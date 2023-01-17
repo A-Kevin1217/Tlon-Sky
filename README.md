@@ -4,6 +4,8 @@
 为云崽提供光遇相关插件
 
 #### 编写中！敬请期待！
+#### 访问量[2023/1/18始]
+[![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
 
 #### 进度
  * 2023/1/17
