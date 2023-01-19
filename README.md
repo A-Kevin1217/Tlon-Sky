@@ -17,6 +17,7 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 | 季节兑换图 | 获取往期和近期的季节先祖兑换图 |
 | 身高图 | 获取查询身高所需的图片 | 
 | 更新 | 更新本插件 |
+ * 代码很烂,轻喷
 
 #### 访问量[2023/1/18始]
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
@@ -28,6 +29,8 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 可通过Bot获取光遇服务器状态,查询是否需要排队
  * 2023/1/15
 已完成所有季节兑换图
+####   为什么这么烂
+"JavaScript"."css"."nodejs"都没学过,好多问题都是问的佬才懂,我奶奶的连帮助都不会写,废了我吧
 #### 开发不易
 
  * 点个Star就是对我最大的支持!
