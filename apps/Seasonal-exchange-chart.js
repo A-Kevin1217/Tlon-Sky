@@ -197,7 +197,7 @@ export class example extends plugin {
     ])
   }
   async zhuiyjdht(e){
-    let url = ''
+    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-3031257384-AB9730DD20EF2ABF792597B7181D94EB/0?term=3&is_origin=0'
     let res = await fetch(url).catch((err) => logger.error(err))
     await yhis.reply([
       segment.at(this.e.user_id),
