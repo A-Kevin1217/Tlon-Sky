@@ -23,13 +23,11 @@ export class example extends plugin {
     })
 }
   async skybz(e) {
-    const imgreply = 'https://gchat.qpic.cn/gchatpic_new/746659424/4144974507-2439053290-125E4E51B9D45F2C955E6675AF7C6CEE/0?term=3&is_origin=0';
-    const Textreply = '┏━━━━━\n┣SKY状态\n┣季节兑换图\n┣身高图\n┗━━━━━';
+    const imgreply = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-3188931212-F1315B129471B79DA55DEE10B8AC17D9/0?term=3&is_origin=0';
     logger.info('[自助回复]', e.msg)
     let msg = [
       segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-      Textreply ? Textreply : ""
+      imgreply ? segment.image(imgreply) : ""
     ]
     e.reply(msg)
     return true;
