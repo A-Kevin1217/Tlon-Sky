@@ -3,7 +3,21 @@
 #### 介绍
 为云崽提供光遇相关插件
 
-#### 编写中！敬请期待！
+#### 安装
+使用Gitee安装
+```
+git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-GuangYu-plugin/
+```
+
+#### 功能
+| 功能名称  |  功能说明  |
+|-------| ----- |
+| sky帮助| 获取已有功能菜单 |
+| 服务器状态 | 获取光遇服务器状态,查询是否需要排队 |
+| 季节兑换图 | 获取往期和近期的季节先祖兑换图 |
+| 身高图 | 获取查询身高所需的图片 | 
+| 更新 | 更新本插件 |
+
 #### 访问量[2023/1/18始]
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
 
