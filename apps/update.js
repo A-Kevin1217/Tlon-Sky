@@ -56,9 +56,9 @@ export class update extends plugin {
         }
         let time = await this.getTime("SKY-GuangYu-plugin");
         if (/(Already up[ -]to[ -]date|已经是最新的)/.test(ret.stdout)) {
-            await this.reply(`清凉图已经是最新版本\n最后更新时间：${time}`);
+            await this.reply(`光遇已经是最新版本\n最后更新时间：${time}`);
         } else {
-            await this.reply(`清凉图\n最后更新时间：${time}`);
+            await this.reply(`光遇\n最后更新时间：${time}`);
             this.isUp = true;
             let log = await this.getLog("SKY-GuangYu-plugin");
             await this.reply(log);
