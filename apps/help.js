@@ -44,7 +44,7 @@ export class example extends plugin {
     e.reply(msg)
     return true;
   }
-  async czdht(e) {
+  async czxzdht(e) {
     const imgreply = 'plugins/SKY-GuangYu-plugin/resource/help/常驻兑换图.png'
     logger.info('[常驻兑换图]',e.msg)
     let msg = [
