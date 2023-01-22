@@ -25,7 +25,7 @@ export class example extends plugin {
     })
 }
   async skybz(e) {
-    const Textreply = '\nSKY状态\n身高图\n季节兑换图\n常驻先祖兑换图';
+    const Textreply = '\nSKY状态\n身高图\n季节兑换图\n常驻先祖兑换图\n光遇公告';
     logger.info('[SKY帮助]', e.msg)
     let msg = [
       segment.at(this.e.user_id),
