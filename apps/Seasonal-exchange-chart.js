@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import plugin from '../../../lib/plugins/plugin.js';
 import { segment } from "oicq";
 export class example extends plugin {
@@ -77,131 +76,115 @@ export class example extends plugin {
     })
   }
   async ganejdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/658312780-2889894068-C676965E13402EC4601B1E24FF3B1414/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/感恩季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async zhuigjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-3069178944-CE2E443A56F5606D49F03FE08F1F47E3/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/追光季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async guisjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-3055385050-46FECE528C99FB1E70F81F5C4ED02CCA/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/归属季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async yinyjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2243376476-4E6BB94CB5E6FFB60F2D5485AAF3398B/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/音韵季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async mofjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2203977974-78E9C75BF35D641AC9C4F45FD35FC308/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/魔法季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async shengdjdht(e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2654089708-0568FCC61B0853FF63FE13F968E6983C/0?term=3&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.errro(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/圣岛季.png'
     await this.reply([
-      segment,at(this.e.user_id),
-      segment.image(url)
+      segment.at(this.e.user_id),
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async yuyjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2568075824-5FA0C6FB0D28A7CE83000FF67C4EFA69/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/预言季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async mengxjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2151948210-800AE36D1C035F961FEAFFE6EF10672E/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/梦想季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async chonzjijjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2657134776-9603A1778BDD3F782A895636430F6489/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/重组季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async xiaowzjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2924563578-E6E341E4A9D217BD072C5AD306197954/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/小王子季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async fengxjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-3128279012-9FBFDFF4A2DA0B46B506F012E82E2728/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/风行季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async qianhjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2776940988-C34C0591A29FE3A7A1EACA35676659B8/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/潜海季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async biaoyjdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2564301330-79AA364705336321435234E1FC051816/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/表演季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async poxiaojidht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-3113721606-06A81A737CB362DE6394318AD99CF87F/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/破晓季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async ourljdht (e) {
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-2820943540-92FE008D8491831D866009655F129F26/0?term=2&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/AURORA季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
   async zhuiyjdht(e){
-    let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/2054658697-3031257384-AB9730DD20EF2ABF792597B7181D94EB/0?term=3&is_origin=0'
-    let res = await fetch(url).catch((err) => logger.error(err))
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/追忆季.png'
     await this.reply([
       segment.at(this.e.user_id),
-      segment.image(url)
+      imgreply ? segment.image(imgreply) : "",
     ])
   }
 }
