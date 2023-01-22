@@ -17,6 +17,7 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 | 季节兑换图 | 获取往期和近期的季节先祖兑换图 |
 | 常驻先祖兑换图 | 获取六图兑换图 |
 | 身高图 | 获取查询身高所需的图片 | 
+| 光遇公告 | 获取光遇官方公告,群内会被风控 |
 | 更新 | 使用全部更新或者#更新SKY-GuangYu-plugin |
 | 后续内容待更新... |其实就是在摆烂|
  * 代码很烂,轻喷
@@ -25,6 +26,8 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
 
 #### 进度
+ * 2023/1/22
+更新光遇公告功能
  * 2023/1/20
 更新常驻六图兑换图
  * 2023/1/17
