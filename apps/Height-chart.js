@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import plugin from '../../../lib/plugins/plugin.js';
 import { segment } from "oicq";
 export class example extends plugin {
@@ -21,19 +20,23 @@ export class example extends plugin {
       })
     }
     async sgt (e) {
-      let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/950353702-2605128334-94C0ED7D68A2766BE6E952F86A2DEFB9/0?term=3&is_origin=0'
-      let res = await fetch(url).catch((err) => logger.error(err))
-      await this.reply([
+      const imgreply = 'plugins/SKY-GuangYu-plugin/resource/身高图/身高图.png';
+      logger.info('[SKY]', e.msg)
+      let msg = [
         segment.at(this.e.user_id),
-        segment.image(url),"发送「身高透明图」查看PNG格式"
-      ])
+        imgreply ? segment.image(imgreply) : "发送「身高透明图」查看透明格式",
+                ]
+      e.reply(msg)
+      return true;
     }
     async sgtmt (e) {
-        let url = 'https://gchat.qpic.cn/gchatpic_new/3620060826/950353702-3074695606-E2ED2EC049E20D91558D712E40A66537/0?term=3&is_origin=0'
-        let res = await fetch(url).catch((err) => logger.error(err))
-        await this.reply([
-          segment.at(this.e.user_id),
-          segment.image(url)
-        ])
+      const imgreply = 'plugins/SKY-GuangYu-plugin/resource/身高图/透明身高图.png';
+      logger.info('[SKY]', e.msg)
+      let msg = [
+        segment.at(this.e.user_id),
+        imgreply ? segment.image(imgreply) : "",
+                ]
+      e.reply(msg)
+      return true;
       }
 }
