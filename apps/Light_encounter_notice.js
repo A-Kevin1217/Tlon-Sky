@@ -52,7 +52,7 @@ export class wenan extends plugin {
               .replace('<?xml version="1.0" encoding="utf-8"?>', '<?xml version="1.0" encoding="utf-8" ?>')
               .replace(/\n/g, '')
               .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, '___')
-              .replace(/___+/, '<title color="#777777" size="26">请点击查看内容</title>');
+              .replace(/___+/, '<title color="#777777" size="26">该内容被Tencent风控,已为您特殊处理</title>');
             msgs = forwardMsg;
             result = await old_reply(msgs, quote, data);
           }
