@@ -42,11 +42,7 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 #### 开发不易
 
  * 点个Star就是对我最大的支持!
- * 或者为我赞助提供动力(滑稽☞[赞助码](https://c2cpicdw.qpic.cn/offpic_new/0//3620060826-1519542571-298BB22C2AE09FC60AC3F3FDFBCA6842/0
-)
+ * 一起玩耍：392665563
+ * 或者为我赞助提供动力[爱发电](https://afdian.net/a/Tloml-Starry)
 #### BUG反馈及优化
  * 向本项目发起lssues,有时间我会看
-
-#### 一起玩耍
-
-群聊：392665563
