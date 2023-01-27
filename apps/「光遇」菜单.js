@@ -29,7 +29,6 @@ export class example extends plugin {
     const imgreply = 'plugins/SKY-GuangYu-plugin/resource/help/help.png';
     logger.info('[SKY帮助]', e.msg)
     let msg = [
-      segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ]
     e.reply(msg)
