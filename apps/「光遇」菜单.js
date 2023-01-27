@@ -39,7 +39,6 @@ export class example extends plugin {
     const imgreply = 'plugins/SKY-GuangYu-plugin/resource/help/季节兑换图.png'
     logger.info('[季节兑换图]',e.msg)
     let msg = [
-      segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ]
     e.reply(msg)
