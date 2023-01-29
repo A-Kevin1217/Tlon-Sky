@@ -21,10 +21,12 @@ export class example extends plugin {
     }
     async sgt (e) {
       const imgreply = 'plugins/SKY-GuangYu-plugin/resource/身高图/身高图.png';
+      const Textreply = '发送「身高透明图」查看透明格式'
       logger.info('[SKY]', e.msg)
       let msg = [
         segment.at(this.e.user_id),
-        imgreply ? segment.image(imgreply) : "发送「身高透明图」查看透明格式",
+        imgreply ? segment.image(imgreply) : "",
+        Textreply ? Textreply : "",
                 ]
       e.reply(msg)
       return true;
