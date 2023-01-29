@@ -25,7 +25,7 @@ export class example extends plugin {
     })
 }
   async sky_cxsg(e) {
-    const Textreply = '该功能需加群,是否加入？\n【加入】|【滚滚滚,真麻烦】\nps:查询方法未群主手动查询,望理解';
+    const Textreply = '该功能需加群,是否加入？\n【加入】|【滚滚滚,真麻烦】\nps:查询方法为群主手动去TG查询,望理解';
     logger.info('[光遇]', e.msg)
     let msg = [
         Textreply ? Textreply : "",
