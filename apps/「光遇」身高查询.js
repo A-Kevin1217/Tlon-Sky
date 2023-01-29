@@ -10,7 +10,7 @@ export class example extends plugin {
         priority: 5000,
         rule: [
             {
-                reg: '查询身高',
+                reg: '^查询身高$',
                 fnc: 'sky_cxsg'
             },
             {
@@ -25,7 +25,7 @@ export class example extends plugin {
     })
 }
   async sky_cxsg(e) {
-    const Textreply = '你好\n该功能需加群,是否加入？\n【加入】|【滚滚滚,真麻烦】';
+    const Textreply = '该功能需加群,是否加入？\n【加入】|【滚滚滚,真麻烦】\nps:查询方法未群主手动查询,望理解';
     logger.info('[光遇]', e.msg)
     let msg = [
         Textreply ? Textreply : "",
