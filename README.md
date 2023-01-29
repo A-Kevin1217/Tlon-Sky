@@ -8,7 +8,11 @@
 ```
 git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-GuangYu-plugin/
 ```
-
+#### 查询光崽身高
+* 注:该功能机器人暂时无法提供,因为掌握查询身高api的主人不愿意提供给我
+* 但是你可以添加Q群[1028495728](https://jq.qq.com/?_wv=1027&k=YQ2G0IP6)并私聊群主，群主将借用api主人的机器人查询并在群内返回给你
+* 如果你能要到api最好，提供给我，我写出功能 (欸嘿~
+* [api主人TG群频道](https://t.me/+TWTYabitFzRkNjU1)
 #### 功能
 | 功能名称  |  功能说明  |
 |-------| ----- |
