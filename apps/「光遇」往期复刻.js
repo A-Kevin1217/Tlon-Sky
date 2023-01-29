@@ -18,7 +18,7 @@ export class example extends plugin {
               fnc: 'fkjl21'
             },
             {
-              reg: '^(2022|22)年复刻记录)$',
+              reg: '^(2022|22)年复刻记录$',
               fnc: 'fkjl22'
             },
             {
