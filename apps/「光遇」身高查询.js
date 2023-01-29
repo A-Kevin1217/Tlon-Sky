@@ -1,4 +1,4 @@
-import plugin from '../../lib/plugins/plugin.js'
+import plugin from '../../../lib/plugins/plugin.js'
 import { segment } from "oicq";
 
 export class example extends plugin {
