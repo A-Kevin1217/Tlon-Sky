@@ -38,9 +38,6 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 #### 访问量[2023/1/18始]
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
 
-####   为什么代码这么烂
-* "JavaScript" "css" "nodejs"都没学过,好多问题都是问的佬才懂
-* 我连帮助都不会写,废了我吧,让我西吧
 #### 开发不易
 
  * 点个Star就是对我最大的支持!
