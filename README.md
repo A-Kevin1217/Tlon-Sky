@@ -42,7 +42,8 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 #### 赞助名单
 | 赞助 | 内容 | 说明 |
 | -------| ----- | ------ |
-| [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 | —————— |
+| [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 | 已征得作者同意 |
+| [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 | 已征得作者同意 |
 
 #### 开发不易
 
