@@ -29,6 +29,10 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 | 后续内容待更新... |其实就是在摆烂|
  * 代码很烂,轻喷
 
+#### 预告功能
+| 免费爱心 | 免费获取一颗爱心,当然,不可能无限获取,一个QQ仅限一次 |
+| 活动兑换图 | 咕咕咕~ |
+
 #### 访问量[2023/1/18始]
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
 
