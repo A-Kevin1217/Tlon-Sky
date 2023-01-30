@@ -38,6 +38,12 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 #### 访问量[2023/1/18始]
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
 
+
+#### 贡献
+| 贡献者 | 贡献 | 说明 |
+| -------| ----- | ------ |
+| [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 | —————— |
+
 #### 开发不易
 
  * 点个Star就是对我最大的支持!
