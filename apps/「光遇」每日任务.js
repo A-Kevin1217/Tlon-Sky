@@ -33,7 +33,7 @@ export class example extends plugin {
 		buff = await page.screenshot({
 			clip: {
 			  x: 300,
-			  y: 1450,
+			  y: 1423,
 			  width: 675,
 			  height: 1800
 			}
