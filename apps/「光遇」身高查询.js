@@ -34,10 +34,10 @@ export class example extends plugin {
     return true;
   }
   async sky_jr(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/查询身高/二维码.png';
+    const Textreply = '群号1028495728';
     logger.info('[光遇]',e.msg)
     let msg = [
-        imgreply ? segment.image(imgreply) : "",
+        Textreply ? Textreply : "",
     ]
     e.reply(msg, true, { recallMsg: 10 })
     return true;
