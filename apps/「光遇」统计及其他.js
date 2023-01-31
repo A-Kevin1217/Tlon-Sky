@@ -39,7 +39,7 @@ export class example extends plugin {
     return true;
   }
   async sky_clgz(e) {
-    const imgreply = 'plugin/SKY-GuangYu-plugin/resource/统计及其他/测量规则.png';
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/统计及其他/测量规则.png';
     logger.info('[SKY]', e.msg)
     let msg = [
         imgreply ? segment.image(imgreply) : "",
@@ -48,7 +48,7 @@ export class example extends plugin {
     return true;
   }
   async sky_lzhcjz(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/统计及其他/P1.png';
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/统计及其他/蜡烛合成机制.png';
     logger.info('[SKY]', e.msg)
     let msg = [
         imgreply ? segment.image(imgreply) : "",
@@ -57,7 +57,7 @@ export class example extends plugin {
     return true;
   }
   async sky_sgjjzs(e) {
-    const imgreply = 'plugin/SKY-GuangYu-plugin/resource/统计及其他/身高进阶知识.png';
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/统计及其他/身高进阶知识.png';
     logger.info('[SKY]', e.msg)
     let msg = [
         imgreply ? segment.image(imgreply) : "",
