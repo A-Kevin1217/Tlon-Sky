@@ -26,7 +26,7 @@ export class example extends plugin {
     })
 }
   async skybz(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/help/help.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/help/help.png';
     logger.info('[SKY帮助]', e.msg)
     let msg = [
       imgreply ? segment.image(imgreply) : "",
@@ -35,7 +35,7 @@ export class example extends plugin {
     return true;
   }
   async jjdht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/help/季节兑换图.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/help/季节兑换图.png'
     logger.info('[季节兑换图]',e.msg)
     let msg = [
       imgreply ? segment.image(imgreply) : "",
@@ -44,7 +44,7 @@ export class example extends plugin {
     return true;
   }
   async czxzdht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/help/常驻兑换图.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/help/常驻兑换图.png'
     logger.info('[常驻兑换图]',e.msg)
     let msg = [
       imgreply ? segment.image(imgreply) : "",
