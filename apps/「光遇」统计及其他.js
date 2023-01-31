@@ -48,7 +48,7 @@ export class example extends plugin {
     return true;
   }
   async sky_lzhcjz(e) {
-    const imgreply = 'plugin/SKY-GuangYu-plugin/resource/统计及其他/P1.png';
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/统计及其他/P1.png';
     logger.info('[SKY]', e.msg)
     let msg = [
         imgreply ? segment.image(imgreply) : "",
