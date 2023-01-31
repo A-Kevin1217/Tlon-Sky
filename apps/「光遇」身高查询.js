@@ -44,7 +44,7 @@ export class example extends plugin {
   }
   async sky_ggg(e) {
     const Textreply = '好嘞~';
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/查询身高/表情.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/查询身高/表情.png';
     logger.info('[光遇]', e.msg)
     let msg = [
         Textreply ? Textreply : "",
