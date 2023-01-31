@@ -6,7 +6,7 @@
 #### 安装
 使用Gitee安装
 ```
-git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-GuangYu-plugin/
+git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 ```
 #### 查询光崽身高
 * 该功能机器人暂时无法提供,因为掌握查询身高api的主人不愿意提供给我
