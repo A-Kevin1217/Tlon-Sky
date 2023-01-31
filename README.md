@@ -23,6 +23,7 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 | 季节兑换图 | 获取往期和近期的季节先祖兑换图 |
 | 常驻先祖兑换图 | 获取六图兑换图 |
 | 身高图 | 获取查询身高所需的图片 | 
+| 统计及其他 | 测量规则,蜡烛合成机制,好友树兑换等等 |
 | 光遇公告 | 获取光遇官方公告,群内会被风控 |
 | 查询身高 | 请加群私聊群主[1028495728](https://jq.qq.com/?_wv=1027&k=YQ2G0IP6) |
 | 更新 | 使用全部更新或者#更新SKY-GuangYu-plugin |
