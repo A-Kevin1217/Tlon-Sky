@@ -29,7 +29,7 @@ export class example extends plugin {
     })
 }
   async fkjl20(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/复刻记录/2020年光遇复刻记录.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/复刻记录/2020年光遇复刻记录.png';
     logger.info('[复刻记录]', e.msg)
     let msg = [
       imgreply ? segment.image(imgreply) : "",
@@ -38,7 +38,7 @@ export class example extends plugin {
     return true;
   }
   async fkjl21(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/复刻记录/2021年光遇复刻记录.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/复刻记录/2021年光遇复刻记录.png'
     logger.info('[复刻记录]',e.msg)
     let msg = [
       imgreply ? segment.image(imgreply) : "",
@@ -47,7 +47,7 @@ export class example extends plugin {
     return true;
   }
   async fkjl22(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/复刻记录/2022年光遇复刻记录.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/复刻记录/2022年光遇复刻记录.png'
     logger.info('[复刻记录]',e.msg)
     let msg = [
       imgreply ? segment.image(imgreply) : "",
@@ -56,7 +56,7 @@ export class example extends plugin {
     return true;
   }
   async fkjl23(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/复刻记录/2023年光遇复刻记录.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/复刻记录/2023年光遇复刻记录.png'
     logger.info('[复刻记录]',e.msg)
     let msg = [
         imgreply ? segment.image(imgreply) : "",
