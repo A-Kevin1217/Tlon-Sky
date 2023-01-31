@@ -40,7 +40,7 @@ export class example extends plugin {
     })
 }
   async chenddht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/常驻先祖兑换图/晨岛.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/晨岛.png';
       logger.info('[SKY]', e.msg)
       let msg = [
         segment.at(this.e.user_id),
@@ -50,7 +50,7 @@ export class example extends plugin {
       return true;
   }
   async yunydht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/常驻先祖兑换图/云野.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/云野.png';
       logger.info('[SKY]', e.msg)
       let msg = [
         segment.at(this.e.user_id),
@@ -60,7 +60,7 @@ export class example extends plugin {
       return true;
   }
   async yuldht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/常驻先祖兑换图/雨林.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/雨林.png';
       logger.info('[SKY]', e.msg)
       let msg = [
         segment.at(this.e.user_id),
@@ -70,7 +70,7 @@ export class example extends plugin {
       return true;
   }
   async xiagdht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/常驻先祖兑换图/霞谷.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/霞谷.png';
       logger.info('[SKY]', e.msg)
       let msg = [
         segment.at(this.e.user_id),
@@ -80,7 +80,7 @@ export class example extends plugin {
       return true;
   }
   async mutdht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/常驻先祖兑换图/暮土.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/暮土.png';
       logger.info('[SKY]', e.msg)
       let msg = [
         segment.at(this.e.user_id),
@@ -90,7 +90,7 @@ export class example extends plugin {
       return true;
   }
   async jingdht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/常驻先祖兑换图/禁阁.png';
+    const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/禁阁.png';
       logger.info('[SKY]', e.msg)
       let msg = [
         segment.at(this.e.user_id),
