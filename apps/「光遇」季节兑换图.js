@@ -76,112 +76,112 @@ export class example extends plugin {
     })
   }
   async ganejdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/感恩季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/感恩季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async zhuigjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/追光季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/追光季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async guisjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/归属季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/归属季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async yinyjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/音韵季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/音韵季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async mofjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/魔法季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/魔法季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async shengdjdht(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/圣岛季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/圣岛季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async yuyjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/预言季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/预言季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async mengxjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/梦想季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/梦想季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async chonzjijjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/重组季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/重组季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async xiaowzjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/小王子季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/小王子季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async fengxjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/风行季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/风行季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async qianhjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/潜海季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/潜海季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async biaoyjdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/表演季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/表演季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async poxiaojidht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/破晓季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/破晓季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async ourljdht (e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/AURORA季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/AURORA季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
   }
   async zhuiyjdht(e){
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/季节兑换图/追忆季.png'
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/追忆季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
