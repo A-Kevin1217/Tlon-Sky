@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import Ver from './components/Version.js'
 import chalk from 'chalk'
 
-const files = fs.readdirSync('./plugins/SKY-GuangYu-plugin/apps').filter(file => file.endsWith('.js'))
+const files = fs.readdirSync('./plugins/Tlon-Sky/apps').filter(file => file.endsWith('.js'))
 
 let ret = []
 
