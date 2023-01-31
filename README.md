@@ -46,6 +46,7 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
 | [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 | 已征得作者同意 |
 | [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 | 已征得作者同意 |
 
+
 #### 开发不易
 
  * 点个Star就是对我最大的支持!
@@ -53,3 +54,8 @@ git clone https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin.git ./plugins/SKY-Gu
  * 或者为我赞助提供动力[爱发电](https://afdian.net/a/Tloml-Starry)
 #### BUG反馈及优化
  * 向本项目发起lssues,有时间我会看
+
+#### 好难过...
+<p align="center">
+<img width = "600" src="resource/QQ图片20230131200416.jpg">
+</p>
