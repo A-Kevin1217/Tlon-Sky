@@ -30,7 +30,7 @@ export class example extends plugin {
     })
 }
   async sky_hys(e) {
-    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/统计及其他/好友树.png';
+    const imgreply = 'plugins/SKY-GuangYu-plugin/resource/统计及其他/好友树兑换图.png';
       logger.info('[SKY]', e.msg)
       let msg = [
         imgreply ? segment.image(imgreply) : "",
