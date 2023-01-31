@@ -26,7 +26,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 | 统计及其他 | 测量规则,蜡烛合成机制,好友树兑换等等 |
 | 光遇公告 | 获取光遇官方公告,群内会被风控 |
 | 查询身高 | 请加群私聊群主[1028495728](https://jq.qq.com/?_wv=1027&k=YQ2G0IP6) |
-| 更新 | 使用全部更新或者#更新Tlon-Sky |
+| 更新 | 使用全部更新或者#光遇更新或sky更新 |
 | 后续内容待更新... |其实就是在摆烂|
  * 代码很烂,轻喷
 
