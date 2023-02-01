@@ -35,6 +35,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 | -------| ----- |
 | 免费爱心 | 免费获取一颗爱心,当然,不可能无限获取,一个QQ仅限一次 |
 | 活动兑换图 | 获取往期或近期活动兑换图 |
+ * 部分图源来自网络，如有侵权，联系删除
 
 #### 访问量[2023/1/18始]
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
