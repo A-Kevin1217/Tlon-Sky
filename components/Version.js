@@ -1,6 +1,6 @@
 import fs from 'fs'
 import lodash from 'lodash'
-const Plugin_Path = `${process.cwd()}/plugins/SKY-GuangYu-plugin`;
+const Plugin_Path = `${process.cwd()}/plugins/Tlon-Sky`;
 const README_path = `${Plugin_Path}/README.md`
 const CHANGELOG_path = `${Plugin_Path}/CHANGELOG.md`
 let yunzai_ver = '';
