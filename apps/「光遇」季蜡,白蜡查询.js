@@ -19,10 +19,6 @@ export class wenan extends plugin {
           {
             reg: '^(季蜡查询)(.*)$',
             fnc: 'sky_jlcx'
-          },
-          {
-            reg: '^查询(教程|帮助)$',
-            fnc: 'sky_cxjc'
           }
         ]
       })
@@ -54,15 +50,5 @@ export class wenan extends plugin {
       residual1 = res.data[1].residual
 
       await this.reply(`最近变化时间：${time1}\n变化数量：${change1}\n剩余蜡烛：${residual1}`, true)
-    }
-    async sky_cxjc(e) {
-      const imgreply = 'https://gchat.qpic.cn/gchatpic_new/3591203536/3882665563-2933672716-752D64627CEA1AE9F750F11C934579BD/0?term=3&is_origin=0';
-      logger.info('[SKY]', e.msg)
-      let msg = [
-        segment.at(this.e.user_id),
-        imgreply ? segment.image(imgreply) : "",
-      ]
-      e.reply(msg)
-      return true;
     }
   }
