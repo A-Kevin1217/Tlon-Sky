@@ -72,6 +72,10 @@ export class example extends plugin {
           reg: '^追忆季兑换图$',
           fnc: 'zhuiyjdht'
         },
+        {
+          reg: '^查询(帮助|教程)$',
+          fnc: 'sky_cxbz'
+        }
       ]
     })
   }
@@ -180,11 +184,18 @@ export class example extends plugin {
       imgreply ? segment.image(imgreply) : "",
     ])
   }
-  async zhuiyjdht(e){
+  async zhuiyjdht(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/追忆季.png'
     await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
+  }
+  async sky_cxbz(e) {
+      const imgreply = `plugin/Tlon-Sky/resource/统计及其他/教程.png`
+      await this.reply({
+          segment.at(this.e.user_id),
+          imgreply ? segment.image(imgreply) : "",
+      })
   }
 }
