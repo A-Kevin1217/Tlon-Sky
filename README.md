@@ -1,4 +1,7 @@
 # 光遇插件<a href='https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/stargazers'><img src='https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/badge/star.svg?theme=dark' alt='star'></img></a>
+<p align="center">
+<img width = "600" src="resource/飞天小女警.png">
+</p>
 
 #### 介绍
 为云崽提供光遇相关插件
