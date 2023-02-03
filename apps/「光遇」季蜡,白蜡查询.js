@@ -59,9 +59,10 @@ export class wenan extends plugin {
       const imgreply = 'https://gchat.qpic.cn/gchatpic_new/3591203536/3882665563-2933672716-752D64627CEA1AE9F750F11C934579BD/0?term=3&is_origin=0';
       logger.info('[SKY]', e.msg)
       let msg = [
+        segment.at(this.e.user_id),
         imgreply ? segment.image(imgreply) : "",
       ]
-      e.reply(`${msg}` ,true)
+      e.reply(msg)
       return true;
     }
   }
