@@ -4,13 +4,6 @@ import fetch from "node-fetch"
 let time1
 let change1
 let residual1
-let time2
-let change2
-let residual2
-let time3
-let change3
-let residual3
-
 
 export class wenan extends plugin {
     constructor () {
@@ -38,16 +31,9 @@ export class wenan extends plugin {
       let res = await fetch(url).catch((err) => logger.error(err))
       res = await res.json()
       time1 = res.data[0].time
-      time2 = res.data[1].time
-      time3 = res.data[2].time
       change1 = res.data[0].change
-      change2 = res.data[1].change
-      change3 = res.data[2].change
       residual1 = res.data[0].residual
-      residual2 = res.data[1].residual
-      residual3 = res.data[2].residual
-
-      await this.reply(`最近变化时间：${time1}\n变化数量：${change1}\n剩余蜡烛：${residual1}\n变化时间：${time2}\n变化数量：${change2}\n变化蜡烛：\n${residual2}\n变化时间：${time3}\n变化数量：${change3}\n变化蜡烛：\n${residual3}`)
+      await this.reply(`最近变化时间：${time1}\n变化数量：${change1}\n剩余蜡烛：${residual1}`)
     }
     async sky_jlcx(e) {
       let msg = e.msg
@@ -56,15 +42,8 @@ export class wenan extends plugin {
       let res = await fetch(url).catch((err) => logger.error(err))
       res = await res.json()
       time1 = res.data[0].time
-      time2 = res.data[1].time
-      time3 = res.data[2].time
       change1 = res.data[0].change
-      change2 = res.data[1].change
-      change3 = res.data[2].change
       residual1 = res.data[0].residual
-      residual2 = res.data[1].residual
-      residual3 = res.data[2].residual
-
-      await this.reply(`最近变化时间：${time1}\n变化数量：${change1}\n剩余季蜡：${residual1}\n变化时间：${time2}\n变化数量：${change2}\n变化季蜡：\n${residual2}\n变化时间：${time3}\n变化数量：${change3}\n变化季蜡：\n${residual3}`)
+      await this.reply(`最近变化时间：${time1}\n变化数量：${change1}\n剩余季蜡：${residual1}`)
     }
   }
