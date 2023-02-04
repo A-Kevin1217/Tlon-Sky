@@ -28,7 +28,7 @@ export class example extends plugin {
     await page.goto('https://www.onebiji.com/hykb_tools/guangyu/rwgl/index.php');
     const buff = await page.screenshot({
       clip: {
-        x: 300, y: 1423, width: 675, height: 1800
+        x: 300, y: 1460, width: 675, height: 1750
       }
     });
     await page.close();
