@@ -1,13 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import fetch from "node-fetch"
-import lodash from 'lodash'
-import fs from 'fs'
-import dayjs from 'dayjs'
 
-let datapath = `../../data/Tlon-Sky_bl`
-fs.exists("./data/Tlon-Sky_bl",function (exists) {
-  if (!exists) fs.mkdirSync(".data/Tlon-Sky_bl")
-})
 let time1
 let change1
 let residual1
