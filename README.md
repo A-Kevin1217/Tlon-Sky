@@ -47,9 +47,9 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 #### 赞助名单
 | 赞助 | 内容 | 备注 |
 | -------| ----- | ------ |
-| 光萌 | 提供查询蜡烛季蜡接口 | 阿巴阿巴阿巴 |
-| [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 | 已征得作者同意 |
-| [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 | 已征得作者同意 |
+| 光萌 | 提供查询蜡烛季蜡接口 | 无 |
+| [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 | 无 |
+| [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 | 无 |
 
 
 #### 开发不易
