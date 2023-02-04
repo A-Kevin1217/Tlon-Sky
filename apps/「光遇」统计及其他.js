@@ -11,7 +11,7 @@ export class example extends plugin {
         priority: 5000,
         rule: [
             {
-                reg: '^好友树兑换$',
+                reg: '^好友树兑换图$',
                 fnc: 'sky_hys'
             },
             {
