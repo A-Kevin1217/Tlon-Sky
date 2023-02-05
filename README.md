@@ -60,9 +60,4 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 #### BUG反馈及优化
  * 向本项目发起lssues,有时间我会看
 
-#### 好难过...
-<p align="center">
-<img width = "600" src="resource/QQ图片20230131200416.jpg">
-</p>
-
-//123123123
+//3620060826
