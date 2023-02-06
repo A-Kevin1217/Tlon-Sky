@@ -44,8 +44,8 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
 
 
-#### 赞助名单
-| 赞助 | 内容 | 备注 |
+#### 贡献名单
+| 贡献 | 内容 | 备注 |
 | -------| ----- | ------ |
 | 光萌 | 提供查询蜡烛季蜡接口 | 无 |
 | [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 | 无 |
