@@ -1,38 +1,58 @@
 //由@xin-closing-fuse提供
 //反馈qq:2859204298
 //交流「宣群」q群:657862057 (大爷来玩呀)
-import plugin from '../../../lib/plugins/plugin.js';
-import { segment } from "oicq";
-import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 
+// 引入插件基础类
+import plugin from '../../../lib/plugins/plugin.js';
+// 引入 oicq 模块中的segment
+import { segment } from "oicq";
+// 引入 puppeteer 模块
+import puppeteer from '../../../lib/puppeteer/puppeteer.js';
+// 定义 example 类，继承自 plugin 类
 export class example extends plugin {
+  // 构造函数
   constructor() {
     super({
+      // 插件名称
       name: '任务',
+      // 插件描述
       dsc: '光遇任务',
+      // 事件类型                   
       event: 'message',
+      // 优先级
       priority: 5000,
+      // 规则数组
       rule: [
         {
+          // 正则表达式
           reg: '^(光遇)?(今日|每日)?任务$',
+          // 触发的函数名称
           fnc: 'rw'
         }
       ]
     });
   }
-
-  async rw(e) {
-    const browser = await puppeteer.browserInit();
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1280, height: 1320 });
-    await page.goto('https://www.onebiji.com/hykb_tools/guangyu/rwgl/index.php');
-    const buff = await page.screenshot({
-      clip: {
-        x: 300, y: 1460, width: 675, height: 1750
-      }
-    });
-    await page.close();
-    await e.reply(segment.image(buff));
-    return true;
+// rw 函数，在规则匹配成功时被触发
+async rw(e) {
+  // 使用 puppeteer 库初始化浏览器
+  const browser = await puppeteer.browserInit();
+  // 打开一个新页面
+  const page = await browser.newPage();
+  // 设置页面大小
+  await page.setViewport({ width: 1280, height: 1320 });
+  // 导航到特定 URL
+  await page.goto('https://www.onebiji.com/hykb_tools/guangyu/rwgl/index.php');
+  // 截取页面图像
+  const buff = await page.screenshot({
+    clip: {
+      x: 300, y: 1423, width: 675, height: 1800
+    }
+  });
+  // 关闭页面
+  await page.close();
+  // 回复图像数据
+  await e.reply(segment.image(buff));
+  // 返回 true
+  return true;
   }
 }
