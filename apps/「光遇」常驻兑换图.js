@@ -43,60 +43,54 @@ export class example extends plugin {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/晨岛.png';
       logger.info('[SKY]', e.msg)
       let msg = [
-        segment.at(this.e.user_id),
         imgreply ? segment.image(imgreply) : "",
                 ]
-      e.reply(msg)
+      e.reply(msg, true)
       return true;
   }
   async yunydht(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/云野.png';
       logger.info('[SKY]', e.msg)
       let msg = [
-        segment.at(this.e.user_id),
         imgreply ? segment.image(imgreply) : "",
                 ]
-      e.reply(msg)
+      e.reply(msg, true)
       return true;
   }
   async yuldht(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/雨林.png';
       logger.info('[SKY]', e.msg)
       let msg = [
-        segment.at(this.e.user_id),
         imgreply ? segment.image(imgreply) : "",
                 ]
-      e.reply(msg)
+      e.reply(msg, true)
       return true;
   }
   async xiagdht(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/霞谷.png';
       logger.info('[SKY]', e.msg)
       let msg = [
-        segment.at(this.e.user_id),
         imgreply ? segment.image(imgreply) : "",
                 ]
-      e.reply(msg)
+      e.reply(msg, true)
       return true;
   }
   async mutdht(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/暮土.png';
       logger.info('[SKY]', e.msg)
       let msg = [
-        segment.at(this.e.user_id),
         imgreply ? segment.image(imgreply) : "",
                 ]
-      e.reply(msg)
+      e.reply(msg, true)
       return true;
   }
   async jingdht(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/禁阁.png';
       logger.info('[SKY]', e.msg)
       let msg = [
-        segment.at(this.e.user_id),
         imgreply ? segment.image(imgreply) : "",
                 ]
-      e.reply(msg)
+      e.reply(msg, true)
       return true;
   }
   async mutu(e) {
@@ -106,7 +100,7 @@ export class example extends plugin {
         segment.at(this.e.user_id),'\n',
         Textreply ? Textreply : "",
                 ]
-      e.reply(msg)
+      e.reply(msg, true)
       return true;
   }
 }
