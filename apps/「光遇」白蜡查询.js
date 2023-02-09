@@ -12,10 +12,6 @@ export class wenan extends plugin {
         {
           reg: `^#(蜡烛查询)(.*)$`,
           fnc: 'sky_lzcx'
-        },
-        {
-          reg: `^蜡烛查询`,
-          fnc: 'sky_lzcxNO'
         }
       ]
     });
@@ -29,15 +25,5 @@ export class wenan extends plugin {
     res = await res.json();
     const { time, change, residual } = res.data[0];
     await this.reply(`最近变化时间：${time}\n变化数量：${change}\n剩余蜡烛：${residual}`, true);
-  }
-  async sky_lzcxNO(e) {
-    const Textreply = '该指令需要带"#"号噢,获取原ID教程请发送查询教程';
-    logger.info('[SKY]', e.msg)
-      let msg = [
-        segment.at(this.e.user_id),'\n',
-        Textreply ? Textreply : "",
-                ]
-      e.reply(msg, true)
-      return true;
   }
 }
