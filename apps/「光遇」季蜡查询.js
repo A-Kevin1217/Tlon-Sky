@@ -10,7 +10,7 @@ export class wenan extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: '^(季蜡查询)(.*)$',
+          reg: '^#(季蜡查询)(.*)$',
           fnc: 'sky_jlcx'
         }
       ]
@@ -23,6 +23,6 @@ export class wenan extends plugin {
     let res = await fetch(url).catch((err) => logger.error(err));
     res = await res.json();
     const { time, change, residual } = res.data[0];
-    await this.reply(`最近变化时间：${time}\n变化数量：${change}\n剩余季蜡：${residual}`);
+    await this.reply(`最近变化时间：${time}\n变化数量：${change}\n剩余季蜡：${residual}`, true);
   }
 }
