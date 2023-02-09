@@ -12,6 +12,10 @@ export class wenan extends plugin {
         {
           reg: '^#(季蜡查询)(.*)$',
           fnc: 'sky_jlcx'
+        },
+        {
+          reg: '^季蜡查询',
+          fnc: 'sky_jlcxNO'
         }
       ]
     });
@@ -23,6 +27,16 @@ export class wenan extends plugin {
     let res = await fetch(url).catch((err) => logger.error(err));
     res = await res.json();
     const { time, change, residual } = res.data[0];
-    await this.reply(`变化时间：${time}\n变化数量：${change}\n剩余季蜡：${residual}\n`, true);
+    await this.reply(`可能会有延迟\n变化时间：${time}\n变化数量：${change}\n剩余季蜡：${residual}`, true);
+  }
+  async sky_jlcxNO(e) {
+    const Textreply = '该指令需要带"#"号噢,获取原ID教程请发送查询教程';
+    logger.info('[SKY]', e.msg)
+      let msg = [
+        segment.at(this.e.user_id),'\n',
+        Textreply ? Textreply : "",
+                ]
+      e.reply(msg, true)
+      return true;
   }
 }
