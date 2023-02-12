@@ -45,8 +45,8 @@ async rw(e) {
   // 截取页面图像
   const buff = await page.screenshot({
     clip: {
-      x: 300, y: 1423, width: 675, height: 1800
-    }
+      x: 300, y: 1300, width: 675, height: 1800
+    }//x: 300, y: 1423, width: 675, height: 1800
   });
   // 关闭页面
   await page.close();
