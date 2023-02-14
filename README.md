@@ -44,7 +44,8 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 #### 贡献名单
 | 贡献 | 内容 |
 | -------| ----- |
-| 光萌 | 提供查询蜡烛季蜡接口 
+| 应天 | 提供红石位置,天气预报接口 |
+| 光萌 | 提供查询蜡烛季蜡接口 |
 | [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 |
 | [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 |
 
