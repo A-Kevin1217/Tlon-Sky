@@ -21,7 +21,7 @@ export class update extends plugin {
             priority: 999,
             rule: [
                 {
-                    reg: '^#(光遇|sky|SKY|Sky)(插件)?(强制)?(更新)$',
+                    reg: '^#?(光遇|sky|SKY|Sky)(插件)?(强制)?(更新)$',
                     fnc: 'update'
                 }
             ]
