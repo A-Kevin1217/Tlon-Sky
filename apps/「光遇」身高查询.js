@@ -13,42 +13,14 @@ export class example extends plugin {
                 reg: '^查询身高$',
                 fnc: 'sky_cxsg'
             },
-            {
-                reg: '^加入$',
-                fnc: 'sky_jr'
-            },
-            {
-                reg: '^滚滚滚(,|，)真麻烦$',
-                fnc: 'sky_ggg'
-            }
         ]
     })
 }
   async sky_cxsg(e) {
-    const Textreply = '该功能需加群,是否加入？\n【加入】|【滚滚滚,真麻烦】\nps:查询方法为群主手动去TG查询,望理解';
+    const Textreply = '暂不支持,请联系1947425850,备注来意';
     logger.info('[光遇]', e.msg)
     let msg = [
         Textreply ? Textreply : "",
-    ]
-    e.reply(msg, true)
-    return true;
-  }
-  async sky_jr(e) {
-    const Textreply = '群号1028495728';
-    logger.info('[光遇]',e.msg)
-    let msg = [
-        Textreply ? Textreply : "",
-    ]
-    e.reply(msg, true, { recallMsg: 10 })
-    return true;
-  }
-  async sky_ggg(e) {
-    const Textreply = '好嘞~';
-    const imgreply = 'plugins/Tlon-Sky/resource/查询身高/表情.png';
-    logger.info('[光遇]', e.msg)
-    let msg = [
-        Textreply ? Textreply : "",
-        imgreply ? segment.image(imgreply) : "",
     ]
     e.reply(msg, true)
     return true;
