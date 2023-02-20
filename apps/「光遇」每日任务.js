@@ -25,7 +25,7 @@ export class example extends plugin {
       rule: [
         {
           // 正则表达式
-          reg: '^(光遇)?(今日|每日)?任务$',
+          reg: '^#?(光遇)?(今日|每日)?任务$',
           // 触发的函数名称
           fnc: 'rw'
         }
