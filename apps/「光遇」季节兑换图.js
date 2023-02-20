@@ -9,71 +9,71 @@ export class example extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: '^感恩季兑换图$',
+          reg: '^#?感恩季兑换图$',
           fnc: 'ganejdht'
         },
         {
-          reg: '^追光季兑换图$',
+          reg: '^#?追光季兑换图$',
           fnc: 'zhuigjdht'
         },
         {
-          reg: '^归属季兑换图$',
+          reg: '^#?归属季兑换图$',
           fnc: 'guisjdht'
         },
         {
-          reg: '^(音韵|凛冬)季兑换图$',
+          reg: '^#?(音韵|凛冬)季兑换图$',
           fnc: 'yinyjdht'
         },
         {
-          reg: '^魔法季兑换图$',
+          reg: '^#?魔法季兑换图$',
           fnc: 'mofjdht'
         },
         {
-          reg: '^圣岛季兑换图$',
+          reg: '^#?圣岛季兑换图$',
           fnc: 'shengdjdht'
         },
         {
-          reg: '^预言季兑换图$',
+          reg: '^#?预言季兑换图$',
           fnc: 'yuyjdht'
         },
         {
-          reg: '^梦想季兑换图$',
+          reg: '^#?梦想季兑换图$',
           fnc: 'mengxjdht'
         },
         {
-          reg: '^(重组|集结)季兑换图$',
+          reg: '^#?(重组|集结)季兑换图$',
           fnc: 'chonzjijjdht'
         },
         {
-          reg: '^小王子季兑换图$',
+          reg: '^#?小王子季兑换图$',
           fnc: 'xiaowzjdht'
         },
         {
-          reg: '^风行季兑换图$',
+          reg: '^#?风行季兑换图$',
           fnc: 'fengxjdht'
         },
         {
-          reg: '^潜海季兑换图$',
+          reg: '^#?潜海季兑换图$',
           fnc: 'qianhjdht'
         },
         {
-          reg: '^表演季兑换图$',
+          reg: '^#?表演季兑换图$',
           fnc: 'biaoyjdht'
         },
         {
-          reg: '^破晓季兑换图$',
+          reg: '^#?破晓季兑换图$',
           fnc: 'poxiaojidht'
         },
         {
-          reg: '^(欧若拉|AURORA|aurora)季兑换图$',
+          reg: '^#?(欧若拉|AURORA|aurora)季兑换图$',
           fnc: 'ourljdht'
         },
         {
-          reg: '^追忆季兑换图$',
+          reg: '^#?追忆季兑换图$',
           fnc: 'zhuiyjdht'
         },
         {
-          reg: '^查询(帮助|教程)$',
+          reg: '^#?查询(帮助|教程)$',
           fnc: 'sky_cxbz'
         }
       ]
