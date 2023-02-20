@@ -12,7 +12,7 @@ export class example extends plugin {
       // 插件名称
         name: '日历',
       // 插件描述
-        dsc: '光遇日历',
+        dsc: '#?光遇日历',
         // 事件类型       
         event: 'message',
         // 优先级
