@@ -10,19 +10,19 @@ export class example extends plugin {
         priority: 5000,
         rule: [
             {
-              reg: '^(2020|20)年复刻记录$',
+              reg: '^#?(2020|20)年复刻记录$',
               fnc: 'fkjl20'
             },
             {
-              reg: '^(2021|21)年复刻记录$',
+              reg: '^#?(2021|21)年复刻记录$',
               fnc: 'fkjl21'
             },
             {
-              reg: '^(2022|22)年复刻记录$',
+              reg: '^#?(2022|22)年复刻记录$',
               fnc: 'fkjl22'
             },
             {
-              reg: '^(2023|23)年复刻记录$',
+              reg: '^#?(2023|23)年复刻记录$',
               fnc: 'fkjl23'
             }
         ]
@@ -34,7 +34,7 @@ export class example extends plugin {
     let msg = [
       imgreply ? segment.image(imgreply) : "",
     ]
-    e.reply(msg)
+    e.reply(msg, true)
     return true;
   }
   async fkjl21(e) {
@@ -43,7 +43,7 @@ export class example extends plugin {
     let msg = [
       imgreply ? segment.image(imgreply) : "",
     ]
-    e.reply(msg)
+    e.reply(msg, true)
     return true;
   }
   async fkjl22(e) {
@@ -52,7 +52,7 @@ export class example extends plugin {
     let msg = [
       imgreply ? segment.image(imgreply) : "",
     ]
-    e.reply(msg)
+    e.reply(msg, true)
     return true;
   }
   async fkjl23(e) {
@@ -60,8 +60,9 @@ export class example extends plugin {
     logger.info('[复刻记录]',e.msg)
     let msg = [
         imgreply ? segment.image(imgreply) : "",
+        `未更新属正常现象(懒`
     ]
-    e.reply(msg)
+    e.reply(msg, true)
     return true;
   }
 }
