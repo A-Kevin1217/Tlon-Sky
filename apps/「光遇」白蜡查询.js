@@ -10,7 +10,7 @@ export class wenan extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: `^#(蜡烛查询)(.*)$`,
+          reg: `^#?(蜡烛查询)(.*)$`,
           fnc: 'sky_lzcx'
         }
       ]
