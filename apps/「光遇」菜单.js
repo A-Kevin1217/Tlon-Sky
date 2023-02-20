@@ -11,15 +11,15 @@ export class example extends plugin {
         priority: 5000,
         rule: [
             {
-              reg: '^(SKY|Sky|sky|光遇)(帮助|菜单|使用说明)$',
+              reg: '^#?(SKY|Sky|sky|光遇)(帮助|菜单|使用说明)$',
               fnc: 'skybz'
             },
             {
-              reg: '^季节兑换图$',
+              reg: '^#?季节兑换图$',
               fnc: 'jjdht'
             },
             {
-              reg: '^常驻先祖兑换图$',
+              reg: '^#?常驻先祖兑换图$',
               fnc: 'czxzdht'
             }
         ]
