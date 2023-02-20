@@ -9,31 +9,31 @@ export class example extends plugin {
         priority: 5000,
         rule: [
             {
-                reg: '^晨岛兑换图$',
+                reg: '^#?晨岛兑换图$',
                 fnc: 'chenddht'
             },
             {
-                reg: '^云野兑换图$',
+                reg: '^#?云野兑换图$',
                 fnc: 'yunydht'
             },
             {
-                reg: '^雨林兑换图$',
+                reg: '^#？雨林兑换图$',
                 fnc: 'yuldht'
             },
             {
-                reg: '^(峡谷|霞谷)兑换图$',
+                reg: '^#?(峡谷|霞谷)兑换图$',
                 fnc: 'xiagdht'
             },
             {
-                reg: '^暮土兑换图$',
+                reg: '^#?暮土兑换图$',
                 fnc: 'mutdht'
             },
             {
-                reg: '^禁阁兑换图$',
+                reg: '^#?禁阁兑换图$',
                 fnc: 'jingdht'
             },
             {
-                reg: '^墓土兑换图',
+                reg: '^#?墓土兑换图',
                 fnc: 'mutu'
             }
         ]
