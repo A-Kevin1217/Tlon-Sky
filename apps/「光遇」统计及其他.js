@@ -11,19 +11,19 @@ export class example extends plugin {
         priority: 5000,
         rule: [
             {
-                reg: '^好友树兑换图$',
+                reg: '^#?好友树兑换图$',
                 fnc: 'sky_hys'
             },
             {
-                reg: '^测量规则$',
+                reg: '^#?测量规则$',
                 fnc: 'sky_clgz'
             },
             {
-                reg: '^蜡烛合成机制$',
+                reg: '^#?蜡烛合成机制$',
                 fnc: 'sky_lzhcjz'
             },
             {
-                reg: '^身高进阶知识$',
+                reg: '^#?身高进阶知识$',
                 fnc: 'sky_sgjjzs'
             }
         ]
