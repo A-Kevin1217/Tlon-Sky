@@ -9,11 +9,11 @@ export class example extends plugin {
         priority: 5000,
         rule: [
           {
-            reg: '^身高图$',
+            reg: '^#?身高图$',
             fnc: 'sgt'
           },
           {
-            reg: '^身高透明图$',
+            reg: '^#?身高透明图$',
             fnc: 'sgtmt'
           }
         ]
