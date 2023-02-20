@@ -12,7 +12,7 @@ export class wenan extends plugin {
         priority: 5000,
         rule: [
           {
-            reg: `^光遇公告$`,
+            reg: `^#?光遇公告$`,
             fnc: 'skygg'
           },
         ]
