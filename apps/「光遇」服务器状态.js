@@ -17,7 +17,7 @@ export class wenan extends plugin {
       rule: [
         {
           // 正则表达式匹配
-          reg: `^((SKY|sky|Sky)服务器状态|(sky|SKY|Sky)状态)$`,
+          reg: `^#?((SKY|sky|Sky)服务器状态|(sky|SKY|Sky)状态)$`,
           // 匹配成功后执行的函数
           fnc: 'skyfwq'
         },
@@ -37,6 +37,6 @@ export class wenan extends plugin {
     }
     let msg = [`${num}`];
     // 回复消息
-    e.reply(msg);
+    e.reply(msg, true);
   }  
 }
