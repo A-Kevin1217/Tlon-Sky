@@ -9,7 +9,7 @@ export class Weekboss extends plugin {
             priority: 4800,
             rule: [
                 {
-                    reg: '^复刻预测$',
+                    reg: '^#?复刻预测$',
                     fnc: 'sky_fkyc'
                 }
             ]
