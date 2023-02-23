@@ -1,35 +1,28 @@
 //抄的小叶的，发现了不要骂我呜呜呜
-//我社恐，所以没敢主动找小叶
-
-
 import plugin from '../../../lib/plugins/plugin.js'
 import lodash from 'lodash'
 import { createRequire } from 'module'
 import { Restart } from '../../other/restart.js'
-
 const require = createRequire(import.meta.url)
 const { exec, execSync } = require('child_process')
-
 let uping = false
-
 export class update extends plugin {
     constructor() {
         super({
-            name: '光遇',
-            dsc: '光遇插件更新',
+            name: '光遇_更新',
+            dsc: '光遇',
             event: 'message',
             priority: 999,
             rule: [
                 {
                     reg: '^#?(光遇|sky|SKY|Sky)(插件)?(强制)?(更新)$',
-                    fnc: 'update'
+                    fnc: 'sky_update'
                 }
             ]
         })
         this.typeName = 'Tlon-Sky'
     }
-
-    async update(e) {
+    async sky_update(e) {
         if (!this.e.isMaster) return false
         if (uping) {
             await this.reply('已有命令更新中..请勿重复操作')
