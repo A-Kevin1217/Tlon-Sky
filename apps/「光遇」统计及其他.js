@@ -12,24 +12,24 @@ export class example extends plugin {
         rule: [
             {
                 reg: '^#?好友树兑换图$',
-                fnc: 'sky_hys'
+                fnc: 'sky_HYS'
             },
             {
                 reg: '^#?测量规则$',
-                fnc: 'sky_clgz'
+                fnc: 'sky_CLGZ'
             },
             {
                 reg: '^#?蜡烛合成机制$',
-                fnc: 'sky_lzhcjz'
+                fnc: 'sky_LZHCJZ'
             },
             {
                 reg: '^#?身高进阶知识$',
-                fnc: 'sky_sgjjzs'
+                fnc: 'sky_SGJJZS'
             }
         ]
     })
 }
-  async sky_hys(e) {
+  async sky_HYS(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/好友树兑换图.png';
       logger.info('[SKY]', e.msg)
       let msg = [
@@ -38,7 +38,7 @@ export class example extends plugin {
     e.reply(msg, true)
     return true;
   }
-  async sky_clgz(e) {
+  async sky_CLGZ(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/测量规则.png';
     logger.info('[SKY]', e.msg)
     let msg = [
@@ -47,7 +47,7 @@ export class example extends plugin {
     e.reply(msg, true)
     return true;
   }
-  async sky_lzhcjz(e) {
+  async sky_LZHCJZ(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/蜡烛合成机制.png';
     logger.info('[SKY]', e.msg)
     let msg = [
@@ -56,7 +56,7 @@ export class example extends plugin {
     e.reply(msg, true)
     return true;
   }
-  async sky_sgjjzs(e) {
+  async sky_SGJJZS(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/身高进阶知识.png';
     logger.info('[SKY]', e.msg)
     let msg = [
