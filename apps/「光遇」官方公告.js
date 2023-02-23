@@ -6,20 +6,20 @@ import plugin from '../../../lib/plugins/plugin.js';
 export class wenan extends plugin {
     constructor () {
       super({
-        name: '查询光遇公告',
-        dsc: '最近光遇公告',
+        name: '光遇_公告',
+        dsc: '光遇',
         event: 'message',
         priority: 5000,
         rule: [
           {
             reg: `^#?光遇公告$`,
-            fnc: 'skygg'
+            fnc: 'sky_gg'
           },
         ]
       })
     }
 
-    async skygg(e) { 
+    async sky_gg(e) { 
       let url = `https://ma75.update.netease.com/game_notice/announcement_live.json`;
       let res = await fetch(url).catch((err) => logger.error(err))
       res = await res.json()
