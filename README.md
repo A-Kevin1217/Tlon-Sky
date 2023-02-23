@@ -13,7 +13,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 ```
 #### 查询光崽身高
 * 您可以添加Q群[1028495728](https://jq.qq.com/?_wv=1027&k=YQ2G0IP6)使用
-* 该群处于全体禁言状态,查询请私聊管理员
+* 查询请私聊管理员
 
 #### 功能
 | 功能名称  |  功能说明  |
