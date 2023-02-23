@@ -38,7 +38,7 @@ async rl(e) {
   // 设置页面大小
 	await page.setViewport({width: 650,height: 2000});
   // 导航到特定 URL
-  await page.goto('https://www.onebiji.com/hykb_tools/guangyu/rwgl/index.php');
+  await page.goto('https://www.guoping123.com/hykb_tools/guangyu/rwgl/index.php');
   // 截取页面图像
   const buff = await page.screenshot({
     clip: {
