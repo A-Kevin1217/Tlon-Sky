@@ -24,7 +24,7 @@ export class example extends plugin {
         ]
     })
 }
-  async skyBZ(e) {
+  async sky_BZ(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/help.png';
     logger.info('[SKY帮助]', e.msg)
     let msg = [
