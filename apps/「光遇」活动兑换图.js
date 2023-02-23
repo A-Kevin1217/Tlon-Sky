@@ -17,12 +17,14 @@ export class example extends plugin {
     })
 }
   async sky_txj(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/同心节兑换图.png';
-    logger.info('[SKY]', e.msg)
-    let msg = [
-      imgreply ? segment.image(imgreply) : "",
-    ]
-    e.reply(msg)
-    return true;
-  }
-}
+      const Textreply = '图源光萌攻略组\n如有侵权,联系仓库主人删除';
+      const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/同心节兑换图.png';
+      logger.info('[SKY]', e.msg)
+      let msg = [
+          imgreply ? segment.image(imgreply) : "",
+          Textreply ? Textreply : "",
+          ]
+          e.reply(msg, true)
+          return true;
+          }
+          }
