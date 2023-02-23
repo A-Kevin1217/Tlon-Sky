@@ -4,31 +4,31 @@ import { segment } from "oicq";
 export class example extends plugin {
     constructor () {
       super({
-        name: '光遇',
-        dsc: '光遇往期复刻',
+        name: '光遇_往期复刻',
+        dsc: '光遇',
         event: 'message',
         priority: 5000,
         rule: [
             {
               reg: '^#?(2020|20)年复刻记录$',
-              fnc: 'fkjl20'
+              fnc: 'sky_20FK'
             },
             {
               reg: '^#?(2021|21)年复刻记录$',
-              fnc: 'fkjl21'
+              fnc: 'sky_21FK'
             },
             {
               reg: '^#?(2022|22)年复刻记录$',
-              fnc: 'fkjl22'
+              fnc: 'sky_22FK'
             },
             {
               reg: '^#?(2023|23)年复刻记录$',
-              fnc: 'fkjl23'
+              fnc: 'sky_23FK'
             }
         ]
     })
 }
-  async fkjl20(e) {
+  async sky_20FK(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/复刻记录/2020年光遇复刻记录.png';
     logger.info('[复刻记录]', e.msg)
     let msg = [
@@ -37,7 +37,7 @@ export class example extends plugin {
     e.reply(msg, true)
     return true;
   }
-  async fkjl21(e) {
+  async sky_21FK(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/复刻记录/2021年光遇复刻记录.png'
     logger.info('[复刻记录]',e.msg)
     let msg = [
@@ -46,7 +46,7 @@ export class example extends plugin {
     e.reply(msg, true)
     return true;
   }
-  async fkjl22(e) {
+  async sky_22FK(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/复刻记录/2022年光遇复刻记录.png'
     logger.info('[复刻记录]',e.msg)
     let msg = [
@@ -55,7 +55,7 @@ export class example extends plugin {
     e.reply(msg, true)
     return true;
   }
-  async fkjl23(e) {
+  async sky_23FK(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/复刻记录/2023年光遇复刻记录.png'
     logger.info('[复刻记录]',e.msg)
     let msg = [
