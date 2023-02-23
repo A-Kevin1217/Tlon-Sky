@@ -6,8 +6,8 @@ import{segment}from'oicq'
 export class example extends plugin {
   constructor () {
     super({
-      name: '光遇',
-      dsc: '光遇红石位置',
+      name: '光遇_红石位置',
+      dsc: '光遇',
       event: 'message',
       priority: 5000,
       rule: [
