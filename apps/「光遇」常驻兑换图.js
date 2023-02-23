@@ -1,45 +1,46 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { segment } from "oicq";
+
 export class example extends plugin {
     constructor () {
       super({
-        name: '光遇攻略',
-        dsc: '光遇攻略',
+        name: '光遇_常驻兑换图',
+        dsc: '光遇',
         event: 'message',
         priority: 5000,
         rule: [
             {
                 reg: '^#?晨岛兑换图$',
-                fnc: 'chenddht'
+                fnc: 'sky_CD'
             },
             {
                 reg: '^#?云野兑换图$',
-                fnc: 'yunydht'
+                fnc: 'sky_YY'
             },
             {
-                reg: '^#？雨林兑换图$',
-                fnc: 'yuldht'
+                reg: '^#?雨林兑换图$',
+                fnc: 'sky_YL'
             },
             {
                 reg: '^#?(峡谷|霞谷)兑换图$',
-                fnc: 'xiagdht'
+                fnc: 'sky_XG'
             },
             {
                 reg: '^#?暮土兑换图$',
-                fnc: 'mutdht'
+                fnc: 'sky_MT'
             },
             {
                 reg: '^#?禁阁兑换图$',
-                fnc: 'jingdht'
+                fnc: 'sky_JG'
             },
             {
                 reg: '^#?墓土兑换图',
-                fnc: 'mutu'
+                fnc: 'sky_xxx'
             }
         ]
     })
 }
-  async chenddht(e) {
+  async sky_CD(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/晨岛.png';
       logger.info('[SKY]', e.msg)
       let msg = [
@@ -48,7 +49,7 @@ export class example extends plugin {
       e.reply(msg, true)
       return true;
   }
-  async yunydht(e) {
+  async sky_YY(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/云野.png';
       logger.info('[SKY]', e.msg)
       let msg = [
@@ -57,7 +58,7 @@ export class example extends plugin {
       e.reply(msg, true)
       return true;
   }
-  async yuldht(e) {
+  async sky_YL(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/雨林.png';
       logger.info('[SKY]', e.msg)
       let msg = [
@@ -66,7 +67,7 @@ export class example extends plugin {
       e.reply(msg, true)
       return true;
   }
-  async xiagdht(e) {
+  async sky_XG(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/霞谷.png';
       logger.info('[SKY]', e.msg)
       let msg = [
@@ -75,7 +76,7 @@ export class example extends plugin {
       e.reply(msg, true)
       return true;
   }
-  async mutdht(e) {
+  async sky_MT(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/暮土.png';
       logger.info('[SKY]', e.msg)
       let msg = [
@@ -84,7 +85,7 @@ export class example extends plugin {
       e.reply(msg, true)
       return true;
   }
-  async jingdht(e) {
+  async sky_JG(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/禁阁.png';
       logger.info('[SKY]', e.msg)
       let msg = [
@@ -93,7 +94,7 @@ export class example extends plugin {
       e.reply(msg, true)
       return true;
   }
-  async mutu(e) {
+  async sky_xxx(e) {
     const Textreply = '不是"墓"土哦亲，是"暮"土';
     logger.info('[SKY]', e.msg)
       let msg = [
