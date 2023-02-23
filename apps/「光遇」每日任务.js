@@ -14,9 +14,9 @@ export class example extends plugin {
   constructor() {
     super({
       // 插件名称
-      name: '任务',
+      name: '光遇_今日任务',
       // 插件描述
-      dsc: '光遇任务',
+      dsc: '光遇',
       // 事件类型                   
       event: 'message',
       // 优先级
@@ -27,13 +27,13 @@ export class example extends plugin {
           // 正则表达式
           reg: '^#?(光遇)?(今日|每日)?任务$',
           // 触发的函数名称
-          fnc: 'rw'
+          fnc: 'sky_JRRW'
         }
       ]
     });
   }
-// rw 函数，在规则匹配成功时被触发
-async rw(e) {
+// sky_JRRW 函数，在规则匹配成功时被触发
+async sky_JRRW(e) {
   // 使用 puppeteer 库初始化浏览器
   const browser = await puppeteer.browserInit();
   // 打开一个新页面
@@ -41,7 +41,7 @@ async rw(e) {
   // 设置页面大小
   await page.setViewport({ width: 1280, height: 1320 });
   // 导航到特定 URL
-  await page.goto('https://www.onebiji.com/hykb_tools/guangyu/rwgl/index.php');
+  await page.goto('https://www.onebiji.com/hykb_tools/guangyu/sky_JRRWgl/index.php');
   // 截取页面图像
   const buff = await page.screenshot({
     clip: {
