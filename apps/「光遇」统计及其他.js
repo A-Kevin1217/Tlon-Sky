@@ -5,8 +5,8 @@ import { segment } from "oicq";
 export class example extends plugin {
     constructor () {
       super({
-        name: '光遇',
-        dsc: '光遇统计及其他',
+        name: '光遇_统计及其他',
+        dsc: '光遇',
         event: 'message',
         priority: 5000,
         rule: [
