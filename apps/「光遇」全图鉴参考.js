@@ -1,10 +1,11 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { segment } from "oicq";
+
 export class example extends plugin {
     constructor () {
       super({
-        name: '光遇攻略',
-        dsc: '光遇攻略',
+        name: '光遇_全图鉴参考',
+        dsc: '光遇',
         event: 'message',
         priority: 5000,
         rule: [
