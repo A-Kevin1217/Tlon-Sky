@@ -10,9 +10,9 @@ export class example extends plugin {
     constructor () {
       super({
       // 插件名称
-        name: '日历',
+        name: '光遇_日历',
       // 插件描述
-        dsc: '#?光遇日历',
+        dsc: '日历',
         // 事件类型       
         event: 'message',
         // 优先级
@@ -22,7 +22,7 @@ export class example extends plugin {
         rule: [
             {
               // 正则表达式
-              reg: '^(光遇)?日历$',
+              reg: '^#?(光遇)?日历$',
               // 触发的函数名称
               fnc: 'rl'
             }
