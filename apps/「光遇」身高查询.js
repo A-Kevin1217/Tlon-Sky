@@ -17,7 +17,7 @@ export class example extends plugin {
     })
 }
   async sky_cxsg(e) {
-    const Textreply = '暂不支持,请联系1947425850,备注来意';
+    const Textreply = '身高查询软件\nhttps://share.weiyun.com/x0dcR4m1';
     logger.info('[光遇]', e.msg)
     let msg = [
         Textreply ? Textreply : "",
