@@ -11,20 +11,20 @@ export class example extends plugin {
         rule: [
             {
               reg: '^#?(SKY|Sky|sky|光遇)(帮助|菜单|使用说明)$',
-              fnc: 'skybz'
+              fnc: 'sky_BZ'
             },
             {
               reg: '^#?季节兑换图$',
-              fnc: 'jjdht'
+              fnc: 'sky_JJDHT'
             },
             {
               reg: '^#?常驻先祖兑换图$',
-              fnc: 'czxzdht'
+              fnc: 'sky_CZXZDHT'
             }
         ]
     })
 }
-  async skybz(e) {
+  async skyBZ(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/help.png';
     logger.info('[SKY帮助]', e.msg)
     let msg = [
@@ -33,7 +33,7 @@ export class example extends plugin {
     e.reply(msg)
     return true;
   }
-  async jjdht(e) {
+  async sky_JJDHT(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/季节兑换图.png'
     logger.info('[季节兑换图]',e.msg)
     let msg = [
@@ -42,7 +42,7 @@ export class example extends plugin {
     e.reply(msg)
     return true;
   }
-  async czxzdht(e) {
+  async sky_CZXZDHT(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/常驻兑换图.png'
     logger.info('[常驻兑换图]',e.msg)
     let msg = [
