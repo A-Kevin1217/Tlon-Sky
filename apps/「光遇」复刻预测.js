@@ -3,8 +3,8 @@ import plugin from '../../../lib/plugins/plugin.js'
 export class Weekboss extends plugin {
     constructor() {
         super({
-            name: '光遇',
-            dsc: '光遇复刻预测',
+            name: '光遇_复刻预测',
+            dsc: '光遇',
             event: 'message',
             priority: 4800,
             rule: [
