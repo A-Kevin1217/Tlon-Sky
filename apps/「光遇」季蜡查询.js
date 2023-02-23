@@ -4,8 +4,8 @@ import fetch from "node-fetch";
 export class wenan extends plugin {
   constructor() {
     super({
-      name: '光遇',
-      dsc: '季蜡查询',
+      name: '光遇_季蜡查询',
+      dsc: '光遇',
       event: 'message',
       priority: 5000,
       rule: [
