@@ -1,6 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { segment } from "oicq";
-let zr = [3620060826]
 
 export class example extends plugin {
     constructor () {
