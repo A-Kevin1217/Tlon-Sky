@@ -7,9 +7,9 @@ export class wenan extends plugin {
   constructor () {
     super({
       // 插件名称
-      name: '查询光遇服务器状态',
+      name: '光遇_服务器状态',
       // 插件描述
-      dsc: '看看网易的破服务器有没有炸服',
+      dsc: '光遇',
       // 插件事件
       event: 'message',
       // 优先级
@@ -19,12 +19,12 @@ export class wenan extends plugin {
           // 正则表达式匹配
           reg: `^#?((SKY|sky|Sky)服务器状态|(sky|SKY|Sky)状态)$`,
           // 匹配成功后执行的函数
-          fnc: 'skyfwq'
+          fnc: 'sky_FWQZT'
         },
       ]
     })
   }
-  async skyfwq(e) { 
+  async sky_FWQZT(e) { 
     // 获取服务器状态信息
     let response = await fetch(`https://live-queue-sky-merge.game.163.com/queue?type=json`);
     let res = await response.json();
