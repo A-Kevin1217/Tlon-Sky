@@ -3,23 +3,23 @@ import { segment } from "oicq";
 export class example extends plugin {
     constructor () {
       super({
-        name: '光遇攻略',
-        dsc: '光遇身高图',
+        name: '光遇_身高图',
+        dsc: '光遇',
         event: 'message',
         priority: 5000,
         rule: [
           {
             reg: '^#?身高图$',
-            fnc: 'sgt'
+            fnc: 'sky_SGT'
           },
           {
             reg: '^#?身高透明图$',
-            fnc: 'sgtmt'
+            fnc: 'sky_SGTTM'
           }
         ]
       })
     }
-    async sgt (e) {
+    async sky_SGT (e) {
       const imgreply = 'plugins/Tlon-Sky/resource/身高图/身高图.png';
       const Textreply = '发送「身高透明图」查看透明格式'
       logger.info('[SKY]', e.msg)
@@ -31,7 +31,7 @@ export class example extends plugin {
       e.reply(msg)
       return true;
     }
-    async sgtmt (e) {
+    async sky_SGTTM (e) {
       const imgreply = 'plugins/Tlon-Sky/resource/身高图/透明身高图.png';
       logger.info('[SKY]', e.msg)
       let msg = [
