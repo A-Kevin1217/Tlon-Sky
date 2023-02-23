@@ -16,7 +16,7 @@ export class example extends plugin {
         ]
     })
 }
-  async skybz(e) {
+  async sky_txj(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/同心节兑换图.png';
     logger.info('[SKY]', e.msg)
     let msg = [
