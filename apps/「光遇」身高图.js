@@ -13,7 +13,7 @@ export class example extends plugin {
             fnc: 'sky_SGT'
           },
           {
-            reg: '^#?透明身高图$',
+            reg: '^#?(透明身高图|身高透明图)$',
             fnc: 'sky_SGTTM'
           }
         ]
