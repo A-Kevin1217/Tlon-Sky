@@ -21,7 +21,7 @@ export class wenan extends plugin {
     let msg = e.msg;
     let place = msg.replace(/#|白蜡查询/g, "").trim();
     let url = `https://api.t1qq.com/api/sky/gy/sc/scjl?id=${place}&type=bl`;
-    await e.reply('正在查询中...\n返回速度较慢,请耐心等待\n数据更新取决于网易服务器\n如诺不对请等待3~5分钟再次查询', true)
+    await e.reply('正在查询中...\n返回速度较慢,请耐心等待\n数据更新取决于网易服务器\n如诺不对请等待3~5分钟再次查询\n注意!!!该ID极其重要,请发送后自行撤回', true)
     await this.reply(segment.image(url), true);
   }
 }
