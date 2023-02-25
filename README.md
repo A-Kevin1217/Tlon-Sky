@@ -43,10 +43,10 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 [![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
 
 
-#### 贡献名单
-| 贡献 | 内容 |
+#### 鸣谢名单
+| 鸣谢 | 内容 |
 | -------| ----- |
-| [应天](https://api.t1qq.com/) | 提供红石位置,天气预报接口 |
+| [应天](https://api.t1qq.com/) | 提供红石位置,天气预报接口,每日任务接口,蜡烛查询图片接口 |
 | 光萌 | 提供查询蜡烛季蜡接口 |
 | [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 |
 | [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 |
