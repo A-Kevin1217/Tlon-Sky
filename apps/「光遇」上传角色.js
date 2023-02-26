@@ -29,7 +29,7 @@ export class wenan extends plugin {
     } else if(res.msg === '请上传正确格式的id值') {
         num = `这个id不对哦~如果不知道是什么id的话\n请发送'查询教程'查看~`
     } else if(res.msg === '上传成功') {
-        num = `上传成功~\n您的新id是：${res.uid}\n请妥善保管哦~`
+        num = `上传成功~\n您的新id是：${res.data.uid}\n请妥善保管哦~`
     }
     await this.reply(`${num}`, false, { recallMsg: 0 }, true)
   }
