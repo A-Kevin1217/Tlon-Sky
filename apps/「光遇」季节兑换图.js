@@ -193,7 +193,7 @@ export class example extends plugin {
     ])
   }
   async sky_cxbz(e) {
-    const Textreply = '示例：蜡烛查询xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+    const Textreply = '示例：蜡烛查询xxxxxxx';
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/教程.png'
     await this.reply([
       segment.at(this.e.user_id),
