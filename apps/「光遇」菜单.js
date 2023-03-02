@@ -18,8 +18,16 @@ export class example extends plugin {
               fnc: 'sky_JJDHT'
             },
             {
-              reg: '^#?常驻先祖兑换图$',
+              reg: '^#?常驻兑换图$',
               fnc: 'sky_CZXZDHT'
+            },
+            {
+              reg: '^#?往期复刻图',
+              fnc: 'sky_WQFKT'
+            },
+            {
+              reg: '^#?活动兑换图',
+              fnc: 'sky_HDDHT'
             }
         ]
     })
@@ -51,4 +59,23 @@ export class example extends plugin {
     e.reply(msg)
     return true;
   }
+  async sky_WQFKT(e) {
+    const imgreply = 'plugins/Tlon-Sky/resource/help/往期复刻记录.png'
+    logger.info('[往期复刻记录]',e.msg)
+    let msg = [
+      imgreply ? segment.image(imgreply) : "",
+    ]
+    e.reply(msg)
+    return true;
+  }
+  async sky_HDDHT(e) {
+    const imgreply = 'plugins/Tlon-Sky/resource/help/活动兑换图.png'
+    logger.info('[活动兑换图]',e.msg)
+    let msg = [
+      imgreply ? segment.image(imgreply) : "",
+    ]
+    e.reply(msg)
+    return true;
+  }
+
 }
