@@ -12,12 +12,12 @@ export class wenan extends plugin {
       rule: [
         {
           reg: `^#?(光遇)?(今日|每日)?任务$`,
-          fnc: 'yt'
+          fnc: 'sky_JRRW'
         },
       ]
     })
   }
-  async yt (e) {
+  async sky_JRRW (e) {
     let url = `https://api.t1qq.com/api/sky/gy/sc/scsky.php`;
     let res = await fetch(url).catch((err) => logger.error(err))
     await e.reply('正在返回图片,可能较慢', true)
