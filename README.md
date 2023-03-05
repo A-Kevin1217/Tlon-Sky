@@ -29,7 +29,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
  * 部分图源来自网络，如有侵权，联系删除
 
 #### 访问量[2023/1/18始]
-[![访问量](https://profile-counter.glitch.me/SKY-GuangYu-plugin/count.svg)](https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/edit/master)
+[![访问量](https://profile-counter.glitch.me/Tlon-Sky/count.svg)](https://gitee.com/Tloml-Starry/Tlon-Sky/edit/master)
 
 
 #### 鸣谢名单
