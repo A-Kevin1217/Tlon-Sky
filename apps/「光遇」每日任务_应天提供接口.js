@@ -18,9 +18,9 @@ export class wenan extends plugin {
     })
   }
   async sky_JRRW (e) {
+    await e.reply('正在返回图片,可能较慢', true)
     let url = `https://api.t1qq.com/api/sky/gy/sc/scsky.php`;
     let res = await fetch(url).catch((err) => logger.error(err))
-    await e.reply('正在返回图片,可能较慢', true)
     await this.reply(segment.image(url), true)
     }  
 }
