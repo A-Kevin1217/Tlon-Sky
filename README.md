@@ -36,13 +36,11 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 | [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 |
 | [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 |
 
-
+[赞助名单](./赞助名单.md)
 #### 开发不易
 
  * 点个Star就是对我最大的支持!
  * 一起玩耍：[392665563](https://jq.qq.com/?_wv=1027&k=VQAEpAlH)
  * 或者为我赞助提供动力[爱发电](https://afdian.net/a/Tloml-Starry)
 #### BUG反馈及优化
- * 向本项目发起lssues,有时间我会看
-
-//3620060826
+ * 请向本项目发起lssues
