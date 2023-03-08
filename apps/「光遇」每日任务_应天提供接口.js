@@ -11,7 +11,7 @@ export class wenan extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: `^#?(光遇今日任务|国服今日任务|今日任务)$`,
+          reg: `^#?(光遇今日任务|国服今日任务|今日任务|任务)$`,
           fnc: 'sky_JRRW'
         },
       ]
