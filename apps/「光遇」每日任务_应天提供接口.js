@@ -18,7 +18,7 @@ export class wenan extends plugin {
     })
   }
   async sky_JRRW (e) {
-    //cv了https://gitee.com/Nwflower/auto-plugin/blob/master/model/autoGroupName/MonthMassage.js的系统时间代码
+    //cv了https://gitee.com/Nwflower/auto-plugin/blob/master/model/autoGroupName/MonthMassage.js的月消息数代码
     let month = Number(moment().month()) + 1
     let monthKey = `Yz:count:sendMsg:month:`
     let messageCount = await redis.get(`${monthKey}${month}`) || 0
