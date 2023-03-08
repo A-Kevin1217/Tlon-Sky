@@ -1,6 +1,6 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import fetch from 'node-fetch'
+import plugin from '../../lib/plugins/plugin.js'
 import{ segment }from 'oicq'
+import moment from "moment";
 
 export class wenan extends plugin {
   constructor () {
@@ -11,16 +11,26 @@ export class wenan extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: `^#?(光遇)?(今日|每日)?任务$`,
+          reg: `^#?(光遇今日任务|国服今日任务|今日任务)$`,
           fnc: 'sky_JRRW'
         },
       ]
     })
   }
   async sky_JRRW (e) {
-    await e.reply('正在返回图片,可能较慢', true)
-    let url = `https://api.t1qq.com/api/sky/gy/sc/scsky.php`;
-    let res = await fetch(url).catch((err) => logger.error(err))
-    await this.reply(segment.image(url), true)
+    //cv了https://gitee.com/Nwflower/auto-plugin/blob/master/model/autoGroupName/MonthMassage.js的系统时间代码
+    let month = Number(moment().month()) + 1
+    let monthKey = `Yz:count:sendMsg:month:`
+    let messageCount = await redis.get(`${monthKey}${month}`) || 0
+    await e.reply('正在返回图片,可能较慢')
+    let url = `https://api.t1qq.com/api/sky/gy/sc/scjlwz`;
+    let url2 = `https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php`
+    let url3 = `https://api.t1qq.com/api/sky/gy/sc/scsky.php`
+    let msg = [
+      '今日任务',segment.image(url3),
+      '季蜡位置&大蜡烛位置',segment.image(url),segment.image(url2),
+      '本月已发送',`${messageCount}`,'条消息'
+    ]
+    await this.reply(msg, true)
     }  
 }
