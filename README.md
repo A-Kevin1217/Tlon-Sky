@@ -28,15 +28,9 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 | 暂无 | 暂无 |
  * 部分图源来自网络，如有侵权，联系删除
 
-#### 鸣谢名单
-| 鸣谢 | 内容 |
-| -------| ----- |
-| [应天](https://api.t1qq.com/) | 提供了各种接口 |
-| [光萌](https://gitee.com/Tloml-Starry/Tlon-Sky/blob/master/resource/%E5%85%89%E8%90%8C.png) | 提供查询蜡烛季蜡接口 |
-| [nonebot-plugin-sky](https://github.com/Kaguya233qwq/nonebot_plugin_sky) | 提供SKY服务器查询接口 |
-| [自闭歆](https://gitee.com/xin-closing-fuse) | 提供了今日任务插件 |
+☞[鸣谢名单](./鸣谢名单.md)
 
-[赞助名单](./赞助名单.md)
+☞[赞助名单](./赞助名单.md)
 #### 开发不易
 
  * 点个Star就是对我最大的支持!
