@@ -22,6 +22,10 @@ export class wenan extends plugin {
     let msg = e.msg;
     let place = msg.replace(/#|白蜡查询/g, "").trim();
     let url = `https://api.t1qq.com/api/sky/gy/sc/scbl?id=${place}&type=bl`;
-    await this.reply(segment.image(url), '如诺无数据,请发送‘上传角色+id’获取新id', false, { recallMsg: 0 }, true);
+    msg = [
+        segment.image(url),
+        `如诺无数据,请发送‘上传角色+id’获取新id`
+    ]
+    await this.reply(msg, false, { recallMsg: 0 }, true);
   }
 }
