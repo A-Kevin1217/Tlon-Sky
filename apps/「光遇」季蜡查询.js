@@ -23,7 +23,7 @@ export class wenan extends plugin {
     let place = msg.replace(/#|季蜡查询/g, "").trim();
     let url = `https://api.t1qq.com/api/sky/gy/sc/scjl?id=${place}&type=jl`;
     msg = [
-        segment.image(url)
+        segment.image(url),
         `如诺无数据,请发送‘上传角色+id’获取新id`
     ]
     await this.reply(msg, false, { recallMsg: 0 }, true);
