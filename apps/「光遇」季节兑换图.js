@@ -193,7 +193,7 @@ export class example extends plugin {
     ])
   }
   async sky_cxbz(e) {
-    const Textreply = '示例：蜡烛查询xxxxxxx';
+    const Textreply = '首先,你需要[上传角色+id]\n然后使用获取的id查询';
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/教程.png'
     await this.reply([
       segment.at(this.e.user_id),
