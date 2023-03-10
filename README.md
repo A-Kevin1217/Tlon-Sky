@@ -37,4 +37,4 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
  * 一起玩耍：[392665563](https://jq.qq.com/?_wv=1027&k=VQAEpAlH)
  * 或者为我赞助提供动力[爱发电](https://afdian.net/a/Tloml-Starry)
 #### BUG反馈及优化
- * 请向本项目发起lssues
+ * 请向本项目发起☞[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues)
