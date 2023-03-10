@@ -27,9 +27,10 @@ export class wenan extends plugin {
     let url = `https://api.t1qq.com/api/sky/gy/sc/scjlwz`;
     let url2 = `https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php`
     let url3 = `https://api.t1qq.com/api/sky/gy/sc/scsky.php`
+    let url4 = `https://api.t1qq.com/api/sky/gy/sc/mf/magic`
     let msg = [
       '季蜡位置',segment.image(url),
-      '今日任务&大蜡烛位置',segment.image(url3),segment.image(url2),
+      '今日任务&大蜡烛位置&今日魔法',segment.image(url3),segment.image(url2),segment.image(url4),
       '发送时间：',`${hour}`,':',`${minutes}`
     ]
     await this.reply(msg, true)
