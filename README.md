@@ -25,7 +25,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 #### 预告功能
 | 功能名称 | 说明 |
 | -------| ----- |
-| 暂无 | 暂无 |
+| 蜡烛排行榜 | 对已收录玩家id进行蜡烛数量排行 |
  * 部分图源来自网络，如有侵权，联系删除
 
 ☞[鸣谢名单](./鸣谢名单.md)
