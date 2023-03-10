@@ -26,7 +26,9 @@ export class wenan extends plugin {
     let url = `https://api.t1qq.com/api/sky/gy/sc/scjlwz`;
     let url2 = `https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php`
     let url3 = `https://api.t1qq.com/api/sky/gy/sc/scsky.php`
+    let url4 = `https://api.t1qq.com/api/sky/gy/sc/mf/magic`
     let msg = [
+      segment.image(url4),
       '今日任务',segment.image(url3),
       '季蜡位置&大蜡烛位置',segment.image(url),segment.image(url2),
       '本月已发送',`${messageCount}`,'条消息'
