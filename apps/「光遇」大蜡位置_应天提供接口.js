@@ -17,6 +17,7 @@ export class wenan extends plugin {
     })
   }
   async sky_DLWZ (e) {
+      //cv了https://gitee.com/Nwflower/auto-plugin/blob/master/model/autoGroupName/OldTime.js的长安十二时辰代码
     await e.reply('正在返回图片,可能较慢')
     let now = new Date()
     let BigHourName = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥','子']
