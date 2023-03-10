@@ -31,7 +31,7 @@ export class wenan extends plugin {
     let url4 = `https://api.t1qq.com/api/sky/gy/sc/mf/magic`
     let msg = [
       '大蜡烛位置',segment.image(url2),
-      '季蜡位置&今日任务&今日魔法',segment.image(url),segment.image(url3),segment.image(url4)
+      '季蜡位置&今日任务&今日魔法',segment.image(url),segment.image(url3),segment.image(url4),
       `现在是长安${BigHourName[Math.floor((hour + 1)/2)]}${BigHourType[hour % 2]}${BigMinName[Math.floor(minutes/15)]}刻`
     ]
     await this.reply(msg, true)
