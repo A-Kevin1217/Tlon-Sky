@@ -17,7 +17,7 @@ export class example extends plugin {
     })
 }
   async sky_cxsg(e) {
-    const Textreply = '身高查询软件[混沌]\nhttps://share.weiyun.com/JoHWpvfD';
+    const Textreply = 'Use is no longer supported.92';
     logger.info('[光遇]', e.msg)
     let msg = [
         Textreply ? Textreply : "",
