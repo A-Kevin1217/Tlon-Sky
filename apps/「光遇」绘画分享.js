@@ -2,7 +2,7 @@ import plugin from'../../../lib/plugins/plugin.js'
 import{segment}from'oicq'
 const path=process.cwd()
 let reply_img = 1.00
-let jpg_number = 81
+let jpg_number = 98
 export class chuo extends plugin{
     constructor() {
         super({
