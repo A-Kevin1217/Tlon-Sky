@@ -7,7 +7,7 @@
 为云崽提供光遇相关功能
 
 #### 安装
-使用Gitee安装
+使用Gitee安装，在Yunzai-Bot根目录执行
 ```
 git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 ```
