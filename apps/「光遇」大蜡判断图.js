@@ -10,7 +10,7 @@ export class wenan extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: `^#?(季蜡判断|任务)$`,
+          reg: `^#?(大蜡判断|任务)$`,
           fnc: 'sky_dlpdt'
         },
       ]
