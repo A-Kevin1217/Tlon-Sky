@@ -24,7 +24,7 @@ export class wenan extends plugin {
     let url4 = `https://api.t1qq.com/api/sky/gy/img/pdt/dl/mt.png`
     let url5 = `https://api.t1qq.com/api/sky/gy/img/pdt/dl/jg.png`
     let msg = [ 
-      '=====季蜡判断图======',segment.image(url),
+      '=====大蜡判断图======',segment.image(url),
       segment.image(url2), segment.image(url3),segment.image(url4), segment.image(url5)
     ]
     await this.reply(msg, true)
