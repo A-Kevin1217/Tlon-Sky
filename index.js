@@ -6,7 +6,7 @@ const files = fs.readdirSync('./plugins/Tlon-Sky/apps').filter(file => file.ends
 
 let ret = []
 
-logger.info(`\n\t${chalk.white(`┌───────────────────────────┐`)}\t\n\t${chalk.cyan(`「SKY光遇登录中···」${Ver.ver}`)}\n\t${chalk.blue(`「登录成功！」`)}\n\t${chalk.yellow(`「交流群号：392665563」`)}\n\t${chalk.white(`└───────────────────────────┘`)}\t`)
+logger.info(`${chalk.blue(`「Sky登录成功！」`)}`)
 files.forEach((file) => {
   ret.push(import(`./apps/${file}`))
 })
