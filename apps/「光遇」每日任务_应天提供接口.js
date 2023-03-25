@@ -22,7 +22,7 @@ export class wenan extends plugin {
     let month = Number(moment().month()) + 1
     let monthKey = `Yz:count:sendMsg:month:`
     let messageCount = await redis.get(`${monthKey}${month}`) || 0
-    await e.reply('正在返回图片,可能较慢')
+    await e.reply('稍等...', true)
     let url = `https://api.t1qq.com/api/sky/gy/sc/scjlwz`;
     let url2 = `https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php`
     let url3 = `https://api.t1qq.com/api/sky/gy/sc/scsky.php`
