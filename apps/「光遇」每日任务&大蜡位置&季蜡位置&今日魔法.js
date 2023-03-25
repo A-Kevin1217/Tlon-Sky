@@ -6,9 +6,11 @@ let JL = 'https://api.t1qq.com/api/sky/gy/sc/scjlwz'
 let DL = 'https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php'
 let MF = 'https://api.t1qq.com/api/sky/gy/sc/mf/magic'
 /*
+
 cv了https://gitee.com/Nwflower/auto-plugin/blob/master/model/autoGroupName/MonthMassage.js月消息数代码
 cv了https://gitee.com/Nwflower/auto-plugin/blob/master/model/autoGroupName/OldTime.js长安十二时辰代码
 cv了https://gitee.com/Nwflower/auto-plugin/blob/master/model/autoGroupName/SystemTime.js系统时间代码
+
 */
 export class wenan extends plugin {
   constructor () {
