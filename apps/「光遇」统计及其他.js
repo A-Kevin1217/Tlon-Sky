@@ -1,5 +1,4 @@
 import plugin from '../../../lib/plugins/plugin.js'
-import { segment } from "oicq";
 
 //      图源光媛攻略组，侵权联系删
 export class example extends plugin {

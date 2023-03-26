@@ -1,6 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import fetch from 'node-fetch'
-import{segment}from'oicq'
 
 
 export class example extends plugin {
