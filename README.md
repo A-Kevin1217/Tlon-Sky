@@ -17,7 +17,8 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 #### <div align="center">预告功能</div>
 | 功能名称 |      说明 | 状态 |
 | -------| ----- | ------- |
- 蜡烛排行榜 | 对已收录玩家id进行蜡烛数量排行 | 已完成 |
+| 蜡烛排行榜 | 对已收录玩家id进行蜡烛数量排行 | 已完成 |
+| 复刻查询 | 查询国服当前复刻,并给出兑换图 | 未完成 |
 <div align="center"> * 图源来自网络，如有侵权，联系删除</div>
 
 ☞[鸣谢名单](./鸣谢名单.md)
