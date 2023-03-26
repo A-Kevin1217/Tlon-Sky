@@ -1,7 +1,5 @@
 // 引入插件基础类
 import plugin from '../../../lib/plugins/plugin.js'
-// 引入 oicq 模块中的segment
-import { segment } from "oicq";
 // 引入 puppeteer 模块
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 // 定义 example 类，继承自 plugin 类
