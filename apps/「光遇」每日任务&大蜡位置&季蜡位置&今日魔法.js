@@ -1,6 +1,6 @@
 import { segment } from 'oicq';
 import moment from 'moment';
-import plugin from '../../lib/plugins/plugin.js';
+import plugin from '../../../lib/plugins/plugin.js';
 const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/scsky.php';
 const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/scjlwz';
 const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php';
