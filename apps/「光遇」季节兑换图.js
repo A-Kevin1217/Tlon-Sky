@@ -73,6 +73,10 @@ export class example extends plugin {
           fnc: 'sky_ZYJ'
         },
         {
+            reg: '^#?航行季兑换图',
+            fnc: 'sky_HXJ'
+        },
+        {
           reg: '^#?查询(帮助|教程)$',
           fnc: 'sky_cxbz'
         }
@@ -187,6 +191,13 @@ export class example extends plugin {
   async sky_ZYJ(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/追忆季.png'
     await this.reply([
+      segment.at(this.e.user_id),
+      imgreply ? segment.image(imgreply) : "",
+    ])
+  }
+  async sky_HXJ(e) {
+      const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/航行季.png'
+      await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
     ])
