@@ -76,7 +76,6 @@ try {
   }
 } catch (e) {
 	logger.error(e);
-  // do nth
 }
 
 try{
