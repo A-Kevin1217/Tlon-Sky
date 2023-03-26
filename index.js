@@ -10,7 +10,11 @@ const files = fs.readdirSync('./plugins/Tlon-Sky/apps').filter(file => file.ends
 
 let ret = []
 
+logger.info(` `)
+logger.info(` `)
 logger.info(`「Sky登录成功！」当前版本：${Ver.ver}`)
+logger.info(` `)
+logger.info(` `)
 files.forEach((file) => {
   ret.push(import(`./apps/${file}`))
 })
