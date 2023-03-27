@@ -11,7 +11,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 #### <div align="center">更新</div>
 在云崽根目录依次执行两行代码
 ```
-cd plugins/Tlon_Sky
+cd plugins/Tlon-Sky
 git pull
 ```
 或者使用```sky更新```
