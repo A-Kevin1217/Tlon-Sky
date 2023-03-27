@@ -1,6 +1,6 @@
 # ﻿<div align="center"><h1 align="center">Sky光遇插件<a href='https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/stargazers'><img src='https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/badge/star.svg?theme=dark' alt='star'></img></a></h1></div>
 
-#### 介绍</div>
+#### <div align="center">介绍</div>
 <div align="center">为云崽提供光遇相关功能</div>
 
 #### <div align="center">安装</div>
@@ -8,6 +8,13 @@
 ```
 git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 ```
+#### <div align="center">更新</div>
+在云崽根目录依次执行两行代码
+```
+cd plugins/Tlon_Sky
+git pull
+```
+或者使用```sky更新```
 
 #### <div align="center">功能</div>
 <p align="center">
