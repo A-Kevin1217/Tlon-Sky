@@ -23,7 +23,7 @@ export class wenan extends plugin {
       let url = `https://ma75.update.netease.com/game_notice/announcement_live.json`;
       let res = await fetch(url).catch((err) => logger.error(err))
       res = await res.json()
-      await this.reply(`${res.Title}\n${res.OtherChannelMessage}`)
+      await this.reply(`${res.Title}\n${res.OtherChannelMessage}`, false, { recallMsg: 20 })
     }
     async accept() {
       let old_reply = this.e.reply;
