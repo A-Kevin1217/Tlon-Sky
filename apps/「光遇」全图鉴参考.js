@@ -16,6 +16,7 @@ export class example extends plugin {
       })
     }
     async sky_qtjck (e) {
+        e.reply(`稍等,图片较大\n需要一定时间`, true, { recallMsg: 10 })
         const imgreply = 'https://gchat.qpic.cn/gchatpic_new/1947425850/3882665563-2449909976-AAC4FDBB5C48636E45CAA739EC907081/0?term=3&is_origin=1'
         logger.info('[SKY]', e.msg)
         let msg = [
