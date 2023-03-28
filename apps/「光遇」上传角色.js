@@ -31,6 +31,6 @@ export class wenan extends plugin {
     } else if(res.code === 200) {
         num = `上传成功~\n您的玩家uid是：${res.uid}\nps:首次上传才能进行反查uid哦！`
     }
-    await this.reply(`${num}`, false, { recallMsg: 0 }, true)
+    await this.reply(`${num}`, false, { recallMsg: 0 }, { at: true})
   }
 }
