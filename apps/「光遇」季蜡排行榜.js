@@ -21,7 +21,7 @@ export class wenan extends plugin {
     let url = `https://api.t1qq.com/api/sky/gy/sc/id/phb/jlphb.php`;
     let res = await fetch(url).catch((err) => logger.error(err))
     res = await res.json()
-    await this.e.reply('!!!不是全服季蜡排行!!!\n排行榜只显示20位\n诺蜡烛能上榜,却没在榜上看见\n请查询一次季蜡', true)
+    await this.e.reply('!!!不是全服季蜡排行!!!\n排行榜只显示20位\n诺蜡烛能上榜,却没在榜上看见\n请查询一次季蜡', true, { recallMsg: 20 })
     let msgList = []
   
     // Add a loop to display the top 20 data
