@@ -42,7 +42,6 @@ try {
         } else {
           changelogs.push(temp)
           if (/0\s*$/.test(v) && versionCount > 0) {
-            //versionCount = 0
 			versionCount--
           } else {
             versionCount--
