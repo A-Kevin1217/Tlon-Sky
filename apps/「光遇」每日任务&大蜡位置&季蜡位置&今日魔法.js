@@ -56,7 +56,6 @@ export class wenan extends plugin {
     const hourType = BigHourType[now.getHours() % 2];
     const minName = BigMinName[Math.floor(now.getMinutes() / 15)];
     const msg = [
-      '大蜡烛位置',
       segment.image(DL_URL),
       `现在是长安${hourName}${hourType}${minName}刻`,
     ];
@@ -68,7 +67,6 @@ export class wenan extends plugin {
     const hour = `0${now.getHours()}`.slice(-2);
     const minutes = `0${now.getMinutes()}`.slice(-2);
     const msg = [
-      '季蜡位置',
       segment.image(JL_URL),
       '发送时间：',
       hour,
