@@ -16,13 +16,18 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 git clone https://gitee.com/Tloml-Starry/Tlon-Sky-gallery.git ./resource/光遇绘画分享/
 ```
 #### <div align="center">更新</div>
-<div align="center">在云崽根目录依次执行两行代码</div>
+<div align="center">在云崽根目录执行</div>
 
 ```
-cd plugins/Tlon-Sky
-git pull
+cd plugins/Tlon-Sky && git pull
 ```
 或者使用```sky更新```
+
+<div align="center">图库更新 在云崽根目录执行</div>
+
+```
+cd plugins/Tlon-Sky/resource/光遇绘画分享 && git pull
+```
 
 #### <div align="center">功能</div>
 <p align="center">
