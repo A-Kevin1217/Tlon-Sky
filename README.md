@@ -4,12 +4,20 @@
 <div align="center">为云崽提供光遇相关功能</div>
 
 #### <div align="center">安装</div>
-使用Gitee安装，在Yunzai-Bot根目录执行
+<div align="center">使用Gitee安装，在Yunzai-Bot根目录执行</div>
+
 ```
 git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 ```
+
+<div align="center">绘画分享图库安装 注：在Tlon-Sky目录执行</div>
+
+```
+git clone https://gitee.com/Tloml-Starry/Tlon-Sky-gallery.git ./resource/光遇绘画分享/
+```
 #### <div align="center">更新</div>
-在云崽根目录依次执行两行代码
+<div align="center">在云崽根目录依次执行两行代码</div>
+
 ```
 cd plugins/Tlon-Sky
 git pull
