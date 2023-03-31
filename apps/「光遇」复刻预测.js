@@ -42,7 +42,7 @@ export class Weekboss extends plugin {
         let boss2 = bossName[randomNumber]
         bossName.splice(randomNumber, 1)
         randomNumber = Math.ceil(Math.random() * bossName.length - 1)
-        await this.reply(`\n我猜下次有可能复刻\n[${boss1}]&[${boss2}]\n其中一个!`, true, { at: true })
+        await this.reply(`\n我猜下次有可能复刻\n【${boss1}】&【${boss2}】\n其中一个!`, true, { at: true })
         return true
     }
 }
