@@ -1,6 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 
-export class Weekboss extends plugin {
+export class 光遇_复刻预测 extends plugin {
     constructor() {
         super({
             name: '光遇_复刻预测',
