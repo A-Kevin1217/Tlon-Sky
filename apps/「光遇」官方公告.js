@@ -3,7 +3,7 @@ import plugin from '../../../lib/plugins/plugin.js';
 //消息风控处理来源小飞插件，未获得原作者许可 (别骂我
 //侵权删除
 
-export class wenan extends plugin {
+export class 光遇_公告 extends plugin {
     constructor () {
       super({
         name: '光遇_公告',
