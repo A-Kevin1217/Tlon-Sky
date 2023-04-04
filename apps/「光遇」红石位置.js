@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import fetch from 'node-fetch'
 
 
-export class example extends plugin {
+export class 光遇_红石位置 extends plugin {
   constructor () {
     super({
       name: '光遇_红石位置',
