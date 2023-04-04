@@ -1,4 +1,3 @@
-//抄的小叶的，发现了不要骂我呜呜呜
 import plugin from '../../../lib/plugins/plugin.js'
 import lodash from 'lodash'
 import { createRequire } from 'module'
@@ -6,7 +5,8 @@ import { Restart } from '../../other/restart.js'
 const require = createRequire(import.meta.url)
 const { exec, execSync } = require('child_process')
 let uping = false
-export class update extends plugin {
+
+export class 光遇_更新 extends plugin {
     constructor() {
         super({
             name: '光遇_更新',
