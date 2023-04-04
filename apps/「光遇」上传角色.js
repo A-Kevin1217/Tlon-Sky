@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import fetch from 'node-fetch'
 
-export class wenan extends plugin {
+export class 光遇_上传id extends plugin {
   constructor() {
     super({
       name: '光遇_上传id',
