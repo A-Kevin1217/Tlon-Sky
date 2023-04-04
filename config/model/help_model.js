@@ -47,19 +47,11 @@ export const helpList = [{
     icon: 4,
     title: '今日任务',
     desc: '获取今日光遇任务'
-  },/*{
-    icon: 14,
-    title: '#开启/关闭体力大图',
-    desc: '体力形式：默认/卡片'
-  },{
-    icon: 48,
-    title: '#开启/关闭转大图',
-    desc: '配置是否开启转大图'
-  }, */{
+  }, {
     icon: 1,
     title: 'Sky状态',
     desc: '获取当前服务器状态'
-  },{
+  }, {
     icon: 18,
     title: '查询教程',
     desc: '获取白蜡&季蜡查询教程'
