@@ -1,5 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js';
-export class example extends plugin {
+
+export class 光遇_身高图 extends plugin {
     constructor () {
       super({
         name: '光遇_身高图',
