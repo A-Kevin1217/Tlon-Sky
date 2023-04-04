@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import fetch from 'node-fetch'
 
 
-export class example extends plugin {
+export class 光遇_天气预报 extends plugin {
   constructor () {
     super({
       name: '光遇_天气预报',
