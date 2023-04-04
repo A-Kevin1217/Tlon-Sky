@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import moment from "moment";
 
-export class wenan extends plugin {
+export class 光遇_判断图 extends plugin {
   constructor () {
     super({
       name: '光遇_判断图',
