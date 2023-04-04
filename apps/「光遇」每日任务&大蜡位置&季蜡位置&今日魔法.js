@@ -7,7 +7,7 @@ const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/mf/magic';
 const BigHourName = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子'];
 const BigHourType = ['正', '初'];
 const BigMinName = ['零', '一', '二', '三', '四'];
-export class wenan extends plugin {
+export class 光遇_每日任务_大蜡位置_季蜡位置_今日魔法 extends plugin {
   constructor() {
     super({
       name: '光遇_每日任务&大蜡位置&季蜡位置&今日魔法',
