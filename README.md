@@ -30,9 +30,7 @@ cd plugins/Tlon-Sky/resource/光遇绘画分享 && git pull
 ```
 
 #### <div align="center">功能</div>
-<p align="center">
-<img width = "600" src="resource/help/help.png">
-</p>
+<div align="center">```使用Sky菜单查看```</div>
 
 #### <div align="center">预告功能</div>
 | 功能名称 |      说明 | 状态 |
