@@ -73,8 +73,8 @@ export class 光遇_季节兑换图 extends plugin {
           fnc: 'sky_ZYJ'
         },
         {
-            reg: '^#?航行季兑换图',
-            fnc: 'sky_HXJ'
+            reg: '^#?夜行季兑换图',
+            fnc: 'sky_YXJ'
         },
         {
           reg: '^#?查询(帮助|教程)$',
@@ -195,7 +195,7 @@ export class 光遇_季节兑换图 extends plugin {
       imgreply ? segment.image(imgreply) : "",
     ])
   }
-  async sky_HXJ(e) {
+  async sky_YXJ(e) {
       const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/航行季.png'
       await this.reply([
       segment.at(this.e.user_id),
