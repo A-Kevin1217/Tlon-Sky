@@ -4,4 +4,6 @@ const Plugin_Path = `${Path}/plugins/${Plugin_Name}`;
 import Version from './Version.js'
 import Data from './Data.js'
 import render from './renderer.js';
-export { render, Data, Version, Path, Plugin_Name, Plugin_Path }
+import Cfg from './Cfg.js'
+import Common from './Common.js'
+export { render, Cfg, Common, Data, Version, Path, Plugin_Name, Plugin_Path }
