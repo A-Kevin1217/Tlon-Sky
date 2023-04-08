@@ -1,7 +1,7 @@
 body {
   transform: scale(1);
   width: 830px;
-  background: url("../help/theme/1.jpg");
+  background: url(../help/theme/1.jpg);
 }
 .container {
   background: url(../help/theme/1.jpg) top left no-repeat;
@@ -20,19 +20,12 @@ body {
   margin-top: 20px;
   margin-bottom: 20px;
   overflow: hidden;
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);/* 阴影 */
   position: relative;
-  font-size: 20px;
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(114, 126, 253, 0.37);
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(30px);
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #209cf5;
+  color: #a8a7a7;/* 功能分区 */
 }
 .help-group {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   padding: 15px 15px 10px 20px;
 }
@@ -44,7 +37,7 @@ body {
   display: table;
   overflow: hidden;
   width: 100%;
-  color: rgb(0, 0, 0);
+  color: #56d9d2;/* 功能描述 */
 }
 .help-table .tr {
   display: table-row;
@@ -53,12 +46,11 @@ body {
 .help-table .th {
   font-size: 14px;
   display: table-cell;
-  box-shadow: 0 0 1px 0 #888 inset;
+  box-shadow: 0 0 1px 0 #888 inset;/* 框线 */
   padding: 12px 0 12px 50px;
   line-height: 24px;
   position: relative;
   text-align: left;
-  width: 20%;
 }
 .help-table .tr:last-child .td {
   padding-bottom: 12px;
@@ -80,7 +72,7 @@ body {
 }
 .help-title {
   display: block;
-  color: #3a79ef;
+  color: #67d491;/* 功能名称 */
   font-size: 16px;
   line-height: 24px;
 }
