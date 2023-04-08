@@ -1,18 +1,15 @@
 import fs from 'fs'
 import lodash from 'lodash'
-const Plugin_Path = `${process.cwd()}/plugins/Tlon-Sky`;
-const README_path = `${Plugin_Path}/README.md`
-const CHANGELOG_path = `${Plugin_Path}/CHANGELOG.md`
-let yunzai_ver = '';
-try{
-  let packageJson = JSON.parse(fs.readFileSync(`${process.cwd()}/package.json`, 'utf8'));
-  yunzai_ver = packageJson.version;
-}catch(err){}
+
+const _path = process.cwd()
+const _logPath = `${_path}/plugins/Tlon-Sky/CHANGELOG.md`
 
 let logs = {}
 let changelogs = []
 let currentVersion
-let versionCount = 10
+let versionCount = 4
+
+let packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'))
 
 const getLine = function (line) {
   line = line.replace(/(^\s*\*|\r)/g, '')
@@ -25,16 +22,17 @@ const getLine = function (line) {
 }
 
 try {
-  if (fs.existsSync(CHANGELOG_path)) {
-    logs = fs.readFileSync(CHANGELOG_path, 'utf8') || ''
-	logs = logs.replace(/\t/g,'   ').split('\n')
+  if (fs.existsSync(_logPath)) {
+    logs = fs.readFileSync(_logPath, 'utf8') || ''
+    logs = logs.split('\n')
+
     let temp = {};
     let lastLine = {}
     lodash.forEach(logs, (line) => {
-      if (versionCount < 1) {
+      if (versionCount <= -1) {
         return false
       }
-      let versionRet = /^#\s*([0-9a-zA-Z\\.~\s]+?)\s*$/.exec(line.trim())
+      let versionRet = /^#\s*([0-9a-zA-Z\\.~\s]+?)\s*$/.exec(line)
       if (versionRet && versionRet[1]) {
         let v = versionRet[1].trim()
         if (!currentVersion) {
@@ -42,11 +40,12 @@ try {
         } else {
           changelogs.push(temp)
           if (/0\s*$/.test(v) && versionCount > 0) {
-			versionCount--
+            versionCount = 0
           } else {
             versionCount--
           }
         }
+
         temp = {
           version: v,
           logs: []
@@ -55,18 +54,12 @@ try {
         if (!line.trim()) {
           return
         }
-		if (/^\*/.test(line)) {
-			lastLine = {
-				title: getLine(line),
-				logs: []
-		}
-		if(!temp.logs){
-			temp = {
-				version: line,
-				logs: []
-			}
-		}
-		temp.logs.push(lastLine)
+        if (/^\*/.test(line)) {
+          lastLine = {
+            title: getLine(line),
+            logs: []
+          }
+          temp.logs.push(lastLine)
         } else if (/^\s{2,}\*/.test(line)) {
           lastLine.logs.push(getLine(line))
         }
@@ -74,28 +67,23 @@ try {
     })
   }
 } catch (e) {
-	logger.error(e);
+  // do nth
 }
 
-try{
-	if(fs.existsSync(README_path)){
-		let README = fs.readFileSync(README_path, 'utf8') || ''
-		let reg = /版本：(.*)/.exec(README)
-		if(reg){
-			currentVersion = reg[1]
-		}
-	}
-}catch(err){}
+const yunzaiVersion = packageJson.version
+const isV3 = yunzaiVersion[0] === '3'
 
 let Version = {
-  get ver () {
-    return currentVersion;
+  isV3,
+  get version () {
+    return currentVersion
   },
-  get yunzai(){
-	  return yunzai_ver;
+  get yunzai () {
+    return yunzaiVersion
   },
-  get logs(){
-	  return changelogs;
+  get changelogs () {
+    return changelogs
   }
 }
+
 export default Version
