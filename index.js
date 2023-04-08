@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import Ver from './components/Version.js'
+import Version from './components/Version.js'
 import chalk from 'chalk'
 
 if (!global.segment) {
@@ -12,7 +12,7 @@ let ret = []
 
 logger.info(` `)
 logger.info(` `)
-logger.info(`「Sky登录成功！」当前版本：${Ver.ver}`)
+logger.info(`「Sky登录成功！」当前版本：${Version.version}`)
 logger.info(` `)
 logger.info(` `)
 files.forEach((file) => {
