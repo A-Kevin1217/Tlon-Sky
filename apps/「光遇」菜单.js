@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import fs from 'fs'
 import lodash from 'lodash'
-import { render, Data } from '../components/index.js'
+import { Version, Common, Data } from '../components/index.js'
 
 export class 光遇_菜单 extends plugin {
     constructor() {
@@ -13,11 +13,22 @@ export class 光遇_菜单 extends plugin {
                 {
                     reg: /^#?(SKY|Sky|sky|光遇)(帮助|菜单|使用说明)$/,
                     fnc: 'Sky_help'
+                },
+                {
+                    reg: /^Sky版本$/,
+                    fnc: 'Sky_version'
                 }
             ]
         });
     }
     async Sky_help() {return await help(this.e);}
+    async Sky_version(e) {
+        return await Common.render('help/version-info', {
+          currentVersion: Version.version,
+          changelogs: Version.changelogs,
+          elem: 'dendro'
+        }, { e, scale: 1.2 })
+      }
 }
 async function help(e) {
     let custom = {}
