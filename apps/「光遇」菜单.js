@@ -6,7 +6,7 @@ import { Version, Common, Data } from '../components/index.js'
 export class 光遇_菜单 extends plugin {
     constructor() {
         super({
-            name: '帮助测试',
+            name: '光遇_菜单',
             event: 'message',
             priority: 1145,
             rule: [
@@ -15,7 +15,7 @@ export class 光遇_菜单 extends plugin {
                     fnc: 'Sky_help'
                 },
                 {
-                    reg: /^Sky版本$/,
+                    reg: /^(Sky|sky|光遇)版本$/,
                     fnc: 'Sky_version'
                 }
             ]
