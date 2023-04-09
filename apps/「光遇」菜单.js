@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import fs from 'fs'
 import lodash from 'lodash'
-import { Version, Common, Data } from '../components/index.js'
+import { render, Version, Common, Data } from '../components/index.js'
 
 export class 光遇_菜单 extends plugin {
     constructor() {
