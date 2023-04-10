@@ -13,14 +13,14 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 #### <div align="center">更新</div>
 
 ```
-# Sky更新
+# 使用指令：Sky更新
 # 或者在云崽根目录执行
 cd plugins/Tlon-Sky && git pull
 ```
 <div align="center">绘画分享图库安装</div>
 
 ```
-# Sky更新图库
+# 使用指令：Sky更新图库
 # 更新也是这个指令
 ```
 
