@@ -24,7 +24,7 @@ export default async function (path, params, cfg) {
     },
     sys: {
       scale: `style=transform:scale(${cfg.scale || 1})`,
-	    copyright: `Yunzai-Bot<span class="version">${Version.yunzai}</span> & Tlon-Sky<span class="version">${Version.ver}</span>`
+	    copyright: `Yunzai-Bot<span class="version">${Version.yunzai}</span> & Tlon-Sky<span class="version">${Version.version}</span>`
     },
     quality: 100
   }
