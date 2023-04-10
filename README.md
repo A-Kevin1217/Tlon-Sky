@@ -10,23 +10,18 @@
 git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 ```
 
-<div align="center">绘画分享图库安装 注：在Tlon-Sky目录执行</div>
-
-```
-git clone https://gitee.com/Tloml-Starry/Tlon-Sky-gallery.git ./resource/光遇绘画分享/
-```
 #### <div align="center">更新</div>
-<div align="center">在云崽根目录执行</div>
 
 ```
+# Sky更新
+# 或者在云崽根目录执行
 cd plugins/Tlon-Sky && git pull
 ```
-或者使用```sky更新```
-
-<div align="center">图库更新 在云崽根目录执行</div>
+<div align="center">绘画分享图库安装</div>
 
 ```
-cd plugins/Tlon-Sky/resource/光遇绘画分享 && git pull
+# Sky更新图库
+# 更新也是这个指令
 ```
 
 #### <div align="center">功能</div>
