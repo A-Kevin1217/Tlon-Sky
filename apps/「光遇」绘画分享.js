@@ -10,7 +10,7 @@ export class sky_hhfx extends plugin {
             priority:3000,
             rule: [
                 {
-                    reg: /^#?(绘画分享|绘画)$/,
+                    reg: /^#?(绘画|绘画分享|绘图分享)$/,
                     fnc:'Sky_hhfx'
                 },
             ]
