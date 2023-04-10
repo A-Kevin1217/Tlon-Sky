@@ -21,7 +21,7 @@ cd plugins/Tlon-Sky && git pull
 
 ```
 # 使用指令：Sky更新图库
-# 更新也是这个指令
+# 后续更新也是这个指令
 ```
 
 #### <div align="center">功能</div>
