@@ -34,9 +34,9 @@ cd plugins/Tlon-Sky && git pull
 | 复刻查询 | 查询国服当前复刻,并给出兑换图 | 未完成 |
 <div align="center"> * 图源来自网络，如有侵权，联系删除</div>
 
-☞[鸣谢名单](./鸣谢名单.md)
+☞[鸣谢名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E9%B8%A3%E8%B0%A2%E5%90%8D%E5%8D%95)
 
-☞[赞助名单](./赞助名单.md)
+☞[赞助名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E8%B5%9E%E5%8A%A9%E5%90%8D%E5%8D%95)
 #### 开发不易
 
  * 点个Star就是对我最大的支持!
