@@ -96,7 +96,7 @@ export const helpList = [{
     desc: '更新本插件'
   },{
     icon: 100,
-    title: 'Sky图库更新',
+    title: 'Sky更新图库',
     desc: '更新绘画分享图库'
   }]
 }]
