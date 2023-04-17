@@ -9,13 +9,16 @@ export class 光遇_活动兑换图 extends plugin {
         priority: 5000,
         rule: [
             {
-              reg: /^#?(同心|情人)节兑换图$/,
-              fnc: 'sky_txj'
-            },
-            {
-              reg: /^#?花憩节兑换图$/,
-              fnc: 'sky_hqj'
+                reg: /^#?(同心|情人)节兑换图$/,
+                fnc: 'sky_txj'
+            },{
+                reg: /^#?花憩节兑换图$/,
+                fnc: 'sky_hqj'
+            },{
+                reg: /^#?集体复刻兑换图$/,
+                fnc: 'sky_jtfk'
             }
+
         ]
     })
 }
@@ -40,5 +43,14 @@ export class 光遇_活动兑换图 extends plugin {
     ]
     e.reply(msg, true)
     return true;
+  }
+  async sky_jtfk(e){
+      const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/集体复刻兑换图.png';
+      logger.info('[SKY]', e.msg)
+      let msg = [
+          imgreply ? segment.image(imgreply) : "",
+      ]
+      e.reply(msg, true)
+      return true;
   }
 }
