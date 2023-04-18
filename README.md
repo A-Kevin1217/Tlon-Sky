@@ -24,6 +24,7 @@ cd plugins/Tlon-Sky && git pull
 # 后续更新也是这个指令
 ```
 <div align="center">复刻图安装</div>
+
 ```
 # 使用指令：#刷新复刻或#更新复刻
 # 后续更新也是这个指令
