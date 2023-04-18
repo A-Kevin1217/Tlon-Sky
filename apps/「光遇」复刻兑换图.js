@@ -16,6 +16,10 @@ export class 光遇_复刻兑换图 extends plugin {
 }
 async sky_Fk(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/复刻图/image/Reprint.png';
+    if (!fs.existsSync(imgreply)) {
+          await e.reply("抱歉未找到复刻图文件夹！\n请使用指令 [#更新复刻] 安装");
+          return false;
+        }
       logger.info('[SKY]', e.msg)
       let msg = [
         imgreply ? segment.image(imgreply) : "",
