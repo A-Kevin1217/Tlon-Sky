@@ -34,6 +34,7 @@ cd plugins/Tlon-Sky && git pull
 <div align="center">```使用Sky菜单查看```</div>
 
 <div align="center"> * 图源来自网络，如有侵权，联系删除</div>
+
 ☞[预告功能](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E9%A2%84%E5%91%8A%E5%8A%9F%E8%83%BD)
 
 ☞[鸣谢名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E9%B8%A3%E8%B0%A2%E5%90%8D%E5%8D%95)
