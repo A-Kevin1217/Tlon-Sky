@@ -30,8 +30,9 @@ cd plugins/Tlon-Sky && git pull
 #### <div align="center">预告功能</div>
 | 功能名称 |      说明 | 状态 |
 | -------| ----- | ------- |
+| 复刻时间查询 | 复刻先祖多久未复刻查询 | 未完成
 | 蜡烛排行榜 | 对已收录玩家id进行蜡烛数量排行 | 已完成 |
-| 复刻查询 | 查询国服当前复刻,并给出兑换图 | 未完成 |
+| 复刻查询 | 查询国服当前复刻,并给出兑换图 | 已完成 |
 <div align="center"> * 图源来自网络，如有侵权，联系删除</div>
 
 ☞[鸣谢名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E9%B8%A3%E8%B0%A2%E5%90%8D%E5%8D%95)
