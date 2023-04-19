@@ -98,5 +98,9 @@ export const helpList = [{
     icon: 100,
     title: 'Sky更新图库',
     desc: '更新绘画分享图库'
+  },{
+    icon: 100,
+    title: '#更新复刻',
+    desc: '更新复刻兑换图'
   }]
 }]
