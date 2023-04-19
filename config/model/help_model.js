@@ -61,6 +61,10 @@ export const helpList = [{
     icon: 24,
     title: '季节剩余&活动剩余',
     desc: '查询季节&活动剩余'
+  },{
+      icon: 100,
+      title: 'xx季多久未复刻',
+      desc: '查询该季节的先祖多久未复刻'
   }]
 },
 {
