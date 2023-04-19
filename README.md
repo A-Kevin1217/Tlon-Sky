@@ -50,12 +50,40 @@ cd plugins/Tlon-Sky && git pull
 ☛[赞助名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E8%B5%9E%E5%8A%A9%E5%90%8D%E5%8D%95)☚
 
 </div>
+
+<div align="center">
+
 #### 开发不易
 
- * 点个Star就是对我最大的支持!
+</div>
+
+<div align="center"> * 点个Star就是对我最大的支持!</div>
+<div align="center">
+
  * 一起玩耍加群~[392665563](https://jq.qq.com/?_wv=1027&k=VQAEpAlH)
 
+</div>
+
+<div align="center">
+
 #### 请我喝瓶阿萨姆~
- * 请我喝一瓶阿萨姆提供动力~☞[爱发电](https://afdian.net/a/Tloml-Starry)
+
+</div>
+
+<div align="center">
+
+ * 请我喝一瓶阿萨姆提供动力~☛[爱发电](https://afdian.net/a/Tloml-Starry)
+
+</div>
+
+<div align="center">
+
 #### BUG反馈及优化
- * 请向本项目发起☞[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues/I6LRZ9)
+
+</div>
+
+<div align="center">
+
+ * 请向本项目发起☛[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues/I6LRZ9)☚
+
+</div>
