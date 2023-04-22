@@ -96,6 +96,12 @@ export class 光遇_先祖多久未复刻查询 extends plugin {
               reg: /^#?(音韵|凌冬)季多久未复刻$/,
               fnc: 'sky_音韵'
             },{
+              reg: /^#?魔法季多久未复刻$/,
+              fnc: 'sky_魔法'
+            },{
+              reg: /^#?圣岛季多久未复刻/,
+              fnc: 'sky_圣岛'
+            },{
               reg: /^#?预言季多久未复刻$/,
               fnc: 'sky_预言'
             },{
