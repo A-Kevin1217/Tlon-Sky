@@ -196,7 +196,7 @@ export class 光遇_季节兑换图 extends plugin {
     ])
   }
   async sky_YXJ(e) {
-      const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/航行季.png'
+      const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/夜行季.png'
       await this.reply([
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
