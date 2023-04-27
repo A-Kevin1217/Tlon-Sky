@@ -65,7 +65,7 @@ const 集结 = [
   //{ name: '茫然植物学生', date: new Date('')},
   { name: '正步冒险家', date: new Date('2022-07-19')},
   //{ name: '傻笑童子军', date: new Date('')},
-  //{ name: '管事小队长', date: new Date('')},
+  { name: '管事小队长', date: new Date('2023-05-03')},
   { name: '胆小鬼学员', date: new Date('2022-12-05')}
 ];
 const 小王子 = [
