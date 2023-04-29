@@ -46,7 +46,7 @@ export class 光遇_每日任务_大蜡位置_季蜡位置_今日魔法 extends 
       '条消息',
     ];
     await e.reply('稍等...', true);
-    await this.reply(msg, true);
+    await this.reply(msg);
   }
   async sky_DLWZ(e) {
     const now = new Date();
@@ -60,7 +60,7 @@ export class 光遇_每日任务_大蜡位置_季蜡位置_今日魔法 extends 
       `现在是长安${hourName}${hourType}${minName}刻`,
     ];
     await e.reply('稍等...', true);
-    await this.reply(msg, true);
+    await this.reply(msg);
   }
   async sky_JLWZ(e) {
     const now = new Date();
@@ -74,6 +74,6 @@ export class 光遇_每日任务_大蜡位置_季蜡位置_今日魔法 extends 
       minutes,
     ];
     await e.reply('稍等...', true);
-    await this.reply(msg, true);
+    await this.reply(msg);
   }
 }
