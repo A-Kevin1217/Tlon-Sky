@@ -25,7 +25,7 @@ export class sky_hhfx extends plugin {
         let img =
           Sky_image +
           fs.readdirSync(Sky_image)[Math.floor(Math.random() * fs.readdirSync(Sky_image).length)];
-        await e.reply(segment.image(`file:///${img}`), true);
+        await e.reply(segment.image(`file:///${img}`));
         return true;
       }
 }
