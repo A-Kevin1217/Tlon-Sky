@@ -9,7 +9,7 @@ const 感恩 = [
   { name: '拳礼武僧', date: new Date('2023-02-13') }
 ];
 const 追光 = [
-  { name: '随性拓荒者', date: new Date('2021-02-01')},
+  { name: '随性拓荒者', date: new Date('2023-05-08')},
   { name: '击掌光农', date: new Date('2023-03-13')},
   { name: '肩背追光', date: new Date('2023-02-27')},
   { name: '静光学者', date: new Date('2022-04-11')},
