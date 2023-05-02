@@ -22,10 +22,10 @@ export class 光遇_复刻兑换图 extends plugin {
       await e.reply("抱歉未找到复刻图文件夹！\n请使用指令 [#更新复刻] 安装");
       return false;
     }
-    e.reply(
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : ""
-      )
+    let msg = [
+        imgreply ? segment.image(imgreply) : ""
+    ]
+    e.reply(msg)
     return true;
   }
 }
