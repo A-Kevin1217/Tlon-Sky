@@ -129,7 +129,7 @@ async sky_感恩 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_追光 ( e ) {
-  let msg = '追光季数据更新时间:2023-04-18\n';
+  let msg = '追光季数据更新时间:2023-05-02\n';
   const today = new Date();
 
   for (const role of 追光) {
