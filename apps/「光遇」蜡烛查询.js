@@ -26,8 +26,7 @@ export class 光遇_蜡烛查询 extends plugin {
     let place = msg.replace(/#|季蜡查询/g, "").trim();
     let url = `https://api.t1qq.com/api/sky/gy/sc/scjl?id=${place}&type=jl`;
     msg = [
-        segment.image(url),
-        `查询格式：指令+上传角色所给的id`
+        segment.image(url)
     ]
     await this.reply(msg, false, { recallMsg: 0 }, true);
   }
@@ -37,8 +36,7 @@ export class 光遇_蜡烛查询 extends plugin {
     let place = msg.replace(/#|白蜡查询/g, "").trim();
     let url = `https://api.t1qq.com/api/sky/gy/sc/scbl?id=${place}&type=bl`;
     msg = [
-        segment.image(url),
-        `查询格式：指令+上传角色所给的id`
+        segment.image(url)
     ]
     await this.reply(msg, false, { recallMsg: 0 }, true);
   }
