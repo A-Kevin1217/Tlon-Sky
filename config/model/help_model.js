@@ -46,10 +46,6 @@ export const helpList = [{
     title: 'Sky状态',
     desc: '获取当前服务器状态'
   },{
-    icon: 18,
-    title: '查询教程',
-    desc: '获取白蜡&季蜡查询教程'
-  },{
     icon: 25,
     title: '白蜡&季蜡查询+[id]',
     desc: '查询蜡烛数量及最近变化时间'
@@ -62,7 +58,7 @@ export const helpList = [{
     title: '季节剩余&活动剩余',
     desc: '查询季节&活动剩余'
   },{
-      icon: 100,
+      icon: 18,
       title: 'xx季多久未复刻',
       desc: '查询该季节的先祖多久未复刻'
   }]
