@@ -18,6 +18,6 @@ export class 光遇_上传id extends plugin {
   }
 
   async sky_scid(e) {
-    await this.reply(`请前往\n[api.t1qq.com/api/sky/bd.html]上传角色`)
+    await this.reply(`请前往\n[api.t1qq.com/api/sky/bd.html]\n上传角色`)
     }
 }
