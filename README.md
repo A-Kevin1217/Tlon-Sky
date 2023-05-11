@@ -1,7 +1,7 @@
 # ﻿<div align="center"><h1 align="center">Sky光遇插件<a href='https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/stargazers'><img src='https://gitee.com/Tloml-Starry/SKY-GuangYu-plugin/badge/star.svg?theme=dark' alt='star'></img></a></h1></div>
 
 #### <div align="center">介绍</div>
-<div align="center">为云崽提供光遇相关功能</div>
+<div align="center">为Yunzai-Bot提供光遇相关功能</div>
 
 #### <div align="center">安装</div>
 <div align="center">使用Gitee安装，在Yunzai-Bot根目录执行</div>
