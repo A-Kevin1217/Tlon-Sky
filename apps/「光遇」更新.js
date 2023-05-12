@@ -266,7 +266,7 @@ export class 光遇_更新 extends plugin {
                 if (error) {
                     e.reply('复刻图安装失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。');
                 } else {
-                    e.reply('绘画分享图库安装成功\n您后续也可以通过[ #更新复刻 ]命令来更新图像');
+                    e.reply('复刻图安装成功\n您后续也可以通过[ #更新复刻 ]命令来更新复刻');
                 }
             });
         }
