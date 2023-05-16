@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 
 const 感恩 = [
   { name: '刁蛮浪者', date: new Date('2021-11-08') },
-  { name: '挑衅艺伎', date: new Date('2020-12-07') },
+  { name: '挑衅艺伎', date: new Date('2023-05-22') },
   { name: '敬礼护卫', date: new Date('2023-03-27') },
   { name: '舒展大师', date: new Date('2021-11-22') },
   { name: '跳跃舞者', date: new Date('2023-04-24') },
@@ -118,7 +118,7 @@ export class 光遇_先祖多久未复刻查询 extends plugin {
     })
 }
 async sky_感恩 ( e ) {
-  let msg = '感恩季数据更新时间:2023-04-18\n';
+  let msg = '感恩季数据更新时间：2023-05-16\n';
   const today = new Date();
 
   for (const role of 感恩) {
@@ -129,7 +129,7 @@ async sky_感恩 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_追光 ( e ) {
-  let msg = '追光季数据更新时间:2023-05-02\n';
+  let msg = '追光季数据更新时间：2023-05-02\n';
   const today = new Date();
 
   for (const role of 追光) {
@@ -140,7 +140,7 @@ async sky_追光 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_归属 ( e ) {
-  let msg = '归属季数据更新时间:2023-04-20\n';
+  let msg = '归属季数据更新时间：2023-04-20\n';
   const today = new Date();
 
   for (const role of 归属) {
@@ -151,7 +151,7 @@ async sky_归属 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_音韵 ( e ) {
-  let msg = '音韵季数据更新时间:2023-04-20\n';
+  let msg = '音韵季数据更新时间：2023-04-20\n';
   const today = new Date();
 
   for (const role of 音韵) {
@@ -162,7 +162,7 @@ async sky_音韵 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_魔法 ( e ) {
-  let msg = '魔法季数据更新时间:2023-04-20\n';
+  let msg = '魔法季数据更新时间：2023-04-20\n';
   const today = new Date();
 
   for (const role of 魔法) {
@@ -173,7 +173,7 @@ async sky_魔法 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_圣岛 ( e ) {
-  let msg = '圣岛季数据更新时间:2023-04-20\n';
+  let msg = '圣岛季数据更新时间：2023-04-20\n';
   const today = new Date();
 
   for (const role of 圣岛) {
@@ -184,7 +184,7 @@ async sky_圣岛 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_预言 ( e ) {
-  let msg = '预言季数据更新时间:2023-04-20\n';
+  let msg = '预言季数据更新时间：2023-04-20\n';
   const today = new Date();
 
   for (const role of 预言) {
@@ -195,7 +195,7 @@ async sky_预言 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_梦想 ( e ) {
-  let msg = '梦想季数据更新时间:2023-04-20\n';
+  let msg = '梦想季数据更新时间：2023-04-20\n';
   const today = new Date();
 
   for (const role of 梦想) {
@@ -206,7 +206,7 @@ async sky_梦想 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_集结 ( e ) {
-  let msg = '集结季数据更新时间:2023-04-20\n';
+  let msg = '集结季数据更新时间：2023-04-20\n';
   const today = new Date();
 
   for (const role of 集结) {
@@ -217,7 +217,7 @@ async sky_集结 ( e ) {
   await e.reply(msg.trim());
 }
 async sky_小王子 ( e ) {
-  let msg = '小王子季数据更新时间:2023-04-20\n';
+  let msg = '小王子季数据更新时间：2023-04-20\n';
   const today = new Date();
 
   for (const role of 小王子) {
