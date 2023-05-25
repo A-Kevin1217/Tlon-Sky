@@ -1,4 +1,5 @@
 # 1.3.1
+* 更新`海洋节兑换图`
 * `应天API`修复蜡烛和季蜡查询`
   * 需要前往`https://api.t1qq.com/api/sky/bd.html`上传ToKen
 * 添加夜行季官方兑换图
