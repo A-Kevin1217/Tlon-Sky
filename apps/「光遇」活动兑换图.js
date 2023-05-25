@@ -17,6 +17,9 @@ export class 光遇_活动兑换图 extends plugin {
         },{
           reg: /^#?集体复刻兑换图$/,
           fnc: 'sky_jtfk'
+        },{
+          reg: /^#?海洋节兑换图$/,
+          fnc: 'sky_hyj' 
         }
       ]
     })
@@ -48,5 +51,14 @@ export class 光遇_活动兑换图 extends plugin {
       imgreply ? segment.image(imgreply) : "",
       )
     return true;
+  }
+  async sky_hyj(e){
+    const Textreply = '图源光萌攻略组\n如有侵权,联系Tlon_Fu(微)删除';
+    const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/海洋节兑换图.png';
+    e.reply(
+      segment.at(this.e.user_id),
+      imgreply ? segment.image(imgreply) : "",
+      Textreply ? Textreply : "",
+    )
   }
 }
