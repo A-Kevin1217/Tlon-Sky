@@ -17,8 +17,12 @@ export class 光遇_上传id extends plugin {
   }
 
   async sky_scid(e) {
-    let url = 'https://gitee.com/Tloml-Starry/Tlon-picture/raw/master/上传角色二维码.png'
-    let msg = segment.image(url)
-    await e.reply(msg,'请扫码获取光遇id')
+    const Textreply = '请扫码获取光遇id';
+    const imgreply = 'https://gitee.com/Tloml-Starry/Tlon-picture/raw/master/上传角色二维码.png'
+    await this.reply([
+      segment.at(this.e.user_id),
+      imgreply ? segment.image(imgreply) : "",
+      Textreply ? Textreply : "",
+    ])
     }
 }
