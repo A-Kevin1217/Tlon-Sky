@@ -30,9 +30,9 @@ export class 光遇_蜡烛查询 extends plugin {
     let msg = e.msg;
     let place = msg.replace(/#|季蜡查询/g, "").trim();
     if(json.hasOwnProperty(id)) {
-      await e.reply('id已收录，正在查询...')
+      await e.reply('id已收录，正在查询...', false, { recallMsg: 10 }, true)
       place = JSON.stringify(json[id].Sky_id).slice(1, -1)
-      await e.reply('返回速度较慢,请耐心等待\n数据更新取决于网易服务器\n如诺不对请等待3~5分钟再次查询', false, { recallMsg: 20 }, true)
+      await e.reply('返回速度较慢,请耐心等待\n数据更新取决于网易服务器\n如诺不对请等待3~5分钟再次查询', false, { recallMsg: 10 }, true)
       let url = `https://api.t1qq.com/api/sky/gy/sc/scjl?id=${place}&type=jl`;
       msg = segment.image(url)
       await this.reply(msg, false, { recallMsg: 0 }, true);
@@ -46,9 +46,9 @@ export class 光遇_蜡烛查询 extends plugin {
     let msg = e.msg;
     let place = msg.replace(/#|白蜡查询/g, "").trim();
     if(json.hasOwnProperty(id)) {
-      await e.reply('id已收录，正在查询...')
+      await e.reply('id已收录，正在查询...', false, { recallMsg: 10 }, true)
       place = JSON.stringify(json[id].Sky_id).slice(1, -1)
-      await e.reply('返回速度较慢,请耐心等待\n数据更新取决于网易服务器\n如诺不对请等待3~5分钟再次查询', false, { recallMsg: 20 }, true)
+      await e.reply('返回速度较慢,请耐心等待\n数据更新取决于网易服务器\n如诺不对请等待3~5分钟再次查询', false, { recallMsg: 10 }, true)
       let url = `https://api.t1qq.com/api/sky/gy/sc/scbl?id=${place}&type=bl`;
       msg = segment.image(url)
       await this.reply(msg, false, { recallMsg: 0 }, true);
