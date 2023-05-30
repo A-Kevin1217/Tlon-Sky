@@ -52,7 +52,7 @@ const 预言 = [
   { name: '水先知', date: new Date('2022-12-19')},
   { name: '土先知', date: new Date('2021-12-06')},
   { name: '风先知', date: new Date('2021-09-13')},
-  { name: '火先知', date: new Date('2022-01-03')}
+  { name: '火先知', date: new Date('2023-06-05')}
 ];
 const 梦想 = [
   { name: '偷窥邮差', date: new Date('2022-02-14')},
