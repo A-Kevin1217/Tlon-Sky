@@ -17,7 +17,7 @@ export class 光遇_上传id extends plugin {
   }
 
   async sky_scid(e) {
-    const Textreply = '请扫码获取光遇id';
+    const Textreply = '请扫码绑定Token获取光遇id';
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/上传角色二维码.png'
     await this.reply([
       segment.at(this.e.user_id),
