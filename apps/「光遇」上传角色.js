@@ -1,5 +1,4 @@
 import plugin from '../../../lib/plugins/plugin.js';
-import fetch from 'node-fetch'
 
 export class 光遇_上传id extends plugin {
   constructor() {
@@ -19,6 +18,8 @@ export class 光遇_上传id extends plugin {
 
   async sky_scid(e) {
     let url = 'https://gitee.com/Tloml-Starry/Tlon-picture/raw/master/上传角色二维码.png'
-    await this.reply(`请扫码获取光遇id`,segment.image(url))
+    let msg = segment.image(url)
+    await this.reply(`请扫码获取光遇id`)
+    await this.reply(msg)
     }
 }
