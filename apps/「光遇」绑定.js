@@ -10,7 +10,7 @@ if (!fs.existsSync(dirpath + "/" + filename)) {//文件不存在
   fs.writeFileSync(dirpath + "/" + filename, JSON.stringify({//创建文件
   }))
 }
-export class wenan extends plugin {
+export class 光遇_绑定 extends plugin {
   constructor() {
     super({
       name: '光遇_绑定',
