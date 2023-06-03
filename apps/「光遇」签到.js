@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import fs from 'fs'
 
 fs.mkdirSync('plugins/Sky/data/Sky签到', { recursive: true });
-export class Sky_Signin extends plugin {
+export class 光遇_签到 extends plugin {
   constructor () {
     super({
       name: '光遇_签到',
@@ -19,7 +19,7 @@ export class Sky_Signin extends plugin {
   }
   async 光遇签到(e) {
     let msg = '';
-    let userId = e.msg.author.id;
+    let userId = e.user_id;
     // 读取本地JSON数据
     let userData = [];
     try {
@@ -36,7 +36,7 @@ export class Sky_Signin extends plugin {
   
     if (signInIndex !== -1) {
       msg = `您今天已经签到过了`;
-      e.reply(msg, segment.reply(e.msg.id));
+      e.reply(msg,true);
     } else {
       // 更新用户的蜡烛数量
       var candles = Math.floor(Math.random() * 9) + 15;
@@ -55,7 +55,7 @@ export class Sky_Signin extends plugin {
       // 保存更新后的数据到本地
       fs.writeFileSync(`plugins/Sky/data/Sky签到/${userId}.json`, JSON.stringify(userData), 'utf8');
       msg = `签到成功，获得${quantity}根蜡烛\n当前共有${candles}根蜡烛`;
-      e.reply(msg, segment.reply(e.msg.id));
+      e.reply(msg,true);
     }
   }
 }
