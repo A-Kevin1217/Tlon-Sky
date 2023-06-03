@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import fs from 'fs'
 
 fs.mkdirSync('plugins/Sky/data/Sky签到', { recursive: true });
-export class 光遇_签到 extends plugin {
+export class Sky_Signin extends plugin {
   constructor () {
     super({
       name: '光遇_签到',
@@ -19,7 +19,7 @@ export class 光遇_签到 extends plugin {
   }
 }
 
-async function 光遇_签到(e) {
+async function Sky_Signin(e) {
     let msg = '';
     let userId = e.msg.author.id;
     // 读取本地JSON数据
