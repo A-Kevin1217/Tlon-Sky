@@ -17,9 +17,7 @@ export class Sky_Signin extends plugin {
       ]
     })
   }
-}
-
-async function Sky_Signin(e) {
+  async 光遇签到(e) {
     let msg = '';
     let userId = e.msg.author.id;
     // 读取本地JSON数据
@@ -60,4 +58,6 @@ async function Sky_Signin(e) {
       e.reply(msg, segment.reply(e.msg.id));
     }
   }
+}
+
   
