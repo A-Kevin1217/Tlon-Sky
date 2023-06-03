@@ -27,7 +27,7 @@ export class 光遇_签到 extends plugin {
       userData = JSON.parse(fileData);
     } catch (err) {
       // 如果文件不存在，则创建一个空的JSON文件
-      fs.writeFileSync(`${userId}.json`, '[]', 'utf8');
+      fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, '[]', 'utf8');
     }
   
     // 查找匹配的签到数据
