@@ -23,7 +23,7 @@ export class 光遇_签到 extends plugin {
     // 读取本地JSON数据
     let userData = [];
     try {
-      const fileData = fs.readFileSync(`plugins/Sky/data/Sky签到/${userId}.json`, 'utf8');
+      const fileData = fs.readFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, 'utf8');
       userData = JSON.parse(fileData);
     } catch (err) {
       // 如果文件不存在，则创建一个空的JSON文件
@@ -53,7 +53,7 @@ export class 光遇_签到 extends plugin {
       };
       userData.push(signInData);
       // 保存更新后的数据到本地
-      fs.writeFileSync(`plugins/Sky/data/Sky签到/${userId}.json`, JSON.stringify(userData), 'utf8');
+      fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, JSON.stringify(userData), 'utf8');
       msg = `签到成功，获得${quantity}根蜡烛\n当前共有${candles}根蜡烛`;
       e.reply(msg,true);
     }
