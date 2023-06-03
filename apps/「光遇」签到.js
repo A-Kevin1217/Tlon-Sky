@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import fs from 'fs'
 
-fs.mkdirSync('plugins/Sky/data/Sky签到', { recursive: true });
+fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true });
 export class 光遇_签到 extends plugin {
   constructor () {
     super({
