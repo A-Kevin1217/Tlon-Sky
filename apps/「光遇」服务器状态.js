@@ -29,7 +29,7 @@ export class wenan extends plugin {
     }
     msg = num;
   } catch (err) {
-    msg = '查询失败，光遇异常，可能正在关服更新';
+    msg = '查询失败，光遇异常\n可能正在关服更新';
   }
   e.reply(msg, true);
   }  
