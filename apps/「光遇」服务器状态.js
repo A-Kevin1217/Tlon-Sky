@@ -17,6 +17,8 @@ export class wenan extends plugin {
     })
   }
   async sky_FWQZT(e) { 
+    let msg = '';
+  try {
     let response = await fetch(`https://live-queue-sky-merge.game.163.com/queue?type=json`);
     let res = await response.json();
     let num;
@@ -25,6 +27,10 @@ export class wenan extends plugin {
     } else if(res.ret === 1){
       num = `查询结果：炸服力~\n当前排队人数:「${res.pos}」\n预计所需时间:「${res.wait_time}」`;
     }
-    e.reply(num, true);
+    msg = num;
+  } catch (err) {
+    msg = '查询失败，光遇异常，可能正在关服更新';
+  }
+  e.reply(msg, true);
   }  
 }
