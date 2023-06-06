@@ -38,13 +38,13 @@ export class 光遇_签到 extends plugin {
       msg = `您今天已经签到过了`;
       e.reply(msg,true);
     } else {
-      // 更新用户的蜡烛数量
+      // 更新用户的蜡烛数量和连续签到天数
       var candles = Math.floor(Math.random() * 9) + 15;
       var quantity = candles;
       console.error('签到获得：',candles);
       const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
       const yesterdayIndex = userData.findIndex(data => data.date === yesterday);
-      let continuousDays = 1
+      let continuousDays = 1;
       if (yesterdayIndex !== -1) {
         candles += userData[yesterdayIndex].candles;
         continuousDays = userData[yesterdayIndex].continuousDays + 1;
@@ -52,12 +52,13 @@ export class 光遇_签到 extends plugin {
       const signInData = {
         candles,
         date: today,
+        continuousDays,
       };
       userData.push(signInData);
       // 保存更新后的数据到本地
       fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, JSON.stringify(userData), 'utf8');
       msg = `签到成功，获得${quantity}根蜡烛\n当前共有${candles}根蜡烛\n连续签到${continuousDays}天`;
-      e.reply(msg,true);
+      e.reply(msg, true);
     }
   }
 }
