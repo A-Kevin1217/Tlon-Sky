@@ -20,7 +20,7 @@ export class 光遇_剩余时间 extends plugin {
     })
 }
 async sky_jjsy(e) {
-  let 季节指定时间 = new Date('2023-7-03 23:59:59').getTime();
+  let 季节指定时间 = new Date('2023-7-18 12:00:00').getTime();
   let msg = '';
 
   function countdown() {
@@ -37,7 +37,7 @@ async sky_jjsy(e) {
     let 季节剩余时间_分钟 = Math.floor((季节剩余时间_毫秒 % (60 * 60 * 1000)) / (60 * 1000));
     let 季节剩余时间_秒 = Math.floor((季节剩余时间_毫秒 % (60 * 1000)) / 1000);
 
-    msg = `距离夜行季结束还剩\n${季节剩余时间_天} 天 ${季节剩余时间_小时} 小时 ${季节剩余时间_分钟} 分钟 ${季节剩余时间_秒} 秒\n截止至2023-7-03 23:59:59`;
+    msg = `距离夜行季结束还剩\n${季节剩余时间_天} 天 ${季节剩余时间_小时} 小时 ${季节剩余时间_分钟} 分钟 ${季节剩余时间_秒} 秒\n截止至2023-7-18 12:00:00`;
     setTimeout(countdown, 1000);
   }
   countdown();
@@ -45,29 +45,12 @@ async sky_jjsy(e) {
   return;
 }
 async sky_hdsy(e) {
-  let 活动指定时间1 = new Date('2023-6-16 23:59:59').getTime();
-  let 活动指定时间 = new Date('2023-6-09 23:59:59').getTime();
+  let 活动指定时间 = new Date('2023-6-16 23:59:59').getTime();
   let msg = '';
-  let msg1 = '';
 
   function countdown() {
     let 现在时间 = Date.now();
     let 活动剩余时间_毫秒 = 活动指定时间 - 现在时间;
-    if (活动剩余时间_毫秒 < 0) {
-      msg = '海洋节已结束！';
-      return;
-    }
-    let 活动剩余时间_天 = Math.floor(活动剩余时间_毫秒 / (24 * 60 * 60 * 1000));
-    let 活动剩余时间_小时 = Math.floor((活动剩余时间_毫秒 % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-    let 活动剩余时间_分钟 = Math.floor((活动剩余时间_毫秒 % (60 * 60 * 1000)) / (60 * 1000));
-    let 活动剩余时间_秒 = Math.floor((活动剩余时间_毫秒 % (60 * 1000)) / 1000);
-    msg = `距离海洋节结束还剩\n${活动剩余时间_天} 天 ${活动剩余时间_小时} 小时 ${活动剩余时间_分钟} 分钟 ${活动剩余时间_秒} 秒\n截止至2023-6-09 23:59:59`;
-    setTimeout(countdown, 1000);
-  }
-
-  function countdown() {
-    let 现在时间 = Date.now();
-    let 活动剩余时间_毫秒 = 活动指定时间1 - 现在时间;
     if (活动剩余时间_毫秒 < 0) {
       msg = '预言季集体复刻已结束！';
       return;
@@ -76,12 +59,11 @@ async sky_hdsy(e) {
     let 活动剩余时间_小时 = Math.floor((活动剩余时间_毫秒 % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
     let 活动剩余时间_分钟 = Math.floor((活动剩余时间_毫秒 % (60 * 60 * 1000)) / (60 * 1000));
     let 活动剩余时间_秒 = Math.floor((活动剩余时间_毫秒 % (60 * 1000)) / 1000);
-    msg1 = `距离预言季集体复刻结束还剩\n${活动剩余时间_天} 天 ${活动剩余时间_小时} 小时 ${活动剩余时间_分钟} 分钟 ${活动剩余时间_秒} 秒\n截止至2023-6-16 23:59:59`;
+    msg = `距离预言季集体复刻结束还剩\n${活动剩余时间_天} 天 ${活动剩余时间_小时} 小时 ${活动剩余时间_分钟} 分钟 ${活动剩余时间_秒} 秒\n截止至2023-6-09 23:59:59`;
     setTimeout(countdown, 1000);
   }
-  let reply = [msg,msg1]
   countdown();
-  await this.reply(reply, true);
+  await this.reply(msg, true);
   return;
 }
 }
