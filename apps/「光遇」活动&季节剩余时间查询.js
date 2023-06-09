@@ -79,7 +79,7 @@ async sky_hdsy(e) {
     msg1 = `距离预言季集体复刻结束还剩\n${活动剩余时间_天} 天 ${活动剩余时间_小时} 小时 ${活动剩余时间_分钟} 分钟 ${活动剩余时间_秒} 秒\n截止至2023-6-16 23:59:59`;
     setTimeout(countdown, 1000);
   }
-  reply = msg + msg1
+  let reply = [msg,msg1]
   countdown();
   await this.reply(reply, true);
   return;
