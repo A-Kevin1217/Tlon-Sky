@@ -15,12 +15,15 @@ export class 光遇_剩余时间 extends plugin {
             {
               reg: /^#?活动剩余$/,
               fnc: 'sky_hdsy'
+            },{
+              reg: /^#?季节结束时间$/,
+              fnc: 'sky_jjjssj'
             }
         ]
     })
 }
 async sky_jjsy(e) {
-  let 季节指定时间 = new Date('2023-7-18 12:00:00').getTime();
+  let 季节指定时间 = new Date('2023-7-19 12:00:00').getTime();
   let msg = '';
 
   function countdown() {
@@ -37,7 +40,7 @@ async sky_jjsy(e) {
     let 季节剩余时间_分钟 = Math.floor((季节剩余时间_毫秒 % (60 * 60 * 1000)) / (60 * 1000));
     let 季节剩余时间_秒 = Math.floor((季节剩余时间_毫秒 % (60 * 1000)) / 1000);
 
-    msg = `距离夜行季结束还剩\n${季节剩余时间_天} 天 ${季节剩余时间_小时} 小时 ${季节剩余时间_分钟} 分钟 ${季节剩余时间_秒} 秒\n截止至2023-7-18 12:00:00`;
+    msg = `距离夜行季结束还剩\n${季节剩余时间_天} 天 ${季节剩余时间_小时} 小时 ${季节剩余时间_分钟} 分钟 ${季节剩余时间_秒} 秒\n截止至2023-7-19 12:00:00`;
     setTimeout(countdown, 1000);
   }
   countdown();
@@ -59,11 +62,15 @@ async sky_hdsy(e) {
     let 活动剩余时间_小时 = Math.floor((活动剩余时间_毫秒 % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
     let 活动剩余时间_分钟 = Math.floor((活动剩余时间_毫秒 % (60 * 60 * 1000)) / (60 * 1000));
     let 活动剩余时间_秒 = Math.floor((活动剩余时间_毫秒 % (60 * 1000)) / 1000);
-    msg = `距离预言季集体复刻结束还剩\n${活动剩余时间_天} 天 ${活动剩余时间_小时} 小时 ${活动剩余时间_分钟} 分钟 ${活动剩余时间_秒} 秒\n截止至2023-6-09 23:59:59`;
+    msg = `距离预言季集体复刻结束还剩\n${活动剩余时间_天} 天 ${活动剩余时间_小时} 小时 ${活动剩余时间_分钟} 分钟 ${活动剩余时间_秒} 秒\n截止至2023-6-16 23:59:59`;
     setTimeout(countdown, 1000);
   }
   countdown();
   await this.reply(msg, true);
   return;
+}
+async sky_jjjssj(e){
+  const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/季节结束时间.png'
+  await this.reply([imgreply ? segment.image(imgreply) : ""],true)
 }
 }
