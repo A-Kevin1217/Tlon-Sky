@@ -7,7 +7,7 @@ const _logPath = `${_path}/plugins/Tlon-Sky/CHANGELOG.md`
 let logs = {}
 let changelogs = []
 let currentVersion
-let versionCount = 4
+let versionCount = 2
 
 let packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'))
 
