@@ -32,7 +32,7 @@ export class 光遇_身高查询 extends plugin {
   }
   async sky_bdsg(e) {
     const msg = e.msg;
-    const Sky_Uid = msg.replace(/#|绑定身高id /g, "").trim();
+    const Sky_Uid = msg.replace(/#|绑定身高id/g, "").trim();
     const data = { Sky_Uid };
     const id = e.user_id;
     const json = JSON.parse(fs.readFileSync(`${dirpath}/${filename}`, "utf8"));
