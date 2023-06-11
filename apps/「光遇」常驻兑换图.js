@@ -9,31 +9,31 @@ export class 光遇_常驻兑换图 extends plugin {
         priority: 5000,
         rule: [
             {
-                reg: '^#?晨岛兑换图$',
+                reg: /^#?晨岛兑换图$/,
                 fnc: 'sky_CD'
             },
             {
-                reg: '^#?云野兑换图$',
+                reg: /^#?云野兑换图$/,
                 fnc: 'sky_YY'
             },
             {
-                reg: '^#?雨林兑换图$',
+                reg: /^#?雨林兑换图$/,
                 fnc: 'sky_YL'
             },
             {
-                reg: '^#?(峡谷|霞谷)兑换图$',
+                reg: /^#?(峡谷|霞谷)兑换图$/,
                 fnc: 'sky_XG'
             },
             {
-                reg: '^#?暮土兑换图$',
+                reg: /^#?暮土兑换图$/,
                 fnc: 'sky_MT'
             },
             {
-                reg: '^#?禁阁兑换图$',
+                reg: /^#?禁阁兑换图$/,
                 fnc: 'sky_JG'
             },
             {
-                reg: '^#?墓土兑换图',
+                reg: /^#?墓土兑换图/,
                 fnc: 'sky_xxx'
             }
         ]

@@ -10,7 +10,7 @@ export class wenan extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: `^#?((SKY|sky|Sky)服务器状态|(sky|SKY|Sky)状态)$`,
+          reg: /^#?((SKY|sky|Sky)服务器状态|(sky|SKY|Sky)状态)$/,
           fnc: 'sky_FWQZT'
         },
       ]

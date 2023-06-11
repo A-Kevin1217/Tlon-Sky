@@ -11,7 +11,7 @@ export class 光遇_天气预报 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: '^#?天气预报$',
+          reg: /^#?天气预报$/,
           fnc: 'sky_tqyb'
         },
       ]

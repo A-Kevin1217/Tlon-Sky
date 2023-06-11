@@ -15,7 +15,7 @@ export class 光遇_菜单 extends plugin {
                     fnc: 'Sky_help'
                 },
                 {
-                    reg: /^(Sky|sky|光遇)版本$/,
+                    reg: /^#?(Sky|sky|光遇)版本$/,
                     fnc: 'Sky_version'
                 }
             ]

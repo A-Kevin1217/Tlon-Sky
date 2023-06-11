@@ -9,7 +9,7 @@ export class 光遇_复刻预测 extends plugin {
             priority: 4800,
             rule: [
                 {
-                    reg: '^#?复刻预测$',
+                    reg: /^#?复刻预测$/,
                     fnc: 'sky_fkyc'
                 }
             ]

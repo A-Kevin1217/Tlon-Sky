@@ -12,7 +12,7 @@ export class 光遇_公告 extends plugin {
         priority: 5000,
         rule: [
           {
-            reg: `^#?光遇公告$`,
+            reg: /^#?光遇公告$/,
             fnc: 'sky_gg'
           },
         ]

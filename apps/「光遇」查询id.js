@@ -10,7 +10,7 @@ export class 光遇_查询id extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: `^#?(查询id)(.*)$`,
+          reg: /^#?(查询id)(.*)$/,
           fnc: 'sky_scids'
         }
       ]

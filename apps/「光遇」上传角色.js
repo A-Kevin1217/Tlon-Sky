@@ -9,7 +9,7 @@ export class 光遇_上传id extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: `^#?上传角色`,
+          reg: /^#?上传角色/,
           fnc: 'sky_scid'
         }
       ]

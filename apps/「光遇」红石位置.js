@@ -11,7 +11,7 @@ export class 光遇_红石位置 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: '^#?红石位置$',
+          reg: /^#?红石位置$/,
           fnc: 'sky_hswz'
         },
       ]

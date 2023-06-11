@@ -60,8 +60,8 @@ export class 光遇_季节兑换图 extends plugin {
           reg: /^#?夜行季兑换图/,
           fnc: 'sky_YXJ'
         },{
-          reg: /^#?查询(帮助|教程)$/,
-          fnc: 'sky_cxbz'
+          reg: /^#?wps季兑换图$/,
+          fnc: 'sky_WPSJ'
         }
       ]
     })
@@ -185,13 +185,11 @@ export class 光遇_季节兑换图 extends plugin {
       imgreply ? segment.image(imgreply) : "",
     ])
   }
-  async sky_cxbz(e) {
-    const Textreply = '首先,你需要[上传角色+id]\n然后使用获取的id查询';
-    const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/教程.png'
+  async sky_WPSJ(e) {
+    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/WPS季.png'
     await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-      Textreply ? Textreply : "",
-    ])
+    segment.at(this.e.user_id),
+    imgreply ? segment.image(imgreply) : "",
+  ])
   }
 }

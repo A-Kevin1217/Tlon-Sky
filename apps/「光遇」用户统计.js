@@ -10,10 +10,10 @@ export class 光遇_用户统计 extends plugin {
       event: 'message',
       prioity: 100,
       rule: [{
-        reg: '^.*',
+        reg: /^.*/,
         fnc: 'TJ'
     },{
-        reg: '^光遇用户统计$',
+        reg: /^光遇用户统计$/,
         fnc: '用户统计'
     }]
 })
