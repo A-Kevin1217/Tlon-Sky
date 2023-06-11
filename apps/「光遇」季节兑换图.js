@@ -1,4 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js';
+import fs from "fs";
 
 export class 光遇_季节兑换图 extends plugin {
   constructor () {
@@ -9,187 +10,27 @@ export class 光遇_季节兑换图 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^#?感恩季兑换图$/,
-          fnc: 'sky_GEJ'
-        },{
-          reg: /^#?追光季兑换图$/,
-          fnc: 'sky_ZGJ'
-        },{
-          reg: /^#?归属季兑换图$/,
-          fnc: 'sky_GSJ'
-        },{
-          reg: /^#?(音韵|凛冬)季兑换图$/,
-          fnc: 'sky_LDJ'
-        },{
-          reg: /^#?魔法季兑换图$/,
-          fnc: 'sky_MFJ'
-        },{
-          reg: /^#?圣岛季兑换图$/,
-          fnc: 'sky_SDJ'
-        },{
-          reg: /^#?预言季兑换图$/,
-          fnc: 'sky_YYJ'
-        },{
-          reg: /^#?梦想季兑换图$/,
-          fnc: 'sky_MXJ'
-        },{
-          reg: /^#?(重组|集结)季兑换图$/,
-          fnc: 'sky_CZJ'
-        },{
-          reg: /^#?小王子季兑换图$/,
-          fnc: 'sky_XWZJ'
-        },{
-          reg: /^#?风行季兑换图$/,
-          fnc: 'sky_FXJ'
-        },{
-          reg: /^#?潜海季兑换图$/,
-          fnc: 'sky_QHJ'
-        },{
-          reg: /^#?表演季兑换图$/,
-          fnc: 'sky_BYJ'
-        },{
-          reg: /^#?破晓季兑换图$/,
-          fnc: 'sky_PXJ'
-        },{
-          reg: /^#?(欧若拉|AURORA|aurora)季兑换图$/,
-          fnc: 'sky_ORL'
-        },{
-          reg: /^#?追忆季兑换图$/,
-          fnc: 'sky_ZYJ'
-        },{
-          reg: /^#?夜行季兑换图/,
-          fnc: 'sky_YXJ'
-        },{
-          reg: /^#?wps季兑换图$/,
-          fnc: 'sky_WPSJ'
+          reg: /^#?(.*)季兑换图$/,
+          fnc: '季节兑换图'
         }
       ]
     })
   }
-  async sky_GEJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/感恩季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_ZGJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/追光季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_GSJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/归属季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_LDJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/音韵季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_MFJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/魔法季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_SDJ(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/圣岛季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_YYJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/预言季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_MXJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/梦想季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_CZJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/重组季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_XWZJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/小王子季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_FXJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/风行季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_QHJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/潜海季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_BYJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/表演季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_PXJ (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/破晓季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_ORL (e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/AURORA季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_ZYJ(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/追忆季.png'
-    await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_YXJ(e) {
-      const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/夜行季.png'
-      await this.reply([
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ])
-  }
-  async sky_WPSJ(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/季节兑换图/WPS季.png'
-    await this.reply([
-    segment.at(this.e.user_id),
-    imgreply ? segment.image(imgreply) : "",
-  ])
-  }
+  async 季节兑换图 (e) {
+    let msg = e.msg;
+    let 季节 = msg.replace(/#|季兑换图/g, "").trim();
+    if (季节 === '欧若拉') {季节 = 'AURORA'}
+    if (季节 === '集结') {季节 = '重组'} 
+    if (季节 === '凌冬') {季节 = '音韵'}
+    const imgreply = `plugins/Tlon-Sky/resource/季节兑换图/${季节}季.png`
+    if (!fs.existsSync(imgreply)) {
+      await e.reply(`抱歉，没有找到${季节}季兑换图\n请检查名称是否正确`);
+      return false;
+    } else {
+        await this.reply([
+          segment.at(this.e.user_id),
+          segment.image(imgreply),
+        ]);
+      }
+    }
 }
