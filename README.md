@@ -16,7 +16,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 
 #### 更新
 
-* 使用指令：Sky更新
+* 使用指令：`Sky更新`
 
 #### 绘画分享图库安装
 
@@ -29,7 +29,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 * 使用指令：`#刷新复刻`或`#更新复刻`
 * 后续更新同上
 
-#### <div align="center">功能</div>
+#### 功能
 <details>
 <summary>功能列表</summary>
 <p align="center">
@@ -72,7 +72,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 
 <div align="center">
 
-请向本项目发起☛[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues/I6LRZ9)☚
+请向本项目发起☛[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues/I6LRZ9)
 
 </div>
 
