@@ -35,13 +35,9 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 <p align="center">
 <img width = "600" src="resource/功能列表.png">
 </p>
+</details>
 
 # 图源来自网络，如有侵权，联系删除
-
-
-
-
-
 
 <div align="center">
 
