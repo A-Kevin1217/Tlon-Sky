@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js';
 import fs from 'fs'
 
 const dirpath = "plugins/Tlon-Sky/data/id"
-var filename = `Sky ID.json`
+let filename = `Sky ID.json`
 if (!fs.existsSync(dirpath)) {//如果文件夹不存在
   fs.mkdirSync(dirpath);//创建文件夹
 }
@@ -31,12 +31,12 @@ export class 光遇_绑定 extends plugin {
 
   async sky_bdid(e){
     let msg = e.msg;
-    var Sky_id = msg.replace(/#|绑定光遇id/g, "").trim();
-    var data = {
+    let Sky_id = msg.replace(/#|绑定光遇id/g, "").trim();
+    let data = {
       "Sky_id": Sky_id,
     }
     const id = e.user_id
-    var json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));//读取文件
+    let json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));//读取文件
     if(!json.hasOwnProperty(id)) {//如果json中不存在该用户
       json[id] = data
       fs.writeFileSync(dirpath + "/" + filename, JSON.stringify(json, null, "\t"));//写入文件
@@ -50,8 +50,8 @@ export class 光遇_绑定 extends plugin {
   }
 
   async sky_cxid(e){
-    var json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));//读取文件
-    var id = e.user_id
+    let json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));//读取文件
+    let id = e.user_id
     let num
     if(json.hasOwnProperty(id)) {//如果json中存在该用户
       num = `您的id为：\n${JSON.stringify(json[id].Sky_id).slice(1, -1)}`

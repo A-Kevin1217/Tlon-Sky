@@ -39,8 +39,8 @@ export class 光遇_签到 extends plugin {
       e.reply(msg,true);
     } else {
       // 更新用户的蜡烛数量和连续签到天数
-      var candles = Math.floor(Math.random() * 9) + 15;
-      var quantity = candles;
+      let candles = Math.floor(Math.random() * 9) + 15;
+      let quantity = candles;
       console.error('签到获得：',candles);
       const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
       const yesterdayIndex = userData.findIndex(data => data.date === yesterday);

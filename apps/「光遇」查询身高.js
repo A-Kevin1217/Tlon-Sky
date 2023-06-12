@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import fs from 'fs'
 
 const dirpath = "plugins/Tlon-Sky/data/id"
-var filename = `Sky UID.json`
+let filename = `Sky UID.json`
 if (!fs.existsSync(dirpath)) {
   fs.mkdirSync(dirpath);
 }

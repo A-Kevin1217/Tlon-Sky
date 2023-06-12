@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js';
 import fs from 'fs'
 
 const dirpath = "plugins/Tlon-Sky/data/id"
-var filename = `Sky ID.json`
+let filename = `Sky ID.json`
 
 export class 光遇_蜡烛查询 extends plugin {
   constructor() {
@@ -25,8 +25,8 @@ export class 光遇_蜡烛查询 extends plugin {
   }
 
   async sky_jlcx(e) {
-    var json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
-    var id = e.user_id
+    let json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
+    let id = e.user_id
     let msg = e.msg;
     let place = msg.replace(/#|季蜡查询/g, "").trim();
     if(json.hasOwnProperty(id)) {
@@ -41,8 +41,8 @@ export class 光遇_蜡烛查询 extends plugin {
   }
 
   async sky_blcx(e) {
-    var json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
-    var id = e.user_id
+    let json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
+    let id = e.user_id
     let msg = e.msg;
     let place = msg.replace(/#|白蜡查询/g, "").trim();
     if(json.hasOwnProperty(id)) {

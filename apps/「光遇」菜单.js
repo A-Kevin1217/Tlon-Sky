@@ -66,11 +66,11 @@ async function help(e) {
     })
 }
 const rodom = async function () {
-    var image = fs.readdirSync(`./plugins/Tlon-Sky/resource/help/theme/`);
-    var list_img = [];
+    let image = fs.readdirSync(`./plugins/Tlon-Sky/resource/help/theme/`);
+    let list_img = [];
     for (let val of image) {
         list_img.push(val)
     }
-    var theme = list_img.length == 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
+    let theme = list_img.length == 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
     return theme;
 }
