@@ -1,9 +1,9 @@
 import moment from 'moment';
 import plugin from '../../../lib/plugins/plugin.js';
-const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/scsky.php';
-const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/scjlwz';
-const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php';
-const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/mf/magic';
+const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mrrw.jpg';
+const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/scjl.jpg';
+const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/scdl.jpg';
+const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg';
 const BigHourName = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子'];
 const BigHourType = ['正', '初'];
 const BigMinName = ['零', '一', '二', '三', '四'];
