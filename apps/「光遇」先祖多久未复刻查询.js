@@ -35,7 +35,7 @@ const 音韵 = [
 const 魔法 = [
   { name: '稻草人农夫', date: new Date('2022-08-29')},
   { name: '赞许壁画及', date: new Date('2022-06-21')},
-  { name: '情绪草药师', date: new Date('2022-04-25')},
+  { name: '情绪草药师', date: new Date('2023-06-19')},
   { name: '瞌睡木匠', date: new Date('2022-12-07')},
   { name: '冷漠术士', date: new Date('2022-03-14')},
   { name: '蟹舞者', date: new Date('2021-04-12')}
