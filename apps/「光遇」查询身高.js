@@ -6,16 +6,11 @@ const dirpath = "plugins/Tlon-Sky/data/id"
 const 使用次数文件夹 = "plugins/Tlon-Sky/data/使用次数"
 let filename = 'Sky UID.json'
 let 使用次数文件 = '身高查询使用次数.json'
-const mkdirIfNotExist = (path) => {
-  if (!fs.existsSync(path)) {
-    fs.mkdirSync(path);
-  }
-};
-
-mkdirIfNotExist(dirpath);
-mkdirIfNotExist(使用次数文件夹);
-fs.writeFileSync(`${dirpath}/${filename}`, JSON.stringify({}), { flag: 'wx' });
-fs.writeFileSync(`${使用次数文件夹}/${使用次数文件}`, JSON.stringify({}), { flag: 'wx' });
+// 没有则自动创建
+if (!fs.existsSync(dirpath)){fs.mkdirSync(dirpath);}
+if (!fs.existsSync(使用次数文件夹)){fs.mkdirSync(使用次数文件夹);}
+if (!fs.existsSync(dirpath + "/" + filename)) {fs.writeFileSync(dirpath + "/" + filename, JSON.stringify({}))}
+if (!fs.existsSync(使用次数文件夹 + "/" + 使用次数文件)) {fs.writeFileSync(使用次数文件夹 + "/" + 使用次数文件, JSON.stringify({}))}
 
 export class 光遇_身高查询 extends plugin {
   constructor() {
