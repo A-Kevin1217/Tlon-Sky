@@ -45,13 +45,10 @@ export class 光遇_每日功能 extends plugin {
       messageCount,
       '条消息',
     ];
-    await e.reply('稍等...', true);
-    await this.reply(msg);
+    e.reply(msg);
   }
   async sky_DLWZ(e) {
     const now = new Date();
-    const hour = `0${now.getHours()}`.slice(-2);
-    const minutes = `0${now.getMinutes()}`.slice(-2);
     const hourName = BigHourName[Math.floor((now.getHours() + 1) / 2)];
     const hourType = BigHourType[now.getHours() % 2];
     const minName = BigMinName[Math.floor(now.getMinutes() / 15)];
@@ -59,8 +56,7 @@ export class 光遇_每日功能 extends plugin {
       segment.image(DL_URL),
       `现在是长安${hourName}${hourType}${minName}刻`,
     ];
-    await e.reply('稍等...', true);
-    await this.reply(msg);
+    e.reply(msg);
   }
   async sky_JLWZ(e) {
     const now = new Date();
@@ -73,7 +69,6 @@ export class 光遇_每日功能 extends plugin {
       ':',
       minutes,
     ];
-    await e.reply('稍等...', true);
-    await this.reply(msg);
+    e.reply(msg);
   }
 }
