@@ -32,8 +32,8 @@ export class 光遇_每日功能 extends plugin {
     });
   }
   async sky_JRRW(e) {
-    const Tlon = moment().unix();
     TlonS = moment().unix();
+    const Tlon = moment().unix();
     const 耗时 = Tlon - TlonS
     const msg = [
       segment.image(MF_URL),
