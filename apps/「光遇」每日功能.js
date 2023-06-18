@@ -7,6 +7,7 @@ const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg';
 const BigHourName = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子'];
 const BigHourType = ['正', '初'];
 const BigMinName = ['零', '一', '二', '三', '四'];
+let TlonS;
 export class 光遇_每日功能 extends plugin {
   constructor() {
     super({
@@ -31,19 +32,10 @@ export class 光遇_每日功能 extends plugin {
     });
   }
   async sky_JRRW(e) {
-    const month = moment().month() + 1;
-    const monthKey = `Yz:count:sendMsg:month:${month}`;
-    const messageCount = await redis.get(monthKey) || 0;
+    const Tlon = moment().unix();
+    TlonS = moment().unix();
     const msg = [
-      segment.image(MF_URL),
-      '今日任务',
-      segment.image(RW_URL),
-      '季蜡位置&大蜡烛位置',
-      segment.image(JL_URL),
-      segment.image(DL_URL),
-      '本月已发送',
-      messageCount,
-      '条消息',
+      `${segment.image(MF_URL)}今日任务${segment.image(RW_URL)}季蜡位置&大蜡烛位置${segment.image(JL_URL)}${segment.image(DL_URL)}用时${Tlon - TlonS}秒`
     ];
     e.reply(msg);
   }
