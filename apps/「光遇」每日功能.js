@@ -34,7 +34,8 @@ export class 光遇_每日功能 extends plugin {
   async sky_JRRW(e) {
     TlonS = moment().unix();
     const Tlon = moment().unix();
-    const 耗时 = Tlon - TlonS
+    let  耗时 = Tlon - TlonS
+    if (耗时 === 0) {耗时 = '零'}
     const msg = [
       segment.image(MF_URL),
       '今日任务',
@@ -42,9 +43,9 @@ export class 光遇_每日功能 extends plugin {
       '季蜡位置&大蜡烛位置',
       segment.image(JL_URL),
       segment.image(DL_URL),
-      '用时',
+      '用时 ',
       耗时,
-      '秒'
+      ' 秒'
     ];
     e.reply(msg);
   }
