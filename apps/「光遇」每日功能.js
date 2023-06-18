@@ -1,5 +1,5 @@
-import moment from 'moment';
 import plugin from '../../../lib/plugins/plugin.js';
+import moment from 'moment';
 const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mrrw.jpg';
 const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/scjl.jpg';
 const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/scdl.jpg';
@@ -34,8 +34,17 @@ export class 光遇_每日功能 extends plugin {
   async sky_JRRW(e) {
     const Tlon = moment().unix();
     TlonS = moment().unix();
+    const 耗时 = Tlon - TlonS
     const msg = [
-      `${segment.image(MF_URL)}今日任务${segment.image(RW_URL)}季蜡位置&大蜡烛位置${segment.image(JL_URL)}${segment.image(DL_URL)}用时${Tlon - TlonS}秒`
+      segment.image(MF_URL),
+      '今日任务',
+      segment.image(RW_URL),
+      '季蜡位置&大蜡烛位置',
+      segment.image(JL_URL),
+      segment.image(DL_URL),
+      '用时',
+      耗时,
+      '秒'
     ];
     e.reply(msg);
   }
