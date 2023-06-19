@@ -47,6 +47,6 @@ export class 光遇_身高查询 extends plugin {
   }
   
   async sky_sgcx(e) {
-    e.reply('身高查询功能已失效\n请等待修复')
+    e.reply('身高查询功能已失效\n查询官方开启收费模式')
 }
 }
