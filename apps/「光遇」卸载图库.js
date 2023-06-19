@@ -21,43 +21,57 @@ export class 光遇_卸载图库 extends plugin {
         })
     }
     async 卸载复刻图库(e){
-        const folderPath = 'plugins/Tlon-Sky/resource/复刻图';
-        e.reply('正在卸载中···')
-        if (fs.existsSync(folderPath)) {
-          fs.readdirSync(folderPath).forEach((file) => {
-            const curPath = path.join(folderPath, file);
-            if (fs.lstatSync(curPath).isDirectory()) {
-              卸载复刻图库(curPath); // 递归删除子文件夹
-            } else {
-              fs.unlinkSync(curPath); // 删除文件
-            }
-          });
-          fs.rmdirSync(folderPath); // 删除空文件夹
-          console.log(`成功删除文件夹：${folderPath}`);
-          e.reply('卸载成功')
-        } else {
-          console.log(`文件夹不存在：${folderPath}`);
-          e.reply('您已经卸载过了')
-        }
+      const folderPath = 'plugins/Tlon-Sky/resource/复刻图';
+      if (fs.existsSync(folderPath)) {
+        fs.readdirSync(folderPath).forEach((file) => {
+          const curPath = path.join(folderPath, file);
+          if (fs.lstatSync(curPath).isDirectory()) {
+            deleteFolder(curPath); // 递归删除子文件夹
+          } else {
+            fs.unlinkSync(curPath); // 删除文件
+          }
+        });
+        fs.rmdirSync(folderPath); // 删除空文件夹
+        console.log(`成功删除文件夹：${folderPath}`);
+        e.reply('卸载成功');
+      } else {
+        console.log(`文件夹不存在：${folderPath}`);
+        e.reply('您已经卸载过了');
+      }
     }
     async 卸载绘画图库(e){
         const folderPath = 'plugins/Tlon-Sky/resource/光遇绘画分享';
-        e.reply('正在卸载中···')
         if (fs.existsSync(folderPath)) {
           fs.readdirSync(folderPath).forEach((file) => {
             const curPath = path.join(folderPath, file);
             if (fs.lstatSync(curPath).isDirectory()) {
-              卸载绘画图库(curPath); // 递归删除子文件夹
+              deleteFolder(curPath); // 递归删除子文件夹
             } else {
               fs.unlinkSync(curPath); // 删除文件
             }
           });
           fs.rmdirSync(folderPath); // 删除空文件夹
           console.log(`成功删除文件夹：${folderPath}`);
-          e.reply('卸载成功')
+          e.reply('卸载成功');
         } else {
           console.log(`文件夹不存在：${folderPath}`);
-          e.reply('您已经卸载过了')
+          e.reply('您已经卸载过了');
         }
     }
+}
+function deleteFolder(folderPath) {
+  if (fs.existsSync(folderPath)) {
+    fs.readdirSync(folderPath).forEach((file) => {
+      const curPath = path.join(folderPath, file);
+      if (fs.lstatSync(curPath).isDirectory()) {
+        deleteFolder(curPath); // 递归删除子文件夹
+      } else {
+        fs.unlinkSync(curPath); // 删除文件
+      }
+    });
+    fs.rmdirSync(folderPath); // 删除空文件夹
+    console.log(`成功删除文件夹：${folderPath}`);
+  } else {
+    console.log(`文件夹不存在：${folderPath}`);
+  }
 }
