@@ -24,11 +24,6 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 * 使用指令：`Sky更新图库`
 * 后续更新图库同上
 
-#### 复刻图安装
-
-* 使用指令：`#刷新复刻`或`#更新复刻`
-* 后续更新同上
-
 #### 功能
 <details>
 <summary>功能列表</summary>
