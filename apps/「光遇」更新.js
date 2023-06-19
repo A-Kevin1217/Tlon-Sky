@@ -23,9 +23,6 @@ export class 光遇_更新 extends plugin {
                 },{
                     reg: /^#?(Sky更新图库|sky更新图库|光遇更新图库)$/,
                     fnc: 'sky_updateRes'
-                },{
-                    reg: /^#?(刷新复刻|更新复刻|sky更新复刻|sky刷新复刻)/,
-                    fnc: 'sky_updateReprint'
                 }
             ]
         })
@@ -233,40 +230,6 @@ export class 光遇_更新 extends plugin {
                     e.reply('绘画分享图库安装失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。');
                 } else {
                     e.reply('绘画分享图库安装成功\n您后续也可以通过[ #Sky更新图库 ]命令来更新图像');
-                }
-            });
-        }
-    }
-    async sky_updateReprint (e) {
-        let command = '';
-        if (fs.existsSync(`${resPath}/复刻图/`)) {
-            e.reply('开始尝试更新，请耐心等待~');
-            command = 'git pull';
-            exec(command, { cwd: `${resPath}/复刻图/` }, function (error, stdout, stderr) {
-                console.log(stdout);
-                if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) {
-                    e.reply('目前复刻已经是最新的~或者暂未更新~');
-                    return true;
-                }
-                let numRet = /(\d*) files changed,/.exec(stdout);
-                if (numRet && numRet[1]) {
-                    e.reply(`复刻已更新~`);
-                    return true;
-                }
-                if (error) {
-                    e.reply('更新失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。');
-                } else {
-                    e.reply('复刻更新成功~');
-                }
-            });
-        } else {
-            command = `git clone https://gitee.com/Tloml-Starry/Tlon-Sky-reprint.git "${resPath}/复刻图/" --depth=1`;
-            e.reply('开始尝试安装复刻图\n可能会需要一段时间，请耐心等待~');
-            exec(command, function (error, stdout, stderr) {
-                if (error) {
-                    e.reply('复刻图安装失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。');
-                } else {
-                    e.reply('复刻图安装成功\n您后续也可以通过[ #更新复刻 ]命令来更新复刻');
                 }
             });
         }

@@ -1,5 +1,4 @@
 import plugin from '../../../lib/plugins/plugin.js'
-import fs from "fs"
 
 export class 光遇_复刻兑换图 extends plugin {
   constructor () {
@@ -10,18 +9,14 @@ export class 光遇_复刻兑换图 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^#?复刻兑换图$/,
+          reg: /^#?(复刻兑换图|国服复刻)$/,
           fnc: 'sky_Fk'
         },
       ]
     })
   }
   async sky_Fk(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/复刻图/image/Reprint.png';
-    if (!fs.existsSync(imgreply)) {
-      await e.reply("抱歉未找到复刻图文件夹！\n请使用指令 [#更新复刻] 安装");
-      return false;
-    }
+    const imgreply = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png';
     let msg = [
         imgreply ? segment.image(imgreply) : ""
     ]
