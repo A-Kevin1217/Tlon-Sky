@@ -21,6 +21,7 @@ export class 光遇_卸载图库 extends plugin {
         })
     }
     async 卸载复刻图库(e){
+      if (!await checkAuth(e)) return
       const folderPath = 'plugins/Tlon-Sky/resource/复刻图';
       if (fs.existsSync(folderPath)) {
         fs.readdirSync(folderPath).forEach((file) => {
@@ -40,6 +41,7 @@ export class 光遇_卸载图库 extends plugin {
       }
     }
     async 卸载绘画图库(e){
+      if (!await checkAuth(e)) return
         const folderPath = 'plugins/Tlon-Sky/resource/光遇绘画分享';
         if (fs.existsSync(folderPath)) {
           fs.readdirSync(folderPath).forEach((file) => {
@@ -74,4 +76,11 @@ function deleteFolder(folderPath) {
   } else {
     console.log(`文件夹不存在：${folderPath}`);
   }
+}
+const checkAuth = async function (e) {
+  if (!e.isMaster) {
+    e.reply(`只有主人才能命令哦~`)
+    return false
+  }
+  return true
 }
