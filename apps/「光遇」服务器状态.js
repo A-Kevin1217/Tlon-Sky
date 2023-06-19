@@ -31,7 +31,7 @@ export class wenan extends plugin {
     }
     msg = num;
   } catch (err) {
-    msg = '查询失败，光遇服务器异常\n可能正在关服更新';
+    msg = '查询失败，光遇服务器异常';
   }
   e.reply(msg, true);
   }  
