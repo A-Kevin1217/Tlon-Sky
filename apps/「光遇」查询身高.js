@@ -52,13 +52,13 @@ export class 光遇_身高查询 extends plugin {
 
   async 填写密钥(e) {
     const msg = e.msg;
-    const 密钥 = msg.replace(/#|填写身高密钥/g, "").trim();
-    const data = { 密钥 };
-    const qq = '3620060826';
+    const 用户密钥 = msg.replace(/#|填写身高密钥/g, "").trim();
+    const data = { 用户密钥 };
+    const 数据 = '密钥';
     const json = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
-    json[qq] = data;
+    json[数据] = data;
     fs.writeFileSync(密钥文件夹 + "/" + 密钥, JSON.stringify(json, null, "\t"));
-    const 消息 = json.hasOwnProperty(qq) ? "重新填写成功" : "填写成功";
+    const 消息 = json.hasOwnProperty(数据) ? "重新填写成功" : "填写成功";
     await this.reply(消息);
   }
 
