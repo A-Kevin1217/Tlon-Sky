@@ -31,8 +31,15 @@ export class 光遇_身高查询 extends plugin {
       },{
         reg: /^#?获取密钥$/,
         fnc: '获取密钥'
+      },{
+        reg: /^#?查询密钥&/,
+        fnc: '查询密钥'
       }]
     });
+  }
+
+  async 查询密钥(e) {
+    await this.reply(`您的密钥是${秘钥}`)
   }
 
   async 获取密钥(e) {
@@ -105,7 +112,7 @@ export class 光遇_身高查询 extends plugin {
         const 消息 = [文字 ? 文字 : ""];
         await this.reply(消息);
       } else if (data.code === 400) {
-        const 文字 = '秘钥错误或尚未填写密钥请使用#填写身高密钥<密钥>来使用\n无密钥请发送#获取密钥'
+        const 文字 = '秘钥错误或尚未填写密钥\n请使用#填写身高密钥<密钥>来使用\n无密钥请发送#获取密钥'
         const 消息 = [文字 ? 文字 : ""];
         await this.reply(消息);
       }
