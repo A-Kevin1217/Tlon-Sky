@@ -28,7 +28,7 @@ const 音韵 = [
   { name: '致敬钢琴家', date: new Date('2022-03-28')},
   { name: '迎宾侍者', date: new Date('2022-05-23')},
   { name: '献情演员', date: new Date('2022-08-16')},
-  { name: '抛球杂耍', date: new Date('2022-02-05')},
+  { name: '抛球杂耍', date: new Date('2023-06-26')},
   { name: '沉思编导', date: new Date('2022-09-27')},
   { name: '旋转舞者', date: new Date('2022-10-10')}
 ];
