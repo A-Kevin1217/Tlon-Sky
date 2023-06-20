@@ -4,13 +4,15 @@ import fs from 'fs'
 
 const dirpath = "plugins/Tlon-Sky/data/id"
 const 使用次数文件夹 = "plugins/Tlon-Sky/data/使用次数"
-let filename = 'Sky UID.json'
-let 使用次数文件 = '身高查询使用次数.json'
+const filename = 'Sky UID.json'
+const 使用次数文件 = '身高查询使用次数.json'
+const 密钥文件夹 = 'plugins/Tlon-Sky/data'
+const 密钥 = '密钥.json'
 if (!fs.existsSync(dirpath)){fs.mkdirSync(dirpath);}
 if (!fs.existsSync(使用次数文件夹)){fs.mkdirSync(使用次数文件夹);}
 if (!fs.existsSync(dirpath + "/" + filename)) {fs.writeFileSync(dirpath + "/" + filename, JSON.stringify({}))}
 if (!fs.existsSync(使用次数文件夹 + "/" + 使用次数文件)) {fs.writeFileSync(使用次数文件夹 + "/" + 使用次数文件, JSON.stringify({}))}
-let 秘钥 = ''
+if (!fs.existsSync(密钥文件夹 + "/" + 密钥)) {fs.writeFileSync(密钥文件夹 + "/" + 密钥, JSON.stringify({}))}
 
 export class 光遇_身高查询 extends plugin {
   constructor() {
@@ -39,7 +41,9 @@ export class 光遇_身高查询 extends plugin {
   }
 
   async 查询密钥(e) {
-    await this.reply(`您的密钥是${秘钥}`)
+    const 密钥文件 = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
+    const 密钥 = 密钥文件["3620060826"]
+    await this.reply(`您的密钥是${密钥}`)
   }
 
   async 获取密钥(e) {
@@ -48,8 +52,14 @@ export class 光遇_身高查询 extends plugin {
 
   async 填写密钥(e) {
     const msg = e.msg;
-    秘钥 = msg.replace(/#|填写身高密钥/g, "").trim();
-    await this.reply(`填写成功，密钥${秘钥}`)
+    const 密钥 = msg.replace(/#|填写身高密钥/g, "").trim();
+    const data = { 密钥 };
+    const qq = '3620060826';
+    const json = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
+    json[qq] = data;
+    fs.writeFileSync(密钥文件夹 + "/" + 密钥, JSON.stringify(json, null, "\t"));
+    const 消息 = json.hasOwnProperty(qq) ? "重新填写成功" : "填写成功";
+    await this.reply(消息);
   }
 
   async 绑定身高id(e) {
@@ -59,7 +69,7 @@ export class 光遇_身高查询 extends plugin {
     const qq = e.user_id;
     const json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
     json[qq] = data;
-    fs.writeFileSync(`${dirpath}/${filename}`, JSON.stringify(json, null, "\t"));
+    fs.writeFileSync(dirpath + "/" + filename, JSON.stringify(json, null, "\t"));
     const 消息 = json.hasOwnProperty(qq) ? "重新绑定成功" : "绑定成功\n您可使用'#身高查询'查询身高";
     await this.reply(消息);
   }
@@ -97,7 +107,9 @@ export class 光遇_身高查询 extends plugin {
       ]
       await e.reply(消息, false, { recallMsg: 20 }, true);
       const Sky_Uid = json[用户QQ].Sky_Uid;
-      const response = await fetch(`https://ws.lightstar.top/sky/getHeights/${秘钥}&${Sky_Uid}`);
+      const 密钥文件 = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
+      const 密钥 = 密钥文件["3620060826"]
+      const response = await fetch(`https://ws.lightstar.top/sky/getHeights/${密钥}&${Sky_Uid}`);
       const data = await response.json();
       if (data.code === 200) {
         const { scale, height, maxHeight, minHeight, currentHeight } = data.data;
