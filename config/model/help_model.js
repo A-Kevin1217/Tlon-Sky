@@ -64,23 +64,23 @@ export const helpList = [{
   }, {
     "group": "身高查询功能",
     "list": [{
-      "icon": 100,
+      "icon": 51,
       "title": "填写身高密钥",
       "desc": "填写您所购买的密钥"
     }, {
-      "icon": 100,
+      "icon": 52,
       "title": "获取密钥",
       "desc": "获取查询身高密钥"
     }, {
-      "icon": 100,
+      "icon": 53,
       "title": "查询身高密钥",
       "desc": "查询您所填写的密钥"
     }, {
-      "icon": 100,
+      "icon": 54,
       "title": "绑定身高id",
       "desc": "绑定您的光遇ID"
     }, {
-      "icon": 100,
+      "icon": 55,
       "title": "查询身高",
       "desc": "查询您的身高数值" 
     }]
