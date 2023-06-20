@@ -1,4 +1,4 @@
-import plugin from '../../../lib/plugins/plugin.js';
+ import plugin from '../../../lib/plugins/plugin.js';
 import fetch from "node-fetch";
 import fs from 'fs'
 
@@ -47,7 +47,7 @@ export class 光遇_身高查询 extends plugin {
   }
 
   async 获取密钥(e) {
-    await this.reply('声明：密钥与本插件无关，插件只负责调用数据，您想用就买，不想用也可以不买去白嫖，请保管好您的密钥，以下是购买地址')
+    await this.reply('声明：密钥与本插件无关，插件只负责调用数据，您想用就买，不想用也可以不买去白嫖，请保管好您的密钥，以下是购买地址\nQQ：1448717612')
   }
 
   async 填写密钥(e) {
