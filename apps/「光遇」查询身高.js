@@ -34,16 +34,16 @@ export class 光遇_身高查询 extends plugin {
         reg: /^#?获取密钥$/,
         fnc: '获取密钥'
       },{
-        reg: /^#?查询密钥&/,
+        reg: /^#?查询身高密钥$/,
         fnc: '查询密钥'
       }]
     });
   }
 
   async 查询密钥(e) {
-    const 密钥文件 = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
-    const 密钥 = 密钥文件["3620060826"]
-    await this.reply(`您的密钥是${密钥}`)
+    const 密钥文件 = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
+    const 用户密钥 = 密钥文件["密钥"]["用户密钥"]
+    await this.reply(`您的密钥是${用户密钥}`)
   }
 
   async 获取密钥(e) {
@@ -107,9 +107,9 @@ export class 光遇_身高查询 extends plugin {
       ]
       await e.reply(消息, false, { recallMsg: 20 }, true);
       const Sky_Uid = json[用户QQ].Sky_Uid;
-      const 密钥文件 = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
-      const 密钥 = 密钥文件["3620060826"]
-      const response = await fetch(`https://ws.lightstar.top/sky/getHeights/${密钥}&${Sky_Uid}`);
+      const 密钥文件 = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
+      const 用户密钥 = 密钥文件["密钥"]["用户密钥"]
+      const response = await fetch(`https://ws.lightstar.top/sky/getHeights/${用户密钥}&${Sky_Uid}`);
       const data = await response.json();
       if (data.code === 200) {
         const { scale, height, maxHeight, minHeight, currentHeight } = data.data;
