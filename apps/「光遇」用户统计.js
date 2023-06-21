@@ -11,7 +11,8 @@ export class 光遇_用户统计 extends plugin {
       prioity: 100,
       rule: [{
         reg: /^.*/,
-        fnc: 'TJ'
+        fnc: 'TJ',
+        log: false
     },{
         reg: /^光遇用户统计$/,
         fnc: '用户统计'
