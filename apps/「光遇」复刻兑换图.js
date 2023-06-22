@@ -16,9 +16,11 @@ export class 光遇_复刻兑换图 extends plugin {
     })
   }
   async sky_Fk(e) {
+    const Textreply = '经供参考,以正式上线为准'
     const imgreply = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png';
     let msg = [
-        imgreply ? segment.image(imgreply) : ""
+      Textreply ? Textreply : "",
+      imgreply ? segment.image(imgreply) : ""
     ]
     e.reply(msg)
     return true;
