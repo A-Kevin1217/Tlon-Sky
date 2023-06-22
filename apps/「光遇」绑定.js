@@ -20,16 +20,19 @@ export class 光遇_绑定 extends plugin {
       rule: [
         {
           reg: /^#?绑定光遇id(.*)$/,
-          fnc: 'sky_bdid'
+          fnc: '绑定光遇id'
         },{
           reg: /^#?查询光遇id$/,
-          fnc: 'sky_cxid'
-        }
+          fnc: '查询光遇id'
+        },{
+          reg: /^#?绑定身高id(.*)$/,
+          fnc: '绑定身高id'
+        },
       ]
     });
   }
 
-  async sky_bdid(e){
+  async 绑定光遇id(e){
     let msg = e.msg;
     let Sky_id = msg.replace(/#|绑定光遇id/g, "").trim();
     let data = {
@@ -49,7 +52,7 @@ export class 光遇_绑定 extends plugin {
     }
   }
 
-  async sky_cxid(e){
+  async 查询光遇id(e){
     let json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));//读取文件
     let id = e.user_id
     let num
@@ -60,5 +63,17 @@ export class 光遇_绑定 extends plugin {
       num = "您还未绑定id"
     }
     await this.reply(num)
+  }
+  
+  async 绑定身高id(e) {
+    const msg = e.msg;
+    const Sky_Uid = msg.replace(/#|绑定身高id/g, "").trim();
+    const data = { Sky_Uid };
+    const qq = e.user_id;
+    const json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
+    json[qq] = data;
+    fs.writeFileSync(dirpath + "/" + filename, JSON.stringify(json, null, "\t"));
+    const 消息 = json.hasOwnProperty(qq) ? "重新绑定成功" : "绑定成功\n您可使用'#身高查询'查询身高";
+    await this.reply(消息);
   }
 }

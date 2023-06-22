@@ -22,9 +22,6 @@ export class 光遇_身高查询 extends plugin {
       event: 'message',
       priority: 5000,
       rule: [{
-        reg: /^#?绑定身高id(.*)$/,
-        fnc: '绑定身高id'
-      },{
         reg: /^#?(身高查询|查询身高)$/,
         fnc: '身高查询'
       },{
@@ -59,18 +56,6 @@ export class 光遇_身高查询 extends plugin {
     json[数据] = data;
     fs.writeFileSync(密钥文件夹 + "/" + 密钥, JSON.stringify(json, null, "\t"));
     const 消息 = json.hasOwnProperty(数据) ? "重新填写成功" : "填写成功";
-    await this.reply(消息);
-  }
-
-  async 绑定身高id(e) {
-    const msg = e.msg;
-    const Sky_Uid = msg.replace(/#|绑定身高id/g, "").trim();
-    const data = { Sky_Uid };
-    const qq = e.user_id;
-    const json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
-    json[qq] = data;
-    fs.writeFileSync(dirpath + "/" + filename, JSON.stringify(json, null, "\t"));
-    const 消息 = json.hasOwnProperty(qq) ? "重新绑定成功" : "绑定成功\n您可使用'#身高查询'查询身高";
     await this.reply(消息);
   }
   
