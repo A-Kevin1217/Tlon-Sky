@@ -60,60 +60,62 @@ export class 光遇_身高查询 extends plugin {
   }
   
   async 身高查询(e) {
-    let userCounts = JSON.parse(fs.readFileSync(使用次数文件夹 + "/" + 使用次数文件, "utf8"));
-    const 用户QQ = e.user_id
-    const 用户昵称 = e.sender.nickname
-    const 用户群昵称 = e.sender.card
-    const 使用群昵称 = e.group_name
-    const 使用群号 = e.guild_id
+    const 使用次数文件路径 = 使用次数文件夹 + "/" + 使用次数文件;
+    const userCounts = JSON.parse(fs.readFileSync(使用次数文件路径, "utf8"));
+    const 用户QQ = e.user_id;
+    const 用户昵称 = e.sender.nickname;
+    const 用户群昵称 = e.sender.card;
+    const 使用群昵称 = e.group_name;
+    const 使用群号 = e.guild_id;
     const { 使用次数: userCount, 用户信息: userInfo } = userCounts[用户QQ] || { 使用次数: 0, 用户信息: {} };
-    const newCount = userCount + 1;
-    userCounts[用户QQ] = { 
-        使用次数: newCount,
-        用户信息: {
-            ...userInfo,
-            "用户QQ": 用户QQ,
-            "用户昵称": 用户昵称,
-            "用户群昵称": 用户群昵称,
-            "使用群昵称": 使用群昵称,
-            "使用群号": 使用群号,
-        }
+    const newCount = userCount + 1
+    userCounts[用户QQ] = {
+      使用次数: newCount,
+      用户信息: {
+        ...userInfo,
+        "用户QQ": 用户QQ,
+        "用户昵称": 用户昵称,
+        "用户群昵称": 用户群昵称,
+        "使用群昵称": 使用群昵称,
+        "使用群号": 使用群号,
+      }
     };
-    fs.writeFileSync(使用次数文件夹 + "/" + 使用次数文件, JSON.stringify(userCounts, null, "\t"));
+    fs.writeFileSync(使用次数文件路径, JSON.stringify(userCounts, null, "\t"));
     const json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
-    if (json.hasOwnProperty(用户QQ)) {
-      const 打开使用次数文件 = JSON.parse(fs.readFileSync(使用次数文件夹 + "/" + 使用次数文件, "utf8"));
-      const 使用次数 = 打开使用次数文件[`${用户QQ}`]["使用次数"]
+    const id = e.user_id;
+    if (json.hasOwnProperty(id)) {
       const 文字 = 'id已收录，正在查询...\n官频：Tlon-Sky'
       const 图片 = 'plugins/Tlon-Sky/resource/统计及其他/官频.png'
       const 消息 = [
         文字 ? 文字 : "",
         图片 ? segment.image(图片) : ""
-      ]
+      ];
       await e.reply(消息, false, { recallMsg: 20 }, true);
-      const Sky_Uid = json[用户QQ][Sky_Uid];
-      const 密钥文件 = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
-      const 用户密钥 = 密钥文件["密钥"]["用户密钥"]
+      const Sky_Uid = json[id].Sky_Uid;
       const response = await fetch(`https://ws.lightstar.top/sky/getHeights/${用户密钥}&${Sky_Uid}`);
       const data = await response.json();
-      console.log('用户UID：',Sky_Uid)
       if (data.code === 200) {
+        const 打开使用次数文件 = JSON.parse(fs.readFileSync(使用次数文件路径, "utf8"));
+        const 使用次数 = 打开使用次数文件[id]["总使用次数"];
         const { scale, height, maxHeight, minHeight, currentHeight } = data.data;
         const 最高 = Math.floor(maxHeight * 100) / 100;
         const 最矮 = Math.floor(minHeight * 100) / 100;
         const 当前 = Math.floor(currentHeight * 100) / 100;
-        const 文字 = `\n体型 S 值是：\n${scale}\n身高 H 值是：\n${height}\n最高是：${最高.toFixed(3)}号\n最矮是：${最矮.toFixed(3)}号\n目前身高：${当前.toFixed(3)}号\n使用次数：${使用次数}`;  // 拼接身高信息
-        const 消息 = [segment.at(e.user_id), 文字 ? 文字 : ""];
-        await this.reply(消息);
+        const 消息 = [
+          segment.at(e.user_id),
+          '\n体型 S 值是：\n',scale,
+          '\n身高 H 值是：\n',height,
+          '\n最高是：',最高.toFixed(3),
+          '号\n最矮是：',最矮.toFixed(3),
+          '号\n目前身高：',当前.toFixed(3),
+          '号\n总使用次数：',使用次数.toString()
+        ];
+        await e.reply(消息);
       } else if (data.code === 201) {
         const 文字 = '绑定id错误,请重新绑定';
         const 图片 = 'plugins/Tlon-Sky/resource/身高教程.png'
         const 消息 = [文字 ? 文字 : "",图片 ? segment.image(图片) : ""];
-        await this.reply(消息);
-      } else if (data.code === 400) {
-        const 文字 = '秘钥错误或尚未填写密钥\n请使用#填写身高密钥<密钥>来使用\n无密钥请发送#获取密钥'
-        const 消息 = [文字 ? 文字 : ""];
-        await this.reply(消息);
+        await e.reply(消息);
       }
     } else {
       const 文字 = '您还未绑定id';
@@ -122,4 +124,4 @@ export class 光遇_身高查询 extends plugin {
       await e.reply(消息);
     }
   }
-}
+  }
