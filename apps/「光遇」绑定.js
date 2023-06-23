@@ -3,6 +3,7 @@ import fs from 'fs'
 
 const dirpath = "plugins/Tlon-Sky/data/id"
 let filename = `Sky ID.json`
+let 身高ID = 'Sky UID.json'
 if (!fs.existsSync(dirpath)) {//如果文件夹不存在
   fs.mkdirSync(dirpath);//创建文件夹
 }
@@ -70,9 +71,9 @@ export class 光遇_绑定 extends plugin {
     const Sky_Uid = msg.replace(/#|绑定身高id/g, "").trim();
     const data = { Sky_Uid };
     const qq = e.user_id;
-    const json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
+    const json = JSON.parse(fs.readFileSync(dirpath + "/" + 身高ID, "utf8"));
     json[qq] = data;
-    fs.writeFileSync(dirpath + "/" + filename, JSON.stringify(json, null, "\t"));
+    fs.writeFileSync(dirpath + "/" + 身高ID, JSON.stringify(json, null, "\t"));
     const 消息 = json.hasOwnProperty(qq) ? "重新绑定成功" : "绑定成功\n您可使用'#身高查询'查询身高";
     await this.reply(消息);
   }
