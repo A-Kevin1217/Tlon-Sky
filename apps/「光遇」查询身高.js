@@ -106,11 +106,13 @@ export class 光遇_身高查询 extends plugin {
         await this.reply(消息);
       } else if (data.code === 201) {
         const 文字 = '绑定id错误,请重新绑定';
-        const 消息 = [文字 ? 文字 : ""];
+        const 图片 = 'plugins/Tlon-Sky/resource/身高教程.png'
+        const 消息 = [文字 ? 文字 : "",图片 ? segment.image(图片) : ""];
         await this.reply(消息);
       } else if (data.code === 400) {
         const 文字 = '秘钥错误或尚未填写密钥\n请使用#填写身高密钥<密钥>来使用\n无密钥请发送#获取密钥'
-        const 消息 = [文字 ? 文字 : ""];
+        const 图片 = 'plugins/Tlon-Sky/resource/身高教程.png'
+        const 消息 = [文字 ? 文字 : "",图片 ? segment.image(图片) : ""];
         await this.reply(消息);
       }
     } else {
