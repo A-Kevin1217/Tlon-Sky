@@ -91,11 +91,12 @@ export class 光遇_身高查询 extends plugin {
         图片 ? segment.image(图片) : ""
       ]
       await e.reply(消息, false, { recallMsg: 20 }, true);
-      const Sky_Uid = json[用户QQ].Sky_Uid;
+      const Sky_Uid = json[用户QQ][Sky_Uid];
       const 密钥文件 = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
       const 用户密钥 = 密钥文件["密钥"]["用户密钥"]
       const response = await fetch(`https://ws.lightstar.top/sky/getHeights/${用户密钥}&${Sky_Uid}`);
       const data = await response.json();
+      console.log('用户UID：',Sky_Uid)
       if (data.code === 200) {
         const { scale, height, maxHeight, minHeight, currentHeight } = data.data;
         const 最高 = Math.floor(maxHeight * 100) / 100;
