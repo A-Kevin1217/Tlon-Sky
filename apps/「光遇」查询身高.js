@@ -1,4 +1,4 @@
- import plugin from '../../../lib/plugins/plugin.js';
+import plugin from '../../../lib/plugins/plugin.js';
 import fetch from "node-fetch";
 import fs from 'fs'
 
@@ -60,6 +60,7 @@ export class 光遇_身高查询 extends plugin {
   }
   
   async 身高查询(e) {
+    const currentDate = new Date().toISOString().slice(0, 10);
     const 使用次数文件路径 = 使用次数文件夹 + "/" + 使用次数文件;
     const userCounts = JSON.parse(fs.readFileSync(使用次数文件路径, "utf8"));
     const 用户QQ = e.user_id;
