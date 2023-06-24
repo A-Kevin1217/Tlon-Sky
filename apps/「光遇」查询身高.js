@@ -67,18 +67,27 @@ export class 光遇_身高查询 extends plugin {
     const 用户群昵称 = e.sender.card;
     const 使用群昵称 = e.group_name;
     const 使用群号 = e.guild_id;
-    const { 使用次数: userCount, 用户信息: userInfo } = userCounts[用户QQ] || { 使用次数: 0, 用户信息: {} };
-    const newCount = userCount + 1
-    userCounts[用户QQ] = {
-      使用次数: newCount,
-      用户信息: {
-        ...userInfo,
-        "用户QQ": 用户QQ,
-        "用户昵称": 用户昵称,
-        "用户群昵称": 用户群昵称,
-        "使用群昵称": 使用群昵称,
-        "使用群号": 使用群号,
-      }
+    const { 
+      限制次数: userCount限制 = 0,
+      总使用次数: userCount = 0,
+      用户信息: userInfo = {},
+      日期: userDate = ""
+    } = userCounts[用户QQ] || {};
+    if (userDate && userDate === currentDate && userCount限制 >= 7) {
+      await e.reply('您已达到每日使用次数限制');
+      return;
+    }
+    const newCount限制 = userCount限制 + 1; const newCount = userCount + 1; userCounts[用户QQ] = {
+      限制次数: newCount限制, 总使用次数: newCount, 用户信息:
+      {
+        ...userInfo, 
+        "用户QQ": 用户QQ, 
+        "用户昵称": 用户昵称, 
+        "用户群昵称": 用户群昵称, 
+        "使用群昵称": 使用群昵称, 
+        "使用群号": 使用群号
+      },
+      日期: currentDate
     };
     fs.writeFileSync(使用次数文件路径, JSON.stringify(userCounts, null, "\t"));
     const json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
@@ -98,6 +107,8 @@ export class 光遇_身高查询 extends plugin {
       if (data.code === 200) {
         const 打开使用次数文件 = JSON.parse(fs.readFileSync(使用次数文件路径, "utf8"));
         const 使用次数 = 打开使用次数文件[用户QQ]["总使用次数"];
+        let 限制次数 = 打开使用次数文件[用户QQ]["限制次数"];
+        const 剩余次数 = 7 - 限制次数;
         const { scale, height, maxHeight, minHeight, currentHeight } = data.data;
         const 最高 = Math.floor(maxHeight * 100) / 100;
         const 最矮 = Math.floor(minHeight * 100) / 100;
@@ -109,7 +120,8 @@ export class 光遇_身高查询 extends plugin {
           '\n最高是：',最高.toFixed(3),
           '号\n最矮是：',最矮.toFixed(3),
           '号\n目前身高：',当前.toFixed(3),
-          `号\n总使用次数：${使用次数}`
+          `号\n总使用次数：${使用次数.toString()}`,
+          `\n今日剩余查询次数：${剩余次数.toString()}`
         ];
         await e.reply(消息);
       } else if (data.code === 201) {
