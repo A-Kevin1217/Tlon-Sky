@@ -10,32 +10,32 @@ export class 光遇_活动兑换图 extends plugin {
       rule: [
         {
           reg: /^#?(同心|情人)节兑换图$/,
-          fnc: 'sky_txj'
+          fnc: '情人节'
         },{
           reg: /^#?花憩节兑换图$/,
-          fnc: 'sky_hqj'
+          fnc: '花憩节'
         },{
           reg: /^#?集体复刻兑换图$/,
-          fnc: 'sky_jtfk'
+          fnc: '集体复刻'
         },{
           reg: /^#?海洋节兑换图$/,
-          fnc: 'sky_hyj' 
+          fnc: '海洋节' 
+        },{
+          reg: /^#?周年庆兑换图$/,
+          fnc: '周年庆'
         }
       ]
     })
   }
-  async sky_txj(e) {
-    const Textreply = '图源光萌攻略组\n如有侵权,联系Tlon_Fu(微)删除';
+  async 情人节(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/同心节兑换图.png';
     e.reply(
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
-      Textreply ? Textreply : "",
       )
     return true;
   }
-  async sky_hqj(e){
-    const Textreply = '图源光萌攻略组\n如有侵权,联系Tlon_Fu(微)删除';
+  async 花憩节(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/花憩节兑换图.png';
     e.reply(
       segment.at(this.e.user_id),
@@ -44,7 +44,7 @@ export class 光遇_活动兑换图 extends plugin {
       )
     return true;
   }
-  async sky_jtfk(e){
+  async 集体复刻(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/集体复刻兑换图.png';
     e.reply(
       segment.at(this.e.user_id),
@@ -52,13 +52,18 @@ export class 光遇_活动兑换图 extends plugin {
       )
     return true;
   }
-  async sky_hyj(e){
-    const Textreply = '图源光萌攻略组\n如有侵权,联系Tlon_Fu(微)删除';
+  async 海洋节(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/海洋节兑换图.png';
     e.reply(
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
-      Textreply ? Textreply : "",
+    )
+  }
+  async 周年庆(e){
+    const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/周年庆兑换图.png';
+    e.reply(
+      segment.at(this.e.user_id),
+      imgreply ? segment.image(imgreply) : "",
     )
   }
 }
