@@ -109,7 +109,7 @@ export class 光遇_身高查询 extends plugin {
           '\n最高是：',最高.toFixed(3),
           '号\n最矮是：',最矮.toFixed(3),
           '号\n目前身高：',当前.toFixed(3),
-          '号\n总使用次数：',使用次数.toString()
+          `号\n总使用次数：${使用次数}`
         ];
         await e.reply(消息);
       } else if (data.code === 201) {
