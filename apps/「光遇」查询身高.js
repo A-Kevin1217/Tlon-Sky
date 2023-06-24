@@ -6,13 +6,13 @@ const dirpath = "plugins/Tlon-Sky/data/id"
 const 使用次数文件夹 = "plugins/Tlon-Sky/data/使用次数"
 const filename = 'Sky UID.json'
 const 使用次数文件 = '身高查询使用次数.json'
-const 密钥文件夹 = 'plugins/Tlon-Sky/data'
-const 密钥 = '密钥.json'
+// const 密钥文件夹 = 'plugins/Tlon-Sky/data'
+// const 密钥 = '密钥.json'
 if (!fs.existsSync(dirpath)){fs.mkdirSync(dirpath);}
 if (!fs.existsSync(使用次数文件夹)){fs.mkdirSync(使用次数文件夹);}
 if (!fs.existsSync(dirpath + "/" + filename)) {fs.writeFileSync(dirpath + "/" + filename, JSON.stringify({}))}
 if (!fs.existsSync(使用次数文件夹 + "/" + 使用次数文件)) {fs.writeFileSync(使用次数文件夹 + "/" + 使用次数文件, JSON.stringify({}))}
-if (!fs.existsSync(密钥文件夹 + "/" + 密钥)) {fs.writeFileSync(密钥文件夹 + "/" + 密钥, JSON.stringify({}))}
+// if (!fs.existsSync(密钥文件夹 + "/" + 密钥)) {fs.writeFileSync(密钥文件夹 + "/" + 密钥, JSON.stringify({}))}
 
 export class 光遇_身高查询 extends plugin {
   constructor() {
@@ -21,43 +21,46 @@ export class 光遇_身高查询 extends plugin {
       dsc: '光遇',
       event: 'message',
       priority: 5000,
-      rule: [{
+      rule: [
+        {
         reg: /^#?(身高查询|查询身高)$/,
         fnc: '身高查询'
-      },{
-        reg: /^#?填写身高密钥(.*)$/,
-        fnc: '填写密钥'
-      },{
-        reg: /^#?获取密钥$/,
-        fnc: '获取密钥'
-      },{
-        reg: /^#?查询身高密钥$/,
-        fnc: '查询密钥'
-      }]
+      }
+      // ,{
+      //   reg: /^#?填写身高密钥(.*)$/,
+      //   fnc: '填写密钥'
+      // },{
+      //   reg: /^#?获取密钥$/,
+      //   fnc: '获取密钥'
+      // },{
+      //   reg: /^#?查询身高密钥$/,
+      //   fnc: '查询密钥'
+      // }
+    ]
     });
   }
 
-  async 查询密钥(e) {
-    const 密钥文件 = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
-    const 用户密钥 = 密钥文件["密钥"]["用户密钥"]
-    await this.reply(`您的密钥是${用户密钥}`)
-  }
+  // async 查询密钥(e) {
+  //   const 密钥文件 = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
+  //   const 用户密钥 = 密钥文件["密钥"]["用户密钥"]
+  //   await this.reply(`您的密钥是${用户密钥}`)
+  // }
 
-  async 获取密钥(e) {
-    await this.reply('声明：密钥与本插件无关，插件只负责调用数据，您想用就买，不想用也可以不买去白嫖，请保管好您的密钥，以下是购买地址\nQQ：1448717612')
-  }
+  // async 获取密钥(e) {
+  //   await this.reply('声明：密钥与本插件无关，插件只负责调用数据，您想用就买，不想用也可以不买去白嫖，请保管好您的密钥，以下是购买地址\nQQ：1448717612')
+  // }
 
-  async 填写密钥(e) {
-    const msg = e.msg;
-    const 用户密钥 = msg.replace(/#|填写身高密钥/g, "").trim();
-    const data = { 用户密钥 };
-    const 数据 = '密钥';
-    const json = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
-    json[数据] = data;
-    fs.writeFileSync(密钥文件夹 + "/" + 密钥, JSON.stringify(json, null, "\t"));
-    const 消息 = json.hasOwnProperty(数据) ? "重新填写成功" : "填写成功";
-    await this.reply(消息);
-  }
+  // async 填写密钥(e) {
+  //   const msg = e.msg;
+  //   const 用户密钥 = msg.replace(/#|填写身高密钥/g, "").trim();
+  //   const data = { 用户密钥 };
+  //   const 数据 = '密钥';
+  //   const json = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
+  //   json[数据] = data;
+  //   fs.writeFileSync(密钥文件夹 + "/" + 密钥, JSON.stringify(json, null, "\t"));
+  //   const 消息 = json.hasOwnProperty(数据) ? "重新填写成功" : "填写成功";
+  //   await this.reply(消息);
+  // }
   
   async 身高查询(e) {
     const currentDate = new Date().toISOString().slice(0, 10);
@@ -103,7 +106,7 @@ export class 光遇_身高查询 extends plugin {
       const Sky_Uid = json[用户QQ].Sky_Uid;
       const 密钥文件 = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
       const 用户密钥 = 密钥文件["密钥"]["用户密钥"]
-      const response = await fetch(`https://ws.lightstar.top/sky/getHeights/${用户密钥}&${Sky_Uid}`);
+      const response = await fetch(`https://api.t1qq.com/api/sky/sc/sg?key=gLlkn4wsi7O4wxayt2UeJocBmk&cx=${Sky_Uid}`);
       const data = await response.json();
       if (data.code === 200) {
         const 打开使用次数文件 = JSON.parse(fs.readFileSync(使用次数文件路径, "utf8"));
