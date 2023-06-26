@@ -32,8 +32,7 @@ export class 光遇_每日功能 extends plugin {
     });
   }
   async sky_JRRW(e) {
-    TlonS = moment().unix();
-    const Tlon = moment().unix();
+    const startTime = performance.now();
     let  耗时 = Tlon - TlonS
     if (耗时 === 0) {耗时 = '零'}
     const msg = [
@@ -43,11 +42,10 @@ export class 光遇_每日功能 extends plugin {
       '季蜡位置&大蜡烛位置',
       segment.image(JL_URL),
       segment.image(DL_URL),
-      '用时 ',
-      耗时,
-      ' 秒'
     ];
-    e.reply(msg);
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+    e.reply(msg`\n耗时：${duration}毫秒`);
   }
   async sky_DLWZ(e) {
     const now = new Date();
