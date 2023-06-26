@@ -33,7 +33,7 @@ export class 光遇_每日功能 extends plugin {
   }
   async sky_JRRW(e) {
     const startTime = performance.now();
-    const msg = [
+    let msg = [
       segment.image(MF_URL),
       '今日任务',
       segment.image(RW_URL),
@@ -43,7 +43,8 @@ export class 光遇_每日功能 extends plugin {
     ];
     const endTime = performance.now();
     const duration = endTime - startTime;
-    e.reply(msg`\n耗时：${duration}毫秒`);
+    msg = `${msg}\n耗时：${duration}毫秒`
+    e.reply(msg);
   }
   async sky_DLWZ(e) {
     const now = new Date();
