@@ -32,8 +32,7 @@ export class 光遇_每日功能 extends plugin {
     });
   }
   async sky_JRRW(e) {
-    const startTime = performance.now();
-    let msg = [
+    const msg = [
       segment.image(MF_URL),
       '今日任务',
       segment.image(RW_URL),
@@ -41,9 +40,6 @@ export class 光遇_每日功能 extends plugin {
       segment.image(JL_URL),
       segment.image(DL_URL),
     ];
-    const endTime = performance.now();
-    const duration = endTime - startTime;
-    msg = `${msg}\n耗时：${duration}毫秒`
     e.reply(msg);
   }
   async sky_DLWZ(e) {
