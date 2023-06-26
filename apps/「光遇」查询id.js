@@ -11,13 +11,13 @@ export class 光遇_查询id extends plugin {
       rule: [
         {
           reg: /^#?(查询id)(.*)$/,
-          fnc: 'sky_scids'
+          fnc: '查询id'
         }
       ]
     });
   }
 
-  async sky_scids(e) {
+  async 查询id(e) {
     let msg = e.msg;
     let place = msg.replace(/#|查询id/g, "").trim();
     let url = `https://api.t1qq.com/api/sky/gy/gf/uid.php?uid=${place}`;
