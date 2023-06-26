@@ -33,7 +33,6 @@ export class 光遇_每日功能 extends plugin {
   }
   async sky_JRRW(e) {
     const startTime = performance.now();
-    if (耗时 === 0) {耗时 = '零'}
     const msg = [
       segment.image(MF_URL),
       '今日任务',
