@@ -30,7 +30,8 @@ export class 光遇_天气预报 extends plugin {
         segment.image(img0),
         segment.image(img1),
         segment.image(img2),
-        segment.image(img3)
+        segment.image(img3),
+        "数据来源：光遇小精灵"
       ]
       await this.reply(msg, true);
     } else if ( res,code !== 200 ) {
