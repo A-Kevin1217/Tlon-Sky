@@ -22,10 +22,10 @@ export class 光遇_天气预报 extends plugin {
     let res = await fetch(url1).catch((err) => logger.error(err));
     res = await res.json();
     if (res.code === 200 ) {
-      const img0 = res.data[img0]
-      const img1 = res.data[img1]
-      const img2 = res.data[img2]
-      const img3 = res.data[img3]
+      const img0 = res.data.data.img0
+      const img1 = res.data.data.img1
+      const img2 = res.data.data.img2
+      const img3 = res.data.data.img3
       const msg = [
         segment.image(img0),
         segment.image(img1),
