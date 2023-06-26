@@ -7,7 +7,7 @@ const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg';
 const BigHourName = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子'];
 const BigHourType = ['正', '初'];
 const BigMinName = ['零', '一', '二', '三', '四'];
-let TlonS;
+
 export class 光遇_每日功能 extends plugin {
   constructor() {
     super({
@@ -33,7 +33,6 @@ export class 光遇_每日功能 extends plugin {
   }
   async sky_JRRW(e) {
     const startTime = performance.now();
-    let  耗时 = Tlon - TlonS
     if (耗时 === 0) {耗时 = '零'}
     const msg = [
       segment.image(MF_URL),
