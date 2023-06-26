@@ -17,7 +17,7 @@ export class 光遇_天气预报 extends plugin {
       ]
     })
   }
-  async sky_tqyb(e) {
+  async 天气预报(e) {
     let url1 = `https://api.t1qq.com/api/sky/gytq?key=gLlkn4wsi7O4wxayt2UeJocBmk`;
     let res = await fetch(url1).catch((err) => logger.error(err));
     res = await res.json();
