@@ -12,22 +12,29 @@ export class 光遇_天气预报 extends plugin {
       rule: [
         {
           reg: /^#?天气预报$/,
-          fnc: 'sky_tqyb'
+          fnc: '天气预报'
         },
       ]
     })
   }
   async sky_tqyb(e) {
-    let url1 = `https://api.t1qq.com/api/sky/gytq?key=bcVIK8fjrfJzZJtvxwOJMQmLPt`;
+    let url1 = `https://api.t1qq.com/api/sky/gytq?key=gLlkn4wsi7O4wxayt2UeJocBmk`;
     let res = await fetch(url1).catch((err) => logger.error(err));
     res = await res.json();
-    const { url } = res.tq[2];
-    let num
-    if(res.msg === '查询成功'){
-      num = [
-        segment.image(`${url}`),
+    if (res.code === 200 ) {
+      const img0 = res.data[img0]
+      const img1 = res.data[img1]
+      const img2 = res.data[img2]
+      const img3 = res.data[img3]
+      const msg = [
+        segment.image(img0),
+        segment.image(img1),
+        segment.image(img2),
+        segment.image(img3)
       ]
+      await this.reply(msg, true);
+    } else if ( res,code !== 200 ) {
+      await this.reply('获取失败！')
     }
-    await this.reply(num, true);
   }
 }
