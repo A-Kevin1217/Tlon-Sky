@@ -70,7 +70,7 @@ const 集结 = [
 ];
 const 小王子 = [
   { name: '沾沾自喜的自恋狂', date: new Date('2023-01-02')},
-  //{ name: '呼风唤雨的统治者', date: new Date('')},
+  { name: '发号施令的统治者', date: new Date('2023-07-03')},
   //{ name: '打喷嚏的地理学家', date: new Date('')},
   //{ name: '被逼无奈的掌灯人', date: new Date('')},
   { name: '萎靡不振的士兵', date: new Date('2023-01-30')},
