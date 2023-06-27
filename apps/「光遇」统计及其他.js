@@ -10,21 +10,21 @@ export class 光遇_统计及其他 extends plugin {
       rule: [
         {
           reg: /^#?好友树兑换图$/,
-          fnc: 'sky_HYS'
+          fnc: '好友树兑换图'
         },{
           reg: /^#?测量规则$/,
-          fnc: 'sky_CLGZ'
+          fnc: '测量规则'
         },{
           reg: /^#?蜡烛合成机制$/,
-          fnc: 'sky_LZHCJZ'
+          fnc: '蜡烛合成机制'
         },{
           reg: /^#?身高进阶知识$/,
-          fnc: 'sky_SGJJZS'
+          fnc: '身高进阶知识'
         }
       ]
     })
   }
-  async sky_HYS(e) {
+  async 好友树兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/好友树兑换图.png';
     let msg = [
       segment.at(this.e.user_id),
@@ -33,7 +33,7 @@ export class 光遇_统计及其他 extends plugin {
     e.reply (msg )
     return true;
   }
-  async sky_CLGZ(e) {
+  async 测量规则(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/测量规则.png';
     let msg = [
       segment.at(this.e.user_id),
@@ -42,7 +42,7 @@ export class 光遇_统计及其他 extends plugin {
     e.reply( msg )
     return true;
   }
-  async sky_LZHCJZ(e) {
+  async 蜡烛合成机制(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/蜡烛合成机制.png';
     let msg = [
       segment.at(this.e.user_id),
@@ -51,7 +51,7 @@ export class 光遇_统计及其他 extends plugin {
     e.reply( msg )
     return true;
   }
-  async sky_SGJJZS(e) {
+  async 身高进阶知识(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/身高进阶知识.png';
     let msg = [
       segment.at(this.e.user_id),
