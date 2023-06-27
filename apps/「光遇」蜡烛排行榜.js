@@ -11,16 +11,16 @@ export class 光遇_蜡烛排行榜 extends plugin {
       rule: [
         {
           reg: /^#?白蜡排行榜$/,
-          fnc: 'sky_blphb'
+          fnc: '白蜡排行榜'
         },
         {
           reg: /^#?季蜡排行榜$/,
-          fnc: 'sky_jlphb'
+          fnc: '季蜡排行榜'
         }
       ]
     });
   }
-  async sky_blphb(e) {
+  async 白蜡排行榜(e) {
     let msg = e.msg;
     let url = `https://api.t1qq.com/api/sky/gy/sc/id/phb/blphb.php`;
     let res = await fetch(url).catch((err) => logger.error(err))
@@ -44,7 +44,7 @@ export class 光遇_蜡烛排行榜 extends plugin {
     }
     await this.e.reply(await Bot.makeForwardMsg(msgList))
   }
-  async sky_jlphb(e) {
+  async 季蜡排行榜(e) {
     let msg = e.msg;
     let url = `https://api.t1qq.com/api/sky/gy/sc/id/phb/jlphb.php`;
     let res = await fetch(url).catch((err) => logger.error(err))

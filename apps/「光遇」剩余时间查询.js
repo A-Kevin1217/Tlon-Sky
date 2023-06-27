@@ -10,19 +10,19 @@ export class 光遇_剩余时间 extends plugin {
         rule: [
             {
               reg: /^#?季节剩余$/,
-              fnc: 'sky_jjsy'
+              fnc: '季节剩余'
             },
             {
               reg: /^#?活动剩余$/,
-              fnc: 'sky_hdsy'
+              fnc: '活动剩余'
             },{
               reg: /^#?季节结束时间$/,
-              fnc: 'sky_jjjssj'
+              fnc: '季节结束时间'
             }
         ]
     })
 }
-async sky_jjsy(e) {
+async 季节剩余(e) {
   let 季节指定时间 = new Date('2023-7-19 12:00:00').getTime();
   let msg = '';
 
@@ -47,7 +47,7 @@ async sky_jjsy(e) {
   await this.reply(msg, true);
   return;
 }
-async sky_hdsy(e) {
+async 活动剩余(e) {
   let 活动指定时间 = new Date('2023-7-9 23:59:59').getTime();
   let msg = '';
 
@@ -69,7 +69,7 @@ async sky_hdsy(e) {
   await this.reply(msg, true);
   return;
 }
-async sky_jjjssj(e){
+async 季节结束时间(e){
   const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/季节结束时间.png'
   await this.reply([imgreply ? segment.image(imgreply) : ""],true)
 }

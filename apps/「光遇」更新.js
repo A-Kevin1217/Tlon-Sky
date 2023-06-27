@@ -19,16 +19,16 @@ export class 光遇_更新 extends plugin {
             rule: [
                 {
                     reg: /^#?(光遇|sky|SKY|Sky)(插件)?(强制)?(更新)$/,
-                    fnc: 'sky_update'
+                    fnc: 'Sky更新'
                 },{
                     reg: /^#?(Sky更新图库|sky更新图库|光遇更新图库)$/,
-                    fnc: 'sky_updateRes'
+                    fnc: 'Sky更新图库'
                 }
             ]
         })
         this.typeName = 'Tlon-Sky'
     }
-    async sky_update(e) {
+    async Sky更新(e) {
         if (!this.e.isMaster) return false
         if (uping) {
             await this.reply('已有命令更新中..请勿重复操作')
@@ -197,7 +197,7 @@ export class 光遇_更新 extends plugin {
             .replace(/___+/, `<title color="#777777" size="26">${title}</title>`)
         return forwardMsg
     }
-    async sky_updateRes (e) {
+    async Sky更新图库 (e) {
         if (!await checkAuth(e)) return
         let command = '';
         if (fs.existsSync(`${resPath}/光遇绘画分享/`)) {

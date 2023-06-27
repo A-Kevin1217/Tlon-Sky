@@ -11,15 +11,15 @@ export class 光遇_判断图 extends plugin {
       rule: [
         {
           reg: /^#?季蜡判断$/,
-          fnc: 'sky_jlpdt'
+          fnc: '季蜡判断'
         },{
           reg: /^#?大蜡判断$/,
-          fnc: 'sky_dlpdt'
+          fnc: '大蜡判断'
         }
       ]
     })
   }
-  async sky_jlpdt (e) {
+  async 季蜡判断 (e) {
     let month = Number(moment().month()) + 1
     let monthKey = `Yz:count:sendMsg:month:`
     let messageCount = await redis.get(`${monthKey}${month}`) || 0
@@ -36,7 +36,7 @@ export class 光遇_判断图 extends plugin {
     ]
     await this.reply (msg )
   }  
-  async sky_dlpdt (e) {
+  async 大蜡判断 (e) {
     await e.reply('稍等...', true)
     let url = `https://api.t1qq.com/api/sky/gy/img/pdt/dl/yy.png`;
     let url2 = `https://api.t1qq.com/api/sky/gy/img/pdt/dl/yl.png`

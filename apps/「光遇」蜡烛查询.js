@@ -14,17 +14,17 @@ export class 光遇_蜡烛查询 extends plugin {
       rule: [
         {
           reg: /^#?季蜡查询$/,
-          fnc: 'sky_jlcx'
+          fnc: '季蜡查询'
         },
         {
           reg: /^#?白蜡查询$/,
-          fnc: 'sky_blcx'
+          fnc: '白蜡查询'
         }
       ]
     });
   }
 
-  async sky_jlcx(e) {
+  async 季蜡查询(e) {
     let json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
     let id = e.user_id
     let msg = e.msg;
@@ -40,7 +40,7 @@ export class 光遇_蜡烛查询 extends plugin {
     else{await e.reply('您还未绑定id')}
   }
 
-  async sky_blcx(e) {
+  async 白蜡查询(e) {
     let json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
     let id = e.user_id
     let msg = e.msg;

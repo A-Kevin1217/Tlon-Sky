@@ -18,11 +18,11 @@ export class 光遇_每日功能 extends plugin {
       rule: [
         {
           reg: /^#?(光遇今日任务|国服今日任务|今日任务|任务)$/,
-          fnc: 'sky_JRRW',
+          fnc: '每日任务',
         },
         {
           reg: /^#?(大蜡烛位置|大蜡位置|大蜡|DL)$/,
-          fnc: 'sky_DLWZ',
+          fnc: '大蜡位置',
         },
         {
           reg: /^#?(季蜡|季蜡位置|JL)$/,
@@ -31,7 +31,7 @@ export class 光遇_每日功能 extends plugin {
       ],
     });
   }
-  async sky_JRRW(e) {
+  async 每日任务(e) {
     const msg = [
       segment.image(MF_URL),
       '今日任务',
@@ -42,7 +42,8 @@ export class 光遇_每日功能 extends plugin {
     ];
     e.reply(msg);
   }
-  async sky_DLWZ(e) {
+
+  async 大蜡位置(e) {
     const now = new Date();
     const hourName = BigHourName[Math.floor((now.getHours() + 1) / 2)];
     const hourType = BigHourType[now.getHours() % 2];
@@ -53,7 +54,8 @@ export class 光遇_每日功能 extends plugin {
     ];
     e.reply(msg);
   }
-  async sky_JLWZ(e) {
+
+  async 季蜡位置(e) {
     const now = new Date();
     const hour = `0${now.getHours()}`.slice(-2);
     const minutes = `0${now.getMinutes()}`.slice(-2);

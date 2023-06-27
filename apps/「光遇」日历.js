@@ -11,12 +11,12 @@ export class 光遇_日历 extends plugin {
         rule: [
             {
               reg: /^#?(光遇)?日历$/,
-              fnc: 'rl'
+              fnc: '光遇日历'
             }
         ]
     })
 }
-async rl(e) {
+async 光遇日历(e) {
 	const browser = await puppeteer.browserInit();
 	const page = await browser.newPage();
 	await page.setViewport({width: 650,height: 2000});

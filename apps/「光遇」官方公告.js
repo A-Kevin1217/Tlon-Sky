@@ -1,7 +1,5 @@
 import fetch from "node-fetch";
 import plugin from '../../../lib/plugins/plugin.js';
-//消息风控处理来源小飞插件，未获得原作者许可 (别骂我
-//侵权删除
 
 export class 光遇_公告 extends plugin {
     constructor () {
@@ -13,13 +11,13 @@ export class 光遇_公告 extends plugin {
         rule: [
           {
             reg: /^#?光遇公告$/,
-            fnc: 'sky_gg'
+            fnc: '光遇公告'
           },
         ]
       })
     }
 
-    async sky_gg(e) { 
+    async 光遇公告(e) { 
       let url = `https://ma75.update.netease.com/game_notice/announcement_live.json`;
       let res = await fetch(url).catch((err) => logger.error(err))
       res = await res.json()

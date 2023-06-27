@@ -10,13 +10,13 @@ export class 光遇_上传id extends plugin {
       rule: [
         {
           reg: /^#?上传角色/,
-          fnc: 'sky_scid'
+          fnc: '上传角色'
         }
       ]
     });
   }
 
-  async sky_scid(e) {
+  async 上传角色(e) {
     const Textreply = '请扫码绑定Token获取光遇id';
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/上传角色二维码.png'
     await this.reply([

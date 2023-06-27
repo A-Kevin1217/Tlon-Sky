@@ -18,7 +18,7 @@ export class 光遇_常驻兑换图 extends plugin {
             },
             {
                 reg: /^#?雨林兑换图$/,
-                fnc: 'sky_YL'
+                fnc: '雨林兑换图'
             },
             {
                 reg: /^#?(峡谷|霞谷)兑换图$/,

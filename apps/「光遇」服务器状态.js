@@ -11,12 +11,12 @@ export class wenan extends plugin {
       rule: [
         {
           reg: /^#?((SKY|sky|Sky)服务器状态|(sky|SKY|Sky)状态)$/,
-          fnc: 'sky_FWQZT'
+          fnc: 'Sky状态'
         },
       ]
     })
   }
-  async sky_FWQZT(e) { 
+  async Sky状态(e) { 
     let msg = '';
   try {
     let response = await fetch(`https://live-queue-sky-merge.game.163.com/queue?type=json`);

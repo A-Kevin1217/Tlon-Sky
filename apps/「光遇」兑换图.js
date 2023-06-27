@@ -10,42 +10,42 @@ export class 光遇_兑换图 extends plugin {
       rule: [
         {
           reg: /^#?季节兑换图$/,
-          fnc: 'sky_JJDHT'
+          fnc: '季节兑换图'
         },{
           reg: /^#?常驻兑换图$/,
-          fnc: 'sky_CZXZDHT'
+          fnc: '常驻兑换图'
         },{
           reg: /^#?往期复刻图/,
-          fnc: 'sky_WQFKT'
+          fnc: '往期复刻图'
         },{
           reg: /^#?活动兑换图/,
-          fnc: 'sky_HDDHT'
+          fnc: '活动兑换图'
         }
       ]
     })
   }
-  async sky_JJDHT(e) {
+  async 季节兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/季节兑换图.png'
     e.reply(
       imgreply ? segment.image(imgreply) : ""
       )
     return true;
   }
-  async sky_CZXZDHT(e) {
+  async 常驻兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/常驻兑换图.png'
     e.reply(
       imgreply ? segment.image(imgreply) : ""
     )
     return true;
   }
-  async sky_WQFKT(e) {
+  async 往期复刻图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/往期复刻记录.png'
     e.reply(
       imgreply ? segment.image(imgreply) : ""
     )
     return true;
   }
-  async sky_HDDHT(e) {
+  async 活动兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/活动兑换图.png'
     e.reply(
       imgreply ? segment.image(imgreply) : ""

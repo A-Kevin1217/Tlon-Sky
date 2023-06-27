@@ -10,12 +10,12 @@ export class 光遇_全图鉴参考 extends plugin {
         rule: [
           {
             reg: /^#?全图鉴参考$/,
-            fnc: 'sky_qtjck'
+            fnc: '全图鉴参考'
           },
         ]
       })
     }
-    async sky_qtjck (e) {
+    async 全图鉴参考(e) {
       const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/全图鉴参考.png'
       let msg = [
         segment.at(this.e.user_id),

@@ -10,13 +10,13 @@ export class 光遇_复刻预测 extends plugin {
             rule: [
                 {
                     reg: /^#?复刻预测$/,
-                    fnc: 'sky_fkyc'
+                    fnc: '复刻预测'
                 }
             ]
         })
     }
 
-    async sky_fkyc(e) {
+    async 复刻预测(e) {
         let bossName = [
             '火先知','水先知','土先知','风先知',
             '刁蛮浪者','挑衅艺伎','敬礼护卫','舒展大师','跳跃舞者','拳礼武僧',
@@ -34,6 +34,7 @@ export class 光遇_复刻预测 extends plugin {
             //'远古光辉上','远古光辉下','远古冥暗上','远古冥暗下',
             //'希望之种','爱之战士','细心矿工','奔离旅行者',
             //'负伤战士','丧子老兵','乞求孩童','嗫足沏茶师',
+            //'','','','',
         ]
         let randomNumber = Math.ceil(Math.random() * bossName.length - 1)
         let boss1 = bossName[randomNumber]
