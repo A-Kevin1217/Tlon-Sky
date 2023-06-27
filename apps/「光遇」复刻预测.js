@@ -34,7 +34,7 @@ export class 光遇_复刻预测 extends plugin {
             //'远古光辉上','远古光辉下','远古冥暗上','远古冥暗下',
             //'希望之种','爱之战士','细心矿工','奔离旅行者',
             //'负伤战士','丧子老兵','乞求孩童','嗫足沏茶师',
-            //'','','','',
+            //'活跃优等生','忧郁自艾者','古怪边缘人','翻滚捣蛋鬼',
         ]
         let randomNumber = Math.ceil(Math.random() * bossName.length - 1)
         let boss1 = bossName[randomNumber]
