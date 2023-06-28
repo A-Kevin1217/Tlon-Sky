@@ -117,15 +117,25 @@ export class 光遇_身高查询 extends plugin {
         const 最高 = Math.floor(maxHeight * 100) / 100;
         const 最矮 = Math.floor(minHeight * 100) / 100;
         const 当前 = Math.floor(currentHeight * 100) / 100;
+        const { hair, horn, mask, neck, pants, cloak, prop } = data.adorn;
         const 消息 = [
           segment.at(e.user_id),
+          '\n------用户身高-----',
           '\n体型 S 值是：\n',scale,
           '\n身高 H 值是：\n',height,
           '\n最高是：',最高.toFixed(3),
           '号\n最矮是：',最矮.toFixed(3),
           '号\n目前身高：',当前.toFixed(3),
           `号\n总使用次数：${使用次数.toString()}`,
-          `\n今日剩余查询次数：${剩余次数.toString()}`
+          `\n今日剩余查询次数：${剩余次数.toString()}`,
+          '\n------用户装扮-----',
+          '\n发型：',hair,
+          '\n头饰：',horn,
+          '\n面具：',mask,
+          '\n项链：',neck,
+          '\n裤子：',pants,
+          '\n斗篷：',cloak,
+          '\n背饰：',prop
         ];
         await e.reply(消息);
       } else if (data.code === 201) {
