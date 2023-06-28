@@ -23,7 +23,7 @@ export class 光遇_身高查询 extends plugin {
       priority: 5000,
       rule: [
         {
-        reg: /^#?(身高查询|查询身高)$/,
+        reg: /^#?(身高查询|查询身高|我的角色)$/,
         fnc: '身高查询'
       }
       // ,{
