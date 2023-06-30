@@ -62,8 +62,8 @@ export class 光遇_身高查询 extends plugin {
     const json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
     if (json.hasOwnProperty(用户QQ)) {
       const Sky_Uid = json[用户QQ].Sky_Uid;
-        const response = `https://api.t1qq.com/api/sky/sc/adorn.php?cx=${Sky_Uid}&qq=${用户QQ}&nc=${用户昵称}`
-        await e.reply(segment.image(response));
+      const response = `https://api.t1qq.com/api/sky/sc/adorn.php?cx=${Sky_Uid}&qq=${用户QQ}&nc=${用户昵称}`
+      await e.reply(segment.image(response));
     } else {
       const 文字 = '您还未绑定id';
       const 图片 = 'plugins/Tlon-Sky/resource/身高教程.png'
