@@ -64,34 +64,17 @@ export class 光遇_身高查询 extends plugin {
       const Sky_Uid = json[用户QQ].Sky_Uid;
       try {
         const response = await fetch(`https://api.t1qq.com/api/sky/sc/adorn.php?cx=${Sky_Uid}&qq=${用户QQ}&nc=${用户昵称}`);
-        if (response.ok) {
-          const contentType = response.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
-            const data = await response.json();
-            // 处理返回的 JSON 数据
-          } else if (contentType && contentType.includes('image')) {
-            const imageBlob = await response.blob();
-            const imageUrl = URL.createObjectURL(imageBlob);
-            await e.reply(imageUrl)
-          } else {
-            // 处理其他类型的响应
-          }
-        } else if (response.code === 201){
-          const 文字 = '绑定id错误';
-          const 图片 = 'plugins/Tlon-Sky/resource/身高教程.png'
-          const 消息 = [文字 ? 文字 : "",图片 ? segment.image(图片) : ""];
-          e.reply(消息)
-          // 处理请求失败的情况
-        }
-      } catch (error) {
-        // 处理请求异常
-      }
-      
-      const response = await fetch(`https://api.t1qq.com/api/sky/sc/adorn.php?cx=${Sky_Uid}&qq=${用户QQ}&nc=${用户昵称}`);
         const 消息 = [
           response ? segment.image(response) : ""
         ];
         await e.reply(消息);
+      } catch (error) {
+        const 文字 = '查询失败，请确认绑定ID正确';
+        const 图片 = 'plugins/Tlon-Sky/resource/身高教程.png'
+        const 消息 = [文字 ? 文字 : "",图片 ? segment.image(图片) : ""];
+        await e.reply(消息);
+      }
+      
     } else {
       const 文字 = '您还未绑定id';
       const 图片 = 'plugins/Tlon-Sky/resource/身高教程.png'
