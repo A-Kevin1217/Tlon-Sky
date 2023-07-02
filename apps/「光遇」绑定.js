@@ -26,7 +26,7 @@ export class 光遇_绑定 extends plugin {
           reg: /^#?查询光遇id$/,
           fnc: '查询光遇id'
         },{
-          reg: /^#?(绑定身高id|绑定身高)(.*)$/,
+          reg: /^#?绑定身高id(.*)$/,
           fnc: '绑定身高id'
         }
       ]
@@ -68,7 +68,7 @@ export class 光遇_绑定 extends plugin {
   
   async 绑定身高id(e) {
     const msg = e.msg;
-    const Sky_Uid = msg.replace(/#|(绑定身高id|绑定身高)/g, "").trim();
+    const Sky_Uid = msg.replace(/#|绑定身高id)/g, "").trim();
     const data = { Sky_Uid };
     const qq = e.user_id;
     const json = JSON.parse(fs.readFileSync(dirpath + "/" + 身高ID, "utf8"));
