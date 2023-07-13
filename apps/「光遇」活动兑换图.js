@@ -32,48 +32,50 @@ export class 光遇_活动兑换图 extends plugin {
   }
   async 情人节(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/同心节兑换图.png';
-    e.reply(
+    const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
-      )
-    return true;
+    ]
+    e.reply(msg)
   }
   async 花憩节(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/花憩节兑换图.png';
-    e.reply(
+    const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
-      Textreply ? Textreply : "",
-      )
-    return true;
+    ]
+    e.reply(msg)
   }
   async 集体复刻(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/集体复刻兑换图.png';
-    e.reply(
+    const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
-      )
-    return true;
+    ]
+    e.reply(msg)
   }
   async 海洋节(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/海洋节兑换图.png';
-    e.reply(
+    const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
-    )
+    ]
+    e.reply(msg)
   }
   async 周年庆(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/周年庆兑换图.png';
-    e.reply(
+    const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
-    )
+    ]
+    e.reply(msg)
   }
   async 缤纷飞行日(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/飞行日兑换图.png';
-    e.reply(
+    const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
-    )
+    ]
+    e.reply(msg)
   }
 }
