@@ -74,7 +74,7 @@ const 小王子 = [
   //{ name: '打喷嚏的地理学家', date: new Date('')},
   //{ name: '被逼无奈的掌灯人', date: new Date('')},
   { name: '萎靡不振的士兵', date: new Date('2023-01-30')},
-  //{ name: '星光收藏家', date: new Date('')}
+  { name: '星光收藏家', date: new Date('2023-07-17')}
 ];
 export class 光遇_先祖多久未复刻查询 extends plugin {
     constructor () {
