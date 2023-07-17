@@ -18,7 +18,7 @@ export class 光遇_天气预报 extends plugin {
     })
   }
   async 天气预报(e) {
-    let url1 = `https://api.t1qq.com/api/sky/gytq?key=gLlkn4wsi7O4wxayt2UeJocBmk`;
+    let url1 = `https://api.t1qq.com/api/sky/gytq?key=lHV6bOsaNrsNv2hmegRRVMxOUp`;
     let res = await fetch(url1).catch((err) => logger.error(err));
     res = await res.json();
     if (res.code === 200 ) {
@@ -26,11 +26,17 @@ export class 光遇_天气预报 extends plugin {
       const img1 = res.data.img1
       const img2 = res.data.img2
       const img3 = res.data.img3
+      const img4 = res.data.img4
+      const img5 = res.data.img5
+      const img6 = res.data.img6
       const msg = [
         segment.image(img0),
         segment.image(img1),
         segment.image(img2),
         segment.image(img3),
+        segment.image(img4),
+        segment.image(img5),
+        segment.image(img6),
         "数据来源：光遇小精灵"
       ]
       await this.reply(msg, true);
