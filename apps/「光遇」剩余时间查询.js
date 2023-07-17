@@ -11,8 +11,7 @@ export class 光遇_剩余时间 extends plugin {
             {
               reg: /^#?季节剩余$/,
               fnc: '季节剩余'
-            },
-            {
+            },{
               reg: /^#?活动剩余$/,
               fnc: '活动剩余'
             },{
