@@ -11,6 +11,7 @@ if (!fs.existsSync(使用次数文件夹)){fs.mkdirSync(使用次数文件夹);}
 if (!fs.existsSync(dirpath + "/" + filename)) {fs.writeFileSync(dirpath + "/" + filename, JSON.stringify({}))}
 if (!fs.existsSync(使用次数文件夹 + "/" + 使用次数文件)) {fs.writeFileSync(使用次数文件夹 + "/" + 使用次数文件, JSON.stringify({}))}
 
+const 密钥 = ''
 export class 光遇_身高查询 extends plugin {
   constructor() {
     super({
@@ -65,7 +66,7 @@ export class 光遇_身高查询 extends plugin {
     const json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
     if (json.hasOwnProperty(用户QQ)) {
       const Sky_Uid = json[用户QQ].Sky_Uid;
-      const response = `https://api.t1qq.com/api/sky/sc/adorn.php?cx=${Sky_Uid}&qq=${用户QQ}&nc=${用户昵称}`
+      const response = `https://api.t1qq.com/api/sky/sc/sczb?key=${密钥}&cx=${Sky_Uid}`
       await e.reply(segment.image(response));
     } else {
       const 文字 = '您还未绑定id';
@@ -117,9 +118,7 @@ export class 光遇_身高查询 extends plugin {
       ];
       await e.reply(消息, false, { recallMsg: 20 }, true);
       const Sky_Uid = json[用户QQ].Sky_Uid;
-      // const 密钥文件 = JSON.parse(fs.readFileSync(密钥文件夹 + "/" + 密钥, "utf8"));
-      // const 用户密钥 = 密钥文件["密钥"]["用户密钥"]
-      const response = await fetch(`https://api.t1qq.com/api/sky/sc/sg?key=gLlkn4wsi7O4wxayt2UeJocBmk&cx=${Sky_Uid}`);
+      const response = await fetch(`https://api.t1qq.com/api/sky/sc/sg?key=${密钥}&cx=${Sky_Uid}`);
       const data = await response.json();
       if (data.code === 200) {
         const 打开使用次数文件 = JSON.parse(fs.readFileSync(使用次数文件路径, "utf8"));
@@ -156,6 +155,8 @@ export class 光遇_身高查询 extends plugin {
         const 图片 = 'plugins/Tlon-Sky/resource/身高教程.png'
         const 消息 = [文字 ? 文字 : "",图片 ? segment.image(图片) : ""];
         await e.reply(消息);
+      } else if (data.code === 403) {
+        await e.reply('请求密钥KEY不正确！请在用户控制台 https://api.t1qq.com/user/key 申请')
       }
     } else {
       const 文字 = '您还未绑定id';
