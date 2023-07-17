@@ -1,5 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 
+const Textreply = '图片源自光遇官方社群攻略组,如有不妥会及时删除';
 export class 光遇_活动兑换图 extends plugin {
   constructor () {
     super({
@@ -67,6 +68,7 @@ export class 光遇_活动兑换图 extends plugin {
     const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
+      Textreply ? Textreply : "",
     ]
     e.reply(msg)
   }
@@ -75,6 +77,7 @@ export class 光遇_活动兑换图 extends plugin {
     const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
+      Textreply ? Textreply : "",
     ]
     e.reply(msg)
   }
