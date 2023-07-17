@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js';
 import fs from "fs";
 
 
-export class sky_hhfx extends plugin {
+export class 光遇_绘画分享 extends plugin {
   constructor() {
     super({
       name: '光遇_绘画分享',
