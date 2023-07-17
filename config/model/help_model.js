@@ -58,8 +58,8 @@ export const helpList = [{
         "desc": "获取绑定光遇id所需的id"
       }, {
         "icon": 36,
-        "title": "#绑定光遇id #查询光遇id",
-        "desc": "绑定和查询光遇id"
+        "title": "#绑定光遇id",
+        "desc": "绑定光遇id"
       }]
   }, {
     "group": "身高查询功能",
