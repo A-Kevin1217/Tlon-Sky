@@ -1,5 +1,5 @@
 import plugin from "../../../lib/plugins/plugin.js"
-
+import fetch from "node-fetch";
 
 var Sky = false
 export class 光遇_用户统计 extends plugin {
