@@ -25,18 +25,10 @@ export class 光遇_天气预报 extends plugin {
       const img0 = res.data.img0
       const img1 = res.data.img1
       const img2 = res.data.img2
-      const img3 = res.data.img3
-      const img4 = res.data.img4
-      const img5 = res.data.img5
-      const img6 = res.data.img6
       const msg = [
         segment.image(img0),
         segment.image(img1),
         segment.image(img2),
-        segment.image(img3),
-        segment.image(img4),
-        segment.image(img5),
-        segment.image(img6),
         "数据来源：光遇小精灵"
       ]
       await this.reply(msg, true);
