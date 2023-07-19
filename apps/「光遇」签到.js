@@ -1,4 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
+import { render , Data } from '../components/index.js'
+import lodash from 'lodash'
 import fs from 'fs'
 
 fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true });
@@ -18,7 +20,8 @@ export class 光遇_签到 extends plugin {
     })
   }
   async 光遇签到(e) {
-    let msg = '';
+    let msg,msg1,msg2,msg3,msg4 = '';
+    let 获得数量,当前数量,连续天数,累计天数 ='';
     let userId = e.user_id;
     let userData = [];
     let accumulatedDays = 0; // 累计签到天数
@@ -36,12 +39,18 @@ export class 光遇_签到 extends plugin {
     
     if (signInIndex !== -1) {
       // 用户今天已经签到过了
-      msg = `您今天已经签到过了\n当前共有${userData[signInIndex].candles}根蜡烛\n连续签到${userData[signInIndex].continuousDays}天\n累计签到${accumulatedDays}天`;
-      e.reply(msg, true);
+      msg = `签到失败，今日已签`;
+      msg1 = `无`
+      msg2 = `当前共有${userData[signInIndex].candles}根蜡烛`
+      msg3 = `连续签到${userData[signInIndex].continuousDays}天`
+      msg4 = `累计签到${accumulatedDays}天`
+      获得数量 = `无`
+      当前数量 = `${userData[signInIndex].candles}`
+      连续天数 = `${userData[signInIndex].continuousDays}`
+      累计天数 = `${accumulatedDays}`
     } else {
       let candles = Math.floor(Math.random() * 9) + 15;
       let quantity = candles;
-      console.error('签到获得：', candles);
       const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
       const yesterdayIndex = userData.findIndex(data => data.date === yesterday);
       let continuousDays = 1;
@@ -63,11 +72,44 @@ export class 光遇_签到 extends plugin {
       accumulatedDays++; // 更新累计签到天数
     
       // 签到成功，返回签到获得的蜡烛数量、当前蜡烛总数、连续签到天数和累计签到天数
-      msg = `签到成功，获得${quantity}根蜡烛\n当前共有${candles}根蜡烛\n连续签到${continuousDays}天\n累计签到${accumulatedDays}天`;
-      e.reply(msg, true);
+      msg = `签到成功`;
+      msg1 = `获得${quantity}根蜡烛`
+      msg2 = `当前共有${candles}根蜡烛`
+      msg3 = `连续签到${continuousDays}天`
+      msg4 = `累计签到${accumulatedDays}天`
+      获得数量 = `${quantity}`
+      当前数量 = `${candles}`
+      连续天数 = `${continuousDays}`
+      累计天数 = `${accumulatedDays}`
     }
-    
+    let data = {
+      tx: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${userId}`,
+      msg: msg,
+      msg1: msg1,
+      msg2: msg2,
+      msg3: msg3,
+      msg4: msg4,
+      qq: userId,
+      quantity: 获得数量,
+      candles: 当前数量,
+      continuousDays: 连续天数,
+      accumulatedDays: 累计天数
+    }
+    await render('admin/qd', {
+      ...data,
+      bg: await rodom()
+    }, {
+      e,
+      scale: 1.4
+    })
   }
 }
-
-  
+const rodom = async function () {
+  let image = fs.readdirSync('./plugins/Tlon-Sky/resource/admin/imgs/bg')
+  let listImg = []
+  for (let val of image) {
+    listImg.push(val)
+  }
+  let imgs = listImg.length == 1 ? listImg[0] : listImg[lodash.random(0, listImg.length - 1)]
+  return imgs
+}

@@ -1,0 +1,68 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" />
+<style>
+	.container {
+		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144 top !important;
+		background-size: cover !important;
+		width: 800px;
+	}
+</style>
+{{/block}}
+{{block 'main'}}
+
+<div class="info_box">
+	<div class="head-box type{{bgType}}">
+		<div class="label">Tlon-Sky</div>
+		<div class="title">光遇签到</div>
+	</div>
+</div>
+<div class = "box">
+	<div id = "box3">
+		<div class ="container">
+			<img src = {{tx}} alt = "头像" >
+		</div>
+	</div>
+</div>
+ <div class="cfg-box">
+    <div class="cfg-group">{{qq}}</div>
+    <ul class="cfg-ul">
+
+		<li class="cfg-li">
+			<div class="cfg-line">
+				签到状态
+				<span class="cfg-hint">{{msg}}</span>
+			</div>
+		</li>
+
+		<li class="cfg-li">
+			<div class="cfg-line">
+				签到获得
+				<span class="cfg-hint">{{msg1}}</span>
+			</div>
+		</li>
+
+		<li class="cfg-li">
+			<div class="cfg-line">
+				当前拥有
+				<span class="cfg-hint">{{msg2}}</span>
+			</div>
+		</li>
+
+		<li class="cfg-li">
+			<div class="cfg-line">
+				连续签到
+				<span class="cfg-hint">{{msg3}}</span>
+			</div>
+		</li>
+
+		<li class="cfg-li">
+			<div class="cfg-line">
+				累计签到
+				<span class="cfg-hint">{{msg4}}</span>
+			</div>
+		</li>
+    </ul>
+ </div>
+ {{/block}}
