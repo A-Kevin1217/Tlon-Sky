@@ -78,7 +78,7 @@ body {
   position: absolute;
   width: 100px; /* 宽度 */
   height: 100px; /* 高度 */
-  top: 15%; /* 垂直位置，大向下，小向上 */
+  top: 20%; /* 垂直位置，大向下，小向上 */
   right: 90%; /* 水平位置，大向左，小向右 */
   padding: 5px;
   background: rgba(245, 240, 240, 0.07);
