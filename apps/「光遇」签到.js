@@ -20,6 +20,7 @@ export class 光遇_签到 extends plugin {
     })
   }
   async 光遇签到(e) {
+    let 昵称 = e.sender.nickname;
     let msg,msg1,msg2,msg3,msg4 = '';
     let 获得数量,当前数量,连续天数,累计天数 ='';
     let userId = e.user_id;
@@ -89,7 +90,7 @@ export class 光遇_签到 extends plugin {
       msg2: msg2,
       msg3: msg3,
       msg4: msg4,
-      qq: userId,
+      qq: 昵称,
       quantity: 获得数量,
       candles: 当前数量,
       continuousDays: 连续天数,
