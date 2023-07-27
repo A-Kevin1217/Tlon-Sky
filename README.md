@@ -24,7 +24,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 * 使用指令：`Sky更新图库`
 * 后续更新图库同上
 
-#### 功能
+## 🎉功能
 <details>
 <summary>功能列表</summary>
 <p align="center">
@@ -34,49 +34,44 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 
 # 图源来自网络，如有侵权，联系删除
 
-<div align="center">
+## 开发不易
 
-#### 开发不易
+点个Star就是对我最大的支持!
 
-</div>
+## 📞 联系
+QQ：3620060826
+<details>
+<summary>扫描二维码添加</summary>
+<p align="center">
+<img width = "600" src="resource/Q二维码.png">
+</p>
+</details>
+官群：[392665563](https://jq.qq.com/?_wv=1027&k=VQAEpAlH)
+<details>
+<summary>扫描二维码添加</summary>
+<p align="center">
+<img width = "600" src="resource/群二维码.png">
+</p>
+</details>
 
-<div align="center">点个Star就是对我最大的支持!</div>
-<div align="center">
 
- 一起玩耍加群~[392665563](https://jq.qq.com/?_wv=1027&k=VQAEpAlH)
 
-</div>
+## 💰赞助
 
-<div align="center">
+[爱发电](https://afdian.net/a/Tloml-Starry)
+<details>
+<summary>二维码</summary>
+<p align="center">
+<img width = "600" src="resource/赞助二维码.png">
+</p>
+</details>
 
-#### 请我喝瓶阿萨姆~
-
-</div>
-
-<div align="center">
-
-请我喝一瓶阿萨姆提供动力~☛[爱发电](https://afdian.net/a/Tloml-Starry)
-
-</div>
-
-<div align="center">
-
-#### BUG反馈及优化
-
-</div>
-
-<div align="center">
+## BUG反馈及优化
 
 请向本项目发起☛[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues/I6LRZ9)
 
-</div>
-
 ☛[预告功能](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E9%A2%84%E5%91%8A%E5%8A%9F%E8%83%BD)
 
-
-
 ☛[鸣谢名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E9%B8%A3%E8%B0%A2%E5%90%8D%E5%8D%95)
-
-
 
 ☛[赞助名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E8%B5%9E%E5%8A%A9%E5%90%8D%E5%8D%95)
