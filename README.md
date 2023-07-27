@@ -51,7 +51,7 @@ QQ：3620060826
 <details>
 <summary>扫描二维码添加</summary>
 <p align="center">
-<img width = "600" src="resource/群二维码.png">
+<img width = "600" src="resource/群二维码.jpg">
 </p>
 </details>
 
