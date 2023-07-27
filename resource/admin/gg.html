@@ -1,0 +1,34 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" />
+
+<style>
+	.container {
+		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144 top !important;
+		background-size: cover !important;
+		width: 800px;
+	}
+</style>
+{{/block}}
+{{block 'main'}}
+
+<div class="info_box">
+	<div class="head-box type{{bgType}}">
+		<div class="label">Tlon-Sky</div>
+		<div class="title">光遇公告</div>
+	</div>
+</div>
+
+ <div class="cfg-box">
+    <div class="cfg-group">{{qq}}</div>
+    <ul class="cfg-ul">
+		<li class="cfg-li">
+			<div class="cfg-line">
+				光遇公告：<br><span class="cfg-hint">{{msg}}</span>
+			</div>
+
+		</li>
+    </ul>
+ </div>
+ {{/block}}
