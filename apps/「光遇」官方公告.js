@@ -22,6 +22,7 @@ export class 光遇_公告 extends plugin {
   }
   
   async 光遇公告(e) {
+    const 昵称 = e.sender.nickname;
     let url = `https://ma75.update.netease.com/game_notice/announcement_live.json`;
     let res = await fetch(url).catch((err) => logger.error(err))
     res = await res.json()
