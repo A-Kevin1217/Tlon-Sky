@@ -26,8 +26,11 @@ export class 光遇_公告 extends plugin {
     let url = `https://ma75.update.netease.com/game_notice/announcement_live.json`;
     let res = await fetch(url).catch((err) => logger.error(err))
     res = await res.json()
-    const msg = `${res.Title}\n${res.OtherChannelMessage}`
+    const msg = res.OtherChannelMessage
+
+    const msg1 = res.Title
     let data = {
+      msg1: msg1,
       msg: msg,
       qq: 昵称
     }
