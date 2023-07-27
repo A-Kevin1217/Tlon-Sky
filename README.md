@@ -46,6 +46,7 @@ QQ：3620060826
 <img width = "600" src="resource/Q二维码.png">
 </p>
 </details>
+
 官群：[392665563](https://jq.qq.com/?_wv=1027&k=VQAEpAlH)
 <details>
 <summary>扫描二维码添加</summary>
