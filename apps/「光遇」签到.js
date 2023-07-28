@@ -35,7 +35,9 @@ export class 光遇_签到 extends plugin {
       fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, '[]', 'utf8');
     }
     
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getCurrentDate();
+    const yesterday = getYesterdayDate();
+    
     const signInIndex = userData.findIndex(data => data.date === today);
     
     if (signInIndex !== -1) {
@@ -105,6 +107,26 @@ export class 光遇_签到 extends plugin {
     })
   }
 }
+
+// 获取当前日期（YYYY-MM-DD）
+function getCurrentDate() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// 获取昨天的日期（YYYY-MM-DD）
+function getYesterdayDate() {
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 const rodom = async function () {
   let image = fs.readdirSync('./plugins/Tlon-Sky/resource/admin/imgs/bg')
   let listImg = []
