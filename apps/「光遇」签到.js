@@ -70,7 +70,7 @@ export class 光遇_签到 extends plugin {
       };
     
       userData.push(signInData);
-      fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, JSON.stringify(userData), 'utf8');
+      fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, JSON.stringify(userData, null, 4), 'utf8');
     
       accumulatedDays++; // 更新累计签到天数
     
