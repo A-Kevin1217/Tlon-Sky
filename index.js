@@ -6,7 +6,13 @@ if (!global.segment) {
   global.segment = (await import("oicq")).segment
 }
 
-const files = fs.readdirSync('./plugins/Tlon-Sky/apps').filter(file => file.endsWith('.js'))
+const dir1 = './plugins/Tlon-Sky/apps';
+const dir2 = './plugins/Tlon-Sky/apps/签到玩法';
+
+const files = [
+  ...fs.readdirSync(dir1),
+  ...fs.readdirSync(dir2)
+].filter(file => file.endsWith('.js'));
 
 let ret = []
 
