@@ -110,19 +110,7 @@ export class 光遇_签到 extends plugin {
       })
     } catch (error) {
       console.error('保存数据失败:', error);
-      签到状态 = '签到失败，请稍后再试！'
-      let html = {
-        QQ昵称: 昵称,
-        tx: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${userId}`,
-        签到状态: 签到状态,
-      }
-      await render('admin/签到', {
-        ...html,
-        bg: await rodom()
-      }, {
-        e,
-        scale: 1.4
-      })
+      e.reply('签到失败，请稍后再试！');
     }
   }
 }
