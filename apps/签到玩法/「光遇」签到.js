@@ -1,5 +1,5 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import { render } from '../components/index.js'
+import plugin from '../../../../lib/plugins/plugin.js'
+import { render } from '../../components/index.js'
 import lodash from 'lodash'
 import fs from 'fs'
 
