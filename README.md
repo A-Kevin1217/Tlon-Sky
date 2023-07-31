@@ -70,9 +70,3 @@ QQ：3620060826
 ## BUG反馈及优化
 
 请向本项目发起☛[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues/I6LRZ9)
-
-☛[预告功能](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E9%A2%84%E5%91%8A%E5%8A%9F%E8%83%BD)
-
-☛[鸣谢名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E9%B8%A3%E8%B0%A2%E5%90%8D%E5%8D%95)
-
-☛[赞助名单](https://gitee.com/Tloml-Starry/Tlon-Sky/wikis/%E8%B5%9E%E5%8A%A9%E5%90%8D%E5%8D%95)
