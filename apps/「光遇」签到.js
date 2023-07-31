@@ -21,6 +21,7 @@ export class 光遇_签到 extends plugin {
   }
   async 光遇签到(e) {
     let 签到状态,获得白蜡,获得季蜡,获得能量值,等级,当前能量值,累计签到提示 = '';
+    let 昵称 = e.sender.nickname;
     let userId = e.user_id;
     const fileName = (`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, 'utf8');
 
@@ -62,7 +63,7 @@ export class 光遇_签到 extends plugin {
     const 当前等级 = (data[userId] && data[userId].等级) || 0;
     // 更新签到数据
     data[userId] = {
-      昵称: e.msg.author.username,
+      昵称: e.sender.nickname,
       最后签到日期: getCurrentDate(),
       连续签到天数: is连续签到 ? (连续签到天数 + 1) : 1,
       累计签到天数: 累计签到天数 + 1,
