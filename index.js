@@ -7,11 +7,9 @@ if (!global.segment) {
 }
 
 const dir1 = './plugins/Tlon-Sky/apps';
-const dir2 = './plugins/Tlon-Sky/apps/签到玩法';
 
 const files = [
-  ...fs.readdirSync(dir1),
-  ...fs.readdirSync(dir2)
+  ...fs.readdirSync(dir1)
 ].filter(file => file.endsWith('.js'));
 
 let ret = []
