@@ -23,7 +23,7 @@ export class 光遇_签到 extends plugin {
     let 签到状态,获得白蜡,获得季蜡,获得能量值,等级,当前能量值,累计签到提示 = '';
     let 昵称 = e.sender.nickname;
     let userId = e.user_id;
-    const fileName = (`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, 'utf8');
+    const fileName = (`plugins/Tlon-Sky/data/Sky签到/${userId}.json`);
 
     // 检查文件是否存在
     const fileExists = fs.existsSync(fileName);
