@@ -34,7 +34,7 @@ export class 光遇_公告 extends plugin {
       msg: msg,
       qq: 昵称
     }
-    await render('admin/gg', {
+    await render('admin/公告', {
       ...data,
       bg: await rodom()
     }, {
