@@ -29,22 +29,23 @@ export class 我的信息 extends plugin {
             const 最后签到日期 = userJson[userId]['最后签到日期']
             const 连续签到天数 = userJson[userId]['连续签到天数']
             const 累计签到天数 = userJson[userId]['累计签到天数']
-            const 白蜡数 = userJson[userId]['白蜡数']
-            const 季蜡数 = userJson[userId]['季蜡数']
+            const 白蜡数 = userJson[userId]['白蜡']
+            const 季蜡数 = userJson[userId]['季蜡']
             const 能量值 = userJson[userId]['能量值']
             const 等级 = userJson[userId]['等级']
             const 信息 = [
                 `昵称：${昵称}\n`,
-                `等级：${等级} | 能量值：${能量值}/100\n`,
+                `等级：${等级}\n`,
+                `能量值：${能量值}/100\n`,
                 `白蜡数：${白蜡数}\n`,
-                `季蜡数：${季蜡数}\n`
+                `季蜡数：${季蜡数}\n`,
                 `连续签到：${连续签到天数}天\n`,
                 `累计签到：${累计签到天数}天\n`,
                 `最后签到日期：${最后签到日期}`
             ]
             e.reply(信息);
         } catch (err) {
-            console.error(err);
+            logger.mark(err);
             e.reply('无法找到用户数据');
         }
     }
