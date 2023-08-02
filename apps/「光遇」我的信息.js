@@ -1,4 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js';
+import { render } from '../components/index.js'
+import lodash from 'lodash'
 import fs from 'fs';
 
 export class 我的信息 extends plugin {
