@@ -1,8 +1,8 @@
 import plugin from '../../../lib/plugins/plugin.js';
-import moment from 'moment';
-const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mrrw.jpg';
-const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/scjl.jpg';
-const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/scdl.jpg';
+
+const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg';
+const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg';
+const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg';
 const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg';
 const BigHourName = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子'];
 const BigHourType = ['正', '初'];
