@@ -1,0 +1,39 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" />
+
+<style>
+	.container {
+		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144 top !important;
+		background-size: cover !important;
+		width: 800px;
+	}
+</style>
+{{/block}}
+{{block 'main'}}
+<div class="info_box">
+	<div class="head-box type{{bgType}}">
+		<div class="label">Tlon-Sky</div>
+		<div class="title">光遇信息</div>
+	</div>
+</div>
+
+<div class="cfg-box">
+    <ul class="cfg-ul">
+        <li class="cfg-li">
+            <div class="cfg-line">
+                <img src="{{头像}}" alt="头像" class="profile-picture">
+                <h1>{{昵称}}</h1>
+                <h1>{{等级}}</h1>
+                <h1>{{能量值}}</h1>
+                <h1>{{白蜡数}}</h1>
+                <h1>{{季蜡数}}</h1>
+                <h1>{{连续签到}}</h1>
+                <h1>{{累计签到}}</h1>
+                <h1>{{最后签到日期}}</h1>
+            </div>
+        </li>
+    </ul>
+</div>
+{{/block}}
