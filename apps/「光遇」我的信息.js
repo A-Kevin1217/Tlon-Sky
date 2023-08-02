@@ -46,7 +46,7 @@ export class 我的信息 extends plugin {
             e.reply(信息);
         } catch (err) {
             logger.mark(err);
-            e.reply('无法找到用户数据');
+            e.reply('无法找到用户数据\n请先发送"光遇签到"');
         }
     }
 }
