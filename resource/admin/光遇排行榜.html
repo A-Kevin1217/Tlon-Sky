@@ -1,0 +1,59 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" />
+
+<style>
+	.container {
+		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144 top !important;
+		background-size: cover !important;
+		width: 800px;
+	}
+</style>
+{{/block}}
+{{block 'main'}}
+
+<div class="info_box">
+	<div class="head-box type{{bgType}}">
+		<div class="label">Tlon-Sky</div>
+		<div class="title">光遇排行榜</div>
+	</div>
+</div>
+
+ <div class="cfg-box">
+    <div class="cfg-group">等级榜</div>
+    <ul class="cfg-ul">
+		<li class="cfg-li">
+			<div class="cfg-line">
+                <div id="textContainer" style="white-space: pre-line;">
+                    <h1>{{等级信息}}</h1>
+                </div>
+            </div>
+		</li>
+    </ul>
+ </div>
+ <div class="cfg-box">
+    <div class="cfg-group">白蜡榜</div>
+    <ul class="cfg-ul">
+		<li class="cfg-li">
+			<div class="cfg-line">
+                <div id="textContainer" style="white-space: pre-line;">
+                    <h1>{{白蜡信息}}</h1>
+                </div>
+            </div>
+		</li>
+    </ul>
+ </div>
+ <div class="cfg-box">
+    <div class="cfg-group">季蜡榜</div>
+    <ul class="cfg-ul">
+		<li class="cfg-li">
+			<div class="cfg-line">
+                <div id="textContainer" style="white-space: pre-line;">
+                    <h1>{{季蜡信息}}</h1>
+                </div>
+            </div>
+		</li>
+    </ul>
+ </div>
+ {{/block}}

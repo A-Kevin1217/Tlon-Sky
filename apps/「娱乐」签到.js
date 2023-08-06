@@ -4,11 +4,11 @@ import lodash from 'lodash'
 import fs from 'fs'
 
 fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true });
-export class 光遇_签到 extends plugin {
+export class 娱乐_签到 extends plugin {
   constructor () {
     super({
-      name: '光遇_签到',
-      dsc: '光遇',
+      name: '娱乐_签到',
+      dsc: '娱乐',
       event: 'message',
       priority: 5000,
       rule: [
