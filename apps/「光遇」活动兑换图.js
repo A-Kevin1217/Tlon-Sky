@@ -27,6 +27,9 @@ export class 光遇_活动兑换图 extends plugin {
         },{
           reg: /^#?(飞行日|彩虹日|彩虹节|缤纷飞行日)兑换图$/,
           fnc: '缤纷飞行日'
+        },{
+          reg: /^#?音乐节兑换图$/,
+          fnc: '音乐节'
         }
       ]
     })
@@ -74,6 +77,15 @@ export class 光遇_活动兑换图 extends plugin {
   }
   async 缤纷飞行日(e){
     const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/飞行日兑换图.png';
+    const msg = [
+      segment.at(this.e.user_id),
+      imgreply ? segment.image(imgreply) : "",
+      Textreply ? Textreply : "",
+    ]
+    e.reply(msg)
+  }
+  async 音乐节(e){
+    const imgreply = 'plugins/Tlon-Sky/resource/活动兑换图/音乐节兑换图.png';
     const msg = [
       segment.at(this.e.user_id),
       imgreply ? segment.image(imgreply) : "",
