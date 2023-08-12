@@ -57,11 +57,11 @@ const 预言 = [
 const 梦想 = [
   { name: '偷窥邮差', date: new Date('2022-02-14')},
   { name: '熊抱雪人', date: new Date('2022-02-28')},
-  { name: '回旋大师', date: new Date('2022-05-04')},
+  { name: '回旋大师', date: new Date('2023-07-31')},
   //{ name: '跳舞艺人', date: new Date('')}
 ];
 const 集结 = [
-  { name: '白日梦森林人', date: new Date('2022-11-22')},
+  { name: '白日梦森林人', date: new Date('2023-08-14')},
   //{ name: '茫然植物学生', date: new Date('')},
   { name: '正步冒险家', date: new Date('2022-07-19')},
   //{ name: '傻笑童子军', date: new Date('')},
