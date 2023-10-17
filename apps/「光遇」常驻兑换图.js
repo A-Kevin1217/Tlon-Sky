@@ -38,7 +38,8 @@ export class 光遇_常驻兑换图 extends plugin {
             }
         ]
     })
-}
+  }
+
   async 晨岛兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/晨岛.png';
       let msg = [
@@ -47,6 +48,7 @@ export class 光遇_常驻兑换图 extends plugin {
       e.reply(msg, true)
       return true;
   }
+
   async 云野兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/云野.png';
       let msg = [
@@ -55,6 +57,7 @@ export class 光遇_常驻兑换图 extends plugin {
       e.reply(msg, true)
       return true;
   }
+
   async 雨林兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/雨林.png';
       let msg = [
@@ -63,6 +66,7 @@ export class 光遇_常驻兑换图 extends plugin {
       e.reply(msg, true)
       return true;
   }
+
   async 霞谷兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/霞谷.png';
       let msg = [
@@ -71,6 +75,7 @@ export class 光遇_常驻兑换图 extends plugin {
       e.reply(msg, true)
       return true;
   }
+
   async 暮土兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/暮土.png';
       let msg = [
@@ -79,6 +84,7 @@ export class 光遇_常驻兑换图 extends plugin {
       e.reply(msg, true)
       return true;
   }
+
   async 禁阁兑换图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/常驻先祖兑换图/禁阁.png';
       let msg = [
@@ -87,6 +93,7 @@ export class 光遇_常驻兑换图 extends plugin {
       e.reply(msg, true)
       return true;
   }
+  
   async 错误名称(e) {
     const Textreply = '不是"墓"土哦亲，是"暮"土';
       let msg = [

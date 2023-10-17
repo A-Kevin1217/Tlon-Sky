@@ -1,15 +1,16 @@
 import plugin from '../../../lib/plugins/plugin.js';
-import fs from 'fs'
+import fs from 'fs';
 
-const dirpath = "plugins/Tlon-Sky/data/id"
-let filename = `Sky ID.json`
-if (!fs.existsSync(dirpath)) {
-  fs.mkdirSync(dirpath);
+const DIR_PATH = "plugins/Tlon-Sky/data/id";
+const FILE_NAME = `Sky ID.json`;
+
+if (!fs.existsSync(DIR_PATH)) {
+  fs.mkdirSync(DIR_PATH);
 }
-if (!fs.existsSync(dirpath + "/" + filename)) {
-  fs.writeFileSync(dirpath + "/" + filename, JSON.stringify({
-  }))
-}
+
+const jsonFilePath = `${DIR_PATH}/${FILE_NAME}`;
+const json = fs.existsSync(jsonFilePath) ? JSON.parse(fs.readFileSync(jsonFilePath, "utf8")) : {};
+
 export class 光遇_绑定 extends plugin {
   constructor() {
     super({
@@ -26,23 +27,17 @@ export class 光遇_绑定 extends plugin {
     });
   }
 
-  async 绑定光遇id(e){
-    let msg = e.msg;
-    let Sky_id = msg.replace(/#|绑定光遇id/g, "").trim();
-    let data = {
-      "Sky_id": Sky_id,
+  async 绑定光遇id() {
+    const { msg, user_id: id } = e;
+    const skyId = msg.replace(/#|绑定光遇id/g, "").trim();
+    const data = {
+      "skyId": skyId,
     }
-    const id = e.user_id
-    let json = JSON.parse(fs.readFileSync(dirpath + "/" + filename, "utf8"));
-    if(!json.hasOwnProperty(id)) {
-      json[id] = data
-      fs.writeFileSync(dirpath + "/" + filename, JSON.stringify(json, null, "\t"));
-      await this.reply("绑定成功")
-    }
-    else{
-      json[id] = data
-      fs.writeFileSync(dirpath + "/" + filename, JSON.stringify(json, null, "\t"));
-      await this.reply("重新绑定成功")
-    }
+
+    json[id] = data;
+    fs.writeFileSync(jsonFilePath, JSON.stringify(json, null, "\t"));
+
+    const replyMessage = json.hasOwnProperty(id) ? "重新绑定成功" : "绑定成功";
+    await this.reply(replyMessage);
   }
 }

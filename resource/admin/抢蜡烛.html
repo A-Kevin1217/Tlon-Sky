@@ -1,11 +1,8 @@
 {{extend defaultLayout}}
 {{block 'css'}}
-
-<!-- <link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" /> -->
-
 <style>
 	.container {
-		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144 top !important;
+		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #D9D9F3 top !important;
 		background-size: cover !important;
 		width: 800px;
 	}
@@ -139,6 +136,12 @@
 		font-size: 14px;
 		line-height: 18px;
 	}
+	.lime {
+        color: lime;
+    }
+	.red {
+		color: red;
+	}
 </style>
 {{/block}}
 {{block 'main'}}
@@ -148,8 +151,9 @@
         <li class="cfg-li">
 			<img src="{{头像}}" alt="头像" class="profile-picture" style="width:170px; height:170px;">
 			<h1>{{昵称}}</h1>
-			<h1>{{等级}}</h1>
-			<h1>{{能量值}}</h1>
+			<h2>ID：{{用户ID}}</h2>
+			<h2>白蜡数：{{当前蜡烛}} + <span class="lime">{{抢得蜡烛}}</span></h2>
+			<h2>抢蜡烛次数：{{当前抢蜡烛次数}} + <span class="lime">1</span></h2>
 		</li>
 	</ul>
 </div>
@@ -157,49 +161,12 @@
 <div class="cfg-box">
     <ul class="cfg-ul">
         <li class="cfg-li">
-			<h1><em>签到信息</em></h1>
-			<h2>{{白蜡数}}</h2>
-			<h2>{{季蜡数}}</h2>
-			<h2>{{连续签到}}</h2>
-			<h2>{{累计签到}}</h2>
-			<h2>{{最后签到日期}}</h2>
-		</li>
-    </ul>
-</div>
-<div class="cfg-box">
-    <ul class="cfg-ul">
-        <li class="cfg-li">
-			<h1><em>抢蜡烛信息</em></h1>
-			<h2>{{抢次数}}</h2>
-			<h2>{{被抢次数}}</h2>
-			<h2>{{抢蜡烛总数}}</h2>
-			<h2>{{被抢蜡烛总数}}</h2>
-			<h2>{{平均抢}}</h2>
-			<h2>{{平均被抢}}</h2>
-			<h5>于2023-10-06 2:30开始记录</h5>
-        </li>
-    </ul>
-</div>
-<div class="cfg-box">
-	<ul class="cfg-ul">
-		<li class="cfg-li">
-			<h1><em>赌蜡烛信息</em></h1>
-			<h2>{{胜}}</h2>
-			<h2>{{负}}</h2>
-			<h2>{{平}}</h2>
-			<h2>{{总赚取}}</h2>
-			<h2>{{总亏损}}</h2>
-			<h5>于2023-10-06 2:30开始记录</h5>
+			<img src="{{被抢人头像}}" alt="头像" class="profile-picture" style="width:170px; height:170px;">
+			<h1>{{被抢人昵称}}</h1>
+			<h2>ID：{{被抢用户ID}}</h2>
+			<h2>白蜡数：{{被抢人当前蜡烛}} - <span class="red">{{抢得蜡烛}}</span></h2>
+			<h2>被抢次数：{{当前被抢次数}} + <span class="red">1</span></h2>
 		</li>
 	</ul>
 </div>
-<div class="cfg-box">
-	<ul class="cfg-ul">
-		<li class="cfg-li">
-			<h1><em>送蜡烛信息</em></h1>
-			<h2>{{总赠送数量}}</h2>
-			<h2>{{总收入数量}}</h2>
-		</li>
-	</ul>
-</div>
-{{/block}}
+ {{/block}}

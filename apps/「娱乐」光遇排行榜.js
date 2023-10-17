@@ -1,9 +1,9 @@
 import plugin from '../../../lib/plugins/plugin.js';
-import { render } from '../components/index.js'
-import lodash from 'lodash'
-import fs from 'fs';
+import { render } from '../components/index.js';
 import path from 'path';
+import fs from 'fs';
 
+const 用户位置 = 'plugins/Tlon-Sky/data/Sky签到';
 export class 娱乐_光遇排行榜 extends plugin {
   constructor() {
     super({
@@ -13,135 +13,259 @@ export class 娱乐_光遇排行榜 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: '^#?光遇排行榜$',
-          fnc: '光遇排行'
+          reg: '^#?蜡烛排行$',
+          fnc: '蜡烛排行'
+        },
+        {
+          reg: '^#?DB排行$',
+          fnc: '赌博排行'
         }
       ]
     });
   }
-  
-  async 光遇排行(e) {
-    let 等级信息 = await 等级排行()
-    let 白蜡信息 = await 白蜡排行()
-    let 季蜡信息 = await 季蜡排行()
-    
-    let html = {
-        等级信息,
-        白蜡信息,
-        季蜡信息
+
+  async 蜡烛排行(e) {
+    const result_白 = await 白蜡排行数据();
+    logger.mark('白蜡排行写入成功', result_白);
+    const result_季 = await 季蜡排行数据();
+    logger.mark('季蜡排行写入成功', result_季);
+
+    const 排行信息_白 = 'plugins/Tlon-Sky/data/排行榜/白蜡.json'
+    const 排行信息Data_白 = await fs.promises.readFile(排行信息_白)
+    const 排行信息Json_白 = JSON.parse(排行信息Data_白.toString())
+
+    const 排行信息_季 = 'plugins/Tlon-Sky/data/排行榜/季蜡.json'
+    const 排行信息Data_季 = await fs.promises.readFile(排行信息_季)
+    const 排行信息Json_季 = JSON.parse(排行信息Data_季.toString())
+    //  读取昵称
+    const Top_nickname_白 = 排行信息Json_白.slice(0, 10).map(item => item.nickname);
+    const Top_nickname_季 = 排行信息Json_季[0].slice(0, 10).map(item => item.nickname);
+    //  读取数量
+    const Top_白蜡 = 排行信息Json_白.slice(0, 10).map(item => item.level);
+    const Top_季蜡 = 排行信息Json_季.slice(0, 10).map(item => item.level);
+    // 读取ID
+    const Top_ID_白 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_白[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_白[i].userId}`;
+    }
+    const Top_ID_季 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_季[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_季[i].userId}`;
     }
 
-    await render('admin/光遇排行榜', {
-        ...html,
-        bg: await rodom()
+    let html = {
+      Top1_nickname_白: Top_nickname_白[0], Top2_nickname_白: Top_nickname_白[1],
+      Top3_nickname_白: Top_nickname_白[2], Top4_nickname_白: Top_nickname_白[3],
+      Top5_nickname_白: Top_nickname_白[4], Top6_nickname_白: Top_nickname_白[5],
+      Top7_nickname_白: Top_nickname_白[6], Top8_nickname_白: Top_nickname_白[7],
+      Top9_nickname_白: Top_nickname_白[8], Top10_nickname_白: Top_nickname_白[9],
+      Top1_nickname_季: Top_nickname_季[0], Top2_nickname_季: Top_nickname_季[1],
+      Top3_nickname_季: Top_nickname_季[2], Top4_nickname_季: Top_nickname_季[3],
+      Top5_nickname_季: Top_nickname_季[4], Top6_nickname_季: Top_nickname_季[5],
+      Top7_nickname_季: Top_nickname_季[6], Top8_nickname_季: Top_nickname_季[7],
+      Top9_nickname_季: Top_nickname_季[8], Top10_nickname_季: Top_nickname_季[9],
+      Top1_白蜡: Top_白蜡[0], Top2_白蜡: Top_白蜡[1],
+      Top3_白蜡: Top_白蜡[2], Top4_白蜡: Top_白蜡[3],
+      Top5_白蜡: Top_白蜡[4], Top6_白蜡: Top_白蜡[5],
+      Top7_白蜡: Top_白蜡[6], Top8_白蜡: Top_白蜡[7],
+      Top9_白蜡: Top_白蜡[8], Top10_白蜡: Top_白蜡[9],
+      Top1_季蜡: Top_季蜡[0], Top2_季蜡: Top_季蜡[1],
+      Top3_季蜡: Top_季蜡[2], Top4_季蜡: Top_季蜡[3],
+      Top5_季蜡: Top_季蜡[4], Top6_季蜡: Top_季蜡[5],
+      Top7_季蜡: Top_季蜡[6], Top8_季蜡: Top_季蜡[7],
+      Top9_季蜡: Top_季蜡[8], Top10_季蜡: Top_季蜡[9],
+      Top1_ID_白: Top_ID_白[0], Top2_ID_白: Top_ID_白[1],
+      Top3_ID_白: Top_ID_白[2], Top4_ID_白: Top_ID_白[3],
+      Top5_ID_白: Top_ID_白[4], Top6_ID_白: Top_ID_白[5],
+      Top7_ID_白: Top_ID_白[6], Top8_ID_白: Top_ID_白[7],
+      Top9_ID_白: Top_ID_白[8], Top10_ID_白: Top_ID_白[9],
+      Top1_ID_季: Top_ID_季[0], Top2_ID_季: Top_ID_季[1],
+      Top3_ID_季: Top_ID_季[2], Top4_ID_季: Top_ID_季[3],
+      Top5_ID_季: Top_ID_季[4], Top6_ID_季: Top_ID_季[5],
+      Top7_ID_季: Top_ID_季[6], Top8_ID_季: Top_ID_季[7],
+      Top9_ID_季: Top_ID_季[8], Top10_ID_季: Top_ID_季[9]
+    }
+
+    await render('admin/蜡烛排行榜', {
+      ...html
     }, {
-        e,
-        scale: 1.4
+      e,
+      scale: 1.4
+    })
+  }
+
+  async 赌博排行(e) {
+    const result_赌神 = await 赌神排行数据();
+    logger.mark('赌神排行写入成功', result_赌神);
+    const result_赌徒 = await 赌徒排行数据();
+    logger.mark('赌徒排行写入成功', result_赌徒);
+
+    const 排行信息_赌神 = 'plugins/Tlon-Sky/data/排行榜/赌神.json'
+    const 排行信息Data_赌神 = await fs.promises.readFile(排行信息_赌神)
+    const 排行信息Json_赌神 = JSON.parse(排行信息Data_赌神.toString())
+
+    const 排行信息_赌徒 = 'plugins/Tlon-Sky/data/排行榜/赌徒.json'
+    const 排行信息Data_赌徒 = await fs.promises.readFile(排行信息_赌徒)
+    const 排行信息Json_赌徒 = JSON.parse(排行信息Data_赌徒.toString())
+    //  读取昵称
+    const Top_nickname_赌神 = 排行信息Json_赌神.slice(0, 10).map(item => item.nickname);
+    const Top_nickname_赌徒 = 排行信息Json_赌徒.slice(0, 10).map(item => item.nickname);
+    //  读取数量与次数
+    const Top_赌神 = 排行信息Json_赌神.slice(0, 10).map(item => item.level);
+    const Top_赌徒 = 排行信息Json_赌徒.slice(0, 10).map(item => item.level);
+    //  读取ID
+    const Top_ID_赌神 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_赌神[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_赌神[i].userId}`;
+    }
+    const Top_ID_赌徒 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_赌徒[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_赌徒[i].userId}`;
+    }
+
+    let html = {
+      Top1_nickname_赌神: Top_nickname_赌神[0],Top2_nickname_赌神: Top_nickname_赌神[1],
+      Top3_nickname_赌神: Top_nickname_赌神[2],Top4_nickname_赌神: Top_nickname_赌神[3],
+      Top5_nickname_赌神: Top_nickname_赌神[4],Top6_nickname_赌神: Top_nickname_赌神[5],
+      Top7_nickname_赌神: Top_nickname_赌神[6],Top8_nickname_赌神: Top_nickname_赌神[7],
+      Top9_nickname_赌神: Top_nickname_赌神[8],Top10_nickname_赌神: Top_nickname_赌神[9],
+      Top1_nickname_赌徒: Top_nickname_赌徒[0], Top2_nickname_赌徒: Top_nickname_赌徒[1],
+      Top3_nickname_赌徒: Top_nickname_赌徒[2], Top4_nickname_赌徒: Top_nickname_赌徒[3],
+      Top5_nickname_赌徒: Top_nickname_赌徒[4], Top6_nickname_赌徒: Top_nickname_赌徒[5],
+      Top7_nickname_赌徒: Top_nickname_赌徒[6], Top8_nickname_赌徒: Top_nickname_赌徒[7],
+      Top9_nickname_赌徒: Top_nickname_赌徒[8], Top10_nickname_赌徒: Top_nickname_赌徒[9],
+      Top1_赌神: Top_赌神[0], Top2_赌神: Top_赌神[1],
+      Top3_赌神: Top_赌神[2], Top4_赌神: Top_赌神[3],
+      Top5_赌神: Top_赌神[4], Top6_赌神: Top_赌神[5],
+      Top7_赌神: Top_赌神[6], Top8_赌神: Top_赌神[7],
+      Top9_赌神: Top_赌神[8], Top10_赌神: Top_赌神[9],
+      Top1_赌徒: Top_赌徒[0], Top2_赌徒: Top_赌徒[1],
+      Top3_赌徒: Top_赌徒[2], Top4_赌徒: Top_赌徒[3],
+      Top5_赌徒: Top_赌徒[4], Top6_赌徒: Top_赌徒[5],
+      Top7_赌徒: Top_赌徒[6], Top8_赌徒: Top_赌徒[7],
+      Top9_赌徒: Top_赌徒[8], Top10_赌徒: Top_赌徒[9],
+      Top1_ID_赌神: Top_ID_赌神[0], Top2_ID_赌神: Top_ID_赌神[1],
+      Top3_ID_赌神: Top_ID_赌神[2], Top4_ID_赌神: Top_ID_赌神[3],
+      Top5_ID_赌神: Top_ID_赌神[4], Top6_ID_赌神: Top_ID_赌神[5],
+      Top7_ID_赌神: Top_ID_赌神[6], Top8_ID_赌神: Top_ID_赌神[7],
+      Top9_ID_赌神: Top_ID_赌神[8], Top10_ID_赌神: Top_ID_赌神[9],
+      Top1_ID_赌徒: Top_ID_赌徒[0], Top2_ID_赌徒: Top_ID_赌徒[1],
+      Top3_ID_赌徒: Top_ID_赌徒[2], Top4_ID_赌徒: Top_ID_赌徒[3],
+      Top5_ID_赌徒: Top_ID_赌徒[4], Top6_ID_赌徒: Top_ID_赌徒[5],
+      Top7_ID_赌徒: Top_ID_赌徒[6], Top8_ID_赌徒: Top_ID_赌徒[7],
+      Top9_ID_赌徒: Top_ID_赌徒[8], Top10_ID_赌徒: Top_ID_赌徒[9]
+    }
+
+    await render('admin/赌博排行榜', {
+      ...html
+    }, {
+      e,
+      scale: 1.4
     })
   }
 }
-const rodom = async function () {
-    let image = fs.readdirSync('./plugins/Tlon-Sky/resource/admin/imgs/bg')
-    let listImg = []
-    for (let val of image) {
-      listImg.push(val)
+
+const 白蜡排行数据 = async function () {
+  const files = fs.readdirSync(用户位置); // 读取目录下的所有文件
+  const ranking = [];
+
+  // 遍历所有文件
+  files.forEach((fileName) => {
+    if (fileName.endsWith('.json')) {
+      const userId = fileName.split('.')[0];
+      const filePath = path.join(用户位置, fileName);
+      const fileData = fs.readFileSync(filePath);
+      const data = JSON.parse(fileData.toString());
+      const level = data[userId]?.白蜡 || 0;
+      const nickname = data[userId]?.昵称 || '未读取';
+
+      ranking.push({ nickname, level, userId });
     }
-    let imgs = listImg.length == 1 ? listImg[0] : listImg[lodash.random(0, listImg.length - 1)]
-    return imgs
+  });
+
+  ranking.sort((a, b) => b.level - a.level);
+
+  const topTen = ranking.slice(0, 10);
+  // 将排行信息储存为 JSON 文件
+  const jsonRanking = JSON.stringify(topTen, null, 2); // 格式化 JSON，使其更易读
+
+  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/白蜡.json', jsonRanking);
 }
 
-const 等级排行 = async function () {
-    const directoryPath = 'plugins/Tlon-Sky/data/Sky签到'
-    const files = fs.readdirSync(directoryPath); // 读取目录下的所有文件
-    const ranking = [];
-    
-    // 遍历所有文件
-    files.forEach((fileName) => {
-        if (fileName.endsWith('.json')) {
-            const userId = fileName.split('.')[0];
-            const filePath = path.join(directoryPath, fileName);
-            const fileData = fs.readFileSync(filePath);
-            const data = JSON.parse(fileData.toString());
-            const level = data[userId]?.等级 || 0;
-            const nickname = data[userId]?.昵称 || 0;
-        
-            ranking.push({ nickname, level });
-        }
-    });
-    
-    ranking.sort((a, b) => b.level - a.level);
+const 季蜡排行数据 = async function () {
+  const files = fs.readdirSync(用户位置);
+  const ranking = [];
 
-    const topTen = ranking.slice(0, 5);
+  files.forEach((fileName) => {
+    if (fileName.endsWith('.json')) {
+      const userId = fileName.split('.')[0];
+      const filePath = path.join(用户位置, fileName);
+      const fileData = fs.readFileSync(filePath);
+      const data = JSON.parse(fileData.toString());
+      const level = data[userId]?.季蜡 || 0;
+      const nickname = data[userId]?.昵称 || '未读取';
 
-    // 生成排行榜消息
-    let message = '';
-    topTen.forEach((info, index) => {
-        const rank = index + 1;
-        message += `Top${rank}：\n昵称：${info.nickname}\n当前等级：${info.level}\n\n`;
-    });
-    return message
+      ranking.push({ nickname, level, userId });
+    }
+  });
+
+  ranking.sort((a, b) => b.level - a.level);
+
+  const topTen = ranking.slice(0, 10);
+
+  const jsonRanking = JSON.stringify(topTen, null, 2);
+
+  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/季蜡.json', jsonRanking);
 }
 
-const 白蜡排行 = async function () {
-    const directoryPath = 'plugins/Tlon-Sky/data/Sky签到'
-    const files = fs.readdirSync(directoryPath); // 读取目录下的所有文件
-    const ranking = [];
-    
-    // 遍历所有文件
-    files.forEach((fileName) => {
-        if (fileName.endsWith('.json')) {
-            const userId = fileName.split('.')[0];
-            const filePath = path.join(directoryPath, fileName);
-            const fileData = fs.readFileSync(filePath);
-            const data = JSON.parse(fileData.toString());
-            const level = data[userId]?.白蜡 || 0;
-            const nickname = data[userId]?.昵称 || 0;
-        
-            ranking.push({ nickname, level });
-        }
-    });
-    
-    ranking.sort((a, b) => b.level - a.level);
+const 赌神排行数据 = async function () {
+  const files = fs.readdirSync(用户位置);
+  const ranking = [];
 
-    const topTen = ranking.slice(0, 5);
+  files.forEach((fileName) => {
+    if (fileName.endsWith('.json')) {
+      const userId = fileName.split('.')[0];
+      const filePath = path.join(用户位置, fileName);
+      const fileData = fs.readFileSync(filePath);
+      const data = JSON.parse(fileData.toString());
+      const level = data[userId]?.赚取 || 0;
+      const nickname = data[userId]?.昵称 || '未读取';
 
-    // 生成排行榜消息
-    let message = '';
-    topTen.forEach((info, index) => {
-        const rank = index + 1;
-        message += `Top${rank}：\n昵称：${info.nickname}\n当前白蜡：${info.level}\n\n`;
-    });
-    return message
+      ranking.push({ nickname, level, userId });
+    }
+  });
+
+  ranking.sort((a, b) => b.level - a.level);
+
+  const topTen = ranking.slice(0, 50);
+
+  const jsonRanking = JSON.stringify(topTen, null, 2);
+
+  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/赌神.json', jsonRanking);
 }
 
-const 季蜡排行 = async function () {
-    const directoryPath = 'plugins/Tlon-Sky/data/Sky签到'
-    const files = fs.readdirSync(directoryPath); // 读取目录下的所有文件
-    const ranking = [];
-    
-    // 遍历所有文件
-    files.forEach((fileName) => {
-        if (fileName.endsWith('.json')) {
-            const userId = fileName.split('.')[0];
-            const filePath = path.join(directoryPath, fileName);
-            const fileData = fs.readFileSync(filePath);
-            const data = JSON.parse(fileData.toString());
-            const level = data[userId]?.季蜡 || 0;
-            const nickname = data[userId]?.昵称 || 0;
-        
-            ranking.push({ nickname, level });
-        }
-    });
-    
-    ranking.sort((a, b) => b.level - a.level);
+const 赌徒排行数据 = async function () {
+  const files = fs.readdirSync(用户位置);
+  const ranking = [];
 
-    const topTen = ranking.slice(0, 5);
+  files.forEach((fileName) => {
+    if (fileName.endsWith('.json')) {
+      const userId = fileName.split('.')[0];
+      const filePath = path.join(用户位置, fileName);
+      const fileData = fs.readFileSync(filePath);
+      const data = JSON.parse(fileData.toString());
+      const level = data[userId]?.赢 || 0 + data[userId]?.输 || 0 + data[userId]?.平 || 0;
+      const nickname = data[userId]?.昵称 || '未读取';
 
-    // 生成排行榜消息
-    let message = '';
-    topTen.forEach((info, index) => {
-        const rank = index + 1;
-        message += `Top${rank}：\n昵称：${info.nickname}\n当前季蜡：${info.level}\n\n`;
-    });
-    return message
+      ranking.push({ nickname, level, userId });
+    }
+  });
+
+  ranking.sort((a, b) => b.level - a.level);
+
+  const topTen = ranking.slice(0, 50);
+
+  const jsonRanking = JSON.stringify(topTen, null, 2);
+
+  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/赌徒.json', jsonRanking);
 }

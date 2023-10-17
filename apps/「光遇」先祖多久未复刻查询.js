@@ -37,14 +37,14 @@ const 魔法 = [
   { name: '赞许壁画及', date: new Date('2022-06-21')},
   { name: '情绪草药师', date: new Date('2023-06-19')},
   { name: '瞌睡木匠', date: new Date('2022-12-07')},
-  { name: '冷漠术士', date: new Date('2022-03-14')},
+  { name: '冷漠术士', date: new Date('2023-08-28')},
   { name: '蟹舞者', date: new Date('2021-04-12')}
 ];
 const 圣岛 = [
   { name: '放松日浴者', date: new Date('2022-09-13')},
-  { name: '鸣谢收藏家', date: new Date('2022-06-06')},
+  { name: '鸣谢收藏家', date: new Date('2023-10-03')},
   { name: '固执登山者', date: new Date('2023-04-10')},
-  { name: '热血运动员', date: new Date('2022-07-04')},
+  { name: '热血运动员', date: new Date('2023-09-11')},
   { name: '内秀书虫', date: new Date('2022-10-25')},
   { name: '母语者', date: new Date('2022-08-01')}
 ];
@@ -55,7 +55,7 @@ const 预言 = [
   { name: '火先知', date: new Date('2023-06-05')}
 ];
 const 梦想 = [
-  { name: '偷窥邮差', date: new Date('2022-02-14')},
+  { name: '偷窥邮差', date: new Date('2023-10-09')},
   { name: '熊抱雪人', date: new Date('2022-02-28')},
   { name: '回旋大师', date: new Date('2023-07-31')},
   //{ name: '跳舞艺人', date: new Date('')}
@@ -71,7 +71,7 @@ const 集结 = [
 const 小王子 = [
   { name: '沾沾自喜的自恋狂', date: new Date('2023-01-02')},
   { name: '发号施令的统治者', date: new Date('2023-07-03')},
-  //{ name: '打喷嚏的地理学家', date: new Date('')},
+  { name: '打喷嚏的地理学家', date: new Date('2023-09-25')},
   //{ name: '被逼无奈的掌灯人', date: new Date('')},
   { name: '萎靡不振的士兵', date: new Date('2023-01-30')},
   { name: '星光收藏家', date: new Date('2023-07-17')}

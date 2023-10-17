@@ -1,5 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js'
-import puppeteer from '../../../lib/puppeteer/puppeteer.js'
+import fetch from 'node-fetch'
 
 export class 光遇_日历 extends plugin {
     constructor () {
@@ -17,17 +17,11 @@ export class 光遇_日历 extends plugin {
     })
 }
 async 光遇日历(e) {
-	const browser = await puppeteer.browserInit();
-	const page = await browser.newPage();
-	await page.setViewport({width: 650,height: 2000});
-  await page.goto('https://www.guoping123.com/hykb_tools/guangyu/rwgl/index.php');
-  const buff = await page.screenshot({
-    clip: {
-      x: 31, y: 645, width: 591, height: 439
-    }
-  });
-  await page.close();
-  await e.reply( segment.image(buff) );
+  const url = `https://api.t1qq.com/api/sky/sc/hdrl?key=lHV6bOsaNrsNv2hmegRRVMxOUp&type=json`;
+  let res = await fetch(url).catch((err) => logger.error(err))
+  res = await res.json()
+  const img = res.img
+  await e.reply(segment.image(img));
   return true;
 }
 }

@@ -5,10 +5,6 @@
 
 为[Yunzai-Bot V3](https://gitee.com/Le-niao/Yunzai-Bot)提供光遇相关功能
 
-图源来自网络，如有侵权，联系删除
-
-该插件已停止更新，后续内容请在Q群查看☛[点击加群](392665563)
-
 </div>
 
 #### <div align="center">安装</div>
@@ -18,7 +14,12 @@
 git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 ```
 
+#### 更新
+
+* 使用指令：`Sky更新`
+
 #### 绘画分享图库安装
+
 
 * 使用指令：`Sky更新图库`
 * 后续更新图库同上
@@ -31,25 +32,41 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 </p>
 </details>
 
+# 图源来自网络，如有侵权，联系删除
+
 ## 开发不易
 
 点个Star就是对我最大的支持!
 
 ## 📞 联系
+QQ：3620060826
 <details>
-<summary>QQ：3620060826</summary>
+<summary>扫描二维码添加</summary>
 <p align="center">
 <img width = "600" src="resource/Q二维码.png">
 </p>
 </details>
 
+官群：[392665563](https://jq.qq.com/?_wv=1027&k=VQAEpAlH)
 <details>
-<summary>官群：392665563</summary>
+<summary>扫描二维码添加</summary>
 <p align="center">
 <img width = "600" src="resource/群二维码.jpg">
 </p>
 </details>
 
+
+
+## 💰赞助
+
+[爱发电](https://afdian.net/a/Tloml-Starry)
+<details>
+<summary>二维码</summary>
+<p align="center">
+<img width = "600" src="resource/赞助二维码.png">
+</p>
+</details>
+
 ## BUG反馈及优化
 
-向本项目发起☛[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues/I6LRZ9)
+请向本项目发起☛[lssues](https://gitee.com/Tloml-Starry/Tlon-Sky/issues/I6LRZ9)

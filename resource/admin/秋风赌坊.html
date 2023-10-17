@@ -1,31 +1,28 @@
 {{extend defaultLayout}}
 {{block 'css'}}
-
-<!-- <link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" /> -->
-
 <style>
 	.container {
-		background: url("{{_res_path}}/admin/imgs/bg/{{bg}}") #000144 top !important;
+		background: #D9D9F3 top !important;
 		background-size: cover !important;
 		width: 800px;
 	}
-	
+
 	body {
 		transform: scale(1);
 		width: 520px;
 		position: relative;
 	}
-	
+
 	.container {
 		background: url("imgs/bg/bg.jpg") #000144 left top no-repeat;
 		background-size: 100% auto;
 		width: 520px;
 	}
-	
+
 	.head-box {
 		margin: 0 0 80px 0;
 	}
-	
+
 	.profile-picture {
 		float: left;
 		width: 200px;
@@ -33,7 +30,7 @@
 		border-radius: 50%;
 		margin-right: 20px;
 	}
-	
+
 	.cfg-box {
 		border-radius: 15px;
 		margin-top: 20px;
@@ -49,14 +46,14 @@
 		border-radius: 26px;
 		box-shadow: 30px 30px 30px -10px rgba(0, 0, 0, 0.15), inset 15px 15px 10px rgba(75, 142, 230, 0.123), -15px -15px 35px rgba(111, 175, 248, 0.144), inset -1px -1px 10px rgba(0, 0, 0, 0.2);
 	}
-	
+
 	.cfg-group {
 		color: #fff;
 		font-size: 22px;
 		font-weight: bold;
 		padding: 10px 20px;
 	}
-	
+
 	.cfg-li {
 		color: #4e5769;
 		font-weight: normal;
@@ -91,7 +88,7 @@
 		background: rgba(255, 255, 255, 0.45);
 		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 		-webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+		backdrop-filter: blur(10px);
 		border-radius: 10px;
 		border: 1px solid rgba(255, 255, 255, 0.18);
 		font-weight: 700;
@@ -144,61 +141,14 @@
 {{block 'main'}}
 
 <div class="cfg-box">
-    <ul class="cfg-ul">
-        <li class="cfg-li">
-			<img src="{{头像}}" alt="头像" class="profile-picture" style="width:170px; height:170px;">
-			<h1>{{昵称}}</h1>
-			<h1>{{等级}}</h1>
-			<h1>{{能量值}}</h1>
-		</li>
-	</ul>
-</div>
-
-<div class="cfg-box">
-    <ul class="cfg-ul">
-        <li class="cfg-li">
-			<h1><em>签到信息</em></h1>
-			<h2>{{白蜡数}}</h2>
-			<h2>{{季蜡数}}</h2>
-			<h2>{{连续签到}}</h2>
-			<h2>{{累计签到}}</h2>
-			<h2>{{最后签到日期}}</h2>
-		</li>
-    </ul>
-</div>
-<div class="cfg-box">
-    <ul class="cfg-ul">
-        <li class="cfg-li">
-			<h1><em>抢蜡烛信息</em></h1>
-			<h2>{{抢次数}}</h2>
-			<h2>{{被抢次数}}</h2>
-			<h2>{{抢蜡烛总数}}</h2>
-			<h2>{{被抢蜡烛总数}}</h2>
-			<h2>{{平均抢}}</h2>
-			<h2>{{平均被抢}}</h2>
-			<h5>于2023-10-06 2:30开始记录</h5>
-        </li>
-    </ul>
-</div>
-<div class="cfg-box">
 	<ul class="cfg-ul">
 		<li class="cfg-li">
-			<h1><em>赌蜡烛信息</em></h1>
-			<h2>{{胜}}</h2>
-			<h2>{{负}}</h2>
+			<img src="D:\msys64\home\zq362\TRSS_AllBot\Yunzai\plugins\Tlon-Sky\resource\Tlon-Sky.png" alt="赌坊头像" class="profile-picture" style="width:170px; height:170px;">
+			<h2>{{赢}}</h2>
+			<h2>{{输}}</h2>
 			<h2>{{平}}</h2>
 			<h2>{{总赚取}}</h2>
 			<h2>{{总亏损}}</h2>
-			<h5>于2023-10-06 2:30开始记录</h5>
-		</li>
-	</ul>
-</div>
-<div class="cfg-box">
-	<ul class="cfg-ul">
-		<li class="cfg-li">
-			<h1><em>送蜡烛信息</em></h1>
-			<h2>{{总赠送数量}}</h2>
-			<h2>{{总收入数量}}</h2>
 		</li>
 	</ul>
 </div>

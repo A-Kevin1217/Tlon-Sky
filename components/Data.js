@@ -94,6 +94,19 @@ let Data = {
       diyCfg
     }
   },
+  async importCfg_(key) {
+    let sysCfg = await Data.importModule(`config/model/${key}_model_.js`)
+    let diyCfg = await Data.importModule(`config/${key}.js`)
+    if (diyCfg.isSys) {
+      console.error(`Tlon-Sky: config/${key}.js`)
+      console.error(`config/${key}_default.js为config/${key}.js`)
+      diyCfg = {}
+    }
+    return {
+      sysCfg,
+      diyCfg
+    }
+  },
   getData(target, keyList = '', cfg = {}) {
     target = target || {}
     let defaultData = cfg.defaultData || {}
