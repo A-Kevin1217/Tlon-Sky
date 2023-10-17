@@ -39,7 +39,7 @@ export class 娱乐_光遇排行榜 extends plugin {
     const 排行信息Json_季 = JSON.parse(排行信息Data_季.toString())
     //  读取昵称
     const Top_nickname_白 = 排行信息Json_白.slice(0, 10).map(item => item.nickname);
-    const Top_nickname_季 = 排行信息Json_季[0].slice(0, 10).map(item => item.nickname);
+    const Top_nickname_季 = 排行信息Json_季.slice(0, 10).map(item => item.nickname);
     //  读取数量
     const Top_白蜡 = 排行信息Json_白.slice(0, 10).map(item => item.level);
     const Top_季蜡 = 排行信息Json_季.slice(0, 10).map(item => item.level);

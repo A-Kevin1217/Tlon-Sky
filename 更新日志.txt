@@ -1,0 +1,199 @@
+直接丢到plugins合并替换
+-------------------
+* 2023/10/17
+ - 添加赌博排行查看赌神与赌徒排行
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
+："Tlon-Sky\resource\admin\赌博排行榜.html"
+
+ - 修改了秋风赌坊UI
+："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
+："Tlon-Sky\resource\admin\秋风赌坊.html"
+
+ - 修改了签到提示信息
+："Tlon-Sky\apps\「娱乐」签到.js"
+
+ - 对抢蜡烛进行优化
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+
+-------------------
+* 2023/10/16
+ - 添加秋风赌坊查看赌坊信息
+："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
+："Tlon-Sky\resource\admin\秋风赌坊.html"
+
+ - 签到UI修改
+："Tlon-Sky\apps\「娱乐」签到.js"
+："Tlon-Sky\resource\admin\签到.html"
+
+ - 抢蜡烛转为图片发送
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+："Tlon-Sky\resource\admin\抢蜡烛.html"
+
+-------------------
+* 2023/10/15
+ - 将白蜡和季蜡排行榜合并显示，指令：蜡烛排行
+："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
+："Tlon-Sky\resource\admin\白蜡排行榜.html"
+："Tlon-Sky\resource\admin\季蜡排行榜.html"
+："Tlon-Sky\resource\admin\蜡烛排行榜.html"
+："Tlon-Sky\config\model\help_model_.js"
+："Tlon-Sky\resource\admin\排行榜.css"
+
+ - 修复了送蜡烛可以赠送自己的问题
+："Tlon-Sky\apps\「娱乐」送蜡烛.js"
+
+-------------------
+* 2023/10/14
+ - '抢蜡烛'显示CD到达时间,并取消了CD提示撤回
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+
+-------------------
+* 2023/10/12
+ - 修复签到昵称问题
+："Tlon-Sky\apps\「娱乐」签到.js"
+
+-------------------
+* 2023/10/11
+ - '白蜡排行'和'季蜡排行'整体UI修改
+："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
+："Tlon-Sky\resource\admin\白蜡排行榜.html"
+："Tlon-Sky\resource\admin\季蜡排行榜.html"
+："Tlon-Sky\resource\admin\排行榜.css"
+
+ - 添加了'Sky娱乐菜单'
+："Tlon-Sky\components\Data.js"
+："Tlon-Sky\apps\「光遇」菜单.js"
+："Tlon-Sky\config\model\help_model_.js"
+
+-------------------
+* 2023/10/09
+ - '白蜡排行'和'季蜡排行'展示信息缩减，只显示前25位
+："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
+
+ - 缩减排行榜字体大小
+："Tlon-Sky\resource\admin\白蜡排行榜.html"
+："Tlon-Sky\resource\admin\季蜡排行榜.html"
+
+-------------------
+* 2023/10/08
+ - '抢蜡烛'对方蜡烛不足提示修改
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+
+ - '光遇信息'修改，NaN改为0，小数只显示一位
+ ："Tlon-Sky\apps\「娱乐」我的信息.js"
+ 
+ - 修复新用户不能签到问题
+："Tlon-Sky\apps\「娱乐」签到.js"
+
+ - 更新'「光遇」先祖多久未复刻查询.js' 先祖时间
+："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"
+
+- 更新复刻记录图片
+："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
+
+-------------------
+* 2023/10/07
+ - 更新送蜡烛功能
+："Tlon-Sky\apps\「娱乐」送蜡烛.js"
+
+ - '光遇信息'增加显示送蜡烛信息：'总赠送数量'和'总收入数量'，(赠送|收入)次数不纳入统计
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\resource\admin\光遇信息.html"
+
+-------------------
+* 2023/10/06
+ - 更新赌蜡烛功能
+："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
+
+ - 修复每日签到会重置'被抢次数','被抢蜡烛总数','抢蜡烛次数'和'抢蜡烛总数'问题
+："Tlon-Sky\apps\「娱乐」签到.js"
+
+ - '光遇信息'增加显示赌蜡烛信息：'胜利次数','失败次数','平局次数','总获得'和'总亏损'，同时增加抢蜡烛信息'平均抢得'和'平均被抢'
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\resource\admin\光遇信息.html"
+
+ - 抢蜡烛功能优化
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+
+-------------------
+* 2023/10/05
+- 更新全图鉴参考图片
+："Tlon-Sky\resource\统计及其他\全图鉴参考.png"
+
+-------------------
+* 2023/10/04
+ - 我的信息添加显示'被抢次数','被抢蜡烛总数','抢蜡烛次数'和'抢蜡烛总数'
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\resource\admin\光遇信息.html"
+
+-------------------
+* 2023/09/30
+ - 抢蜡烛功能支持指定人抢，抢蜡烛@对方即可丨修复bug
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+
+ - 光遇信息添加抢次数和被抢次数，html同样增加
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\resource\admin\光遇信息.html"
+
+-------------------
+* 2023/09/29
+ - 添加'抢蜡烛'功能
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+
+-------------------
+* 2023/09/26
+- 指令'今日任务'返回内容添加复刻兑换图
+："Tlon-Sky\apps\「光遇」每日功能.js"
+
+- 更新 '「光遇」先祖多久未复刻查询.js' 先祖时间
+："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"
+
+- 更新复刻记录图片
+："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
+
+-------------------
+* 2023/09/25
+- 更新全图鉴参考图片
+："Tlon-Sky\resource\统计及其他\全图鉴参考.png"
+
+-------------------
+* 2023/09/23
+- 更新复刻记录图片
+："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
+
+- 更新 '「光遇」先祖多久未复刻查询.js' 先祖时间
+："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"
+
+-------------------
+* 2023/09/09
+- 更新复刻记录图片
+："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
+
+- 更新 '「光遇」先祖多久未复刻查询.js' 先祖时间
+："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"
+
+-------------------
+* 2023/09/02
+- 更换光遇日历
+："Tlon-Sky\apps\「光遇」日历.js"
+
+-------------------
+* 2023/08/29
+- 部分功能代码重构，使其易读
+："Tlon-Sky\apps\「光遇」绑定.js"
+："Tlon-Sky\apps\「光遇」菜单.js"
+："Tlon-Sky\apps\「光遇」常驻兑换图.js"
+
+- 添加白蜡排行和季蜡排行，可查询前50位
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
+
+-------------------
+* 2023/08/26
+- 更新复刻记录图片
+："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
+
+- 移除「光遇」更新.js
+："Tlon-Sky\apps\「光遇」更新.js"
+
+-------------------
