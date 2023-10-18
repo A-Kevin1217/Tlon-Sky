@@ -10,6 +10,9 @@
  - 常试对forwardMsg.data.replace is not a function问题修复
  ："Tlon-Sky\apps\「光遇」更新.js"
  
+ - 修复赌徒排行次数只计入平局问题
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
+
 -------------------
 * 2023/10/17
  - 添加赌博排行查看赌神与赌徒排行

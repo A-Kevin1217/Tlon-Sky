@@ -254,7 +254,10 @@ const 赌徒排行数据 = async function () {
       const filePath = path.join(用户位置, fileName);
       const fileData = fs.readFileSync(filePath);
       const data = JSON.parse(fileData.toString());
-      const level = data[userId]?.赢 || 0 + data[userId]?.输 || 0 + data[userId]?.平 || 0;
+      let 赢 = data[userId]?.赢 || 0;
+      let 输 = data[userId]?.输 || 0;
+      let 平 = data[userId]?.平 || 0;
+      const level = 赢 + 输 + 平;
       const nickname = data[userId]?.昵称 || '未读取';
 
       ranking.push({ nickname, level, userId });
