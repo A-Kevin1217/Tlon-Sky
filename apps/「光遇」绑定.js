@@ -27,7 +27,7 @@ export class 光遇_绑定 extends plugin {
     });
   }
 
-  async 绑定光遇id() {
+  async 绑定光遇id(e) {
     const { msg, user_id: id } = e;
     const skyId = msg.replace(/#|绑定光遇id/g, "").trim();
     const data = {
