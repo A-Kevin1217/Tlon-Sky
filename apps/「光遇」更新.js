@@ -3,10 +3,13 @@ import { Restart } from '../../other/restart.js'
 import { createRequire } from 'module'
 import lodash from 'lodash'
 import fs from 'fs'
+
 const require = createRequire(import.meta.url)
 const { exec, execSync } = require('child_process')
+
 const _path = process.cwd()
 const resPath = `${_path}/plugins/Tlon-Sky/resource/`;
+
 let uping = false
 
 export class 光遇_更新 extends plugin {
@@ -30,11 +33,13 @@ export class 光遇_更新 extends plugin {
     }
     async Sky更新(e) {
         if (!this.e.isMaster) return false
+
         if (uping) {
             await this.reply('已有命令更新中..请勿重复操作')
             return
         }
         let plugin = 'Tlon-Sky'
+        
         if (!await this.checkGit()) return
         await this.runUpdate(plugin)
         if (this.isUp) {
@@ -70,13 +75,13 @@ export class 光遇_更新 extends plugin {
             this.gitErr(ret.error, ret.stdout)
             return false
         }
-        let time = await this.getTime(plugin)
+        let time = await this.getTime('Tlon-Sky')
         if (/Already up|已经是最新/g.test(ret.stdout)) {
             await this.reply(`${this.typeName}已经是最新\n最后更新时间：${time}`)
         } else {
             await this.reply(`${this.typeName}更新成功\n更新时间：${time}`)
             this.isUp = true
-            let log = await this.getLog(plugin)
+            let log = await this.getLog('Tlon-Sky')
             await this.reply(log)
         }
         logger.mark(`${this.e.logFnc} 最后更新时间：${time}`)
@@ -162,41 +167,51 @@ export class 光遇_更新 extends plugin {
         log = log.join('\n\n')
         if (log.length <= 0) return ''
         log = await this.makeForwardMsg(`${plugin}更新日志，共${line}条`, log)
+        let end = "";
+        end =
+          "更多详细信息，请前往gitee查看\nhttps://gitee.com/SmallK111407/earth-k-plugin/blob/master/CHANGELOG.md";
         return log
     }
-    async makeForwardMsg(title, msg) {
-        let nickname = Bot.nickname
+    async makeForwardMsg(title, msg, end) {
+        let nickname = Bot.nickname;
         if (this.e.isGroup) {
-            let info = await Bot.getGroupMemberInfo(this.e.group_id, Bot.uin)
-            nickname = info.card ?? info.nickname
+          let info = await Bot.getGroupMemberInfo(this.e.group_id, Bot.uin);
+          nickname = info.card || info.nickname;
         }
         let userInfo = {
-            user_id: Bot.uin,
-            nickname
-        }
+          user_id: Bot.uin,
+          nickname,
+        };
+    
         let forwardMsg = [
-            {
-                ...userInfo,
-                message: title
-            },
-            {
-                ...userInfo,
-                message: msg
-            }
-        ]
-        /** 制作转发内容 */
-        if (this.e.isGroup) {
-            forwardMsg = await this.e.group.makeForwardMsg(forwardMsg)
-        } else {
-            forwardMsg = await this.e.friend.makeForwardMsg(forwardMsg)
+          {
+            ...userInfo,
+            message: title,
+          },
+          {
+            ...userInfo,
+            message: msg,
+          },
+        ];
+    
+        if (end) {
+          forwardMsg.push({
+            ...userInfo,
+            message: end,
+          });
         }
+    
+        /** 制作转发内容 */
+        
+    
         /** 处理描述 */
         forwardMsg.data = forwardMsg.data
-            .replace(/\n/g, '')
-            .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, '___')
-            .replace(/___+/, `<title color="#777777" size="26">${title}</title>`)
-        return forwardMsg
-    }
+          .replace(/\n/g, "")
+          .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, "___")
+          .replace(/___+/, `<title color="#777777" size="26">${title}</title>`);
+    
+        return forwardMsg;
+      }
     async Sky更新图库 (e) {
         if (!await checkAuth(e)) return
         let command = '';

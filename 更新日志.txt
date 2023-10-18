@@ -7,6 +7,9 @@
  - 修复e is not defined问题
 ："Tlon-Sky\apps\「光遇」绑定.js"
 
+ - 常试对forwardMsg.data.replace is not a function问题修复
+ ："Tlon-Sky\apps\「光遇」更新.js"
+ 
 -------------------
 * 2023/10/17
  - 添加赌博排行查看赌神与赌徒排行
