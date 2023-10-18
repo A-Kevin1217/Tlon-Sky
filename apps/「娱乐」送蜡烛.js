@@ -22,8 +22,7 @@ export class 娱乐_送蜡烛 extends plugin {
         let 对象ID = e.at
         const regex = /\d+/g;
         if (e.atme === true) {
-            对象ID = "3620060826"
-            logger.mark('AT对象为机器人,继续向下')
+            对象ID = Bot.uin
         } else if (对象ID === undefined || 对象ID === null) {
             return e.reply('请at对方')
         }

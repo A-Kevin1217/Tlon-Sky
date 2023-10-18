@@ -29,6 +29,9 @@ export class 娱乐_抢蜡烛 extends plugin {
     if (!fs.existsSync(用户文件)) {
       return e.reply('抢蜡烛失败！您尚未拥有存档\n请您发送"光遇签到"')
     }
+    if (e.atme === true) {
+      e.at = Bot.uin
+    }
     if (e.at === undefined || e.at === null) {
       //  未at，执行随机抢
       try {
@@ -103,6 +106,9 @@ export class 娱乐_抢蜡烛 extends plugin {
       }
     } else {
       //  at了，指定用户抢蜡烛
+      if (e.at === 用户ID) {
+        return e.reply('不可自己抢自己')
+      }
       try {
         const 用户文件Data = await fs.promises.readFile(用户文件);
         const 用户文件Json = JSON.parse(用户文件Data.toString());
