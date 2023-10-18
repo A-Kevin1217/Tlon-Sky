@@ -23,7 +23,7 @@ export class 光遇_更新 extends plugin {
                 {
                     reg: /^#?(光遇|sky|SKY|Sky)(插件)?(强制)?(更新)$/,
                     fnc: 'Sky更新'
-                },{
+                }, {
                     reg: /^#?(Sky更新图库|sky更新图库|光遇更新图库)$/,
                     fnc: 'Sky更新图库'
                 }
@@ -39,7 +39,7 @@ export class 光遇_更新 extends plugin {
             return
         }
         let plugin = 'Tlon-Sky'
-        
+
         if (!await this.checkGit()) return
         await this.runUpdate(plugin)
         if (this.isUp) {
@@ -86,30 +86,6 @@ export class 光遇_更新 extends plugin {
         }
         logger.mark(`${this.e.logFnc} 最后更新时间：${time}`)
         return true
-    }
-    async gitErr(err, stdout) {
-        let msg = '更新失败！'
-        let errMsg = err.toString()
-        stdout = stdout.toString()
-        if (errMsg.includes('Timed out')) {
-            let remote = errMsg.match(/'(.+?)'/g)[0].replace(/'/g, '')
-            await this.reply(msg + `\n连接超时：${remote}`)
-            return
-        }
-        if (/Failed to connect|unable to access/g.test(errMsg)) {
-            let remote = errMsg.match(/'(.+?)'/g)[0].replace(/'/g, '')
-            await this.reply(msg + `\n连接失败：${remote}`)
-            return
-        }
-        if (errMsg.includes('be overwritten by merge')) {
-            await this.reply(msg + `存在冲突：\n${errMsg}\n` + '请解决冲突后再更新，或者执行#光遇强制更新，放弃本地修改')
-            return
-        }
-        if (stdout.includes('CONFLICT')) {
-            await this.reply([msg + '存在冲突\n', errMsg, stdout, '\n请解决冲突后再更新，或者执行#光遇强制更新，放弃本地修改'])
-            return
-        }
-        await this.reply([errMsg, stdout])
     }
     async getcommitId(plugin = '') {
         let cm = 'git rev-parse --short HEAD'
@@ -167,52 +143,74 @@ export class 光遇_更新 extends plugin {
         log = log.join('\n\n')
         if (log.length <= 0) return ''
         log = await this.makeForwardMsg(`${plugin}更新日志，共${line}条`, log)
-        let end = "";
-        end =
-          "更多详细信息，请前往gitee查看\nhttps://gitee.com/SmallK111407/earth-k-plugin/blob/master/CHANGELOG.md";
         return log
     }
     async makeForwardMsg(title, msg, end) {
         let nickname = Bot.nickname;
         if (this.e.isGroup) {
-          let info = await Bot.getGroupMemberInfo(this.e.group_id, Bot.uin);
-          nickname = info.card || info.nickname;
+            let info = await Bot.getGroupMemberInfo(this.e.group_id, Bot.uin);
+            nickname = info.card || info.nickname;
         }
         let userInfo = {
-          user_id: Bot.uin,
-          nickname,
+            user_id: Bot.uin,
+            nickname,
         };
-    
+
         let forwardMsg = [
-          {
-            ...userInfo,
-            message: title,
-          },
-          {
-            ...userInfo,
-            message: msg,
-          },
+            {
+                ...userInfo,
+                message: title,
+            },
+            {
+                ...userInfo,
+                message: msg,
+            },
         ];
-    
+
         if (end) {
-          forwardMsg.push({
-            ...userInfo,
-            message: end,
-          });
+            forwardMsg.push({
+                ...userInfo,
+                message: end,
+            });
         }
-    
+
         /** 制作转发内容 */
-        
-    
+
+
         /** 处理描述 */
         forwardMsg.data = forwardMsg.data
-          .replace(/\n/g, "")
-          .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, "___")
-          .replace(/___+/, `<title color="#777777" size="26">${title}</title>`);
-    
+            .replace(/\n/g, "")
+            .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, "___")
+            .replace(/___+/, `<title color="#777777" size="26">${title}</title>`);
+
         return forwardMsg;
-      }
-    async Sky更新图库 (e) {
+    }
+
+    async gitErr(err, stdout) {
+        let msg = '更新失败！'
+        let errMsg = err.toString()
+        stdout = stdout.toString()
+        if (errMsg.includes('Timed out')) {
+            let remote = errMsg.match(/'(.+?)'/g)[0].replace(/'/g, '')
+            await this.reply(msg + `\n连接超时：${remote}`)
+            return
+        }
+        if (/Failed to connect|unable to access/g.test(errMsg)) {
+            let remote = errMsg.match(/'(.+?)'/g)[0].replace(/'/g, '')
+            await this.reply(msg + `\n连接失败：${remote}`)
+            return
+        }
+        if (errMsg.includes('be overwritten by merge')) {
+            await this.reply(msg + `存在冲突：\n${errMsg}\n` + '请解决冲突后再更新，或者执行#光遇强制更新，放弃本地修改')
+            return
+        }
+        if (stdout.includes('CONFLICT')) {
+            await this.reply([msg + '存在冲突\n', errMsg, stdout, '\n请解决冲突后再更新，或者执行#光遇强制更新，放弃本地修改'])
+            return
+        }
+        await this.reply([errMsg, stdout])
+    }
+    async Sky更新图库(e) {
         if (!await checkAuth(e)) return
         let command = '';
         if (fs.existsSync(`${resPath}/光遇绘画分享/`)) {
@@ -252,8 +250,8 @@ export class 光遇_更新 extends plugin {
 }
 const checkAuth = async function (e) {
     if (!e.isMaster) {
-      e.reply(`只有主人才能命令哦~`)
-      return false
+        e.reply(`只有主人才能命令哦~`)
+        return false
     }
     return true
-  }
+}
