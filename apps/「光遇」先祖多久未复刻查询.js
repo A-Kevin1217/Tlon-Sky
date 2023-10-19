@@ -58,7 +58,7 @@ const 梦想 = [
   { name: '偷窥邮差', date: new Date('2023-10-09')},
   { name: '熊抱雪人', date: new Date('2022-02-28')},
   { name: '回旋大师', date: new Date('2023-07-31')},
-  //{ name: '跳舞艺人', date: new Date('')}
+  { name: '跳舞艺人', date: new Date('2023-10-23')}
 ];
 const 集结 = [
   { name: '白日梦森林人', date: new Date('2023-08-14')},
