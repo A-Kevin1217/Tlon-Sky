@@ -25,10 +25,6 @@ export const helpList = [{
         "icon": 31,
         "title": "#今日魔法",
         "desc": "查看今日免费魔法"
-      }, {
-        "icon": 41,
-        "title": "#光遇签到",
-        "desc": "咕咕咕中..."
       }]
   }, {
     "group": "查询功能",
@@ -36,10 +32,6 @@ export const helpList = [{
         "icon": 2,
         "title": "#Sky状态",
         "desc": "查询光遇是否炸服"
-      }, {
-        "icon": 12,
-        "title": "#白蜡查询 #季蜡查询",
-        "desc": "查询最近蜡烛变化"
       }, {
         "icon": 22,
         "title": "#季节剩余",
@@ -52,39 +44,8 @@ export const helpList = [{
         "icon": 42,
         "title": "#(季节名)季多久未复刻",
         "desc": "查询季节先祖多久未复刻"
-      }, {
-        "icon": 26,
-        "title": "#上传角色",
-        "desc": "获取绑定光遇id所需的id"
-      }, {
-        "icon": 36,
-        "title": "#绑定光遇id",
-        "desc": "绑定光遇id"
       }]
   }, {
-    // "group": "身高查询功能",
-    // "list": [{
-    //   "icon": 51,
-    //   "title": "填写身高密钥",
-    //   "desc": "填写您所购买的密钥"
-    // }, {
-    //   "icon": 52,
-    //   "title": "获取密钥",
-    //   "desc": "获取查询身高密钥"
-    // }, {
-    //   "icon": 53,
-    //   "title": "查询身高密钥",
-    //   "desc": "查询您所填写的密钥"
-    // }, {
-    //   "icon": 54,
-    //   "title": "绑定身高id",
-    //   "desc": "绑定您的光遇ID"
-    // }, {
-    //   "icon": 55,
-    //   "title": "查询身高",
-    //   "desc": "查询您的身高数值" 
-    // }]
-  //}, {
     "group": "兑换图功能",
     "list": [{
         "icon": 3,
