@@ -2,13 +2,17 @@
 -------------------
 * 2023/10/20
  - 更新复刻记录图片
- ："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
+："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
 
  - 更新归巢季兑换图
 ："Tlon-Sky\resource\季节兑换图\归巢季.png"
 
  - 更新先祖多久未复刻“跳舞艺人”时间
- ："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"
+："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"
+
+ - 移除活动剩余功能，更新季节剩余时间，修改菜单显示内容
+："Tlon-Sky\apps\「光遇」剩余时间查询.js"
+："Tlon-Sky\config\model\help_model.js"
 
 -------------------
 * 2023/10/18

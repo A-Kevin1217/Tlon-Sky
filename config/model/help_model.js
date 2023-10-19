@@ -42,8 +42,8 @@ export const helpList = [{
         "desc": "查询最近蜡烛变化"
       }, {
         "icon": 22,
-        "title": "#季节剩余 #活动剩余",
-        "desc": "查询剩余时间"
+        "title": "#季节剩余",
+        "desc": "查询季节剩余时间"
       }, {
         "icon": 32,
         "title": "#往期复刻",
@@ -119,8 +119,8 @@ export const helpList = [{
         "desc": "光遇同人赏析"
       }, {
         "icon": 46,
-        "title": "#光遇签到",
-        "desc": "签到获得每日蜡烛(假"
+        "title": "#Sky娱乐菜单",
+        "desc": "查看蜡烛娱乐功能"
       }]
   }, {
     "group": "其他功能",
