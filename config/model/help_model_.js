@@ -7,7 +7,7 @@ export const helpCfg = {
   themeExclude: ['default'],
 }
 export const helpList = [{
-    "group": "娱乐功能",
+    "group": "基本信息",
     "auth": false,
     "list": [{
       "icon": 1,
@@ -19,12 +19,8 @@ export const helpList = [{
       "desc": "查看Tlon-Sky的个人信息"
     }, {
       "icon": 1,
-      "title": "#抢蜡烛",
-      "desc": "抢别人蜡烛,可@人指定抢"
-    }, {
-      "icon": 1,
-      "title": "#送蜡烛",
-      "desc": "将自己的蜡烛赠予别人"
+      "title": "#光遇背包",
+      "desc": "查看Tlon-Sky背包信息"
     }]
   }, {
     "group": "蜡烛商店",
@@ -38,7 +34,7 @@ export const helpList = [{
       "desc": "购买商店物品"
     }]
   }, {
-    "group": "赌蜡烛",
+    "group": "蜡烛操作",
     "list": [{
       "icon": 1,
       "title": "#押注+数字",
@@ -47,6 +43,14 @@ export const helpList = [{
       "icon": 1,
       "title": "#dlz+剪刀 石头 布",
       "desc": "与系统进行猜拳"
+    }, {
+      "icon": 1,
+      "title": "#抢蜡烛",
+      "desc": "抢别人蜡烛,可@人指定抢"
+    }, {
+      "icon": 1,
+      "title": "#送蜡烛",
+      "desc": "将自己的蜡烛赠予别人"
     }]
   }, {
     "group": "排行榜",
