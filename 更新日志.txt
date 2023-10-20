@@ -29,6 +29,9 @@
 ："Tlon-Sky\apps\「娱乐」我的信息.js"
 ："Tlon-Sky\resource\admin\光遇信息.html"
 
+ - 更新娱乐菜单内容
+："Tlon-Sky\config\model\help_model_.js"
+
 -------------------
 * 2023/10/18
  - 修复抢蜡烛可指定抢自己的问题和机器人不可被抢的问题
