@@ -14,6 +14,17 @@
 ："Tlon-Sky\apps\「光遇」剩余时间查询.js"
 ："Tlon-Sky\config\model\help_model.js"
 
+ - 签到初始化信息添加上次抢蜡烛时间戳
+："Tlon-Sky\apps\「娱乐」签到.js"
+
+ - 添加蜡烛商店体系，添加商品蜡烛保护卡
+："Tlon-Sky\apps\「娱乐」蜡烛商店.js"
+："Tlon-Sky\resource\admin\蜡烛商店.html"
+："Tlon-Sky\data\商店\秋风商店.json"
+
+ - 抢蜡烛增加判断用户是否拥有蜡烛保护卡
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+
 -------------------
 * 2023/10/18
  - 修复抢蜡烛可指定抢自己的问题和机器人不可被抢的问题

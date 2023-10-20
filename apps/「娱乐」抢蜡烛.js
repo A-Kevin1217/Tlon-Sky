@@ -64,6 +64,25 @@ export class 娱乐_抢蜡烛 extends plugin {
         const 被抢蜡烛数量 = Math.floor(Math.random() * 30) + 1;
 
         if (被抢用户Json[被抢用户ID]['白蜡'] >= 被抢蜡烛数量) {//  被抢人蜡烛足够，继续向下
+          const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${被抢用户ID}.json`
+          if (!fs.existsSync(用户背包文件)) {
+              let 背包信息 = {}
+              fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
+              const _用户背包文件Data = fs.readFileSync(用户背包文件)
+              const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
+              _用户背包文件Json[被抢用户ID] = {
+                  蜡烛保护卡: 0
+              }
+              fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
+              logger.mark(`已为用户${被抢用户ID}\n创建背包信息`)
+          }
+          const 用户背包文件Data = await fs.promises.readFile(用户背包文件)
+          const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
+          if (用户背包文件Json[被抢用户ID]['蜡烛保护卡'] >= 1) {
+            用户背包文件Json[被抢用户ID]['蜡烛保护卡'] -= 1
+            fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
+            return e.reply('对方有保护卡，抢蜡烛失败！')
+          }
           //  更新被抢人信息
           被抢用户Json[被抢用户ID]['白蜡'] -= 被抢蜡烛数量;
           被抢用户Json[被抢用户ID]['被抢次数'] += 1;
@@ -102,12 +121,31 @@ export class 娱乐_抢蜡烛 extends plugin {
           return e.reply(`对不起，被抢的人蜡烛数量不足！\n【${被抢用户昵称}】 仅剩「${被抢用户Json[被抢用户ID]['白蜡']}」个白蜡\n无法被抢走「${被抢蜡烛数量}」个白蜡，请再次发送抢蜡烛`, true, { recallMsg: 15 })
         }
       } catch (error) {
-        return e.reply('抢蜡烛失败！您尚未拥有存档\n请您发送"光遇签到"')
+        return e.reply('出现错误了，请执行"创建信息"试试~')
       }
     } else {
       //  at了，指定用户抢蜡烛
       if (e.at === 用户ID) {
         return e.reply('不可自己抢自己')
+      }
+      const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${e.at}.json`
+      if (!fs.existsSync(用户背包文件)) {
+          let 背包信息 = {}
+          fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
+          const _用户背包文件Data = fs.readFileSync(用户背包文件)
+          const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
+          _用户背包文件Json[e.at] = {
+              蜡烛保护卡: 0
+          }
+          fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
+          logger.mark(`已为用户${e.at}\n创建背包信息`)
+      }
+      const 用户背包文件Data = await fs.promises.readFile(用户背包文件)
+      const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
+      if (用户背包文件Json[e.at]['蜡烛保护卡'] >= 1) {
+        用户背包文件Json[e.at]['蜡烛保护卡'] -= 1
+        fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
+        return e.reply('对方有保护卡，抢蜡烛失败！')
       }
       try {
         const 用户文件Data = await fs.promises.readFile(用户文件);
@@ -183,7 +221,7 @@ export class 娱乐_抢蜡烛 extends plugin {
           return e.reply(`对不起，被抢的人蜡烛数量不足！\n【${被抢用户昵称}】 仅剩「${被抢用户Json[被抢用户ID]['白蜡']}」个白蜡\n无法被抢走「${被抢蜡烛数量}」个白蜡，请再次发送抢蜡烛`, true, { recallMsg: 15 });
         }
       } catch (error) {
-        return e.reply('抢蜡烛失败！可能有以下原因：\n1.您尚未拥有存档\n2.被抢人尚未拥有存档\n3.您抢了机器人')
+        return e.reply('抢蜡烛失败！可能有以下原因：\n1.您尚未拥有存档\n2.被抢人尚未拥有存档\n3.出现错误了，请执行"创建信息"试试~')
       }
     }
   }

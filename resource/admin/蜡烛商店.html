@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            width: 350px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            width: 350px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        .product {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .product img {
+            width: 150px;
+            height: 150px;
+            margin-right: 20px;
+        }
+
+        .product-info {
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .product-price {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .product-description {
+            margin-bottom: 10px;
+        }
+
+        .product-button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>蜡烛商店</h1>
+    </header>
+    <main>
+        <div class="product">
+            <div class="product-info">
+                <h2 class="product-title">蜡烛保护卡</h2>
+                <p class="product-price">$10.00 季蜡</p>
+                <p class="product-description">被抢蜡烛时自动触发。</p>
+                <button class="product-button">售出数量：{{蜡烛保护卡}}</button>
+            </div>
+        </div>
+        <div class="product">
+            <div class="product-info">
+                <h2 class="product-title">物品名</h2>
+                <p class="product-price">价格</p>
+                <p class="product-description">描述。</p>
+                <button class="product-button">售出数量：{{物品名}}</button>
+            </div>
+        </div>
+        <!-- 添加更多产品 -->
+    </main>
+</body>
+
+</html>
