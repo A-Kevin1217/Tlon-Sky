@@ -66,20 +66,22 @@ export class 娱乐_抢蜡烛 extends plugin {
         if (被抢用户Json[被抢用户ID]['白蜡'] >= 被抢蜡烛数量) {//  被抢人蜡烛足够，继续向下
           const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${被抢用户ID}.json`
           if (!fs.existsSync(用户背包文件)) {
-              let 背包信息 = {}
-              fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
-              const _用户背包文件Data = fs.readFileSync(用户背包文件)
-              const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
-              _用户背包文件Json[被抢用户ID] = {
-                  蜡烛保护卡: 0
-              }
-              fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
-              logger.mark(`已为用户${被抢用户ID}\n创建背包信息`)
+            let 背包信息 = {}
+            fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
+            const _用户背包文件Data = fs.readFileSync(用户背包文件)
+            const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
+            _用户背包文件Json[被抢用户ID] = {
+              蜡烛保护卡: 0
+            }
+            fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
+            logger.mark(`\n已为用户${被抢用户ID}\n创建背包信息`)
           }
           const 用户背包文件Data = await fs.promises.readFile(用户背包文件)
           const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
           if (用户背包文件Json[被抢用户ID]['蜡烛保护卡'] >= 1) {
             用户背包文件Json[被抢用户ID]['蜡烛保护卡'] -= 1
+            用户文件Json[用户ID]['上次抢蜡烛时间戳'] = 当前时间戳
+            fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4));
             fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
             return e.reply('对方有保护卡，抢蜡烛失败！')
           }
@@ -128,25 +130,6 @@ export class 娱乐_抢蜡烛 extends plugin {
       if (e.at === 用户ID) {
         return e.reply('不可自己抢自己')
       }
-      const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${e.at}.json`
-      if (!fs.existsSync(用户背包文件)) {
-          let 背包信息 = {}
-          fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
-          const _用户背包文件Data = fs.readFileSync(用户背包文件)
-          const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
-          _用户背包文件Json[e.at] = {
-              蜡烛保护卡: 0
-          }
-          fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
-          logger.mark(`已为用户${e.at}\n创建背包信息`)
-      }
-      const 用户背包文件Data = await fs.promises.readFile(用户背包文件)
-      const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
-      if (用户背包文件Json[e.at]['蜡烛保护卡'] >= 1) {
-        用户背包文件Json[e.at]['蜡烛保护卡'] -= 1
-        fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
-        return e.reply('对方有保护卡，抢蜡烛失败！')
-      }
       try {
         const 用户文件Data = await fs.promises.readFile(用户文件);
         const 用户文件Json = JSON.parse(用户文件Data.toString());
@@ -165,7 +148,27 @@ export class 娱乐_抢蜡烛 extends plugin {
             return e.reply(`抢蜡烛CD中！\n请等待 ${剩余小时} 小时 ${剩余分钟} 分钟 ${剩余秒钟} 秒后再试！\nCD结束时间：${CD结束时间}`);
           }
         }
-
+        const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${e.at}.json`
+        if (!fs.existsSync(用户背包文件)) {
+          let 背包信息 = {}
+          fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
+          const _用户背包文件Data = fs.readFileSync(用户背包文件)
+          const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
+          _用户背包文件Json[e.at] = {
+            蜡烛保护卡: 0
+          }
+          fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
+          logger.mark(`\n已为用户${e.at}\n创建背包信息`)
+        }
+        const 用户背包文件Data = await fs.promises.readFile(用户背包文件)
+        const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
+        if (用户背包文件Json[e.at]['蜡烛保护卡'] >= 1) {
+          用户背包文件Json[e.at]['蜡烛保护卡'] -= 1
+          用户文件Json[用户ID]['上次抢蜡烛时间戳'] = 当前时间戳
+          fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4));
+          fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
+          return e.reply('对方有保护卡，抢蜡烛失败！')
+        }
         // 读取被抢用户的数据
         const 被抢文件 = `${e.at}.json`
         const 被抢用户 = `${用户文件位置}${被抢文件}`;
