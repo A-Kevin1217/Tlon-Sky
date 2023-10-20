@@ -17,7 +17,7 @@
  - 签到初始化信息添加上次抢蜡烛时间戳
 ："Tlon-Sky\apps\「娱乐」签到.js"
 
- - 添加蜡烛商店体系，添加商品蜡烛保护卡
+ - 添加蜡烛商店体系，添加商品蜡烛保护卡，同时显示售出数量
 ："Tlon-Sky\apps\「娱乐」蜡烛商店.js"
 ："Tlon-Sky\resource\admin\蜡烛商店.html"
 ："Tlon-Sky\data\商店\秋风商店.json"

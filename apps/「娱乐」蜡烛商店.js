@@ -42,6 +42,7 @@ export class 娱乐_蜡烛商店 extends plugin {
         const 用户ID = e.user_id
         const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${用户ID}.json`
         const 用户文件 = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`
+        const 秋风商店 = 'plugins/Tlon-Sky/data/商店/秋风商店.json'
         if (!fs.existsSync(用户背包文件)) {
             let 背包信息 = {}
             fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
@@ -57,13 +58,16 @@ export class 娱乐_蜡烛商店 extends plugin {
         const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
         const 用户文件Data = await fs.promises.readFile(用户文件)
         const 用户文件Json = JSON.parse(用户文件Data.toString())
-
+        const 秋风商店Data = fs.readFileSync(秋风商店)
+        const 秋风商店Json = JSON.parse(秋风商店Data.toString())
         if (购买物品 === '蜡烛保护卡') {
             if (用户文件Json[用户ID]['季蜡'] >= 10) {
                 用户文件Json[用户ID]['季蜡'] -= 10
                 用户背包文件Json[用户ID]['蜡烛保护卡'] += 1
-                fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
+                秋风商店Json['蜡烛保护卡'] += 1
                 fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4))
+                fs.writeFileSync(秋风商店, JSON.stringify(秋风商店Json, null, 4))
+                fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
                 return e.reply('购买成功！消耗季蜡：10')
             } else {
                 return e.reply('季蜡不足！')
