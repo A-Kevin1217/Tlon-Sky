@@ -256,6 +256,7 @@ export class 娱乐_赌蜡烛 extends plugin {
         const 赌坊信息Data = await fs.promises.readFile(赌坊信息);
         const 赌坊信息Json = JSON.parse(赌坊信息Data.toString());
         let html = {
+            秋风赌坊: 'plugins/Tlon-Sky/resource/Tlon-Sky.png',
             赢: `赢：${赌坊信息Json.胜} 次`,
             输: `输：${赌坊信息Json.负} 次`,
             平: `平：${赌坊信息Json.平} 次`,
