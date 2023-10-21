@@ -2,8 +2,8 @@ import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
 import fs from 'fs';
 
-// 设定蜡烛CD时间（4小时的毫秒数）
-const CD时间 = 4 * 60 * 60 * 1000;
+// 设定蜡烛CD时间（2小时的毫秒数）
+const CD时间 = 2 * 60 * 60 * 1000;
 
 export class 娱乐_抢蜡烛 extends plugin {
   constructor() {
