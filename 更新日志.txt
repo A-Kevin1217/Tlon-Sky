@@ -1,5 +1,10 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/10/23
+ - 修改了菜单显示信息
+："Tlon-Sky\config\model\help_model.js"
+
+-------------------
 * 2023/10/22
  - 修复秋风赌坊无头像问题
 ："Tlon-Sky\resource\admin\秋风赌坊.html"
