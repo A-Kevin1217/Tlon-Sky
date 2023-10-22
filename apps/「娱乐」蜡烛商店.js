@@ -68,7 +68,7 @@ export class 娱乐_蜡烛商店 extends plugin {
                 fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4))
                 fs.writeFileSync(秋风商店, JSON.stringify(秋风商店Json, null, 4))
                 fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
-                return e.reply('购买成功！消耗季蜡：10')
+                return e.reply(`购买成功！消耗季蜡：10\n剩余季蜡：${用户文件Json[用户ID]['季蜡']}\n蜡烛保护卡：${用户背包文件Json[用户ID]['蜡烛保护卡']}`)
             } else {
                 return e.reply('季蜡不足！')
             }
