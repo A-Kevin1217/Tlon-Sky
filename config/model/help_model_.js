@@ -11,15 +11,15 @@ export const helpList = [{
     "auth": false,
     "list": [{
       "icon": 1,
-      "title": "#光遇签到",
+      "title": "光遇签到",
       "desc": "每日签到"
     }, {
       "icon": 1,
-      "title": "#光遇信息",
+      "title": "光遇信息",
       "desc": "查看Tlon-Sky的个人信息"
     }, {
       "icon": 1,
-      "title": "#光遇背包",
+      "title": "光遇背包",
       "desc": "查看Tlon-Sky背包信息"
     }]
   }, {
@@ -30,26 +30,26 @@ export const helpList = [{
       "desc": "查看商店物品与价格"
     }, {
       "icon": 1,
-      "title": "购买+物品名",
-      "desc": "购买商店物品"
+      "title": "#购买+物品名",
+      "desc": "购买商店物品，记得带#号"
     }]
   }, {
     "group": "蜡烛操作",
     "list": [{
       "icon": 1,
-      "title": "#押注+数字",
+      "title": "押注+数字",
       "desc": "每多一千赌注倍率增加0.5"
     }, {
       "icon": 1,
-      "title": "#dlz+剪刀 石头 布",
+      "title": "dlz+剪刀 石头 布",
       "desc": "与系统进行猜拳"
     }, {
       "icon": 1,
-      "title": "#抢蜡烛",
+      "title": "抢蜡烛",
       "desc": "抢别人蜡烛,可@人指定抢"
     }, {
       "icon": 1,
-      "title": "#送蜡烛",
+      "title": "送蜡烛",
       "desc": "将自己的蜡烛赠予别人"
     }]
   }, {
