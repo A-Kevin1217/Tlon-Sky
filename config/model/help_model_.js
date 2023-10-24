@@ -60,8 +60,8 @@ export const helpList = [{
       "desc": "查看白蜡与季蜡排行Top10"
     }, {
       "icon": 1,
-      "title": "DB排行",
-      "desc": "查看赌神与赌徒排行Top10"
+      "title": "赌博排行",
+      "desc": "查看赚取、亏损与次数排行Top10"
     }]
   }, {
     "group": "后续功能待添加 · 欢迎来392665563提议",

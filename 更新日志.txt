@@ -1,5 +1,14 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/10/24
+ - DB排行更名赌博排行，同时增加亏损排行，赌神更为赚取，赌徒更为次数
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
+："Tlon-Sky\resource\admin\赌博排行榜.html"
+
+ - 菜单内容DB排行更为赌博排行
+："Tlon-Sky\config\model\help_model.js"
+
+-------------------
 * 2023/10/23
  - 修改了菜单显示信息
 ："Tlon-Sky\config\model\help_model.js"
