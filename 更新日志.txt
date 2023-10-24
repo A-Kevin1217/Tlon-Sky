@@ -6,7 +6,7 @@
 ："Tlon-Sky\resource\admin\赌博排行榜.html"
 ："Tlon-Sky\resource\admin\赌博次数排行榜.html"
 
- - 菜单内容DB排行更为赌博排行，增加DB次数排行
+ - 菜单内容DB排行更为赌博排行，增加赌博次数排行
 ："Tlon-Sky\config\model\help_model.js"
 
 -------------------
