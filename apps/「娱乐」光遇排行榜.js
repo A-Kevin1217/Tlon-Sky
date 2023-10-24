@@ -19,6 +19,10 @@ export class 娱乐_光遇排行榜 extends plugin {
         {
           reg: '^#?赌博排行$',
           fnc: '赌博排行'
+        },
+        {
+          reg: '^#?赌博次数排行',
+          fnc: '赌博次数排行'
         }
       ]
     });
@@ -99,8 +103,6 @@ export class 娱乐_光遇排行榜 extends plugin {
     logger.mark('赚取排行写入成功', result_赚取);
     const result_亏损 = await 亏损排行数据();
     logger.mark('亏损排行写入成功', result_亏损);
-    const result_次数 = await 次数排行数据();
-    logger.mark('次数排行写入成功', result_次数);
 
     const 排行信息_赚取 = 'plugins/Tlon-Sky/data/排行榜/赚取.json'
     const 排行信息Data_赚取 = await fs.promises.readFile(排行信息_赚取)
@@ -110,17 +112,12 @@ export class 娱乐_光遇排行榜 extends plugin {
     const 排行信息Data_亏损 = await fs.promises.readFile(排行信息_亏损)
     const 排行信息Json_亏损 = JSON.parse(排行信息Data_亏损.toString())
 
-    const 排行信息_次数 = 'plugins/Tlon-Sky/data/排行榜/次数.json'
-    const 排行信息Data_次数 = await fs.promises.readFile(排行信息_次数)
-    const 排行信息Json_次数 = JSON.parse(排行信息Data_次数.toString())
     //  读取昵称
     const Top_nickname_赚取 = 排行信息Json_赚取.slice(0, 10).map(item => item.nickname);
     const Top_nickname_亏损 = 排行信息Json_亏损.slice(0, 10).map(item => item.nickname);
-    const Top_nickname_次数 = 排行信息Json_次数.slice(0, 10).map(item => item.nickname);
     //  读取数量与次数
     const Top_赚取 = 排行信息Json_赚取.slice(0, 10).map(item => item.level);
     const Top_亏损 = 排行信息Json_亏损.slice(0, 10).map(item => item.level);
-    const Top_次数 = 排行信息Json_次数.slice(0, 10).map(item => item.level);
     //  读取ID
     const Top_ID_赚取 = [];
     for (let i = 0; i < 10; i++) {
@@ -129,10 +126,6 @@ export class 娱乐_光遇排行榜 extends plugin {
     const Top_ID_亏损 = [];
     for (let i = 0; i < 10; i++) {
       Top_ID_亏损[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_亏损[i].userId}`;
-    }
-    const Top_ID_次数 = [];
-    for (let i = 0; i < 10; i++) {
-      Top_ID_次数[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_次数[i].userId}`;
     }
 
     let html = {
@@ -146,11 +139,6 @@ export class 娱乐_光遇排行榜 extends plugin {
       Top5_nickname_亏损: Top_nickname_亏损[4],Top6_nickname_亏损: Top_nickname_亏损[5],
       Top7_nickname_亏损: Top_nickname_亏损[6],Top8_nickname_亏损: Top_nickname_亏损[7],
       Top9_nickname_亏损: Top_nickname_亏损[8],Top10_nickname_亏损: Top_nickname_亏损[9],
-      Top1_nickname_次数: Top_nickname_次数[0], Top2_nickname_次数: Top_nickname_次数[1],
-      Top3_nickname_次数: Top_nickname_次数[2], Top4_nickname_次数: Top_nickname_次数[3],
-      Top5_nickname_次数: Top_nickname_次数[4], Top6_nickname_次数: Top_nickname_次数[5],
-      Top7_nickname_次数: Top_nickname_次数[6], Top8_nickname_次数: Top_nickname_次数[7],
-      Top9_nickname_次数: Top_nickname_次数[8], Top10_nickname_次数: Top_nickname_次数[9],
       Top1_赚取: Top_赚取[0], Top2_赚取: Top_赚取[1],
       Top3_赚取: Top_赚取[2], Top4_赚取: Top_赚取[3],
       Top5_赚取: Top_赚取[4], Top6_赚取: Top_赚取[5],
@@ -161,11 +149,6 @@ export class 娱乐_光遇排行榜 extends plugin {
       Top5_亏损: Top_亏损[4], Top6_亏损: Top_亏损[5],
       Top7_亏损: Top_亏损[6], Top8_亏损: Top_亏损[7],
       Top9_亏损: Top_亏损[8], Top10_亏损: Top_亏损[9],
-      Top1_次数: Top_次数[0], Top2_次数: Top_次数[1],
-      Top3_次数: Top_次数[2], Top4_次数: Top_次数[3],
-      Top5_次数: Top_次数[4], Top6_次数: Top_次数[5],
-      Top7_次数: Top_次数[6], Top8_次数: Top_次数[7],
-      Top9_次数: Top_次数[8], Top10_次数: Top_次数[9],
       Top1_ID_赚取: Top_ID_赚取[0], Top2_ID_赚取: Top_ID_赚取[1],
       Top3_ID_赚取: Top_ID_赚取[2], Top4_ID_赚取: Top_ID_赚取[3],
       Top5_ID_赚取: Top_ID_赚取[4], Top6_ID_赚取: Top_ID_赚取[5],
@@ -175,7 +158,42 @@ export class 娱乐_光遇排行榜 extends plugin {
       Top3_ID_亏损: Top_ID_亏损[2], Top4_ID_亏损: Top_ID_亏损[3],
       Top5_ID_亏损: Top_ID_亏损[4], Top6_ID_亏损: Top_ID_亏损[5],
       Top7_ID_亏损: Top_ID_亏损[6], Top8_ID_亏损: Top_ID_亏损[7],
-      Top9_ID_亏损: Top_ID_亏损[8], Top10_ID_亏损: Top_ID_亏损[9],
+      Top9_ID_亏损: Top_ID_亏损[8], Top10_ID_亏损: Top_ID_亏损[9]
+    }
+
+    await render('admin/赌博排行榜', {
+      ...html
+    }, {
+      e,
+      scale: 1.4
+    })
+  }
+
+  async 赌博次数排行(e) {
+    const result_次数 = await 次数排行数据();
+    logger.mark('次数排行写入成功', result_次数);
+
+    const 排行信息_次数 = 'plugins/Tlon-Sky/data/排行榜/次数.json'
+    const 排行信息Data_次数 = await fs.promises.readFile(排行信息_次数)
+    const 排行信息Json_次数 = JSON.parse(排行信息Data_次数.toString())
+    const Top_nickname_次数 = 排行信息Json_次数.slice(0, 10).map(item => item.nickname);
+    const Top_次数 = 排行信息Json_次数.slice(0, 10).map(item => item.level);
+    const Top_ID_次数 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_次数[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_次数[i].userId}`;
+    }
+
+    let html = {
+      Top1_nickname_次数: Top_nickname_次数[0], Top2_nickname_次数: Top_nickname_次数[1],
+      Top3_nickname_次数: Top_nickname_次数[2], Top4_nickname_次数: Top_nickname_次数[3],
+      Top5_nickname_次数: Top_nickname_次数[4], Top6_nickname_次数: Top_nickname_次数[5],
+      Top7_nickname_次数: Top_nickname_次数[6], Top8_nickname_次数: Top_nickname_次数[7],
+      Top9_nickname_次数: Top_nickname_次数[8], Top10_nickname_次数: Top_nickname_次数[9],
+      Top1_次数: Top_次数[0], Top2_次数: Top_次数[1],
+      Top3_次数: Top_次数[2], Top4_次数: Top_次数[3],
+      Top5_次数: Top_次数[4], Top6_次数: Top_次数[5],
+      Top7_次数: Top_次数[6], Top8_次数: Top_次数[7],
+      Top9_次数: Top_次数[8], Top10_次数: Top_次数[9],
       Top1_ID_次数: Top_ID_次数[0], Top2_ID_次数: Top_ID_次数[1],
       Top3_ID_次数: Top_ID_次数[2], Top4_ID_次数: Top_ID_次数[3],
       Top5_ID_次数: Top_ID_次数[4], Top6_ID_次数: Top_ID_次数[5],
@@ -183,7 +201,7 @@ export class 娱乐_光遇排行榜 extends plugin {
       Top9_ID_次数: Top_ID_次数[8], Top10_ID_次数: Top_ID_次数[9]
     }
 
-    await render('admin/赌博排行榜', {
+    await render('admin/赌博次数排行榜', {
       ...html
     }, {
       e,
