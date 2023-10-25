@@ -15,13 +15,16 @@ export class 娱乐_签到 extends plugin {
         {
           reg: /^#?(光遇签到|冒泡)$/,
           fnc: '光遇签到'
+        },
+        {
+          reg: /^#?设置昵称(.*)$/,
+          fnc: '设置昵称'
         }
       ]
     })
   }
   async 光遇签到(e) {
-    let member = await Bot.getGroupMemberInfo(e.group_id, e.at ? e.at : e.user_id);
-    let 昵称 = member.nickname
+    let 昵称 = null
     let userId = e.user_id;
     const fileName = (`plugins/Tlon-Sky/data/Sky签到/${userId}.json`);
 
@@ -34,7 +37,7 @@ export class 娱乐_签到 extends plugin {
       const 用户Data = fs.readFileSync(`plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`)
       const 用户JSON = JSON.parse(用户Data.toString())
       用户JSON[用户ID] = {
-        昵称: member.nickname,
+        昵称: '未命名用户',
         最后签到日期: null,
         连续签到天数: 0,
         累计签到天数: 0,
@@ -92,7 +95,6 @@ export class 娱乐_签到 extends plugin {
     const 季蜡 = Math.floor(Math.random() * (11 - 5 + 1)) + 5;
     const 能量值 = Math.floor(Math.random() * 30 - 20 + 1) + 20;
     // 更新签到数据
-    data[userId].昵称 = member.nickname
     data[userId].最后签到日期 = getCurrentDate()
     data[userId].连续签到天数 = is连续签到 ? (连续签到天数 + 1) : 1
     data[userId].累计签到天数 = 累计签到天数 + 1
@@ -135,6 +137,18 @@ export class 娱乐_签到 extends plugin {
       logger.mark('保存数据失败:', error);
       e.reply('签到失败，请稍后再试！');
     }
+  }
+
+  async 设置昵称(e) {
+    const 用户ID = e.user_id
+    const 昵称 = e.msg.replace(/#|设置昵称/g, "")
+    const 用户文件 = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`
+    const 用户文件Data = await fs.promises.readFile(用户文件)
+    const 用户文件Json = JSON.parse(用户文件Data.toString())
+
+    用户文件Json[用户ID]['昵称'] = 昵称
+    fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4))
+    e.reply(`设置成功，昵称：${昵称}`)
   }
 }
 

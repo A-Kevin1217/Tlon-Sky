@@ -21,6 +21,10 @@ export const helpList = [{
       "icon": 1,
       "title": "光遇背包",
       "desc": "查看Tlon-Sky背包信息"
+    }, {
+      "icon": 1,
+      "title": "设置昵称",
+      "desc": "设置个人信息昵称"
     }]
   }, {
     "group": "蜡烛商店",

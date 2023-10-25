@@ -1,5 +1,16 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/10/26
+ - 用户签到之后需要自己设置昵称
+："Tlon-Sky\apps\「娱乐」签到.js"
+
+ - 娱乐菜单添加设置昵称
+："Tlon-Sky\config\model\help_model.js"
+
+ - 娱乐帮助图片取消背景图，改为纯色背景
+："Tlon-Sky\resource\admin\娱乐help.html"
+
+-------------------
 * 2023/10/25
  - 修改今日任务发送方式
 ："Tlon-Sky\apps\「光遇」每日功能.js"
