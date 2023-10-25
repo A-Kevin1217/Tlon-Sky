@@ -37,7 +37,7 @@ export class 娱乐_签到 extends plugin {
       const 用户Data = fs.readFileSync(`plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`)
       const 用户JSON = JSON.parse(用户Data.toString())
       用户JSON[用户ID] = {
-        昵称: '未命名用户',
+        昵称: '未命名',
         最后签到日期: null,
         连续签到天数: 0,
         累计签到天数: 0,
