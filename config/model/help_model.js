@@ -1,6 +1,6 @@
 export const helpCfg = {
   title: 'Sky菜单',
-  subTitle: 'Yunzai-Bot & Tlon-Sky',
+  subTitle: 'Tlon-Sky',
   columnCount: 0,
   colWidth: 265,
   theme: 'all',

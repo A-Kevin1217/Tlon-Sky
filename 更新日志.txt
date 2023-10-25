@@ -4,11 +4,16 @@
  - 用户签到之后需要自己设置昵称
 ："Tlon-Sky\apps\「娱乐」签到.js"
 
- - 娱乐菜单添加设置昵称
-："Tlon-Sky\config\model\help_model.js"
+ - 娱乐菜单添加设置昵称，和显示内容
+："Tlon-Sky\config\model\help_model_.js"
 
  - 娱乐帮助图片取消背景图，改为纯色背景
 ："Tlon-Sky\resource\admin\娱乐help.html"
+
+ - 修改一些显示信息
+："Tlon-Sky\components\renderer.js"
+："Tlon-Sky\components\common-lib\render.js"
+："Tlon-Sky\config\model\help_model.js"
 
 -------------------
 * 2023/10/25
