@@ -7,6 +7,10 @@
  - 适配a-yunzai
 ："Tlon-Sky\main.js"
 
+ - 修改自述，更迭图片
+："Tlon-Sky\README.md"
+："Tlon-Sky\resource\功能图片.png"
+："Tlon-Sky\resource\娱乐功能图片.png"
 -------------------
 * 2023/10/24
  - DB排行更名赌博排行，同时增加亏损排行，赌神更为赚取，赌徒更为次数，次数排行额外列出
