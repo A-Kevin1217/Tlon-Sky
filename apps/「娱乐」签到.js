@@ -114,7 +114,7 @@ export class 娱乐_签到 extends plugin {
       const 累计签到提示 = `你已累计签到 ${data[userId].累计签到天数} 天！`
       const 连续签到提示 = is连续签到 ? `你已连续签到 ${data[userId].连续签到天数} 天！` : '';
       let html = {
-        昵称: 昵称,
+        昵称: data[userId].昵称,
         头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${userId}`,
         获得白蜡: 白蜡,
         数量_白: data[userId].白蜡 - 白蜡,
