@@ -26,11 +26,11 @@ export const helpList = [{
         "title": "#今日魔法",
         "desc": "查看今日免费魔法"
       }, {
-        "icon": 0,
+        "icon": 41,
         "title": "#代币位置",
         "desc": "查看国服今日获得代币位置"
       }, {
-        "icon": 0,
+        "icon": 51,
         "title": "#季节任务",
         "desc": "查看国服当前季节任务"
       }]
