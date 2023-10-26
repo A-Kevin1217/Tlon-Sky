@@ -15,6 +15,9 @@
 ："Tlon-Sky\components\common-lib\render.js"
 ："Tlon-Sky\config\model\help_model.js"
 
+ - 添加代币位置功能，季节任务功能
+："Tlon-Sky\apps\「光遇」每日功能.js"
+
 -------------------
 * 2023/10/25
  - 修改今日任务发送方式
