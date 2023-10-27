@@ -89,7 +89,7 @@ export class 娱乐_赌蜡烛 extends plugin {
                         重置押注信息(e)
                         //  押注金额与倍率相乘
                         const 赚取金额 = 押注信息Json[userID].押注金额 * 押注信息Json[userID].倍率
-                        const 净利润 = 押注信息Json[userID].押注金额 * 0.5
+                        const 净利润 = 押注信息Json[userID].押注金额 * (押注信息Json[userID].倍率 - 1)
                         //  用户信息处理
                         用户信息Json[userID].胜 = (用户信息Json[userID]?.胜 || 0) + 1
                         用户信息Json[userID].赚取 = (用户信息Json[userID]?.赚取 || 0) + 净利润
@@ -108,7 +108,7 @@ export class 娱乐_赌蜡烛 extends plugin {
                         重置押注信息(e)
                         //  押注金额与倍率相乘
                         const 赚取金额 = 押注信息Json[userID].押注金额 * 押注信息Json[userID].倍率
-                        const 净利润 = 押注信息Json[userID].押注金额 * 0.5
+                        const 净利润 = 押注信息Json[userID].押注金额 * (押注信息Json[userID].倍率 - 1)
                         //  用户信息处理
                         用户信息Json[userID].胜 = (用户信息Json[userID]?.胜 || 0) + 1
                         用户信息Json[userID].赚取 = (用户信息Json[userID]?.赚取 || 0) + 净利润
@@ -165,7 +165,7 @@ export class 娱乐_赌蜡烛 extends plugin {
                         重置押注信息(e)
                         //  押注金额与倍率相乘
                         const 赚取金额 = 押注信息Json[userID].押注金额 * 押注信息Json[userID].倍率
-                        const 净利润 = 押注信息Json[userID].押注金额 * 0.5
+                        const 净利润 = 押注信息Json[userID].押注金额 * (押注信息Json[userID].倍率 - 1)
                         //  用户信息处理
                         用户信息Json[userID].胜 = (用户信息Json[userID]?.胜 || 0) + 1
                         用户信息Json[userID].赚取 = (用户信息Json[userID]?.赚取 || 0) + 净利润
