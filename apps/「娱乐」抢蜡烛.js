@@ -123,7 +123,7 @@ export class 娱乐_抢蜡烛 extends plugin {
           return e.reply(`对不起，被抢的人蜡烛数量不足！\n【${被抢用户昵称}】 仅剩「${被抢用户Json[被抢用户ID]['白蜡']}」个白蜡\n无法被抢走「${被抢蜡烛数量}」个白蜡，请再次发送抢蜡烛`, true, { recallMsg: 15 })
         }
       } catch (error) {
-        return e.reply('出现错误了，请执行"创建信息"试试~')
+        return e.reply('出现错误了，请联系机器人主人查看错误~')
       }
     } else {
       //  at了，指定用户抢蜡烛
@@ -224,7 +224,7 @@ export class 娱乐_抢蜡烛 extends plugin {
           return e.reply(`对不起，被抢的人蜡烛数量不足！\n【${被抢用户昵称}】 仅剩「${被抢用户Json[被抢用户ID]['白蜡']}」个白蜡\n无法被抢走「${被抢蜡烛数量}」个白蜡，请再次发送抢蜡烛`, true, { recallMsg: 15 });
         }
       } catch (error) {
-        return e.reply('抢蜡烛失败！可能有以下原因：\n1.您尚未拥有存档\n2.被抢人尚未拥有存档\n3.出现错误了，请执行"创建信息"试试~')
+        return e.reply('抢蜡烛失败！可能有以下原因：\n1.您尚未拥有存档\n2.被抢人尚未拥有存档\n3.出现错误了，请联系机器人主人查看错误~')
       }
     }
   }

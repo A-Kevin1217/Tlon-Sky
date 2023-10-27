@@ -59,7 +59,7 @@ export class 娱乐_签到 extends plugin {
         总收入数量: 0
       }
       fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`, JSON.stringify(用户JSON, null, 4));
-      e.reply('用户第一次执行光遇签到\n已为用户创建信息')
+      e.reply('用户第一次执行光遇签到\n创建基础信息成功！\n使用"设置昵称+内容"可设置昵称呦~')
     }
 
     const fileExists = fs.existsSync(fileName);
