@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
-import { render , Data } from '../components/index.js'
+import { render } from '../components/index.js'
 import fetch from "node-fetch";
+import lodash from 'lodash'
 import fs from 'fs'
 
 
