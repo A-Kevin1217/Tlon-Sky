@@ -11,6 +11,10 @@
 ："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
 ："Tlon-Sky\apps\「娱乐」签到.js"
 
+ - 修改光遇公告图片
+："Tlon-Sky\apps\「光遇」官方公告.js"
+："Tlon-Sky\resource\admin\公告.html"
+
 -------------------
 * 2023/10/26
  - 用户签到之后需要自己设置昵称

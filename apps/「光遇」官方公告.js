@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { render , Data } from '../components/index.js'
 import fetch from "node-fetch";
-import lodash from 'lodash'
+import lodash, { replace } from 'lodash'
 import fs from 'fs'
 
 
@@ -26,7 +26,8 @@ export class 光遇_公告 extends plugin {
     let url = `https://ma75.update.netease.com/game_notice/announcement_live.json`;
     let res = await fetch(url).catch((err) => logger.error(err))
     res = await res.json()
-    const msg = res.OtherChannelMessage
+    let msg = res.OtherChannelMessage
+    msg = msg.replace(/<1>|<\/1>/g, "");
 
     const msg1 = res.Title
     let data = {
