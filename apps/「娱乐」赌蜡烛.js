@@ -54,12 +54,10 @@ export class 娱乐_赌蜡烛 extends plugin {
 
             //  判断是否押注
             if (押注信息Json[userID]['押注金额'] > 0) {
-                let 系统猜拳 = Math.floor(Math.random() * 3);
-                switch (系统猜拳) {
-                    case 0:ROCK;break;
-                    case 1:PAPER;break;
-                    case 2:SCISSORS;break;
-                }
+                
+                let 猜拳 = ['剪刀', '石头', '布']
+                let 随机索引 = Math.floor(Math.random() * 猜拳.length);
+                let 系统猜拳 = 猜拳[随机索引];
 
                 if (用户猜拳 === 系统猜拳) {
                     重置押注信息(e)
