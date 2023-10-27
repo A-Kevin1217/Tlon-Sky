@@ -56,12 +56,9 @@ export class 娱乐_赌蜡烛 extends plugin {
             if (押注信息Json[userID]['押注金额'] > 0) {
                 let 系统猜拳 = Math.floor(Math.random() * 3);
                 switch (系统猜拳) {
-                    case 0:
-                        return ROCK;
-                    case 1:
-                        return PAPER;
-                    case 2:
-                        return SCISSORS;
+                    case 0:ROCK;break;
+                    case 1:PAPER;break;
+                    case 2:SCISSORS;break;
                 }
 
                 if (用户猜拳 === 系统猜拳) {
