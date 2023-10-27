@@ -31,6 +31,10 @@ export class 娱乐_赌蜡烛 extends plugin {
         //  获取用户ID
         const userID = e.user_id;
 
+        const ROCK = '石头';
+        const PAPER = '布';
+        const SCISSORS = '剪刀';
+
         //  判断用户输入是否正确
         if (用户猜拳 === '剪刀' || 用户猜拳 === '石头' || 用户猜拳 === '布') {
             //  读取押注信息
@@ -50,147 +54,61 @@ export class 娱乐_赌蜡烛 extends plugin {
 
             //  判断是否押注
             if (押注信息Json[userID]['押注金额'] > 0) {
+                let 系统猜拳 = Math.floor(Math.random() * 3);
+                switch (randomNum) {
+                    case 0:
+                        return ROCK;
+                    case 1:
+                        return PAPER;
+                    case 2:
+                        return SCISSORS;
+                }
 
-                let 猜拳 = ['剪刀', '石头', '布']
-                let 随机索引 = Math.floor(Math.random() * 猜拳.length);
-                let 系统猜拳 = 猜拳[随机索引];
+                if (用户猜拳 === 系统猜拳) {
+                    重置押注信息(e)
+                    //  用户信息处理
+                    用户信息Json[userID].白蜡 = (用户信息Json[userID]?.白蜡) + (押注信息Json[userID]?.押注金额)
+                    用户信息Json[userID].平 = (用户信息Json[userID]?.平 || 0) + 1
+                    fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
 
-                if (用户猜拳 === '剪刀') {
-                    //  平局
-                    if (系统猜拳 === '剪刀') {
-                        重置押注信息(e)
-                        //  用户信息处理
-                        用户信息Json[userID].白蜡 = (用户信息Json[userID]?.白蜡) + (押注信息Json[userID]?.押注金额)
-                        用户信息Json[userID].平 = (用户信息Json[userID]?.平 || 0) + 1
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
+                    //  秋风信息处理
+                    秋风信息Json.平 += 1
+                    fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
+                    return e.reply(`平局！你和系统都选择了${系统猜拳}\n赌注已全部返还用户`)
+                } else if (
+                    (用户猜拳 === ROCK && 系统猜拳 === SCISSORS) ||
+                    (用户猜拳 === PAPER && 系统猜拳 === ROCK) ||
+                    (用户猜拳 === SCISSORS && 系统猜拳 === PAPER)
+                ) {
+                    重置押注信息(e)
+                    //  押注金额与倍率相乘
+                    const 赚取金额 = 押注信息Json[userID].押注金额 * 押注信息Json[userID].倍率
+                    const 净利润 = 押注信息Json[userID].押注金额 * (押注信息Json[userID].倍率 - 1)
+                    //  用户信息处理
+                    用户信息Json[userID].胜 = (用户信息Json[userID]?.胜 || 0) + 1
+                    用户信息Json[userID].赚取 = (用户信息Json[userID]?.赚取 || 0) + 净利润
+                    用户信息Json[userID].白蜡 = (用户信息Json[userID]?.白蜡) + 赚取金额
+                    fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
 
-                        //  秋风信息处理
-                        秋风信息Json.平 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
+                    //  秋风信息处理
+                    秋风信息Json.赔 = 秋风信息Json?.赔 + 净利润
+                    秋风信息Json.负 += 1
+                    fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
 
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：平\n返还押注蜡烛：${押注信息Json[userID]['押注金额']}根`)
-                        //  输了
-                    } else if (系统猜拳 === '石头') {
-                        重置押注信息(e)
-                        //  用户信息处理
-                        用户信息Json[userID].负 = (用户信息Json[userID]?.负 || 0) + 1
-                        用户信息Json[userID].亏损 = (用户信息Json[userID]?.亏损 || 0) + 押注信息Json[userID].押注金额
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
+                    return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：赢\n赚取蜡烛数量：${净利润}根`)
+                } else {
+                    重置押注信息(e)
+                    //  用户信息处理
+                    用户信息Json[userID].负 = (用户信息Json[userID]?.负 || 0) + 1
+                    用户信息Json[userID].亏损 = (用户信息Json[userID]?.亏损 || 0) + 押注信息Json[userID].押注金额
+                    fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
 
-                        //  秋风信息处理
-                        秋风信息Json.赚 = (秋风信息Json?.赚) + 押注信息Json[userID].押注金额
-                        秋风信息Json.胜 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
+                    //  秋风信息处理
+                    秋风信息Json.赚 = (秋风信息Json?.赚) + 押注信息Json[userID].押注金额
+                    秋风信息Json.胜 += 1
+                    fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
 
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：输\n损失蜡烛数量：${押注信息Json[userID]['押注金额']}根`)
-
-                        //  赢了
-                    } else if (系统猜拳 === '布') {
-                        重置押注信息(e)
-                        //  押注金额与倍率相乘
-                        const 赚取金额 = 押注信息Json[userID].押注金额 * 押注信息Json[userID].倍率
-                        const 净利润 = 押注信息Json[userID].押注金额 * (押注信息Json[userID].倍率 - 1)
-                        //  用户信息处理
-                        用户信息Json[userID].胜 = (用户信息Json[userID]?.胜 || 0) + 1
-                        用户信息Json[userID].赚取 = (用户信息Json[userID]?.赚取 || 0) + 净利润
-                        用户信息Json[userID].白蜡 = (用户信息Json[userID]?.白蜡) + 赚取金额
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
-
-                        //  秋风信息处理
-                        秋风信息Json.赔 = 秋风信息Json?.赔 + 净利润
-                        秋风信息Json.负 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
-
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：赢\n赚取蜡烛数量：${净利润}根`)
-                    }
-                } else if (用户猜拳 === '石头') {
-                    if (系统猜拳 === '剪刀') {
-                        重置押注信息(e)
-                        //  押注金额与倍率相乘
-                        const 赚取金额 = 押注信息Json[userID].押注金额 * 押注信息Json[userID].倍率
-                        const 净利润 = 押注信息Json[userID].押注金额 * (押注信息Json[userID].倍率 - 1)
-                        //  用户信息处理
-                        用户信息Json[userID].胜 = (用户信息Json[userID]?.胜 || 0) + 1
-                        用户信息Json[userID].赚取 = (用户信息Json[userID]?.赚取 || 0) + 净利润
-                        用户信息Json[userID].白蜡 = (用户信息Json[userID]?.白蜡) + 赚取金额
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
-
-                        //  秋风信息处理
-                        秋风信息Json.赔 = 秋风信息Json?.赔 + 净利润
-                        秋风信息Json.负 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
-
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：赢\n赚取蜡烛数量：${净利润}根`)
-                    } else if (系统猜拳 === '石头') {
-                        重置押注信息(e)
-                        //  用户信息处理
-                        用户信息Json[userID].白蜡 = 用户信息Json[userID].白蜡 + 押注信息Json[userID].押注金额
-                        用户信息Json[userID].平 = (用户信息Json[userID]?.平 || 0) + 1
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
-
-                        //  秋风信息处理
-                        秋风信息Json.平 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
-
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：平\n返还押注蜡烛：${押注信息Json[userID]['押注金额']}根`)
-                    } else if (系统猜拳 === '布') {
-                        重置押注信息(e)
-                        //  用户信息处理
-                        用户信息Json[userID].负 = (用户信息Json[userID]?.负 || 0) + 1
-                        用户信息Json[userID].亏损 = (用户信息Json[userID]?.亏损 || 0) + 押注信息Json[userID].押注金额
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
-
-                        //  秋风信息处理
-                        秋风信息Json.赚 = 秋风信息Json.赚 + 押注信息Json[userID].押注金额
-                        秋风信息Json.胜 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
-
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：输\n损失蜡烛数量：${押注信息Json[userID]['押注金额']}根`)
-                    }
-                } else if (用户猜拳 === '布') {
-                    if (系统猜拳 === '剪刀') {
-                        重置押注信息(e)
-                        //  用户信息处理
-                        用户信息Json[userID].负 = (用户信息Json[userID]?.负 || 0) + 1
-                        用户信息Json[userID].亏损 = (用户信息Json[userID]?.亏损 || 0) + 押注信息Json[userID].押注金额
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
-
-                        //  秋风信息处理
-                        秋风信息Json.赚 = 秋风信息Json.赚 + 押注信息Json[userID].押注金额
-                        秋风信息Json.胜 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
-
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：输\n损失蜡烛数量：${押注信息Json[userID]['押注金额']}根`)
-                    } else if (系统猜拳 === '石头') {
-                        重置押注信息(e)
-                        //  押注金额与倍率相乘
-                        const 赚取金额 = 押注信息Json[userID].押注金额 * 押注信息Json[userID].倍率
-                        const 净利润 = 押注信息Json[userID].押注金额 * (押注信息Json[userID].倍率 - 1)
-                        //  用户信息处理
-                        用户信息Json[userID].胜 = (用户信息Json[userID]?.胜 || 0) + 1
-                        用户信息Json[userID].赚取 = (用户信息Json[userID]?.赚取 || 0) + 净利润
-                        用户信息Json[userID].白蜡 = (用户信息Json[userID]?.白蜡) + 赚取金额
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
-
-                        //  秋风信息处理
-                        秋风信息Json.赔 = 秋风信息Json?.赔 + 净利润
-                        秋风信息Json.负 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
-
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：赢\n赚取蜡烛数量：${净利润}根`)
-                    } else if (系统猜拳 === '布') {
-                        重置押注信息(e)
-                        //  用户信息处理
-                        用户信息Json[userID].白蜡 = 用户信息Json[userID].白蜡 + 押注信息Json[userID].押注金额
-                        用户信息Json[userID].平 = (用户信息Json[userID]?.平 || 0) + 1
-                        fs.writeFileSync(用户信息, JSON.stringify(用户信息Json, null, 4));
-
-                        //  秋风信息处理
-                        秋风信息Json.平 += 1
-                        fs.writeFileSync(秋风信息, JSON.stringify(秋风信息Json, null, 4))
-
-                        return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：平\n返还押注蜡烛：${押注信息Json[userID]['押注金额']}根`)
-                    }
+                    return e.reply(`用户出拳：${用户猜拳}\n系统出拳：${系统猜拳}\n出拳结果：输\n损失蜡烛数量：${押注信息Json[userID]['押注金额']}根`)
                 }
             } else {
                 return e.reply('您尚未押注，请先押注')
