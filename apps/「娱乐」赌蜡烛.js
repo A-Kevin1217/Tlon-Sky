@@ -55,7 +55,7 @@ export class 娱乐_赌蜡烛 extends plugin {
             //  判断是否押注
             if (押注信息Json[userID]['押注金额'] > 0) {
                 let 系统猜拳 = Math.floor(Math.random() * 3);
-                switch (randomNum) {
+                switch (系统猜拳) {
                     case 0:
                         return ROCK;
                     case 1:
