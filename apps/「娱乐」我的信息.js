@@ -98,10 +98,12 @@ export class 我的信息 extends plugin {
             const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
 
             const 蜡烛保护卡 = 用户背包文件Json[用户ID]['蜡烛保护卡']
+            const 签到双倍卡 = 用户背包文件Json[用户ID]['签到双倍卡']
             let html = {
                 头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${用户ID}`,
                 用户ID: 用户ID,
-                蜡烛保护卡: 蜡烛保护卡
+                蜡烛保护卡: 蜡烛保护卡,
+                签到双倍卡: 签到双倍卡
             }
             await render('admin/光遇背包', {
                 ...html,
