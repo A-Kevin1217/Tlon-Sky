@@ -94,7 +94,7 @@ export class 娱乐_签到 extends plugin {
     const 白蜡 = Math.floor(Math.random() * (31 - 20 + 1)) + 20;
     const 季蜡 = Math.floor(Math.random() * (11 - 5 + 1)) + 5;
     const 能量值 = Math.floor(Math.random() * 30 - 20 + 1) + 20;
-    const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${被抢用户ID}.json`
+    const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${userId}.json`
     if (!fs.existsSync(用户背包文件)) {
       let 背包信息 = {}
       fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
