@@ -88,6 +88,9 @@ export class 娱乐_蜡烛商店 extends plugin {
             }
         } else if (购买物品 === '签到双倍卡') {
             if (用户文件Json[用户ID]['季蜡'] >= 30) {
+                if (用户背包文件Json[用户ID]['签到双倍卡'] === null || 用户背包文件Json[用户ID]['签到双倍卡'] === undefined) {
+                    用户背包文件Json[用户ID]['签到双倍卡'] = 0
+                }
                 用户文件Json[用户ID]['季蜡'] -= 30
                 用户背包文件Json[用户ID]['签到双倍卡'] += 1
                 秋风商店Json['签到双倍卡'] += 1
