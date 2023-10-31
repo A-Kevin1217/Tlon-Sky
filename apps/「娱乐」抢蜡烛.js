@@ -71,7 +71,8 @@ export class 娱乐_抢蜡烛 extends plugin {
             const _用户背包文件Data = fs.readFileSync(用户背包文件)
             const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
             _用户背包文件Json[被抢用户ID] = {
-              蜡烛保护卡: 0
+              蜡烛保护卡: 0,
+              签到双倍卡: 0
             }
             fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
             logger.mark(`\n已为用户${被抢用户ID}\n创建背包信息`)

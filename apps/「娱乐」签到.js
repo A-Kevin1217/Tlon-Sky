@@ -94,14 +94,35 @@ export class 娱乐_签到 extends plugin {
     const 白蜡 = Math.floor(Math.random() * (31 - 20 + 1)) + 20;
     const 季蜡 = Math.floor(Math.random() * (11 - 5 + 1)) + 5;
     const 能量值 = Math.floor(Math.random() * 30 - 20 + 1) + 20;
+    const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${被抢用户ID}.json`
+    if (!fs.existsSync(用户背包文件)) {
+      let 背包信息 = {}
+      fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
+      const _用户背包文件Data = fs.readFileSync(用户背包文件)
+      const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
+      _用户背包文件Json[userId] = {
+        蜡烛保护卡: 0,
+        签到双倍卡: 0
+      }
+      fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
+      logger.mark(`\n已为用户${userId}\n创建背包信息`)
+    }
+    const 用户背包文件Data = await fs.promises.readFile(用户背包文件)
+    const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
     // 更新签到数据
     data[userId].最后签到日期 = getCurrentDate()
     data[userId].连续签到天数 = is连续签到 ? (连续签到天数 + 1) : 1
     data[userId].累计签到天数 = 累计签到天数 + 1
-    data[userId].白蜡 = (data[userId]?.白蜡 || 0) + 白蜡
-    data[userId].季蜡 = (data[userId]?.季蜡 || 0) + 季蜡
     data[userId].能量值 = (data[userId]?.能量值 || 0) + 能量值
-
+    if (用户背包文件Json[userId]['签到双倍卡'] >= 1) {
+      data[userId].白蜡 = (data[userId]?.白蜡 || 0) + 白蜡 * 2
+      data[userId].季蜡 = (data[userId]?.季蜡 || 0) + 季蜡 * 2
+      e.reply('消耗蜡烛双倍卡，蜡烛翻倍！')
+    } else {
+      data[userId].白蜡 = (data[userId]?.白蜡 || 0) + 白蜡
+      data[userId].季蜡 = (data[userId]?.季蜡 || 0) + 季蜡
+      data[userId].能量值 = (data[userId]?.能量值 || 0) + 能量值
+    }
     // 判断是否升级
     if (data[userId].能量值 >= 100) {
       data[userId].等级 = (data[userId]?.等级 || 0) + 1;

@@ -27,7 +27,8 @@ export class 娱乐_蜡烛商店 extends plugin {
         const 秋风商店Data = fs.readFileSync(秋风商店)
         const 秋风商店Json = JSON.parse(秋风商店Data.toString())
         let html = {
-            蜡烛保护卡: 秋风商店Json['蜡烛保护卡']
+            蜡烛保护卡: 秋风商店Json['蜡烛保护卡'],
+            签到双倍卡: 秋风商店Json['签到双倍卡']
         }
         await render('admin/蜡烛商店', {
             ...html
@@ -68,7 +69,19 @@ export class 娱乐_蜡烛商店 extends plugin {
                 fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4))
                 fs.writeFileSync(秋风商店, JSON.stringify(秋风商店Json, null, 4))
                 fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
-                return e.reply(`购买成功！消耗季蜡：10\n剩余季蜡：${用户文件Json[用户ID]['季蜡']}\n蜡烛保护卡：${用户背包文件Json[用户ID]['蜡烛保护卡']}`)
+                return e.reply(`购买成功！消耗季蜡：10\n剩余季蜡：${用户文件Json[用户ID]['季蜡']} 根\n蜡烛保护卡：${用户背包文件Json[用户ID]['蜡烛保护卡']} 张`)
+            } else {
+                return e.reply('季蜡不足！')
+            }
+        } else if (购买物品 === '签到双倍卡') {
+            if (用户文件Json[用户ID]['季蜡'] >= 30) {
+                用户文件Json[用户ID]['季蜡'] -= 30
+                用户背包文件Json[用户ID]['签到双倍卡'] += 1
+                秋风商店Json['签到双倍卡'] += 1
+                fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4))
+                fs.writeFileSync(秋风商店, JSON.stringify(秋风商店Json, null, 4))
+                fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
+                return e.reply(`购买成功！消耗季蜡：30\n剩余季蜡：${用户文件Json[用户ID]['季蜡']} 根\n签到双倍卡：${用户背包文件Json[用户ID]['签到双倍卡']} 张`)
             } else {
                 return e.reply('季蜡不足！')
             }
