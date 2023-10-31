@@ -115,8 +115,12 @@ export class 娱乐_签到 extends plugin {
     data[userId].累计签到天数 = 累计签到天数 + 1
     data[userId].能量值 = (data[userId]?.能量值 || 0) + 能量值
     if (用户背包文件Json[userId]['签到双倍卡'] >= 1) {
-      data[userId].白蜡 = (data[userId]?.白蜡 || 0) + 白蜡 * 2
-      data[userId].季蜡 = (data[userId]?.季蜡 || 0) + 季蜡 * 2
+      const 双倍白蜡 = 白蜡 * 2
+      const 双倍季蜡 = 季蜡 * 2
+      data[userId].白蜡 = (data[userId]?.白蜡 || 0) + 双倍白蜡
+      data[userId].季蜡 = (data[userId]?.季蜡 || 0) + 双倍季蜡
+      用户背包文件Json[userId]['签到双倍卡'] -= 1
+      fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
       e.reply('消耗蜡烛双倍卡，蜡烛翻倍！')
     } else {
       data[userId].白蜡 = (data[userId]?.白蜡 || 0) + 白蜡
