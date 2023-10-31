@@ -24,6 +24,18 @@ export class 娱乐_蜡烛商店 extends plugin {
 
     async 蜡烛商店(e) {
         const 秋风商店 = 'plugins/Tlon-Sky/data/商店/秋风商店.json'
+        if (!fs.existsSync(秋风商店)) {
+            let 信息 = {}
+            fs.writeFileSync(秋风商店, JSON.stringify(信息, null, 4))
+            const _秋风商店Data = fs.readFileSync(秋风商店)
+            const _秋风商店Json = JSON.parse(_秋风商店Data.toString())
+            _秋风商店Json = {
+                蜡烛保护卡: 0,
+                签到双倍卡: 0
+            }
+            fs.writeFileSync(秋风商店, JSON.stringify(_秋风商店Json, null, 4))
+            logger.mark(`已创建秋风商店信息`)
+        }
         const 秋风商店Data = fs.readFileSync(秋风商店)
         const 秋风商店Json = JSON.parse(秋风商店Data.toString())
         let html = {
@@ -50,7 +62,8 @@ export class 娱乐_蜡烛商店 extends plugin {
             const _用户背包文件Data = fs.readFileSync(用户背包文件)
             const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
             _用户背包文件Json[用户ID] = {
-                蜡烛保护卡: 0
+                蜡烛保护卡: 0,
+                签到双倍卡: 0,
             }
             fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
             logger.mark(`\n已为用户${用户ID}\n创建背包信息`)
