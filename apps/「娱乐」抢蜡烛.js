@@ -185,24 +185,7 @@ export class 娱乐_抢蜡烛 extends plugin {
           用户文件Json[用户ID]['上次抢蜡烛时间戳'] = 当前时间戳
           fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4));
           fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
-          let html = {
-            头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${用户ID}`,
-            被抢人头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${e.at}`,
-            用户ID: 用户ID,
-            被抢用户ID: e.at,
-            昵称: 用户文件Json[用户ID]['昵称'],
-            被抢人昵称: 被抢用户昵称,
-            当前蜡烛: 用户文件Json[用户ID]['白蜡'],
-            被抢人当前蜡烛: 被抢用户Json[e.at]['白蜡'],
-            当前抢蜡烛次数: 用户文件Json[用户ID]['抢蜡烛次数'],
-            当前被抢次数: 被抢用户Json[被抢e.at用户ID]['被抢次数'],
-          }
-          return await render('admin/抢蜡烛失败', {
-            ...html
-          }, {
-            e,
-            scale: 1.4
-          })
+          return e.reply('对方有保护卡，抢蜡烛失败！')
         }
         // 读取被抢用户的数据
         const 被抢文件 = `${e.at}.json`
