@@ -1,5 +1,10 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/11/04
+ - 光遇信息添加排行信息
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\resource\admin\光遇信息.html"
+-------------------
 * 2023/11/02
  - 更新复刻记录图片
 ："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
@@ -23,7 +28,7 @@
 
  - 光遇背包展示签到双倍卡
 ："Tlon-Sky\apps\「娱乐」我的信息.js"
-："Tlon-Sky\resource\admin\光遇信息.html"
+："Tlon-Sky\resource\admin\光遇背包.html"
 
  - 抢蜡烛创建用户背包信息增加签到双倍卡
 ："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
