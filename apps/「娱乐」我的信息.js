@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
-import { render } from '../components/index.js'
-import lodash from 'lodash'
+import { render } from '../components/index.js';
+import lodash from 'lodash';
+import path from 'path';
 import fs from 'fs';
 
 const 用户位置 = 'plugins/Tlon-Sky/data/Sky签到';
