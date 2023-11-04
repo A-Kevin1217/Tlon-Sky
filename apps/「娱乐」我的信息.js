@@ -3,6 +3,7 @@ import { render } from '../components/index.js'
 import lodash from 'lodash'
 import fs from 'fs';
 
+const 用户位置 = 'plugins/Tlon-Sky/data/Sky签到';
 export class 我的信息 extends plugin {
     constructor() {
         super({
