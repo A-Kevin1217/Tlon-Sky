@@ -1,9 +1,18 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/11/08
+ - 部分头像改为方形
+："Tlon-Sky\resource\admin\光遇信息.html"
+："Tlon-Sky\resource\admin\抢蜡烛.html"
+："Tlon-Sky\resource\admin\抢蜡烛失败.html"
+："Tlon-Sky\resource\admin\秋风赌坊.html"
+
+-------------------
 * 2023/11/04
  - 光遇信息添加排行信息
 ："Tlon-Sky\apps\「娱乐」我的信息.js"
 ："Tlon-Sky\resource\admin\光遇信息.html"
+
 -------------------
 * 2023/11/02
  - 更新复刻记录图片
