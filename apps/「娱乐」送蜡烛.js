@@ -10,7 +10,7 @@ export class 娱乐_送蜡烛 extends plugin {
             priority: 5000,
             rule: [
                 {
-                    reg: /^送蜡烛.*$/,
+                    reg: /^(#|\/)?送蜡烛.*$/,
                     fnc: '送蜡烛'
                 }
             ]

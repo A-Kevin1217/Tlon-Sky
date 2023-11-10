@@ -10,7 +10,7 @@ export class 整理 extends plugin {
             priority: 5000,
             rule: [
                 {
-                    reg: '^光遇存档整理$',
+                    reg: '^(#|\/)?光遇存档整理$',
                     fnc: '整理'
                 }
             ]

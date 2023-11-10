@@ -9,7 +9,7 @@ export class 光遇_复刻兑换图 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^#?(复刻兑换图|国服复刻)$/,
+          reg: /^(#|\/)?(复刻兑换图|国服复刻)$/,
           fnc: '复刻兑换图'
         },
       ]

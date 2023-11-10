@@ -9,10 +9,10 @@ export class 光遇_剩余时间 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^#?季节剩余$/,
+          reg: /^(#|\/)?季节剩余$/,
           fnc: '季节剩余'
         }, {
-          reg: /^#?季节结束时间$/,
+          reg: /^(#|\/)?季节结束时间$/,
           fnc: '季节结束时间'
         }
       ]

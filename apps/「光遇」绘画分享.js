@@ -11,7 +11,7 @@ export class 光遇_绘画分享 extends plugin {
       priority:3000,
       rule: [
         {
-          reg: /^#?(绘画|绘画分享|绘图分享)$/,
+          reg: /^(#|\/)?(绘画|绘画分享|绘图分享)$/,
           fnc:'绘画分享'
         }
       ]

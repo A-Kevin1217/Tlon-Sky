@@ -21,10 +21,10 @@ export class 光遇_更新 extends plugin {
             priority: 999,
             rule: [
                 {
-                    reg: /^#?(光遇|sky|SKY|Sky)(插件)?(强制)?(更新)$/,
+                    reg: /^(#|\/)?(光遇|sky|SKY|Sky)(插件)?(强制)?(更新)$/,
                     fnc: 'Sky更新'
                 }, {
-                    reg: /^#?(Sky更新图库|sky更新图库|光遇更新图库)$/,
+                    reg: /^(#|\/)?(Sky更新图库|sky更新图库|光遇更新图库)$/,
                     fnc: 'Sky更新图库'
                 }
             ]

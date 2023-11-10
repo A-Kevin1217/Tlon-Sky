@@ -10,7 +10,7 @@ export class 光遇_日历 extends plugin {
         priority: 5000,
         rule: [
             {
-              reg: /^#?(光遇)?日历$/,
+              reg: /^(#|\/)?(光遇)?日历$/,
               fnc: '光遇日历'
             }
         ]

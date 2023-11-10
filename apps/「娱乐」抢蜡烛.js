@@ -14,7 +14,7 @@ export class 娱乐_抢蜡烛 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^抢蜡烛(.*)$/,
+          reg: /^(#|\/)?抢蜡烛(.*)$/,
           fnc: '抢蜡烛'
         }
       ]

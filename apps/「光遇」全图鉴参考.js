@@ -9,7 +9,7 @@ export class 光遇_全图鉴参考 extends plugin {
         priority: 5000,
         rule: [
           {
-            reg: /^#?全图鉴参考$/,
+            reg: /^(#|\/)?全图鉴参考$/,
             fnc: '全图鉴参考'
           },
         ]

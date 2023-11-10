@@ -13,11 +13,11 @@ export class 娱乐_签到 extends plugin {
       priority: 1,
       rule: [
         {
-          reg: /^#?(光遇签到|冒泡)$/,
+          reg: /^(#|\/)?(光遇签到|冒泡)$/,
           fnc: '光遇签到'
         },
         {
-          reg: /^#?设置昵称(.*)$/,
+          reg: /^(#|\/)?设置昵称(.*)$/,
           fnc: '设置昵称'
         }
       ]
@@ -184,7 +184,7 @@ export class 娱乐_签到 extends plugin {
 
   async 设置昵称(e) {
     const 用户ID = e.user_id
-    const 昵称 = e.msg.replace(/#|设置昵称/g, "")
+    const 昵称 = e.msg.replace(/#?\/|设置昵称/g, "")
     const 用户文件 = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`
     const 用户文件Data = await fs.promises.readFile(用户文件)
     const 用户文件Json = JSON.parse(用户文件Data.toString())

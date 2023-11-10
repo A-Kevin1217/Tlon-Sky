@@ -11,11 +11,11 @@ export class 娱乐_蜡烛商店 extends plugin {
             priority: 1,
             rule: [
                 {
-                    reg: /^#?蜡烛商店$/,
+                    reg: /^(#|\/)?蜡烛商店$/,
                     fnc: '蜡烛商店'
                 },
                 {
-                    reg: /^#购买(.*)$/,
+                    reg: /^(#|\/)购买(.*)$/,
                     fnc: '购买'
                 }
             ]

@@ -11,15 +11,15 @@ export class 光遇_菜单 extends plugin {
       priority: 1145,
       rule: [
         {
-          reg: /^#?(SKY|Sky|sky|光遇)(帮助|菜单|使用说明)$/,
+          reg: /^(#|\/)?(SKY|Sky|sky|光遇)(帮助|菜单|使用说明)$/,
           fnc: '光遇菜单',
         },
         {
-          reg: /^#?(Sky|sky|光遇)版本$/,
+          reg: /^(#|\/)?(Sky|sky|光遇)版本$/,
           fnc: '光遇版本',
         },
         {
-          reg: /^#?(SKY|Sky|sky|光遇)娱乐(帮助|菜单|使用说明)$/,
+          reg: /^(#|\/)?(SKY|Sky|sky|光遇)娱乐(帮助|菜单|使用说明)$/,
           fnc: '光遇娱乐菜单'
         }
       ],

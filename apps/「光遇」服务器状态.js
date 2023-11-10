@@ -11,7 +11,7 @@ export class 光遇_服务器状态 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^#?((SKY|sky|Sky)服务器状态|(sky|SKY|Sky)状态)$/,
+          reg: /^(#|\/)?((SKY|sky|Sky)服务器状态|(sky|SKY|Sky)状态)$/,
           fnc: 'Sky状态'
         },
       ]

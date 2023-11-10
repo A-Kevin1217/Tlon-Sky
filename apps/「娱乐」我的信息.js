@@ -15,11 +15,11 @@ export class 我的信息 extends plugin {
             priority: 5000,
             rule: [
                 {
-                    reg: '^#?光遇信息$',
+                    reg: '^(#|\/)?光遇信息$',
                     fnc: '光遇信息'
                 },
                 {
-                    reg: '^#?光遇背包$',
+                    reg: '^(#|\/)?光遇背包$',
                     fnc: '光遇背包'
                 }
             ]
