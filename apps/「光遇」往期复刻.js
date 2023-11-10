@@ -18,7 +18,7 @@ export class 光遇_往期复刻 extends plugin {
   }
   async 往期复刻(e) {
     let msg = e.msg;
-    let 往期复刻 = msg.replace(/(#|\/)?年复刻记录/g, "").trim();
+    let 往期复刻 = msg.replace(/#?\/|年复刻记录/g, "").trim();
     if (往期复刻 === '20') {往期复刻 = '2020'}
     if (往期复刻 === '21') {往期复刻 = '2021'}
     if (往期复刻 === '22') {往期复刻 = '2022'}

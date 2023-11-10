@@ -41,7 +41,7 @@ export class 娱乐_送蜡烛 extends plugin {
                 return e.reply('请输入有效的整数赠送金额。');
             }
 
-            const 赠送对象昵称 = e.raw_message.replace(/送蜡烛@/g, "").replace(赠送数量, "")
+            const 赠送对象昵称 = e.raw_message.replace(/#?\/|送蜡烛@/g, "").replace(赠送数量, "")
 
             if (e.raw_message === '送蜡烛') {
                 return e.reply('使用方法：\n送蜡烛@用户999（999为蜡烛数量）')

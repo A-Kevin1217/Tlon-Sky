@@ -18,7 +18,7 @@ export class 光遇_季节兑换图 extends plugin {
   }
   async 季节兑换图 (e) {
     let msg = e.msg;
-    let 季节 = msg.replace(/(#|\/)?季兑换图/g, "").trim();
+    let 季节 = msg.replace(/#?\/|季兑换图/g, "").trim();
     if (季节 === '欧若拉') {季节 = 'AURORA'}
     if (季节 === '集结') {季节 = '重组'} 
     if (季节 === '凌冬') {季节 = '音韵'}

@@ -27,7 +27,7 @@ export class 娱乐_赌蜡烛 extends plugin {
 
     async 赌蜡烛(e) {
         //  获取用户猜拳结果
-        const 用户猜拳 = e.msg.replace(/(#|\/)?dlz/g, "")
+        const 用户猜拳 = e.msg.replace(/#?\/|dlz/g, "")
         //  获取用户ID
         const userID = e.user_id;
 
@@ -116,7 +116,7 @@ export class 娱乐_赌蜡烛 extends plugin {
 
     async 押注(e) {
         // 从消息中提取押注的金额
-        const 押注金额 = e.msg.replace(/(#|\/)?押注/g, "");
+        const 押注金额 = e.msg.replace(/#?\/|押注/g, "");
         const 押注金额数字 = parseFloat(押注金额);
 
         if (isNaN(押注金额数字) || 押注金额数字 <= 0 || !Number.isInteger(押注金额数字)) {

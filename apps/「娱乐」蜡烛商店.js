@@ -51,7 +51,7 @@ export class 娱乐_蜡烛商店 extends plugin {
     }
 
     async 购买(e) {
-        const 购买物品 = e.msg.replace(/#|购买/g, "")
+        const 购买物品 = e.msg.replace(/#?\/|购买/g, "")
         const 用户ID = e.user_id
         const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${用户ID}.json`
         const 用户文件 = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`
