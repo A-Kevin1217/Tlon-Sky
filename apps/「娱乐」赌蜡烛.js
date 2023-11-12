@@ -6,8 +6,8 @@ import path from 'path';
 export class 娱乐_赌蜡烛 extends plugin {
     constructor() {
         super({
-            name: '娱乐_赌蜡烛',
-            dsc: '娱乐',
+            name: '[Tlon-Sky]娱乐:赌蜡烛',
+            dsc: '娱乐赌蜡烛',
             event: 'message',
             priority: 5000,
             rule: [

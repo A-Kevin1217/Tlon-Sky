@@ -4,8 +4,7 @@ import fs from 'fs';
 export class 整理 extends plugin {
     constructor() {
         super({
-            name: '整理',
-            dsc: '整理',
+            name: '[Tlon-Sky]工具:整理',
             event: 'message',
             priority: 5000,
             rule: [

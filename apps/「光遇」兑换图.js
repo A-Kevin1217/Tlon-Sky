@@ -3,8 +3,8 @@ import plugin from '../../../lib/plugins/plugin.js'
 export class 光遇_兑换图 extends plugin {
   constructor () {
     super({
-      name: '光遇_兑换图',
-      dsc: '兑换图',
+      name: '[Tlon-Sky]光遇:兑换图',
+      dsc: '光遇兑换图',
       event: 'message',
       priority: 5000,
       rule: [
@@ -17,9 +17,6 @@ export class 光遇_兑换图 extends plugin {
         },{
           reg: /^(#|\/)?往期复刻图/,
           fnc: '往期复刻图'
-        },{
-          reg: /^(#|\/)?活动兑换图/,
-          fnc: '活动兑换图'
         }
       ]
     })

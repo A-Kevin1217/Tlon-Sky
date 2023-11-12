@@ -3,8 +3,8 @@ import plugin from '../../../lib/plugins/plugin.js'
 export class 光遇_统计及其他 extends plugin {
   constructor () {
     super({
-      name: '光遇_统计及其他',
-      dsc: '光遇',
+      name: '[Tlon-Sky]光遇:统计及其他',
+      dsc: '光遇统计及其他',
       event: 'message',
       priority: 5000,
       rule: [

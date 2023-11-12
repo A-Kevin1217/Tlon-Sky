@@ -3,8 +3,8 @@ import plugin from '../../../lib/plugins/plugin.js';
 export class 光遇_全图鉴参考 extends plugin {
     constructor () {
       super({
-        name: '光遇_全图鉴参考',
-        dsc: '光遇',
+        name: '[Tlon-Sky]光遇:全图鉴参考',
+        dsc: '光遇全图鉴参考',
         event: 'message',
         priority: 5000,
         rule: [

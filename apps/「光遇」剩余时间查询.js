@@ -3,8 +3,8 @@ import plugin from '../../../lib/plugins/plugin.js'
 export class 光遇_剩余时间 extends plugin {
   constructor() {
     super({
-      name: '光遇_剩余时间',
-      dsc: '日历',
+      name: '[Tlon-Sky]光遇:剩余时间',
+      dsc: '光遇剩余时间',
       event: 'message',
       priority: 5000,
       rule: [

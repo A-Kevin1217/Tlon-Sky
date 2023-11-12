@@ -4,8 +4,8 @@ import fs from "fs";
 export class 光遇_季节兑换图 extends plugin {
   constructor () {
     super({
-      name: '光遇_季节兑换图',
-      dsc: '光遇',
+      name: '[Tlon-Sky]光遇:季节兑换图',
+      dsc: '光遇季节兑换图',
       event: 'message',
       priority: 5000,
       rule: [

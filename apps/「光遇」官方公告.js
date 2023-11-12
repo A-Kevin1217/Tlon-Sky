@@ -8,8 +8,8 @@ import fs from 'fs'
 export class 光遇_公告 extends plugin {
   constructor () {
     super({
-      name: '光遇_公告',
-      dsc: '光遇',
+      name: '[Tlon-Sky]光遇:公告',
+      dsc: '光遇公告',
       event: 'message',
       priority: 5000,
       rule: [

@@ -4,8 +4,8 @@ const Textreply = '图片源自光遇官方社群攻略组,如有不妥会及时
 export class 光遇_活动兑换图 extends plugin {
   constructor () {
     super({
-      name: '光遇_活动兑换图',
-      dsc: '活动兑换图',
+      name: '[Tlon-Sky]光遇:活动兑换图',
+      dsc: '光遇活动兑换图',
       event: 'message',
       priority: 5000,
       rule: [

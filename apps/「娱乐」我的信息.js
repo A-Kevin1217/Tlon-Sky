@@ -9,8 +9,8 @@ const 用户位置 = 'plugins/Tlon-Sky/data/Sky签到';
 export class 我的信息 extends plugin {
     constructor() {
         super({
-            name: '光遇_我的信息',
-            dsc: '光遇',
+            name: '[Tlon-Sky]娱乐:我的信息',
+            dsc: '娱乐我的信息',
             event: 'message',
             priority: 5000,
             rule: [

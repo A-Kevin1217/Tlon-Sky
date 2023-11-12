@@ -7,8 +7,8 @@ fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true });
 export class 娱乐_签到 extends plugin {
   constructor() {
     super({
-      name: '娱乐_签到',
-      dsc: '娱乐',
+      name: '[Tlon-Sky]娱乐:签到',
+      dsc: '娱乐签到',
       event: 'message',
       priority: 1,
       rule: [

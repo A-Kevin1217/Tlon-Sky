@@ -12,8 +12,8 @@ const JR_URL = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image
 export class 光遇_每日功能 extends plugin {
   constructor() {
     super({
-      name: '光遇_每日任务&大蜡位置&季蜡位置&今日魔法',
-      dsc: '光遇',
+      name: '[Tlon-Sky]光遇:每日功能',
+      dsc: '光遇任务&大蜡位置&季蜡位置&今日魔法&代币&季节任务',
       event: 'message',
       priority: 5000,
       rule: [

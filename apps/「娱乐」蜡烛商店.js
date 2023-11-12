@@ -5,8 +5,8 @@ import fs from 'fs'
 export class 娱乐_蜡烛商店 extends plugin {
     constructor() {
         super({
-            name: '娱乐_蜡烛商店',
-            dsc: '娱乐',
+            name: '[Tlon-Sky]娱乐:蜡烛商店',
+            dsc: '娱乐蜡烛商店',
             event: 'message',
             priority: 1,
             rule: [

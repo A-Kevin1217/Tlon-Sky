@@ -4,8 +4,8 @@ import fetch from 'node-fetch'
 export class 光遇_日历 extends plugin {
     constructor () {
       super({
-        name: '光遇_日历',
-        dsc: '日历',
+        name: '[Tlon-Sky]光遇:日历',
+        dsc: '光遇日历',
         event: 'message',
         priority: 5000,
         rule: [

@@ -3,8 +3,8 @@ import plugin from '../../../lib/plugins/plugin.js'
 export class 光遇_常驻兑换图 extends plugin {
     constructor () {
       super({
-        name: '光遇_常驻兑换图',
-        dsc: '光遇',
+        name: '[Tlon-Sky]光遇:常驻兑换图',
+        dsc: '光遇常驻兑换图',
         event: 'message',
         priority: 5000,
         rule: [

@@ -5,8 +5,7 @@ import fs from 'fs'
 export class 光遇_卸载图库 extends plugin {
     constructor() {
         super({
-            name: '光遇_卸载图库',
-            dsc: '光遇',
+            name: '[Tlon-Sky]工具:卸载图库',
             event: 'message',
             priority: 999,
             rule: [

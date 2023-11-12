@@ -6,7 +6,7 @@ import fs from 'fs';
 export class 光遇_菜单 extends plugin {
   constructor() {
     super({
-      name: '光遇_菜单',
+      name: '[Tlon-Sky]光遇:菜单',
       event: 'message',
       priority: 1145,
       rule: [

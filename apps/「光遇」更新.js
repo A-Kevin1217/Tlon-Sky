@@ -15,8 +15,8 @@ let uping = false
 export class 光遇_更新 extends plugin {
     constructor() {
         super({
-            name: '光遇_更新',
-            dsc: '光遇',
+            name: '[Tlon-Sky]工具:更新',
+            dsc: '光遇更新',
             event: 'message',
             priority: 999,
             rule: [

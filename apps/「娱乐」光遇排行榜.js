@@ -7,8 +7,8 @@ const 用户位置 = 'plugins/Tlon-Sky/data/Sky签到';
 export class 娱乐_光遇排行榜 extends plugin {
   constructor() {
     super({
-      name: '娱乐_光遇排行榜',
-      dsc: '娱乐',
+      name: '[Tlon-Sky]娱乐:光遇排行榜',
+      dsc: '娱乐光遇排行榜',
       event: 'message',
       priority: 5000,
       rule: [

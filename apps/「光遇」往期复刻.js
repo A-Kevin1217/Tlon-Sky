@@ -4,8 +4,8 @@ import fs from "fs";
 export class 光遇_往期复刻 extends plugin {
   constructor () {
     super({
-      name: '光遇_往期复刻',
-      dsc: '光遇',
+      name: '[Tlon-Sky]光遇:往期复刻',
+      dsc: '光遇往期复刻',
       event: 'message',
       priority: 5000,
       rule: [

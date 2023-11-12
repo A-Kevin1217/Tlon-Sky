@@ -82,7 +82,7 @@ const 风行 = [
 export class 光遇_先祖多久未复刻查询 extends plugin {
   constructor() {
     super({
-      name: '光遇_先祖多久未复刻查询',
+      name: '[Tlon-Sky]光遇:先祖多久未复刻查询',
       event: 'message',
       priority: 5000,
       rule: [

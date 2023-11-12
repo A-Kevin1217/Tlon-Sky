@@ -8,8 +8,8 @@ const CD时间 = 2 * 60 * 60 * 1000;
 export class 娱乐_抢蜡烛 extends plugin {
   constructor() {
     super({
-      name: '娱乐_抢蜡烛',
-      dsc: '娱乐',
+      name: '[Tlon-Sky]娱乐:抢蜡烛',
+      dsc: '娱乐抢蜡烛',
       event: 'message',
       priority: 5000,
       rule: [

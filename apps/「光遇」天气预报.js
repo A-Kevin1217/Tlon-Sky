@@ -5,8 +5,8 @@ import fetch from 'node-fetch'
 export class 光遇_天气预报 extends plugin {
   constructor () {
     super({
-      name: '光遇_天气预报',
-      dsc: '光遇',
+      name: '[Tlon-Sky]光遇:天气预报',
+      dsc: '光遇天气预报',
       event: 'message',
       priority: 5000,
       rule: [

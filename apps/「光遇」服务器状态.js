@@ -5,8 +5,8 @@ import fetch from "node-fetch";
 export class 光遇_服务器状态 extends plugin {
   constructor () {
     super({
-      name: '光遇_服务器状态',
-      dsc: '光遇',
+      name: '[Tlon-Sky]光遇:服务器状态',
+      dsc: '光遇服务器状态',
       event: 'message',
       priority: 5000,
       rule: [
