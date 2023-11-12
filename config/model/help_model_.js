@@ -25,6 +25,10 @@ export const helpList = [{
       "icon": 1,
       "title": "设置昵称",
       "desc": "设置个人信息昵称"
+    }, {
+      "icon": 1,
+      "title": "每周礼包",
+      "desc": "无法手动领取，可加392665563查看每周礼包发放"
     }]
   }, {
     "group": "蜡烛商店",
