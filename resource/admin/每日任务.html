@@ -27,21 +27,33 @@
     <div class="head_box">
         <h1>===============今日魔法===============</h1>
     </div>
-    <img src="{{魔法Url}}" alt="每日魔法加载失败" class="center-image">
+    <img src="https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg" alt="每日魔法加载失败" class="center-image">
     <div class="head_box">
         <h1>===============今日任务===============</h1>
     </div>
-    <img src="{{任务Url}}" alt="每日任务加载失败" class="center-image">
+    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg" alt="每日任务加载失败" class="center-image">
     <div class="head_box">
         <h1>===============今日季蜡===============</h1>
     </div>
-    <img src="{{季蜡Url}}" alt="今日季蜡加载失败" class="center-image">
+    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg" alt="今日季蜡加载失败" class="center-image">
     <div class="head_box">
         <h1>===============今日大蜡===============</h1>
     </div>
-    <img src="{{大蜡Url}}" alt="今日大蜡加载失败" class="center-image">
+    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg" alt="今日大蜡加载失败" class="center-image">
     <div class="head_box">
         <h1>===============本周复刻===============</h1>
     </div>
-    <img src="{{复刻Url}}" alt="本周复刻加载失败" class="center-image">
+    <img src="https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png" alt="本周复刻加载失败" class="center-image">
 </div>
+
+<script>
+    window.addEventListener('load', function() {
+        var images = document.querySelectorAll('.center-image');
+        images.forEach(function(image) {
+            var timestamp = new Date().getTime(); // 获取当前时间戳
+            var src = image.getAttribute('src');
+            var newSrc = src + '?timestamp=' + timestamp; // 将时间戳添加到图片URL的末尾
+            image.setAttribute('src', newSrc); // 更新图片的URL
+        });
+    });
+</script>
