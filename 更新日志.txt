@@ -1,5 +1,13 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/11/27
+ - 更换头像获取地址
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
+："Tlon-Sky\apps\「娱乐」签到.js"
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+
+-------------------
 * 2023/11/26
  - 删除菜单活动兑换图选项
 ："Tlon-Sky\config\model\help_model.js"

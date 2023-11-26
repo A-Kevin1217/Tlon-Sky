@@ -85,8 +85,8 @@ export class 娱乐_抢蜡烛 extends plugin {
             fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4));
             fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
             let html = {
-              头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${用户ID}`,
-              被抢人头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${被抢用户ID}`,
+              头像: `https://q.qlogo.cn/g?b=qq&nk=${用户ID}&s=640`,
+              被抢人头像: `https://q.qlogo.cn/g?b=qq&nk=${被抢用户ID}&s=640`,
               用户ID: 用户ID,
               被抢用户ID: 被抢用户ID,
               昵称: 用户文件Json[用户ID]['昵称'],
@@ -114,8 +114,8 @@ export class 娱乐_抢蜡烛 extends plugin {
           用户文件Json[用户ID]['抢蜡烛总数'] += 被抢蜡烛数量;
           用户文件Json[用户ID]['上次抢蜡烛时间戳'] = 当前时间戳;
           let html = {
-            头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${用户ID}`,
-            被抢人头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${被抢用户ID}`,
+            头像: `https://q.qlogo.cn/g?b=qq&nk=${用户ID}&s=640`,
+            被抢人头像: `https://q.qlogo.cn/g?b=qq&nk=${被抢用户ID}&s=640`,
             用户ID: 用户ID,
             被抢用户ID: 被抢用户ID,
             昵称: 用户文件Json[用户ID]['昵称'],
@@ -215,8 +215,8 @@ export class 娱乐_抢蜡烛 extends plugin {
           用户文件Json[用户ID]['抢蜡烛总数'] += 被抢蜡烛数量;
           用户文件Json[用户ID]['上次抢蜡烛时间戳'] = 当前时间戳;
           let html = {
-            头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${用户ID}`,
-            被抢人头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${被抢用户ID}`,
+            头像: `https://q.qlogo.cn/g?b=qq&nk=${用户ID}&s=640`,
+            被抢人头像: `https://q.qlogo.cn/g?b=qq&nk=${被抢用户ID}&s=640`,
             用户ID: 用户ID,
             被抢用户ID: 被抢用户ID,
             昵称: 用户文件Json[用户ID]['昵称'],

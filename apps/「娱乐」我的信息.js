@@ -54,7 +54,7 @@ export class 我的信息 extends plugin {
             let 平均被抢 = isNaN(被抢蜡烛总数 / 被抢次数) ? 0 : (被抢蜡烛总数 / 被抢次数).toFixed(1);
             let html = {
                 昵称: 昵称,
-                头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${用户ID}`,
+                头像: `https://q.qlogo.cn/g?b=qq&nk=${用户ID}&s=640`,
                 等级: 等级,
                 能量值: 能量值,
                 白蜡数: 白蜡,
@@ -102,7 +102,7 @@ export class 我的信息 extends plugin {
             const 蜡烛保护卡 = 用户背包文件Json[用户ID]['蜡烛保护卡']
             const 签到双倍卡 = 用户背包文件Json[用户ID]['签到双倍卡']
             let html = {
-                头像: `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${用户ID}`,
+                头像: `https://q.qlogo.cn/g?b=qq&nk=${用户ID}&s=640`,
                 用户ID: 用户ID,
                 蜡烛保护卡: 蜡烛保护卡,
                 签到双倍卡: 签到双倍卡

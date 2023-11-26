@@ -50,11 +50,11 @@ export class 娱乐_光遇排行榜 extends plugin {
     // 读取ID
     const Top_ID_白 = [];
     for (let i = 0; i < 10; i++) {
-      Top_ID_白[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_白[i].userId}`;
+      Top_ID_白[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_白[i].userId}&s=640`;
     }
     const Top_ID_季 = [];
     for (let i = 0; i < 10; i++) {
-      Top_ID_季[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_季[i].userId}`;
+      Top_ID_季[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_季[i].userId}&s=640`;
     }
 
     let html = {
@@ -121,11 +121,11 @@ export class 娱乐_光遇排行榜 extends plugin {
     //  读取ID
     const Top_ID_赚取 = [];
     for (let i = 0; i < 10; i++) {
-      Top_ID_赚取[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_赚取[i].userId}`;
+      Top_ID_赚取[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_赚取[i].userId}&s=640`;
     }
     const Top_ID_亏损 = [];
     for (let i = 0; i < 10; i++) {
-      Top_ID_亏损[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_亏损[i].userId}`;
+      Top_ID_亏损[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_亏损[i].userId}&s=640`;
     }
 
     let html = {
@@ -180,7 +180,7 @@ export class 娱乐_光遇排行榜 extends plugin {
     const Top_次数 = 排行信息Json_次数.slice(0, 10).map(item => item.level);
     const Top_ID_次数 = [];
     for (let i = 0; i < 10; i++) {
-      Top_ID_次数[i] = `https://api.t1qq.com/api/tool/qq/qqtx?key=lHV6bOsaNrsNv2hmegRRVMxOUp&qq=${排行信息Json_次数[i].userId}`;
+      Top_ID_次数[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_次数[i].userId}&s=640`;
     }
 
     let html = {
