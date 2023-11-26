@@ -1,5 +1,22 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/11/26
+ - 删除菜单活动兑换图选项
+："Tlon-Sky\config\model\help_model.js"
+
+ - 删除多余指令
+："Tlon-Sky\apps\「光遇」兑换图.js"
+
+ - 更新复刻记录图片
+："Tlon-Sky\resource\复刻记录/2023年光遇复刻记录.png"
+
+ - 修复一个小错误
+："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"
+
+ - 载入文件加入创建"data/背包"文件
+："Tlon-Sky/index.js"
+
+-------------------
 * 2023/11/14
  - 修复每日任务不更新的问题
 ："Tlon-Sky/resource/admin/每日任务.html"

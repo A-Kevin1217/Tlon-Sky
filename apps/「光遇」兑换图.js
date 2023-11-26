@@ -15,7 +15,7 @@ export class 光遇_兑换图 extends plugin {
           reg: /^(#|\/)?常驻兑换图$/,
           fnc: '常驻兑换图'
         },{
-          reg: /^(#|\/)?往期复刻图/,
+          reg: /^(#|\/)?往期复刻$/,
           fnc: '往期复刻图'
         }
       ]
@@ -37,13 +37,6 @@ export class 光遇_兑换图 extends plugin {
   }
   async 往期复刻图(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/help/往期复刻记录.png'
-    e.reply(
-      imgreply ? segment.image(imgreply) : ""
-    )
-    return true;
-  }
-  async 活动兑换图(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/help/活动兑换图.png'
     e.reply(
       imgreply ? segment.image(imgreply) : ""
     )

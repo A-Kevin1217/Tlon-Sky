@@ -5,7 +5,9 @@ import chalk from 'chalk'
 if (!global.segment) {
   global.segment = (await import("oicq")).segment
 }
-
+fs.mkdirSync('plugins/Tlon-Sky/data', { recursive: true })
+fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true })
+fs.mkdirSync('plugins/Tlon-Sky/data/背包', { recursive: true })
 const dir1 = './plugins/Tlon-Sky/apps';
 
 const files = [

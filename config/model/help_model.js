@@ -64,10 +64,6 @@ export const helpList = [{
         "title": "#季节兑换图",
         "desc": "查看季节兑换图列表"
       }, {
-        "icon": 23,
-        "title": "#活动兑换图",
-        "desc": "查看活动兑换图列表"
-      }, {
         "icon": 33,
         "title": "#复刻兑换图",
         "desc": "查看最近一次复刻的兑换图"
