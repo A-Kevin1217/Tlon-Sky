@@ -1,3 +1,4 @@
+import path from 'path';
 import fs from 'fs'
 
 const Userfile = 'plugins/Tlon-Sky/data/Sky签到';
