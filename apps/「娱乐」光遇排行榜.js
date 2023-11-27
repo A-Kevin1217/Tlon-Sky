@@ -1,10 +1,8 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
-import { Leaderboard } from '../utils/db.js';
-import path from 'path';
+import { Leaderboard } from '../utils/Leaderboard.js';
 import fs from 'fs';
 
-const 用户位置 = 'plugins/Tlon-Sky/data/Sky签到';
 export class 娱乐_光遇排行榜 extends plugin {
   constructor() {
     super({

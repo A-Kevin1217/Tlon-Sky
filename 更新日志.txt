@@ -9,7 +9,7 @@
 ："Tlon-Sky\resource\admin\Leaderboard.css"
 
  - 添加utils
-："Tlon-Sky\utils\db.js"
+："Tlon-Sky\utils\Leaderboard.js"
 
 -------------------
 * 2023/11/27
