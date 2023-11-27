@@ -20,6 +20,10 @@ export class 娱乐_光遇排行榜 extends plugin {
         {
           reg: '^(#|\/)?赌博排行$',
           fnc: '赌博排行'
+        },
+        {
+          reg: '^(#|\/)?抢蜡排行$',
+          fnc: '抢蜡排行'
         }
       ]
     });
@@ -93,11 +97,7 @@ export class 娱乐_光遇排行榜 extends plugin {
   }
 
   async 赌博排行(e) {
-    const result_赚取 = await 赚取排行数据();
-    logger.mark('赚取排行写入成功', result_赚取);
-    const result_亏损 = await 亏损排行数据();
-    logger.mark('亏损排行写入成功', result_亏损);
-
+    Leaderboard()
     const 排行信息_赚取 = 'plugins/Tlon-Sky/data/排行榜/赚取.json'
     const 排行信息Data_赚取 = await fs.promises.readFile(排行信息_赚取)
     const 排行信息Json_赚取 = JSON.parse(排行信息Data_赚取.toString())
@@ -163,138 +163,72 @@ export class 娱乐_光遇排行榜 extends plugin {
       scale: 1.4
     })
   }
-}
 
-const 白蜡排行数据 = async function () {
-  const files = fs.readdirSync(用户位置); // 读取目录下的所有文件
-  const ranking = [];
+  async 抢蜡排行(e) {
+    Leaderboard()
+    const 排行信息_抢蜡 = 'plugins/Tlon-Sky/data/排行榜/抢蜡烛次数.json'
+    const 排行信息Data_抢蜡 = await fs.promises.readFile(排行信息_抢蜡)
+    const 排行信息Json_抢蜡 = JSON.parse(排行信息Data_抢蜡.toString())
 
-  // 遍历所有文件
-  files.forEach((fileName) => {
-    if (fileName.endsWith('.json')) {
-      const userId = fileName.split('.')[0];
-      const filePath = path.join(用户位置, fileName);
-      const fileData = fs.readFileSync(filePath);
-      const data = JSON.parse(fileData.toString());
-      const level = data[userId]?.白蜡 || 0;
-      const nickname = data[userId]?.昵称 || '未读取';
+    const 排行信息_被抢 = 'plugins/Tlon-Sky/data/排行榜/被抢次数.json'
+    const 排行信息Data_被抢 = await fs.promises.readFile(排行信息_被抢)
+    const 排行信息Json_被抢 = JSON.parse(排行信息Data_被抢.toString())
 
-      ranking.push({ nickname, level, userId });
+    //  读取昵称
+    const Top_nickname_抢蜡 = 排行信息Json_抢蜡.slice(0, 10).map(item => item.nickname);
+    const Top_nickname_被抢 = 排行信息Json_被抢.slice(0, 10).map(item => item.nickname);
+    //  读取数量与次数
+    const Top_抢蜡 = 排行信息Json_抢蜡.slice(0, 10).map(item => item.level);
+    const Top_被抢 = 排行信息Json_被抢.slice(0, 10).map(item => item.level);
+    //  读取ID
+    const Top_ID_抢蜡 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_抢蜡[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_抢蜡[i].userId}&s=640`;
     }
-  });
-
-  ranking.sort((a, b) => b.level - a.level);
-
-  const topTen = ranking.slice(0, 10);
-  // 将排行信息储存为 JSON 文件
-  const jsonRanking = JSON.stringify(topTen, null, 2); // 格式化 JSON，使其更易读
-
-  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/白蜡.json', jsonRanking);
-}
-
-const 季蜡排行数据 = async function () {
-  const files = fs.readdirSync(用户位置);
-  const ranking = [];
-
-  files.forEach((fileName) => {
-    if (fileName.endsWith('.json')) {
-      const userId = fileName.split('.')[0];
-      const filePath = path.join(用户位置, fileName);
-      const fileData = fs.readFileSync(filePath);
-      const data = JSON.parse(fileData.toString());
-      const level = data[userId]?.季蜡 || 0;
-      const nickname = data[userId]?.昵称 || '未读取';
-
-      ranking.push({ nickname, level, userId });
+    const Top_ID_被抢 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_被抢[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_被抢[i].userId}&s=640`;
     }
-  });
 
-  ranking.sort((a, b) => b.level - a.level);
-
-  const topTen = ranking.slice(0, 10);
-
-  const jsonRanking = JSON.stringify(topTen, null, 2);
-
-  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/季蜡.json', jsonRanking);
-}
-
-const 赚取排行数据 = async function () {
-  const files = fs.readdirSync(用户位置);
-  const ranking = [];
-
-  files.forEach((fileName) => {
-    if (fileName.endsWith('.json')) {
-      const userId = fileName.split('.')[0];
-      const filePath = path.join(用户位置, fileName);
-      const fileData = fs.readFileSync(filePath);
-      const data = JSON.parse(fileData.toString());
-      const level = data[userId]?.赚取 || 0;
-      const nickname = data[userId]?.昵称 || '未读取';
-
-      ranking.push({ nickname, level, userId });
+    let html = {
+      Title1: '抢蜡排行', Title2: '被抢排行',
+      NicknameTop1: Top_nickname_抢蜡[0], NicknameTop2: Top_nickname_抢蜡[1],
+      NicknameTop3: Top_nickname_抢蜡[2], NicknameTop4: Top_nickname_抢蜡[3],
+      NicknameTop5: Top_nickname_抢蜡[4], NicknameTop6: Top_nickname_抢蜡[5],
+      NicknameTop7: Top_nickname_抢蜡[6], NicknameTop8: Top_nickname_抢蜡[7],
+      NicknameTop9: Top_nickname_抢蜡[8], NicknameTop10: Top_nickname_抢蜡[9],
+      _NicknameTop1: Top_nickname_被抢[0], _NicknameTop2: Top_nickname_被抢[1],
+      _NicknameTop3: Top_nickname_被抢[2], _NicknameTop4: Top_nickname_被抢[3],
+      _NicknameTop5: Top_nickname_被抢[4], _NicknameTop6: Top_nickname_被抢[5],
+      _NicknameTop7: Top_nickname_被抢[6], _NicknameTop8: Top_nickname_被抢[7],
+      _NicknameTop9: Top_nickname_被抢[8], _NicknameTop10: Top_nickname_被抢[9],
+      NumberTop1: Top_抢蜡[0], NumberTop2: Top_抢蜡[1],
+      NumberTop3: Top_抢蜡[2], NumberTop4: Top_抢蜡[3],
+      NumberTop5: Top_抢蜡[4], NumberTop6: Top_抢蜡[5],
+      NumberTop7: Top_抢蜡[6], NumberTop7: Top_抢蜡[7],
+      NumberTop9: Top_抢蜡[8], NumberTop10: Top_抢蜡[9],
+      _NumberTop1: Top_被抢[0], _NumberTop2: Top_被抢[1],
+      _NumberTop3: Top_被抢[2], _NumberTop4: Top_被抢[3],
+      _NumberTop5: Top_被抢[4], _NumberTop6: Top_被抢[5],
+      _NumberTop7: Top_被抢[6], _NumberTop8: Top_被抢[7],
+      _NumberTop9: Top_被抢[8], _NumberTop10: Top_被抢[9],
+      AvatarTop1: Top_ID_抢蜡[0], AvatarTop2: Top_ID_抢蜡[1],
+      AvatarTop3: Top_ID_抢蜡[2], AvatarTop4: Top_ID_抢蜡[3],
+      AvatarTop5: Top_ID_抢蜡[4], AvatarTop6: Top_ID_抢蜡[5],
+      AvatarTop7: Top_ID_抢蜡[6], AvatarTop8: Top_ID_抢蜡[7],
+      AvatarTop9: Top_ID_抢蜡[8], AvatarTop10: Top_ID_抢蜡[9],
+      _AvatarTop1: Top_ID_被抢[0], _AvatarTop2: Top_ID_被抢[1],
+      _AvatarTop3: Top_ID_被抢[2], _AvatarTop4: Top_ID_被抢[3],
+      _AvatarTop5: Top_ID_被抢[4], _AvatarTop6: Top_ID_被抢[5],
+      _AvatarTop7: Top_ID_被抢[6], _AvatarTop8: Top_ID_被抢[7],
+      _AvatarTop9: Top_ID_被抢[8], _AvatarTop10: Top_ID_被抢[9]
     }
-  });
 
-  ranking.sort((a, b) => b.level - a.level);
-
-  const topTen = ranking.slice(0, 50);
-
-  const jsonRanking = JSON.stringify(topTen, null, 2);
-
-  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/赚取.json', jsonRanking);
-}
-
-const 亏损排行数据 = async function () {
-  const files = fs.readdirSync(用户位置);
-  const ranking = [];
-
-  files.forEach((fileName) => {
-    if (fileName.endsWith('.json')) {
-      const userId = fileName.split('.')[0];
-      const filePath = path.join(用户位置, fileName);
-      const fileData = fs.readFileSync(filePath);
-      const data = JSON.parse(fileData.toString());
-      const level = data[userId]?.亏损 || 0;
-      const nickname = data[userId]?.昵称 || '未读取';
-
-      ranking.push({ nickname, level, userId });
-    }
-  });
-
-  ranking.sort((a, b) => b.level - a.level);
-
-  const topTen = ranking.slice(0, 50);
-
-  const jsonRanking = JSON.stringify(topTen, null, 2);
-
-  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/亏损.json', jsonRanking);
-}
-
-const 次数排行数据 = async function () {
-  const files = fs.readdirSync(用户位置);
-  const ranking = [];
-
-  files.forEach((fileName) => {
-    if (fileName.endsWith('.json')) {
-      const userId = fileName.split('.')[0];
-      const filePath = path.join(用户位置, fileName);
-      const fileData = fs.readFileSync(filePath);
-      const data = JSON.parse(fileData.toString());
-      let 赢 = data[userId]?.胜 || 0;
-      let 输 = data[userId]?.负 || 0;
-      let 平 = data[userId]?.平 || 0;
-      const level = 赢 + 输 + 平;
-      const nickname = data[userId]?.昵称 || '未读取';
-
-      ranking.push({ nickname, level, userId });
-    }
-  });
-
-  ranking.sort((a, b) => b.level - a.level);
-
-  const topTen = ranking.slice(0, 50);
-
-  const jsonRanking = JSON.stringify(topTen, null, 2);
-
-  fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/次数.json', jsonRanking);
+    await render('admin/Leaderboard', {
+      ...html
+    }, {
+      e,
+      scale: 1.4
+    })
+  }
 }
