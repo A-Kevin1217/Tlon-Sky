@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
 import lodash from 'lodash';
-import path from 'path';
+import { Leaderboard } from '../utils/db.js';
 import fs from 'fs';
 
 const 用户位置 = 'plugins/Tlon-Sky/data/Sky签到';
@@ -27,10 +27,7 @@ export class 我的信息 extends plugin {
     }
 
     async 光遇信息(e) {
-        const result_白 = await 白蜡排行数据();
-        logger.mark('白蜡排行写入成功', result_白);
-        const result_季 = await 季蜡排行数据();
-        logger.mark('季蜡排行写入成功', result_季);
+        Leaderboard()
         const 用户ID = e.user_id;
         const 用户文件 = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`;
 
@@ -127,7 +124,7 @@ function 获取排名(排行信息Json, 用户ID) {
             return i + 1;
         }
     }
-    return -1; // 如果未找到匹配的用户ID，返回-1或其他适当的值
+    return -1;
 }
 
 const rodom = async function () {
@@ -138,48 +135,4 @@ const rodom = async function () {
     }
     let imgs = listImg.length == 1 ? listImg[0] : listImg[lodash.random(0, listImg.length - 1)]
     return imgs
-}
-
-const 白蜡排行数据 = async function () {
-    const files = fs.readdirSync(用户位置);
-    const 用户数量 = files.length;
-    const ranking = [];
-    files.forEach((fileName) => {
-        if (fileName.endsWith('.json')) {
-            const userId = parseFloat(fileName.split('.')[0]);
-            const filePath = path.join(用户位置, fileName);
-            const fileData = fs.readFileSync(filePath);
-            const data = JSON.parse(fileData.toString());
-            const level = data[userId]?.白蜡 || 0;
-            const nickname = data[userId]?.昵称 || '未读取';
-
-            ranking.push({ nickname, level, userId });
-        }
-    });
-    ranking.sort((a, b) => b.level - a.level);
-    const topTen = ranking.slice(0, 用户数量);
-    const jsonRanking = JSON.stringify(topTen, null, 2);
-    fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/白蜡.json', jsonRanking);
-}
-
-const 季蜡排行数据 = async function () {
-    const files = fs.readdirSync(用户位置);
-    const 用户数量 = files.length;
-    const ranking = [];
-    files.forEach((fileName) => {
-        if (fileName.endsWith('.json')) {
-            const userId = parseFloat(fileName.split('.')[0]);
-            const filePath = path.join(用户位置, fileName);
-            const fileData = fs.readFileSync(filePath);
-            const data = JSON.parse(fileData.toString());
-            const level = data[userId]?.季蜡 || 0;
-            const nickname = data[userId]?.昵称 || '未读取';
-
-            ranking.push({ nickname, level, userId });
-        }
-    });
-    ranking.sort((a, b) => b.level - a.level);
-    const topTen = ranking.slice(0, 用户数量);
-    const jsonRanking = JSON.stringify(topTen, null, 2);
-    fs.writeFileSync('plugins/Tlon-Sky/data/排行榜/季蜡.json', jsonRanking);
 }

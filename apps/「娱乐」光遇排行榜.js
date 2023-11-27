@@ -1,5 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
+import { Leaderboard } from '../utils/db.js';
 import path from 'path';
 import fs from 'fs';
 
@@ -19,21 +20,13 @@ export class 娱乐_光遇排行榜 extends plugin {
         {
           reg: '^(#|\/)?赌博排行$',
           fnc: '赌博排行'
-        },
-        {
-          reg: '^(#|\/)?赌博次数排行',
-          fnc: '赌博次数排行'
         }
       ]
     });
   }
 
   async 蜡烛排行(e) {
-    const result_白 = await 白蜡排行数据();
-    logger.mark('白蜡排行写入成功', result_白);
-    const result_季 = await 季蜡排行数据();
-    logger.mark('季蜡排行写入成功', result_季);
-
+    Leaderboard()
     const 排行信息_白 = 'plugins/Tlon-Sky/data/排行榜/白蜡.json'
     const 排行信息Data_白 = await fs.promises.readFile(排行信息_白)
     const 排行信息Json_白 = JSON.parse(排行信息Data_白.toString())
@@ -58,39 +51,40 @@ export class 娱乐_光遇排行榜 extends plugin {
     }
 
     let html = {
-      Top1_nickname_白: Top_nickname_白[0], Top2_nickname_白: Top_nickname_白[1],
-      Top3_nickname_白: Top_nickname_白[2], Top4_nickname_白: Top_nickname_白[3],
-      Top5_nickname_白: Top_nickname_白[4], Top6_nickname_白: Top_nickname_白[5],
-      Top7_nickname_白: Top_nickname_白[6], Top8_nickname_白: Top_nickname_白[7],
-      Top9_nickname_白: Top_nickname_白[8], Top10_nickname_白: Top_nickname_白[9],
-      Top1_nickname_季: Top_nickname_季[0], Top2_nickname_季: Top_nickname_季[1],
-      Top3_nickname_季: Top_nickname_季[2], Top4_nickname_季: Top_nickname_季[3],
-      Top5_nickname_季: Top_nickname_季[4], Top6_nickname_季: Top_nickname_季[5],
-      Top7_nickname_季: Top_nickname_季[6], Top8_nickname_季: Top_nickname_季[7],
-      Top9_nickname_季: Top_nickname_季[8], Top10_nickname_季: Top_nickname_季[9],
-      Top1_白蜡: Top_白蜡[0], Top2_白蜡: Top_白蜡[1],
-      Top3_白蜡: Top_白蜡[2], Top4_白蜡: Top_白蜡[3],
-      Top5_白蜡: Top_白蜡[4], Top6_白蜡: Top_白蜡[5],
-      Top7_白蜡: Top_白蜡[6], Top8_白蜡: Top_白蜡[7],
-      Top9_白蜡: Top_白蜡[8], Top10_白蜡: Top_白蜡[9],
-      Top1_季蜡: Top_季蜡[0], Top2_季蜡: Top_季蜡[1],
-      Top3_季蜡: Top_季蜡[2], Top4_季蜡: Top_季蜡[3],
-      Top5_季蜡: Top_季蜡[4], Top6_季蜡: Top_季蜡[5],
-      Top7_季蜡: Top_季蜡[6], Top8_季蜡: Top_季蜡[7],
-      Top9_季蜡: Top_季蜡[8], Top10_季蜡: Top_季蜡[9],
-      Top1_ID_白: Top_ID_白[0], Top2_ID_白: Top_ID_白[1],
-      Top3_ID_白: Top_ID_白[2], Top4_ID_白: Top_ID_白[3],
-      Top5_ID_白: Top_ID_白[4], Top6_ID_白: Top_ID_白[5],
-      Top7_ID_白: Top_ID_白[6], Top8_ID_白: Top_ID_白[7],
-      Top9_ID_白: Top_ID_白[8], Top10_ID_白: Top_ID_白[9],
-      Top1_ID_季: Top_ID_季[0], Top2_ID_季: Top_ID_季[1],
-      Top3_ID_季: Top_ID_季[2], Top4_ID_季: Top_ID_季[3],
-      Top5_ID_季: Top_ID_季[4], Top6_ID_季: Top_ID_季[5],
-      Top7_ID_季: Top_ID_季[6], Top8_ID_季: Top_ID_季[7],
-      Top9_ID_季: Top_ID_季[8], Top10_ID_季: Top_ID_季[9]
+      Title1: '白蜡排行', Title2: '季蜡排行',
+      NicknameTop1: Top_nickname_白[0], NicknameTop2: Top_nickname_白[1],
+      NicknameTop3: Top_nickname_白[2], NicknameTop4: Top_nickname_白[3],
+      NicknameTop5: Top_nickname_白[4], NicknameTop6: Top_nickname_白[5],
+      NicknameTop7: Top_nickname_白[6], NicknameTop8: Top_nickname_白[7],
+      NicknameTop9: Top_nickname_白[8], NicknameTop10: Top_nickname_白[9],
+      _NicknameTop1: Top_nickname_季[0], _NicknameTop2: Top_nickname_季[1],
+      _NicknameTop3: Top_nickname_季[2], _NicknameTop4: Top_nickname_季[3],
+      _NicknameTop5: Top_nickname_季[4], _NicknameTop6: Top_nickname_季[5],
+      _NicknameTop7: Top_nickname_季[6], _NicknameTop8: Top_nickname_季[7],
+      _NicknameTop9: Top_nickname_季[8], _NicknameTop10: Top_nickname_季[9],
+      NumberTop1: Top_白蜡[0], NumberTop2: Top_白蜡[1],
+      NumberTop3: Top_白蜡[2], NumberTop4: Top_白蜡[3],
+      NumberTop5: Top_白蜡[4], NumberTop6: Top_白蜡[5],
+      NumberTop7: Top_白蜡[6], NumberTop8: Top_白蜡[7],
+      NumberTop9: Top_白蜡[8], NumberTop10: Top_白蜡[9],
+      _NumberTop1: Top_季蜡[0], _NumberTop2: Top_季蜡[1],
+      _NumberTop3: Top_季蜡[2], _NumberTop4: Top_季蜡[3],
+      _NumberTop5: Top_季蜡[4], _NumberTop6: Top_季蜡[5],
+      _NumberTop7: Top_季蜡[6], _NumberTop8: Top_季蜡[7],
+      _NumberTop9: Top_季蜡[8], _NumberTop10: Top_季蜡[9],
+      AvatarTop1: Top_ID_白[0], AvatarTop2: Top_ID_白[1],
+      AvatarTop3: Top_ID_白[2], AvatarTop4: Top_ID_白[3],
+      AvatarTop5: Top_ID_白[4], AvatarTop6: Top_ID_白[5],
+      AvatarTop7: Top_ID_白[6], AvatarTop8: Top_ID_白[7],
+      AvatarTop9: Top_ID_白[8], AvatarTop10: Top_ID_白[9],
+      _AvatarTop1: Top_ID_季[0], _AvatarTop2: Top_ID_季[1],
+      _AvatarTop3: Top_ID_季[2], _AvatarTop4: Top_ID_季[3],
+      _AvatarTop5: Top_ID_季[4], _AvatarTop6: Top_ID_季[5],
+      _AvatarTop7: Top_ID_季[6], _AvatarTop8: Top_ID_季[7],
+      _AvatarTop9: Top_ID_季[8], _AvatarTop10: Top_ID_季[9]
     }
 
-    await render('admin/蜡烛排行榜', {
+    await render('admin/Leaderboard', {
       ...html
     }, {
       e,
@@ -129,79 +123,40 @@ export class 娱乐_光遇排行榜 extends plugin {
     }
 
     let html = {
-      Top1_nickname_赚取: Top_nickname_赚取[0],Top2_nickname_赚取: Top_nickname_赚取[1],
-      Top3_nickname_赚取: Top_nickname_赚取[2],Top4_nickname_赚取: Top_nickname_赚取[3],
-      Top5_nickname_赚取: Top_nickname_赚取[4],Top6_nickname_赚取: Top_nickname_赚取[5],
-      Top7_nickname_赚取: Top_nickname_赚取[6],Top8_nickname_赚取: Top_nickname_赚取[7],
-      Top9_nickname_赚取: Top_nickname_赚取[8],Top10_nickname_赚取: Top_nickname_赚取[9],
-      Top1_nickname_亏损: Top_nickname_亏损[0],Top2_nickname_亏损: Top_nickname_亏损[1],
-      Top3_nickname_亏损: Top_nickname_亏损[2],Top4_nickname_亏损: Top_nickname_亏损[3],
-      Top5_nickname_亏损: Top_nickname_亏损[4],Top6_nickname_亏损: Top_nickname_亏损[5],
-      Top7_nickname_亏损: Top_nickname_亏损[6],Top8_nickname_亏损: Top_nickname_亏损[7],
-      Top9_nickname_亏损: Top_nickname_亏损[8],Top10_nickname_亏损: Top_nickname_亏损[9],
-      Top1_赚取: Top_赚取[0], Top2_赚取: Top_赚取[1],
-      Top3_赚取: Top_赚取[2], Top4_赚取: Top_赚取[3],
-      Top5_赚取: Top_赚取[4], Top6_赚取: Top_赚取[5],
-      Top7_赚取: Top_赚取[6], Top8_赚取: Top_赚取[7],
-      Top9_赚取: Top_赚取[8], Top10_赚取: Top_赚取[9],
-      Top1_亏损: Top_亏损[0], Top2_亏损: Top_亏损[1],
-      Top3_亏损: Top_亏损[2], Top4_亏损: Top_亏损[3],
-      Top5_亏损: Top_亏损[4], Top6_亏损: Top_亏损[5],
-      Top7_亏损: Top_亏损[6], Top8_亏损: Top_亏损[7],
-      Top9_亏损: Top_亏损[8], Top10_亏损: Top_亏损[9],
-      Top1_ID_赚取: Top_ID_赚取[0], Top2_ID_赚取: Top_ID_赚取[1],
-      Top3_ID_赚取: Top_ID_赚取[2], Top4_ID_赚取: Top_ID_赚取[3],
-      Top5_ID_赚取: Top_ID_赚取[4], Top6_ID_赚取: Top_ID_赚取[5],
-      Top7_ID_赚取: Top_ID_赚取[6], Top8_ID_赚取: Top_ID_赚取[7],
-      Top9_ID_赚取: Top_ID_赚取[8], Top10_ID_赚取: Top_ID_赚取[9],
-      Top1_ID_亏损: Top_ID_亏损[0], Top2_ID_亏损: Top_ID_亏损[1],
-      Top3_ID_亏损: Top_ID_亏损[2], Top4_ID_亏损: Top_ID_亏损[3],
-      Top5_ID_亏损: Top_ID_亏损[4], Top6_ID_亏损: Top_ID_亏损[5],
-      Top7_ID_亏损: Top_ID_亏损[6], Top8_ID_亏损: Top_ID_亏损[7],
-      Top9_ID_亏损: Top_ID_亏损[8], Top10_ID_亏损: Top_ID_亏损[9]
+      Title1: '赚取排行', Title2: '亏损排行',
+      NicknameTop1: Top_nickname_赚取[0], NicknameTop2: Top_nickname_赚取[1],
+      NicknameTop3: Top_nickname_赚取[2], NicknameTop4: Top_nickname_赚取[3],
+      NicknameTop5: Top_nickname_赚取[4], NicknameTop6: Top_nickname_赚取[5],
+      NicknameTop7: Top_nickname_赚取[6], NicknameTop8: Top_nickname_赚取[7],
+      NicknameTop9: Top_nickname_赚取[8], NicknameTop10: Top_nickname_赚取[9],
+      _NicknameTop1: Top_nickname_亏损[0], _NicknameTop2: Top_nickname_亏损[1],
+      _NicknameTop3: Top_nickname_亏损[2], _NicknameTop4: Top_nickname_亏损[3],
+      _NicknameTop5: Top_nickname_亏损[4], _NicknameTop6: Top_nickname_亏损[5],
+      _NicknameTop7: Top_nickname_亏损[6], _NicknameTop8: Top_nickname_亏损[7],
+      _NicknameTop9: Top_nickname_亏损[8], _NicknameTop10: Top_nickname_亏损[9],
+      NumberTop1: Top_赚取[0], NumberTop2: Top_赚取[1],
+      NumberTop3: Top_赚取[2], NumberTop4: Top_赚取[3],
+      NumberTop5: Top_赚取[4], NumberTop6: Top_赚取[5],
+      NumberTop7: Top_赚取[6], NumberTop7: Top_赚取[7],
+      NumberTop9: Top_赚取[8], NumberTop10: Top_赚取[9],
+      _NumberTop1: Top_亏损[0], _NumberTop2: Top_亏损[1],
+      _NumberTop3: Top_亏损[2], _NumberTop4: Top_亏损[3],
+      _NumberTop5: Top_亏损[4], _NumberTop6: Top_亏损[5],
+      _NumberTop7: Top_亏损[6], _NumberTop8: Top_亏损[7],
+      _NumberTop9: Top_亏损[8], _NumberTop10: Top_亏损[9],
+      AvatarTop1: Top_ID_赚取[0], AvatarTop2: Top_ID_赚取[1],
+      AvatarTop3: Top_ID_赚取[2], AvatarTop4: Top_ID_赚取[3],
+      AvatarTop5: Top_ID_赚取[4], AvatarTop6: Top_ID_赚取[5],
+      AvatarTop7: Top_ID_赚取[6], AvatarTop8: Top_ID_赚取[7],
+      AvatarTop9: Top_ID_赚取[8], AvatarTop10: Top_ID_赚取[9],
+      _AvatarTop1: Top_ID_亏损[0], _AvatarTop2: Top_ID_亏损[1],
+      _AvatarTop3: Top_ID_亏损[2], _AvatarTop4: Top_ID_亏损[3],
+      _AvatarTop5: Top_ID_亏损[4], _AvatarTop6: Top_ID_亏损[5],
+      _AvatarTop7: Top_ID_亏损[6], _AvatarTop8: Top_ID_亏损[7],
+      _AvatarTop9: Top_ID_亏损[8], _AvatarTop10: Top_ID_亏损[9]
     }
 
-    await render('admin/赌博排行榜', {
-      ...html
-    }, {
-      e,
-      scale: 1.4
-    })
-  }
-
-  async 赌博次数排行(e) {
-    const result_次数 = await 次数排行数据();
-    logger.mark('次数排行写入成功', result_次数);
-
-    const 排行信息_次数 = 'plugins/Tlon-Sky/data/排行榜/次数.json'
-    const 排行信息Data_次数 = await fs.promises.readFile(排行信息_次数)
-    const 排行信息Json_次数 = JSON.parse(排行信息Data_次数.toString())
-    const Top_nickname_次数 = 排行信息Json_次数.slice(0, 10).map(item => item.nickname);
-    const Top_次数 = 排行信息Json_次数.slice(0, 10).map(item => item.level);
-    const Top_ID_次数 = [];
-    for (let i = 0; i < 10; i++) {
-      Top_ID_次数[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_次数[i].userId}&s=640`;
-    }
-
-    let html = {
-      Top1_nickname_次数: Top_nickname_次数[0], Top2_nickname_次数: Top_nickname_次数[1],
-      Top3_nickname_次数: Top_nickname_次数[2], Top4_nickname_次数: Top_nickname_次数[3],
-      Top5_nickname_次数: Top_nickname_次数[4], Top6_nickname_次数: Top_nickname_次数[5],
-      Top7_nickname_次数: Top_nickname_次数[6], Top8_nickname_次数: Top_nickname_次数[7],
-      Top9_nickname_次数: Top_nickname_次数[8], Top10_nickname_次数: Top_nickname_次数[9],
-      Top1_次数: Top_次数[0], Top2_次数: Top_次数[1],
-      Top3_次数: Top_次数[2], Top4_次数: Top_次数[3],
-      Top5_次数: Top_次数[4], Top6_次数: Top_次数[5],
-      Top7_次数: Top_次数[6], Top8_次数: Top_次数[7],
-      Top9_次数: Top_次数[8], Top10_次数: Top_次数[9],
-      Top1_ID_次数: Top_ID_次数[0], Top2_ID_次数: Top_ID_次数[1],
-      Top3_ID_次数: Top_ID_次数[2], Top4_ID_次数: Top_ID_次数[3],
-      Top5_ID_次数: Top_ID_次数[4], Top6_ID_次数: Top_ID_次数[5],
-      Top7_ID_次数: Top_ID_次数[6], Top8_ID_次数: Top_ID_次数[7],
-      Top9_ID_次数: Top_ID_次数[8], Top10_ID_次数: Top_ID_次数[9]
-    }
-
-    await render('admin/赌博次数排行榜', {
+    await render('admin/Leaderboard', {
       ...html
     }, {
       e,

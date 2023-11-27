@@ -70,10 +70,6 @@ export const helpList = [{
       "icon": 1,
       "title": "赌博排行",
       "desc": "查看赚取与亏损排行Top10"
-    }, {
-      "icon": 1,
-      "title": "赌博次数排行",
-      "desc": "查看赌博次数排行Top10"
     }]
   }, {
     "group": "后续功能待添加 · 欢迎来392665563提议",

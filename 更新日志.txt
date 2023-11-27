@@ -1,5 +1,17 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/11/28
+ - 优化排行榜功能，更改排行榜样式，删除赌博次数排行
+："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
+："Tlon-Sky\apps\「娱乐」「娱乐」我的信息.js"
+："Tlon-Sky\config\model\help_model_.js"
+："Tlon-Sky\resource\admin\Leaderboard.html"
+："Tlon-Sky\resource\admin\Leaderboard.css"
+
+ - 添加utils
+："Tlon-Sky\utils\db.js"
+
+-------------------
 * 2023/11/27
  - 更换头像获取地址
 ："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
