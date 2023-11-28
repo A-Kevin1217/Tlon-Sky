@@ -15,7 +15,7 @@ export function CreateFolder(filepath) {
 }
 
 export function UserFiles(id) {
-    if (!fs.existsSync(`plugins/Tlon-Sky/data/Sky签到/${id}`)) {
+    if (!fs.existsSync(`plugins/Tlon-Sky/data/Sky签到/${id}.json`)) {
         return false
     } else {
         return true

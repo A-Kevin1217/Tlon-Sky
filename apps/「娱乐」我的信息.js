@@ -104,6 +104,7 @@ export class 我的信息 extends plugin {
             leaderboardRanks.push(获取排名(leaderboardJsons[i], UserId));
         }
         const html  = {
+            头像: `https://q.qlogo.cn/g?b=qq&nk=${UserId}&s=640`,
             白蜡排名: leaderboardRanks[0],
             季蜡排名: leaderboardRanks[1],
             亏损排名: leaderboardRanks[2],
