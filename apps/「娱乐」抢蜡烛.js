@@ -49,7 +49,6 @@ export class 娱乐_抢蜡烛 extends plugin {
 
     if (NowDate - LastExecutionTime < CoolingTime) {
       const RemainingTimestamp = CoolingTime - (NowDate - LastExecutionTime);
-
       if (RemainingTimestamp > 0) {
         const hour = Math.floor(RemainingTimestamp / (60 * 60 * 1000));
         const minutes = Math.floor((RemainingTimestamp % (60 * 60 * 1000)) / (60 * 1000));
@@ -62,6 +61,8 @@ export class 娱乐_抢蜡烛 extends plugin {
           return e.reply(`抢蜡烛CD中！\n请等待 ${minutes} 分钟 ${second} 秒后再试！\nCD结束时间：${EndTime}`);
         } else if (minutes === 0) {
           return e.reply(`抢蜡烛CD中！\n请等待 ${second} 秒后再试！\nCD结束时间：${EndTime}`);
+        } else {
+          return e.reply(`抢蜡烛CD中！\n请等待 ${剩余小时} 小时 ${minutes} 分钟 ${second} 秒后再试！\nCD结束时间：${EndTime}`)
         }
       }
     }
