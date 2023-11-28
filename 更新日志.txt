@@ -22,6 +22,9 @@
 ："Tlon-Sky\resource\admin\签到.html"
 ："Tlon-Sky\resource\admin\Message.css"
 
+ - 优化签到
+："Tlon-Sky\apps\「娱乐」签到.js"
+
 -------------------
 * 2023/11/27
  - 更换头像获取地址

@@ -1,9 +1,9 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import { render } from '../components/index.js'
-import lodash from 'lodash'
-import fs from 'fs'
+import fs from 'fs';
+import lodash from 'lodash';
+import plugin from '../../../lib/plugins/plugin.js';
+import { render } from '../components/index.js';
+import { GetData, SaveData } from '../utils/db.js';
 
-fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true });
 export class 娱乐_签到 extends plugin {
   constructor() {
     super({
@@ -24,174 +24,104 @@ export class 娱乐_签到 extends plugin {
     })
   }
   async 光遇签到(e) {
-    const userId = e.user_id;
-    const fileName = `plugins/Tlon-Sky/data/Sky签到/${userId}.json`
-
-    if (!fs.existsSync(fileName)) {
-      let 信息 = {}
-      fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, JSON.stringify(信息, null, 4))
-
-      const 用户Data = fs.readFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`)
-      const 用户JSON = JSON.parse(用户Data.toString())
-      用户JSON[userId] = {
-        昵称: '未命名',
-        最后签到日期: null,
-        连续签到天数: 0,
-        累计签到天数: 0,
-        能量值: 0,
-        等级: 0,
-        白蜡: 0,
-        季蜡: 0,
-        抢蜡烛次数: 0,
-        被抢次数: 0,
-        抢蜡烛总数: 0,
-        被抢蜡烛总数: 0,
-        上次抢蜡烛时间戳: 0,
-        胜: 0,
-        负: 0,
-        平: 0,
-        赚取: 0,
-        亏损: 0,
-        总赠送数量: 0,
-        总收入数量: 0
+    const UserId = e.user_id;
+    const UserFile = `plugins/Tlon-Sky/data/Sky签到/${UserId}.json`
+    const UserBackpackFile = `plugins/Tlon-Sky/data/背包/${UserId}.json`
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let conversionCode = '';
+    for (let i = 0; i < 7; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      const randomChar = characters.charAt(randomIndex);
+      conversionCode += randomChar;
+    }
+    if (!fs.existsSync(UserFile)) {
+      const Userinfo = {
+        [UserId]: {
+          昵称: conversionCode, 最后签到日期: null,
+          连续签到天数: 0, 累计签到天数: 0,
+          能量值: 0, 等级: 0, 白蜡: 0,
+          季蜡: 0, 抢蜡烛次数: 0, 被抢次数: 0,
+          抢蜡烛总数: 0, 被抢蜡烛总数: 0,
+          上次抢蜡烛时间戳: 0, 胜: 0, 负: 0, 平: 0,
+          赚取: 0, 亏损: 0, 总赠送数量: 0,
+          总收入数量: 0
+        }
       }
-      fs.writeFileSync(`plugins/Tlon-Sky/data/Sky签到/${userId}.json`, JSON.stringify(用户JSON, null, 4));
-      e.reply('用户第一次执行光遇签到\n创建基础信息成功！\n使用"设置昵称+内容"可设置昵称呦~')
-    }
-
-    const fileExists = fs.existsSync(fileName);
-    let data = {};
-
-    if (fileExists) {
-      try {
-        const fileData = fs.readFileSync(fileName);
-        data = JSON.parse(fileData.toString());
-      } catch (error) {
-        console.error('读取数据失败:', error);
+      const UserBackpack = {
+        [UserId]: {
+          蜡烛保护卡: 0,
+          签到双倍卡: 0
+        }
       }
+      SaveData(UserFile, Userinfo)
+      SaveData(UserBackpackFile, UserBackpack)
+      e.reply('用户第一次执行光遇签到\n创建基础信息成功！\n使用"设置昵称+昵称"可设置昵称呦~\n"+"不用带')
     }
 
-    if (data[userId] && data[userId].最后签到日期 === getCurrentDate()) {
-      return e.reply('你今天已经签到过了！');
+    const UserData = GetData(UserFile)
+
+    if (UserData[UserId]['最后签到日期'] === getCurrentDate()) {
+      return e.reply('今日已签')
     }
 
-    const 连续签到天数 = (data[userId] && data[userId].连续签到天数) || 0;
-    const 累计签到天数 = (data[userId] && data[userId].累计签到天数) || 0;
+    const 连签天数 = UserData[UserId]['连续签到天数'] || 0;
+    const 累签天数 = UserData[UserId]['累计签到天数'] || 0;
 
     let is连续签到 = false;
-    if (data[userId] && data[userId].最后签到日期 === getYesterdayDate()) {
+    if (UserData[UserId]['最后签到日期'] === getYesterdayDate()) {
       is连续签到 = true;
     }
 
-    let 白蜡 = Math.floor(Math.random() * (31 - 20 + 1)) + 20;
-    let 季蜡 = Math.floor(Math.random() * (11 - 5 + 1)) + 5;
-    const 能量值 = Math.floor(Math.random() * 30 - 20 + 1) + 20;
+    let Get白蜡 = Math.floor(Math.random() * (31 - 20 + 1)) + 20;
+    let Get季蜡 = Math.floor(Math.random() * (11 - 5 + 1)) + 5;
+    const Get能量值 = Math.floor(Math.random() * 30 - 20 + 1) + 20;
 
-    const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${userId}.json`
-    if (!fs.existsSync(用户背包文件)) {
-      let 背包信息 = {}
-      fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
-      const _用户背包文件Data = fs.readFileSync(用户背包文件)
-      const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
-      _用户背包文件Json[userId] = {
-        蜡烛保护卡: 0,
-        签到双倍卡: 0
-      }
-      fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
-      logger.mark(`\n已为用户${userId}\n创建背包信息`)
-    }
-    const 用户背包文件Data = await fs.promises.readFile(用户背包文件)
-    const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
+    const UserBackpackData = GetData(UserBackpackFile)
 
-
-
-    if (用户背包文件Json[userId]['签到双倍卡'] >= 1) {
-      白蜡 = 白蜡 * 2
-      季蜡 = 季蜡 * 2
-      data[userId].最后签到日期 = getCurrentDate()
-      data[userId].连续签到天数 = is连续签到 ? (连续签到天数 + 1) : 1
-      data[userId].累计签到天数 = 累计签到天数 + 1
-      data[userId].白蜡 = (data[userId]?.白蜡 || 0) + 白蜡
-      data[userId].季蜡 = (data[userId]?.季蜡 || 0) + 季蜡
-      data[userId].能量值 = (data[userId]?.能量值 || 0) + 能量值
-      用户背包文件Json[userId]['签到双倍卡'] -= 1
-      if (data[userId].能量值 >= 100) {
-        data[userId].等级 = (data[userId]?.等级 || 0) + 1
-        data[userId].能量值 = data[userId].能量值 - 100
-      }
-      fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
-      fs.writeFileSync(fileName, JSON.stringify(data, null, 4))
-
+    if (UserBackpackData[UserId]['签到双倍卡'] >= 1) {
+      Get白蜡 *= 2
+      Get季蜡 *= 2
       e.reply('消耗蜡烛双倍卡，蜡烛翻倍！')
-      const 累计签到提示 = `你已累计签到 ${data[userId].累计签到天数} 天！`
-      const 连续签到提示 = is连续签到 ? `你已连续签到 ${data[userId].连续签到天数} 天！` : '';
-      let html = {
-        昵称: data[userId].昵称,
-        头像: `https://q.qlogo.cn/g?b=qq&nk=${userId}&s=640`,
-        获得白蜡: 白蜡,
-        数量_白: data[userId].白蜡 - 白蜡,
-        获得季蜡: 季蜡,
-        数量_季: data[userId].季蜡 - 季蜡,
-        获得能量值: 能量值,
-        数量_能量: data[userId].能量值 - 能量值,
-        等级: data[userId].等级,
-        累计签到提示: 累计签到提示,
-        连续签到提示: 连续签到提示
-      }
-      await render('admin/签到', {
-        ...html,
-        bg: await rodom()
-      }, {
-        e,
-        scale: 1.4
-      })
-    } else {
-      data[userId].最后签到日期 = getCurrentDate()
-      data[userId].连续签到天数 = is连续签到 ? (连续签到天数 + 1) : 1
-      data[userId].累计签到天数 = 累计签到天数 + 1
-      data[userId].白蜡 = (data[userId]?.白蜡 || 0) + 白蜡
-      data[userId].季蜡 = (data[userId]?.季蜡 || 0) + 季蜡
-      data[userId].能量值 = (data[userId]?.能量值 || 0) + 能量值
-      if (data[userId].能量值 >= 100) {
-        data[userId].等级 = (data[userId]?.等级 || 0) + 1
-        data[userId].能量值 = data[userId].能量值 - 100
-      }
-      fs.writeFileSync(fileName, JSON.stringify(data, null, 4))
-      const 累计签到提示 = `你已累计签到 ${data[userId].累计签到天数} 天！`
-      const 连续签到提示 = is连续签到 ? `你已连续签到 ${data[userId].连续签到天数} 天！` : '';
-      let html = {
-        昵称: data[userId].昵称,
-        头像: `https://q.qlogo.cn/g?b=qq&nk=${userId}&s=640`,
-        获得白蜡: 白蜡,
-        数量_白: data[userId].白蜡 - 白蜡,
-        获得季蜡: 季蜡,
-        数量_季: data[userId].季蜡 - 季蜡,
-        获得能量值: 能量值,
-        数量_能量: data[userId].能量值 - 能量值,
-        等级: data[userId].等级,
-        累计签到提示: 累计签到提示,
-        连续签到提示: 连续签到提示
-      }
-      await render('admin/签到', {
-        ...html,
-        bg: await rodom()
-      }, {
-        e,
-        scale: 1.4
-      })
     }
+
+    UserData[UserId]['最后签到日期'] = getCurrentDate()
+    UserData[UserId]['连续签到天数'] = is连续签到 ? (连签天数 + 1) : 1
+    UserData[UserId]['累计签到天数'] = 累签天数 + 1
+    UserData[UserId]['白蜡'] = (UserData[UserId]['白蜡'] || 0) + Get白蜡
+    UserData[UserId]['季蜡'] = (UserData[UserId]['季蜡'] || 0) + Get季蜡
+    UserData[UserId]['能量值'] = (data[UserId]['能量值'] || 0) + Get能量值
+    if (UserData[UserId]['能量值'] >= 100) {
+      UserData[UserId]['等级'] = (UserData[UserId]['等级'] || 0) + 1
+      UserData[UserId]['能量值'] = UserData[UserId]['能量值'] - 100
+    }
+    SaveData(UserFile, UserData)
+    const 累计签到提示 = `你已累计签到 ${累签天数} 天！`
+    const 连续签到提示 = is连续签到 ? `你已连续签到 ${连签天数} 天！` : '';
+    let html = {
+      昵称: UserData[UserId].昵称,
+      头像: `https://q.qlogo.cn/g?b=qq&nk=${UserId}&s=640`,
+      获得白蜡: Get白蜡,
+      数量_白: UserData[UserId]['白蜡'] - Get白蜡,
+      获得季蜡: Get季蜡,
+      数量_季: UserData[UserId]['季蜡'] - Get季蜡,
+      获得能量值: 能量值,
+      数量_能量: UserData[UserId]['能量值'] - Get能量值,
+      等级: UserData[UserId].等级,
+      累计签到提示: 累计签到提示,
+      连续签到提示: 连续签到提示
+    }
+    await render('admin/签到', { ...html, bg: await rodom() }, { e, scale: 1.4 })
   }
 
   async 设置昵称(e) {
-    const 用户ID = e.user_id
-    const 昵称 = e.msg.replace(/#?\/|设置昵称/g, "")
-    const 用户文件 = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`
-    const 用户文件Data = await fs.promises.readFile(用户文件)
-    const 用户文件Json = JSON.parse(用户文件Data.toString())
-
-    用户文件Json[用户ID]['昵称'] = 昵称
-    fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4))
-    e.reply(`设置成功，昵称：${昵称}`)
+    const UserId = e.user_id
+    const Nickname = e.msg.replace(/#?\/|设置昵称/g, "")
+    if (Nickname.length > 7) { return e.reply('昵称长度不可大于七位！') }
+    const Userfile = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`
+    const UserJson = GetData(Userfile)
+    UserJson[UserId]['昵称'] = Nickname
+    SaveData(Userfile, UserJson)
+    e.reply(`设置成功 [${Nickname}]`)
   }
 }
 
