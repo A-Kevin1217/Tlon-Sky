@@ -1,7 +1,7 @@
 直接丢到plugins合并替换
 -------------------
 * 2023/11/28
- - 优化排行榜功能，更改排行榜样式，删除赌博次数排行, 添加抢蜡排行
+ - 优化排行榜功能，更改排行榜样式，删除赌博次数排行, 添加抢蜡排行，添加签到排行
 ："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
 ："Tlon-Sky\apps\「娱乐」「娱乐」我的信息.js"
 ："Tlon-Sky\config\model\help_model_.js"
@@ -10,6 +10,17 @@
 
  - 添加utils
 ："Tlon-Sky\utils\Leaderboard.js"
+："Tlon-Sky\utils\db.js"
+
+ - 添加排行信息
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\resource\admin\排行信息.html"
+
+ - 优化html
+："Tlon-Sky\resource\admin\光遇背包.html"
+："Tlon-Sky\resource\admin\光遇信息.html"
+："Tlon-Sky\resource\admin\签到.html"
+："Tlon-Sky\resource\admin\Message.css"
 
 -------------------
 * 2023/11/27

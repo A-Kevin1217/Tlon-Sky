@@ -12,6 +12,8 @@ export function Leaderboard() {
     const rankingsss = [];
     const rankingssss = [];
     const rankingsssss = [];
+    const rankingssssss = [];
+    const rankingsssssss = [];
 
     Allfile.forEach((fileName) => {
         if (fileName.endsWith('.json')) {
@@ -19,8 +21,9 @@ export function Leaderboard() {
             const filePath = path.join(Userfile, fileName);
             const fileData = fs.readFileSync(filePath);
             const data = JSON.parse(fileData.toString());
-            const level = data[userId]?.白蜡 || 0;
             const nickname = data[userId]?.昵称 || '未读取';
+
+            const level = data[userId]?.白蜡 || 0;
             ranking.push({ nickname, level, userId });
 
             const level2 = data[userId]?.季蜡 || 0;
@@ -37,6 +40,12 @@ export function Leaderboard() {
 
             const level6 = data[userId]?.被抢次数 || 0;
             rankingsssss.push({ nickname, level: level6, userId });
+
+            const level7 = data[userId]?.连续签到天数 || 0;
+            rankingssssss.push({ nickname, level: level7, userId });
+
+            const level8 = data[userId]?.累计签到天数 || 0;
+            rankingsssssss.push({ nickname, level: level8, userId });
         }
     });
 
@@ -53,4 +62,6 @@ export function Leaderboard() {
     sortAndWriteToFile(rankingsss, '赚取');
     sortAndWriteToFile(rankingssss, '抢蜡烛次数');
     sortAndWriteToFile(rankingsssss, '被抢次数');
+    sortAndWriteToFile(rankingssssss, '连续签到天数');
+    sortAndWriteToFile(rankingsssssss, '累计签到天数');
 }

@@ -22,6 +22,10 @@ export class 娱乐_光遇排行榜 extends plugin {
         {
           reg: '^(#|\/)?抢蜡排行$',
           fnc: '抢蜡排行'
+        },
+        {
+          reg: '^(#|\/)?签到排行$',
+          fnc: '签到排行'
         }
       ]
     });
@@ -220,6 +224,74 @@ export class 娱乐_光遇排行榜 extends plugin {
       _AvatarTop5: Top_ID_被抢[4], _AvatarTop6: Top_ID_被抢[5],
       _AvatarTop7: Top_ID_被抢[6], _AvatarTop8: Top_ID_被抢[7],
       _AvatarTop9: Top_ID_被抢[8], _AvatarTop10: Top_ID_被抢[9]
+    }
+
+    await render('admin/Leaderboard', {
+      ...html
+    }, {
+      e,
+      scale: 1.4
+    })
+  }
+
+  async 签到排行(e) {
+    Leaderboard()
+    const 排行信息_累签 = 'plugins/Tlon-Sky/data/排行榜/累计签到天数.json'
+    const 排行信息Data_累签 = await fs.promises.readFile(排行信息_累签)
+    const 排行信息Json_累签 = JSON.parse(排行信息Data_累签.toString())
+
+    const 排行信息_连签 = 'plugins/Tlon-Sky/data/排行榜/连续签到天数.json'
+    const 排行信息Data_连签 = await fs.promises.readFile(排行信息_连签)
+    const 排行信息Json_连签 = JSON.parse(排行信息Data_连签.toString())
+
+    //  读取昵称
+    const Top_nickname_累签 = 排行信息Json_累签.slice(0, 10).map(item => item.nickname);
+    const Top_nickname_连签 = 排行信息Json_连签.slice(0, 10).map(item => item.nickname);
+    //  读取数量与次数
+    const Top_累签 = 排行信息Json_累签.slice(0, 10).map(item => item.level);
+    const Top_连签 = 排行信息Json_连签.slice(0, 10).map(item => item.level);
+    //  读取ID
+    const Top_ID_累签 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_累签[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_累签[i].userId}&s=640`;
+    }
+    const Top_ID_连签 = [];
+    for (let i = 0; i < 10; i++) {
+      Top_ID_连签[i] = `https://q.qlogo.cn/g?b=qq&nk=${排行信息Json_连签[i].userId}&s=640`;
+    }
+
+    let html = {
+      Title1: '累签排行', Title2: '连签排行',
+      NicknameTop1: Top_nickname_累签[0], NicknameTop2: Top_nickname_累签[1],
+      NicknameTop3: Top_nickname_累签[2], NicknameTop4: Top_nickname_累签[3],
+      NicknameTop5: Top_nickname_累签[4], NicknameTop6: Top_nickname_累签[5],
+      NicknameTop7: Top_nickname_累签[6], NicknameTop8: Top_nickname_累签[7],
+      NicknameTop9: Top_nickname_累签[8], NicknameTop10: Top_nickname_累签[9],
+      _NicknameTop1: Top_nickname_连签[0], _NicknameTop2: Top_nickname_连签[1],
+      _NicknameTop3: Top_nickname_连签[2], _NicknameTop4: Top_nickname_连签[3],
+      _NicknameTop5: Top_nickname_连签[4], _NicknameTop6: Top_nickname_连签[5],
+      _NicknameTop7: Top_nickname_连签[6], _NicknameTop8: Top_nickname_连签[7],
+      _NicknameTop9: Top_nickname_连签[8], _NicknameTop10: Top_nickname_连签[9],
+      NumberTop1: Top_累签[0], NumberTop2: Top_累签[1],
+      NumberTop3: Top_累签[2], NumberTop4: Top_累签[3],
+      NumberTop5: Top_累签[4], NumberTop6: Top_累签[5],
+      NumberTop7: Top_累签[6], NumberTop7: Top_累签[7],
+      NumberTop9: Top_累签[8], NumberTop10: Top_累签[9],
+      _NumberTop1: Top_连签[0], _NumberTop2: Top_连签[1],
+      _NumberTop3: Top_连签[2], _NumberTop4: Top_连签[3],
+      _NumberTop5: Top_连签[4], _NumberTop6: Top_连签[5],
+      _NumberTop7: Top_连签[6], _NumberTop8: Top_连签[7],
+      _NumberTop9: Top_连签[8], _NumberTop10: Top_连签[9],
+      AvatarTop1: Top_ID_累签[0], AvatarTop2: Top_ID_累签[1],
+      AvatarTop3: Top_ID_累签[2], AvatarTop4: Top_ID_累签[3],
+      AvatarTop5: Top_ID_累签[4], AvatarTop6: Top_ID_累签[5],
+      AvatarTop7: Top_ID_累签[6], AvatarTop8: Top_ID_累签[7],
+      AvatarTop9: Top_ID_累签[8], AvatarTop10: Top_ID_累签[9],
+      _AvatarTop1: Top_ID_连签[0], _AvatarTop2: Top_ID_连签[1],
+      _AvatarTop3: Top_ID_连签[2], _AvatarTop4: Top_ID_连签[3],
+      _AvatarTop5: Top_ID_连签[4], _AvatarTop6: Top_ID_连签[5],
+      _AvatarTop7: Top_ID_连签[6], _AvatarTop8: Top_ID_连签[7],
+      _AvatarTop9: Top_ID_连签[8], _AvatarTop10: Top_ID_连签[9]
     }
 
     await render('admin/Leaderboard', {
