@@ -35,7 +35,7 @@ export class 我的信息 extends plugin {
         Leaderboard()
         const UserId = e.user_id;
         const UserFile = `plugins/Tlon-Sky/data/Sky签到/${UserId}.json`;
-        if (!UserFiles(UserFile)) { return e.reply('请先发送光遇签到') }
+        if (!UserFiles(UserId)) { return e.reply('请先发送光遇签到') }
         const UserJson = GetData(UserFile)
         const 排行信息_白 = 'plugins/Tlon-Sky/data/排行榜/白蜡.json'
         const 排行信息Json_白 = GetData(排行信息_白)
@@ -81,6 +81,7 @@ export class 我的信息 extends plugin {
     }
 
     async 排行信息(e) {
+        Leaderboard()
         const UserId = e.user_id;
         const leaderboardFiles = [
             'plugins/Tlon-Sky/data/排行榜/白蜡.json',
@@ -112,7 +113,7 @@ export class 我的信息 extends plugin {
             连签排名: leaderboardRanks[6],
             累签排名: leaderboardRanks[7]
         }
-        await render('admin/排名信息', { ...html, }, { e, scale: 1.4 })
+        await render('admin/排行信息', { ...html, }, { e, scale: 1.4 })
     }
 }
 function 获取排名(排行信息Json, UserId) {
