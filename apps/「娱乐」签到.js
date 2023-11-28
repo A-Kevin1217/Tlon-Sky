@@ -89,7 +89,7 @@ export class 娱乐_签到 extends plugin {
     UserData[UserId]['累计签到天数'] = 累签天数 + 1
     UserData[UserId]['白蜡'] = (UserData[UserId]['白蜡'] || 0) + Get白蜡
     UserData[UserId]['季蜡'] = (UserData[UserId]['季蜡'] || 0) + Get季蜡
-    UserData[UserId]['能量值'] = (data[UserId]['能量值'] || 0) + Get能量值
+    UserData[UserId]['能量值'] = (UserData[UserId]['能量值'] || 0) + Get能量值
     if (UserData[UserId]['能量值'] >= 100) {
       UserData[UserId]['等级'] = (UserData[UserId]['等级'] || 0) + 1
       UserData[UserId]['能量值'] = UserData[UserId]['能量值'] - 100
