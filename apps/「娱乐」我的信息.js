@@ -69,7 +69,7 @@ export class 我的信息 extends plugin {
     async 光遇背包(e) {
         const UserId = e.user_id;
         const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${UserId}.json`
-        if (!UserFiles(`plugins/Tlon-Sky/data/Sky签到/${UserId}.json`)) { return e.reply('请先发送光遇签到') }
+        if (!UserFiles(UserId)) { return e.reply('请先发送光遇签到') }
         const 用户背包文件Json = GetData(用户背包文件)
         let html = {
             头像: `https://q.qlogo.cn/g?b=qq&nk=${UserId}&s=640`,
@@ -83,6 +83,7 @@ export class 我的信息 extends plugin {
     async 排行信息(e) {
         Leaderboard()
         const UserId = e.user_id;
+        if (!UserFiles(UserId)) { return e.reply('请先发送光遇签到') }
         const leaderboardFiles = [
             'plugins/Tlon-Sky/data/排行榜/白蜡.json',
             'plugins/Tlon-Sky/data/排行榜/季蜡.json',
