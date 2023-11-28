@@ -104,7 +104,7 @@ export class 娱乐_签到 extends plugin {
       数量_白: UserData[UserId]['白蜡'] - Get白蜡,
       获得季蜡: Get季蜡,
       数量_季: UserData[UserId]['季蜡'] - Get季蜡,
-      获得能量值: 能量值,
+      获得能量值: Gte能量值,
       数量_能量: UserData[UserId]['能量值'] - Get能量值,
       等级: UserData[UserId].等级,
       累计签到提示: 累计签到提示,
