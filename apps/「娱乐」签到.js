@@ -117,7 +117,7 @@ export class 娱乐_签到 extends plugin {
     const UserId = e.user_id
     const Nickname = e.msg.replace(/#?\/|设置昵称/g, "")
     if (Nickname.length > 7) { return e.reply('昵称长度不可大于七位！') }
-    const Userfile = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`
+    const Userfile = `plugins/Tlon-Sky/data/Sky签到/${UserId}.json`
     const UserJson = GetData(Userfile)
     UserJson[UserId]['昵称'] = Nickname
     SaveData(Userfile, UserJson)
