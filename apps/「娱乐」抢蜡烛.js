@@ -62,7 +62,7 @@ export class 娱乐_抢蜡烛 extends plugin {
         } else if (minutes === 0) {
           return e.reply(`抢蜡烛CD中！\n请等待 ${second} 秒后再试！\nCD结束时间：${EndTime}`);
         } else {
-          return e.reply(`抢蜡烛CD中！\n请等待 ${剩余小时} 小时 ${minutes} 分钟 ${second} 秒后再试！\nCD结束时间：${EndTime}`)
+          return e.reply(`抢蜡烛CD中！\n请等待 ${hour} 小时 ${minutes} 分钟 ${second} 秒后再试！\nCD结束时间：${EndTime}`)
         }
       }
     }
