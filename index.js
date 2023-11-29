@@ -1,13 +1,14 @@
 import fs from 'node:fs'
 import Version from './components/Version.js'
 import chalk from 'chalk'
-
+import yaml from 'YAML'
 if (!global.segment) {
   global.segment = (await import("oicq")).segment
 }
 fs.mkdirSync('plugins/Tlon-Sky/data', { recursive: true })
 fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true })
 fs.mkdirSync('plugins/Tlon-Sky/data/背包', { recursive: true })
+if (!fs.existsSync('plugins/Tlon-Sky/config/Gambling.yaml')) fs.writeFileSync('./resources/birthday.yaml', yaml.stringify({ group: [] }))
 const dir1 = './plugins/Tlon-Sky/apps';
 
 const files = [

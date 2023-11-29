@@ -1,9 +1,11 @@
+import yaml from 'YAML';
 import fs from 'fs';
 import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
 import { GetData, SaveData, UserFiles } from '../utils/db.js';
 
 const AWGSFile = `plugins/Tlon-Sky/data/秋风赌坊.json`;
+const GroupYaml = 'plugins/Tlon-Sky/config/Gambling.yaml'
 
 export class 娱乐_赌蜡烛 extends plugin {
     constructor() {
@@ -22,12 +24,17 @@ export class 娱乐_赌蜡烛 extends plugin {
                 }, {
                     reg: /^(#|\/)?(赌坊信息|秋风赌坊)$/,
                     fnc: '赌坊信息'
+                }, {
+                    reg: /^(#|\/)?开启赌蜡烛$/,
+                    fnc: 'StartGambling'
                 }
             ]
         });
     }
 
     async 赌蜡烛(e) {
+        let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
+        if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
         const UserPunches = e.msg.replace(/#?\/|dlz/g, "")
         const UserID = e.user_id;
         if (!UserFiles(UserID)) { return e.reply('请先发送光遇签到') }
@@ -102,9 +109,10 @@ export class 娱乐_赌蜡烛 extends plugin {
 
 
     async 押注(e) {
+        let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
+        if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
         const GetAmount = e.msg.replace(/#?\/|押注/g, "");
         const GetNumber = parseFloat(GetAmount);
-
         if (isNaN(GetNumber) || GetNumber <= 0 || !Number.isInteger(GetNumber)) {
             return e.reply('请输入有效的整数押注金额。');
         }
@@ -156,6 +164,16 @@ export class 娱乐_赌蜡烛 extends plugin {
             e,
             scale: 1.4
         })
+    }
+
+    async StartGambling(e) {
+        if (!e.isMaster) return false
+        let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
+        if (!data.group.includes(e.group_id)) {
+           data.group.push(e.group_id * 1)
+           fs.writeFileSync(GroupYaml, yaml.stringify(data))
+        }
+        e.reply(`群[${e.group_id}]已开启赌蜡烛`)
     }
 }
 
