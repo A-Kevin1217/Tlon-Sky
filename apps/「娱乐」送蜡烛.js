@@ -10,7 +10,7 @@ export class 娱乐_送蜡烛 extends plugin {
             priority: 5000,
             rule: [
                 {
-                    reg: /^(#|\/)?送蜡烛(.*)$/,
+                    reg: /^(#|\/)?送蜡烛(\d+)$/,
                     fnc: '送蜡烛'
                 }
             ]
@@ -34,7 +34,7 @@ export class 娱乐_送蜡烛 extends plugin {
         const UserFile = `plugins/Tlon-Sky/data/Sky签到/${UserId}.json`
         const UsersFile = `plugins/Tlon-Sky/data/Sky签到/${UsersId}.json`
 
-        const extraction = e.msg.match(/^#?\/|送蜡烛(.*)$/)
+        const extraction = e.msg.match(/^#?\/|送蜡烛(\d+)$/)
         const GiveNumber = extraction[1]
         logger.mark('赠送数量' + GiveNumber)
         if (!Number.isInteger(GiveNumber)) {
