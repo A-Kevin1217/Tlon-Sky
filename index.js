@@ -8,7 +8,7 @@ if (!global.segment) {
 fs.mkdirSync('plugins/Tlon-Sky/data', { recursive: true })
 fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true })
 fs.mkdirSync('plugins/Tlon-Sky/data/背包', { recursive: true })
-if (!fs.existsSync('plugins/Tlon-Sky/config/Gambling.yaml')) fs.writeFileSync('./resources/birthday.yaml', yaml.stringify({ group: [] }))
+if (!fs.existsSync('plugins/Tlon-Sky/config/Gambling.yaml')) fs.writeFileSync('plugins/Tlon-Sky/config/Gambling.yaml', yaml.stringify({ group: [] }))
 const dir1 = './plugins/Tlon-Sky/apps';
 
 const files = [
