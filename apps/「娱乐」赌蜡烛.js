@@ -27,6 +27,9 @@ export class 娱乐_赌蜡烛 extends plugin {
                 }, {
                     reg: /^(#|\/)?开启赌蜡烛$/,
                     fnc: 'StartGambling'
+                }, {
+                    reg: /^(#|\/)?关闭赌蜡烛$/,
+                    fnc: 'OffGambling'
                 }
             ]
         });
@@ -175,6 +178,16 @@ export class 娱乐_赌蜡烛 extends plugin {
         }
         e.reply(`群[${e.group_id}]已开启赌蜡烛`)
     }
+
+    async OffGambling(e) {
+        if (!e.isMaster) return false
+        let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
+        if (data.group.includes(e.group_id)) {
+           data.group = data.group.filter(groupId => groupId !== e.group_id)
+           fs.writeFileSync(GroupYaml, yaml.stringify(data))
+        }
+        e.reply(`群[${e.group_id}]已关闭赌蜡烛`)
+    }    
 }
 
 const 重置押注信息 = async function (e) {
