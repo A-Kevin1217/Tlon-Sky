@@ -41,16 +41,16 @@ export class 娱乐_送蜡烛 extends plugin {
         }
         const UserData = GetData(UserFile)
         const UsersData = GetData(UsersFile)
-        if (UserData[UserId]['白蜡'] >= 赠送数量) {
-            UserData[UserId]['白蜡'] -= 赠送数量
-            UserData[UserId]['总赠送数量'] = (UserData[UserId]['总赠送数量'] || 0) + 赠送数量
+        if (UserData[UserId]['白蜡'] >= GiveNumber) {
+            UserData[UserId]['白蜡'] -= GiveNumber
+            UserData[UserId]['总赠送数量'] = (UserData[UserId]['总赠送数量'] || 0) + GiveNumber
 
-            UsersData[UsersId]['白蜡'] += 赠送数量
-            UsersData[UsersId]['总收入数量'] = (UsersData[UsersId]['总收入数量'] || 0) + 赠送数量
+            UsersData[UsersId]['白蜡'] += GiveNumber
+            UsersData[UsersId]['总收入数量'] = (UsersData[UsersId]['总收入数量'] || 0) + GiveNumber
 
             SaveData(UserFile, UserData)
             SaveData(UsersFile, UsersData)
-            return e.reply(`赠送成功！\n赠送数量：${赠送数量}`)
+            return e.reply(`赠送成功！\n赠送数量：${GiveNumber}`)
         } else {
             return e.reply('赠送失败！白蜡不足')
         }
