@@ -35,8 +35,7 @@ export class 娱乐_送蜡烛 extends plugin {
         const UsersFile = `plugins/Tlon-Sky/data/Sky签到/${UsersId}.json`
 
         const extraction = e.msg.match(/^#?\/|送蜡烛(\d+)$/)
-        const GiveNumber = extraction[1]
-        logger.mark('赠送数量' + GiveNumber)
+        const GiveNumber = Number(extraction[1])
         if (!Number.isInteger(GiveNumber)) {
             return e.reply('请输入有效的整数赠送金额。');
         }
