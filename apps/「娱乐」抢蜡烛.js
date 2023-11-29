@@ -99,15 +99,20 @@ export class 娱乐_抢蜡烛 extends plugin {
       UsersNumber = Math.floor(Math.random() * 30) + 1;
     }
 
-    State = (State === 0) ? '' : '抢蜡烛失败，对方有保护卡';
-
+    if (State === 1) {
+      State = '抢蜡烛失败，对方有保护卡';
+      UsersNumber = 0
+    } else {
+      State = ''
+    }
+    const one = 1
     if (UsersData[Users]['白蜡'] >= UsersNumber) {//  被抢人蜡烛足够，继续向下
       UsersData[Users]['白蜡'] -= UsersNumber;
-      UsersData[Users]['被抢次数'] += 1;
+      UsersData[Users]['被抢次数'] += one;
       UsersData[Users]['被抢蜡烛总数'] += UsersNumber;
 
       UserData[UserId]['白蜡'] += UsersNumber;
-      UserData[UserId]['抢蜡烛次数'] += 1;
+      UserData[UserId]['抢蜡烛次数'] += one;
       UserData[UserId]['抢蜡烛总数'] += UsersNumber;
       UserData[UserId]['上次抢蜡烛时间戳'] = NowDate;
       let html = {
