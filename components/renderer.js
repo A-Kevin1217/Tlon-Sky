@@ -24,7 +24,7 @@ export default async function (path, params, cfg) {
     },
     sys: {
       scale: `style=transform:scale(${cfg.scale || 1})`,
-	    copyright: `Tlon-Sky<span class="version">${Version.version}</span>`
+      copyright: `Tlon-Sky<span class="version">${Version.version}</span>`
     },
     quality: 100
   }
