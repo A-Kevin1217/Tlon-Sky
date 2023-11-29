@@ -127,24 +127,24 @@ export class 娱乐_赌蜡烛 extends plugin {
         const GetFile = `plugins/Tlon-Sky/data/押注信息/${UserID}.json`
 
         if (!fs.existsSync(GetFile)) {
-            const GetData = {
+            const GetDatas = {
                 [UserID]: {
                     押注金额: 0,
                     倍率: null
                 }
             }
-            SaveData(GetFile, GetData)
+            SaveData(GetFile, GetDatas)
         }
 
-        const GetData = GetData(GetFile)
+        const GetDatas = GetData(GetFile)
 
         if (UserData[UserID]['白蜡'] > GetNumber) {
             UserData[UserID]['白蜡'] = UserData[UserID]['白蜡'] - GetNumber
             SaveData(UserFile, UserData)
 
             const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 5.0);
-            GetData[UserID] = { 押注金额: GetData[UserID]['押注金额'] + GetNumber, 倍率: X }
-            SaveData(GetFile, GetData)
+            GetDatas[UserID] = { 押注金额: GetDatas[UserID]['押注金额'] + GetNumber, 倍率: X }
+            SaveData(GetFile, GetDatas)
             e.reply(`你已成功押注 ${GetNumber}根白蜡，倍率为 ${X}。`);
         } else {
             return e.reply('白蜡不足！')
