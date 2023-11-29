@@ -4,6 +4,10 @@ import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
 import { GetData, SaveData } from '../utils/db.js';
 
+const Tlon_Sky_file = 'plugins/Tlon-Sky/data/Sky签到'
+const Tlon_Sky_file_data = fs.readdirSync(Tlon_Sky_file)
+const Tlon_Sky_user_number = Tlon_Sky_file_data.length
+
 export class 娱乐_签到 extends plugin {
   constructor() {
     super({
@@ -108,7 +112,8 @@ export class 娱乐_签到 extends plugin {
       数量_能量: UserData[UserId]['能量值'] - Get能量值,
       等级: UserData[UserId].等级,
       累计签到提示: 累计签到提示,
-      连续签到提示: 连续签到提示
+      连续签到提示: 连续签到提示,
+      UserNumber: Tlon_Sky_user_number
     }
     await render('admin/签到', { ...html, bg: await rodom() }, { e, scale: 1.4 })
   }
