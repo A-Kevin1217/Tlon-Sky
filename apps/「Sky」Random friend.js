@@ -82,7 +82,7 @@ export class RandomFriend extends plugin {
         const UserMsg = e.msg.match(/^(#|\/)?存入盲盒(.*)\*(.*)/)
         const FriendCode = UserMsg[2]
         const FriendRemarks = UserMsg[3]
-        const regex = /^[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}$/;
+        const regex = /^[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}$/;
         const isValidFormat = regex.test(FriendCode);
         if (!isValidFormat) {
             return e.reply('好友代码不符合格式要求\n示例：存入盲盒xxxx-xxxx-xxxx*Hi 我是卿何');
