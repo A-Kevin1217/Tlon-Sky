@@ -75,7 +75,7 @@ export class RandomFriend extends plugin {
         SaveData(FriendCodeFile, FriendCodeData);
         SaveData(FriendRemarksFile, FriendRemarksData);
         SaveData(UserCdFile, UserCdData)
-        return e.reply(`来咯~请及时添加好友哦~\n好友代码：${FriendCode}\n对方备注：${FriendRemarks}\n防骗提示：盲盒来源网友，请谨防受骗`, true);
+        return e.reply(`来咯~请及时添加好友哦~\n好友代码：${FriendCode}\n对方备注：${FriendRemarks}\n防骗提示：盲盒来源网友，请谨防受骗\n如歌您不需要这个盲盒请添加回去\n指令：\n存入盲盒${FriendCode}*${FriendRemarks}`, true);
     }
 
     async SaveFriendCode(e) {
@@ -85,7 +85,7 @@ export class RandomFriend extends plugin {
         const regex = /^[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}$/;
         const isValidFormat = regex.test(FriendCode);
         if (!isValidFormat) {
-            return e.reply('好友代码不符合格式要求\n示例：存入盲盒xxxx-xxxx-xxxx*Hi 我是卿何');
+            return e.reply('好友代码不符合格式要求\n示例：\n存入盲盒xxxx-xxxx-xxxx*国服|备注小光|平常晚上在线');
         }
 
         const FriendCodeData = GetData(FriendCodeFile);
