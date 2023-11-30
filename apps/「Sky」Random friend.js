@@ -75,7 +75,7 @@ export class RandomFriend extends plugin {
         SaveData(FriendCodeFile, FriendCodeData);
         SaveData(FriendRemarksFile, FriendRemarksData);
         SaveData(UserCdFile, UserCdData)
-        e.reply(`来咯~请及时添加好友哦~\n好友代码：${FriendCode}\n对方备注：${FriendRemarks}\n防骗提示：盲盒来源网友，请谨防受骗\n如果您不需要这个盲盒请添加回去\n指令：\n存入盲盒${FriendCode}*${FriendRemarks}`, true);
+        e.reply(`来咯~请及时添加好友哦~\n好友代码：${FriendCode}\n对方备注：${FriendRemarks}\n防骗提示：盲盒来源网友，请谨防受骗`, true);
         return e.reply(`如果您不需要这个盲盒请添加回去指令：\n存入盲盒${FriendCode}*${FriendRemarks}`, true);
     }
 
