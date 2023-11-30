@@ -1,30 +1,22 @@
+import yaml from 'YAML'
 import fs from 'node:fs'
 import Version from './components/Version.js'
-import chalk from 'chalk'
-import yaml from 'YAML'
-if (!global.segment) {
-  global.segment = (await import("oicq")).segment
-}
+
+if (!global.segment) { global.segment = (await import("oicq")).segment }
 fs.mkdirSync('plugins/Tlon-Sky/data', { recursive: true })
 fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true })
 fs.mkdirSync('plugins/Tlon-Sky/data/背包', { recursive: true })
+fs.mkdirSync('plugins/Tlon-Sky/data/FriendCodeCD', { recursive: true })
 if (!fs.existsSync('plugins/Tlon-Sky/config/Gambling.yaml')) fs.writeFileSync('plugins/Tlon-Sky/config/Gambling.yaml', yaml.stringify({ group: [] }))
+
 const dir1 = './plugins/Tlon-Sky/apps';
 
-const files = [
-  ...fs.readdirSync(dir1)
-].filter(file => file.endsWith('.js'));
+const files = [...fs.readdirSync(dir1)].filter(file => file.endsWith('.js'));
 
 let ret = []
 
-logger.info(` `)
-logger.info(` `)
-logger.info(`「Sky登录成功！」当前版本：${Version.version}`)
-logger.info(` `)
-logger.info(` `)
-files.forEach((file) => {
-  ret.push(import(`./apps/${file}`))
-})
+logger.info(`「Sky登录中...」`)
+files.forEach((file) => { ret.push(import(`./apps/${file}`)) })
 
 ret = await Promise.allSettled(ret)
 
@@ -40,3 +32,5 @@ for (let i in files) {
   apps[name] = ret[i].value[Object.keys(ret[i].value)[0]]
 }
 export { apps }
+
+logger.mark(`「Sky登录成功！」当前版本：${Version.version}`)
