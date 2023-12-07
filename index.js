@@ -3,26 +3,38 @@ import fs from 'node:fs'
 import Version from './components/Version.js'
 
 if (!global.segment) { global.segment = (await import("oicq")).segment }
-fs.mkdirSync('plugins/Tlon-Sky/data', { recursive: true })
-fs.mkdirSync('plugins/Tlon-Sky/data/Sky签到', { recursive: true })
-fs.mkdirSync('plugins/Tlon-Sky/data/背包', { recursive: true })
-fs.mkdirSync('plugins/Tlon-Sky/data/FriendCodeCD', { recursive: true })
-if (!fs.existsSync('plugins/Tlon-Sky/config/Gambling.yaml')) fs.writeFileSync('plugins/Tlon-Sky/config/Gambling.yaml', yaml.stringify({ group: [] }))
+const directories = [
+  'plugins/Tlon-Sky/data',
+  'plugins/Tlon-Sky/data/Sky签到',
+  'plugins/Tlon-Sky/data/背包',
+  'plugins/Tlon-Sky/data/FriendCodeCD'
+];
 
-const dir1 = './plugins/Tlon-Sky/apps';
+directories.forEach((directory) => {
+  fs.mkdirSync(directory, { recursive: true });
+});
 
-const files = [...fs.readdirSync(dir1)].filter(file => file.endsWith('.js'));
+const configFile = 'plugins/Tlon-Sky/config/Gambling.yaml';
+if (!fs.existsSync(configFile)) {
+  const initialConfig = { group: [] };
+  fs.writeFileSync(configFile, yaml.stringify(initialConfig));
+}
+const dir1 = './plugins/Tlon-Sky/apps'
+
+const file = [...fs.readdirSync(dir1)].filter(file => file.endsWith('.js'));
 
 let ret = []
 
 logger.info(`「Sky登录中...」`)
-files.forEach((file) => { ret.push(import(`./apps/${file}`)) })
+
+file.forEach((file) => { ret.push(import(`./apps/${file}`)) })
 
 ret = await Promise.allSettled(ret)
 
 let apps = {}
-for (let i in files) {
-  let name = files[i].replace('.js', '')
+
+for (let i in file) {
+  let name = file[i].replace('.js', '')
 
   if (ret[i].status != 'fulfilled') {
     logger.error(`载入插件错误：${logger.red(name)}`)

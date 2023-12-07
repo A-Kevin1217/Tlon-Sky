@@ -9,7 +9,7 @@
 	.container {
 		background: #D9D9F3 top !important;
 		background-size: cover !important;
-		width: 800px;
+		width: 400px;
 	}
 	.profile-picture {
 		float: left;
@@ -37,9 +37,9 @@
 	<ul class="cfg-ul">
 		<li class="cfg-li">
 			<h1><em>签到信息</em></h1>
-			<h2>白蜡数：{{数量_白}} + <span class="highlight">{{获得白蜡}}</span></h2>
-			<h2>季蜡数：{{数量_季}} + <span class="highlight">{{获得季蜡}}</span></h2>
-			<h2>能量值：{{数量_能量}} + <span class="highlight">{{获得能量值}}</span></h2>
+			<h2>白蜡 + <span class="color: lime;">{{获得白蜡}}</span></h2>
+			<h2>季蜡 + <span class="color: lime;">{{获得季蜡}}</span></h2>
+			<h2>能量值 + <span class="color: lime;">{{获得能量值}}</span></h2>
 			<h2>{{累计签到提示}}</h2>
 			<h2>{{连续签到提示}}</h2>
 		</li>
@@ -48,7 +48,7 @@
 <div class="cfg-box">
 	<ul class="cfg-ul">
 		<li class="cfg-li">
-			<h2>Tlon-Sky用户数量：{{UserNumber}}</h2>
+			<h2>Tlon-Sky当前用户数量：{{UserNumber}}</h2>
 		</li>
 	</ul>
 </div>
