@@ -1,5 +1,11 @@
 直接丢到plugins合并替换
 -------------------
+* 2023/12/02
+ - 修复yaml问题
+："Tlon-Sky/index.js"
+："Tlon-Sky/apps/「娱乐」赌蜡烛.js"
+
+-------------------
 * 2023/11/30
  - 添加随机好友功能
 ："Tlon-Sky\apps\「Sky」Random friend.js"

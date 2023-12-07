@@ -1,4 +1,4 @@
-import yaml from 'YAML'
+import yaml from 'yaml'
 import fs from 'node:fs'
 import Version from './components/Version.js'
 

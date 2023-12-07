@@ -1,4 +1,4 @@
-import yaml from 'YAML';
+import yaml from 'yaml';
 import fs from 'fs';
 import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
