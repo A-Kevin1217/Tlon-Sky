@@ -52,19 +52,20 @@ export class 光遇_剩余时间 extends plugin {
       msg = `距离归巢季结束还剩
 ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒
 截止至2024-01-10 23:59:59
-本季节一共${daysBetween}天
+本季节一共[${daysBetween}]天
 季蜡还可获得
 [有季卡]：${seasonWaxWithCard}季蜡
 [无季卡]：${seasonWaxWithoutCard}季蜡
 本季节毕业需：${graduationWax}季蜡
 [有季卡]毕业需：${graduationDaysWithCard}天
-[无季卡]毕业需：${graduationDaysWithoutCard}天(包括非必要的魔法节点)`;
+[无季卡]毕业需：${graduationDaysWithoutCard}天
+(包括非必要的魔法节点)`;
 
       setTimeout(countdown, 1000);
     };
 
     countdown();
-    await this.reply(msg, true);
+    await this.reply(msg, true, false, true);
     return;
   }
 
