@@ -18,11 +18,13 @@ export class 光遇_剩余时间 extends plugin {
       ]
     })
   }
+
   async 季节剩余(e) {
+    const START_TIME = new Date('2023-10-19 10:00:00').getTime();
     const END_TIME = new Date('2024-01-10 23:59:59').getTime();
     let msg = '';
 
-    function countdown() {
+    const countdown = () => {
       const GET_TIME = Date.now();
       const MILLISECOND = END_TIME - GET_TIME;
 
@@ -31,29 +33,42 @@ export class 光遇_剩余时间 extends plugin {
         return;
       }
 
-      const DAY = Math.floor(MILLISECOND / (24 * 60 * 60 * 1000));
-      const HOUR = Math.floor((MILLISECOND % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-      const MINUTE = Math.floor((MILLISECOND % (60 * 60 * 1000)) / (60 * 1000));
-      const SECOND = Math.floor((MILLISECOND % (60 * 1000)) / 1000);
+      const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
+      const daysBetween = Math.floor((END_TIME - START_TIME) / DAY_IN_MILLISECONDS);
 
-      msg = [
-        `距离归巢季结束还剩\n`,
-        `${DAY} 天 ${HOUR} 小时 ${MINUTE} 分钟 ${SECOND} 秒\n`,
-        `截止至2024-01-10 23:59:59\n`,
-        `季蜡还可获得\n`,
-        `[有季卡]：${DAY * 6}季蜡\n`,
-        `[无季卡]：${DAY * 5}季蜡\n`,
-        `本季节毕业需：396季蜡\n`,
-        `[有季卡]毕业需：${((396 - 30) / 6).toFixed(1)}\n`,
-        `[无季卡]毕业需：${(396 / 5).toFixed(1)}`
-      ]
+      const { days, hours, minutes, seconds } = {
+        days: Math.floor(MILLISECOND / (24 * 60 * 60 * 1000)),
+        hours: Math.floor((MILLISECOND % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
+        minutes: Math.floor((MILLISECOND % (60 * 60 * 1000)) / (60 * 1000)),
+        seconds: Math.floor((MILLISECOND % (60 * 1000)) / 1000)
+      };
+
+      const graduationWax = 396;
+      const seasonWaxWithCard = days * 6;
+      const seasonWaxWithoutCard = days * 5;
+      const graduationDaysWithCard = Math.ceil((graduationWax - 30) / 6);
+      const graduationDaysWithoutCard = Math.ceil(graduationWax / 5);
+
+      msg = `距离归巢季结束还剩
+${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒
+截止至2024-01-10 23:59:59
+本季节一共${daysBetween}天
+季蜡还可获得
+[有季卡]：${seasonWaxWithCard}季蜡
+[无季卡]：${seasonWaxWithoutCard}季蜡
+本季节毕业需：${graduationWax}季蜡
+[有季卡]毕业需：${graduationDaysWithCard}天
+[无季卡]毕业需：${graduationDaysWithoutCard}天(包括非必要的魔法节点)`;
+
       setTimeout(countdown, 1000);
-    }
+    };
+
     countdown();
     await this.reply(msg, true);
     return;
   }
-  
+
+
   async 季节结束时间(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/季节结束时间.png'
     await this.reply([imgreply ? segment.image(imgreply) : ""], true)
