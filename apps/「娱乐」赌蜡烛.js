@@ -36,15 +36,35 @@ export class 娱乐_赌蜡烛 extends plugin {
     }
 
     async 赌蜡烛(e) {
+        const CoolingTime = 30 * 60 * 1000;
+        const NowDate = Date.now();
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
         const UserPunches = e.msg.replace(/#?\/|dlz/g, "")
         const UserID = e.user_id;
         if (!UserFiles(UserID)) { return e.reply('请先发送光遇签到') }
+        const UserDatas = GetData(`plugins/Tlon-Sky/data/Sky签到/${UserID}.json`)
+        const LastExecutionTime = UserDatas[UserID]['上次赌蜡烛时间戳'] || 0;
         const ROCK = '石头';
         const PAPER = '布';
         const SCISSORS = '剪刀';
+        if (NowDate - LastExecutionTime < CoolingTime) {
+            const RemainingTimestamp = CoolingTime - (NowDate - LastExecutionTime);
+            if (RemainingTimestamp > 0) {
+                const hour = Math.floor(RemainingTimestamp / (60 * 60 * 1000));
+                const minutes = Math.floor((RemainingTimestamp % (60 * 60 * 1000)) / (60 * 1000));
+                const second = Math.floor((RemainingTimestamp % (60 * 1000)) / 1000);
 
+                const EndTimestamp = NowDate + RemainingTimestamp;
+                const EndTime = new Date(EndTimestamp).toLocaleString();
+
+                if (hour === 0) {
+                    return e.reply(`赌蜡烛CD中！\n请等待 ${minutes} 分钟 ${second} 秒！\nCD结束时间：${EndTime}`);
+                } else if (minutes === 0) {
+                    return e.reply(`赌蜡烛CD中！\n请等待 ${second} 秒！\nCD结束时间：${EndTime}`);
+                }
+            }
+        }
         if (UserPunches === '剪刀' || UserPunches === '石头' || UserPunches === '布') {
 
             const BetFile = `plugins/Tlon-Sky/data/押注信息/${UserID}.json`;
@@ -67,6 +87,7 @@ export class 娱乐_赌蜡烛 extends plugin {
                     重置押注信息(e)
                     UserData[UserID]['白蜡'] = (UserData[UserID]['白蜡']) + (BetData[UserID]?.押注金额)
                     UserData[UserID]['平'] = (UserData[UserID]['平'] || 0) + 1
+                    UserData[UserID]['上次赌蜡烛时间戳'] = NowDate
                     SaveData(UserFile, UserData)
 
                     AWGSData['平'] += 1
@@ -84,6 +105,7 @@ export class 娱乐_赌蜡烛 extends plugin {
                     UserData[UserID]['胜'] = (UserData[UserID]['胜'] || 0) + 1
                     UserData[UserID]['赚取'] = (UserData[UserID]['赚取'] || 0) + NetProfit
                     UserData[UserID]['白蜡'] = (UserData[UserID]['白蜡']) + GetAmount
+                    UserData[UserID]['上次赌蜡烛时间戳'] = NowDate
                     SaveData(UserFile, UserData)
 
                     AWGSData['赔'] = AWGSData['赔'] + NetProfit
@@ -94,6 +116,7 @@ export class 娱乐_赌蜡烛 extends plugin {
                     重置押注信息(e)
                     UserData[UserID]['负'] = (UserData[UserID]['负'] || 0) + 1
                     UserData[UserID]['亏损'] = (UserData[UserID]['亏损'] || 0) + BetData[UserID]['押注金额']
+                    UserData[UserID]['上次赌蜡烛时间戳'] = NowDate
                     SaveData(UserFile, UserData)
 
                     //  秋风信息处理
@@ -142,7 +165,7 @@ export class 娱乐_赌蜡烛 extends plugin {
             UserData[UserID]['白蜡'] = UserData[UserID]['白蜡'] - GetNumber
             SaveData(UserFile, UserData)
 
-            const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 5.0);
+            const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 2.0);
             GetDatas[UserID] = { 押注金额: GetDatas[UserID]['押注金额'] + GetNumber, 倍率: X }
             SaveData(GetFile, GetDatas)
             e.reply(`你已成功押注 ${GetNumber}根白蜡，倍率为 ${X}。`);
@@ -173,8 +196,8 @@ export class 娱乐_赌蜡烛 extends plugin {
         if (!e.isMaster) return false
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) {
-           data.group.push(e.group_id * 1)
-           fs.writeFileSync(GroupYaml, yaml.stringify(data))
+            data.group.push(e.group_id * 1)
+            fs.writeFileSync(GroupYaml, yaml.stringify(data))
         }
         e.reply(`群[${e.group_id}]已开启赌蜡烛`)
     }
@@ -183,11 +206,11 @@ export class 娱乐_赌蜡烛 extends plugin {
         if (!e.isMaster) return false
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (data.group.includes(e.group_id)) {
-           data.group = data.group.filter(groupId => groupId !== e.group_id)
-           fs.writeFileSync(GroupYaml, yaml.stringify(data))
+            data.group = data.group.filter(groupId => groupId !== e.group_id)
+            fs.writeFileSync(GroupYaml, yaml.stringify(data))
         }
         e.reply(`群[${e.group_id}]已关闭赌蜡烛`)
-    }    
+    }
 }
 
 const 重置押注信息 = async function (e) {
