@@ -47,7 +47,7 @@ export class 光遇_剩余时间 extends plugin {
       const seasonWaxWithCard = days * 6;
       const seasonWaxWithoutCard = days * 5;
       const graduationDaysWithCard = Math.ceil((graduationWax - 30) / 6);
-      const graduationDaysWithoutCard = Math.ceil(graduationWax / 5);
+      const graduationDaysWithoutCard = Math.ceil((graduationWax - 12) / 5);
 
       msg = `距离归巢季结束还剩
 ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒
