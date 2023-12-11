@@ -19,7 +19,7 @@ export class 光遇_剩余时间 extends plugin {
     })
   }
   async 季节剩余(e) {
-    const END_TIME = new Date('2024-01-10 23:59:59').GET_TIME();
+    const END_TIME = new Date('2024-01-10 23:59:59').getTime();
     let msg = '';
 
     function countdown() {
