@@ -1,4 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js';
 import { GetData, SaveData, UserFiles } from '../utils/db.js';
 
 export class 娱乐_送蜡烛 extends plugin {

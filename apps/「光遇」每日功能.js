@@ -1,4 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js'
 
 const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg';

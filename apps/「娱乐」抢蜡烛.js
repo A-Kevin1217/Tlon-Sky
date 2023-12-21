@@ -1,5 +1,4 @@
 import fs from 'fs';
-import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
 import { GetData, UserFiles, SaveData } from '../utils/db.js';
 

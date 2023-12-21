@@ -1,6 +1,5 @@
-import yaml from 'yaml';
 import fs from 'fs';
-import plugin from '../../../lib/plugins/plugin.js';
+import yaml from 'yaml';
 import { render } from '../components/index.js';
 import { GetData, SaveData, UserFiles } from '../utils/db.js';
 

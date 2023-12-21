@@ -1,6 +1,5 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import path from 'path'
-import fs from 'fs'
+import fs from 'fs';
+import path from 'path';
 
 export class 光遇_卸载图库 extends plugin {
     constructor() {

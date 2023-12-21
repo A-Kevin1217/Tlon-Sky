@@ -1,6 +1,4 @@
-import plugin from '../../../lib/plugins/plugin.js';
 import fetch from "node-fetch";
-
 
 export class 光遇_服务器状态 extends plugin {
   constructor () {

@@ -1,5 +1,4 @@
 import fs from 'fs';
-import plugin from "../../../lib/plugins/plugin.js";
 import { GetData, SaveData } from '../utils/db.js';
 
 const FriendCodeFile = 'plugins/Tlon-Sky/data/FriendCodeFile.json'
@@ -9,7 +8,7 @@ if (!fs.existsSync(FriendCodeFile)) {
     const Code = []
     SaveData(FriendCodeFile, Code); SaveData(FriendRemarksFile, Code)
 }
-const CoolingTime = 4 * 60 * 60 * 1000;
+const CoolingTime = 1 * 60 * 60 * 1000;
 
 export class RandomFriend extends plugin {
     constructor() {
@@ -101,13 +100,3 @@ export class RandomFriend extends plugin {
         return e.reply('好友代码已存入盲盒！', true);
     }
 }
-function handleCooldownEnd() {
-    // 在这里执行CD结束后的操作
-    console.log("CD已结束！");
-}
-
-// 设置CD时间为1小时（以毫秒为单位）
-const cooldownTime = 60 * 60 * 1000;
-
-// 启动CD计时器
-setTimeout(handleCooldownEnd, cooldownTime);

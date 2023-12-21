@@ -1,6 +1,4 @@
-import plugin from '../../../lib/plugins/plugin.js';
 import fs from "fs";
-
 
 export class 光遇_绘画分享 extends plugin {
   constructor() {

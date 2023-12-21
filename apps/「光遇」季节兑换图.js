@@ -1,4 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js';
 import fs from "fs";
 
 export class 光遇_季节兑换图 extends plugin {
@@ -27,7 +26,7 @@ export class 光遇_季节兑换图 extends plugin {
       await e.reply(`抱歉，没有找到${季节}季兑换图\n请检查名称是否正确`);
       return false;
     } else {
-        await this.reply([
+        await this.e.reply([
           segment.at(this.e.user_id),
           segment.image(imgreply),
         ]);

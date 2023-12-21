@@ -1,5 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js'
-
 export class 光遇_剩余时间 extends plugin {
   constructor() {
     super({
@@ -65,13 +63,13 @@ ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒
     };
 
     countdown();
-    await this.reply(msg, true, false, true);
+    await e.reply(msg, true, false, true);
     return;
   }
 
 
   async 季节结束时间(e) {
     const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/季节结束时间.png'
-    await this.reply([imgreply ? segment.image(imgreply) : ""], true)
+    await e.reply([imgreply ? segment.image(imgreply) : ""], true)
   }
 }

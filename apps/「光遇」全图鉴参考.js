@@ -1,5 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js';
-
 export class 光遇_全图鉴参考 extends plugin {
     constructor () {
       super({

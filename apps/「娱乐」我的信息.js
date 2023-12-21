@@ -1,11 +1,10 @@
 import fs from 'fs';
 import lodash from 'lodash';
-import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
 import { Leaderboard } from '../utils/Leaderboard.js';
 import { GetData, UserFiles } from '../utils/db.js';
 
-const 用户位置 = 'plugins/Tlon-Sky/data/Sky签到';
+const USER_FOLDER = 'plugins/Tlon-Sky/data/Sky签到';
 
 export class 我的信息 extends plugin {
     constructor() {
@@ -17,7 +16,7 @@ export class 我的信息 extends plugin {
             rule: [
                 {
                     reg: '^(#|\/)?光遇信息$',
-                    fnc: '光遇信息'
+                    fnc: 'si'
                 },
                 {
                     reg: '^(#|\/)?光遇背包$',
@@ -31,7 +30,7 @@ export class 我的信息 extends plugin {
         });
     }
 
-    async 光遇信息(e) {
+    async si(e) {
         Leaderboard()
         const UserId = e.user_id;
         const UserFile = `plugins/Tlon-Sky/data/Sky签到/${UserId}.json`;
@@ -41,8 +40,8 @@ export class 我的信息 extends plugin {
         const 排行信息Json_白 = GetData(排行信息_白)
         const 排行信息_季 = 'plugins/Tlon-Sky/data/排行榜/季蜡.json'
         const 排行信息Json_季 = GetData(排行信息_季)
-        const 白蜡排名 = 获取排名(排行信息Json_白, UserId);
-        const 季蜡排名 = 获取排名(排行信息Json_季, UserId);
+        const 白蜡排名 = calculateRank(排行信息Json_白, UserId);
+        const 季蜡排名 = calculateRank(排行信息Json_季, UserId);
         const {
             昵称, 总收入数量, 最后签到日期,
             连续签到天数, 累计签到天数,
@@ -102,7 +101,7 @@ export class 我的信息 extends plugin {
 
         const leaderboardRanks = [];
         for (let i = 0; i < leaderboardJsons.length; i++) {
-            leaderboardRanks.push(获取排名(leaderboardJsons[i], UserId));
+            leaderboardRanks.push(calculateRank(leaderboardJsons[i], UserId));
         }
         const html  = {
             头像: `https://q.qlogo.cn/g?b=qq&nk=${UserId}&s=640`,
@@ -118,8 +117,8 @@ export class 我的信息 extends plugin {
         await render('admin/排行信息', { ...html, }, { e, scale: 1.4 })
     }
 }
-function 获取排名(排行信息Json, UserId) {
-    const files = fs.readdirSync(用户位置);
+function calculateRank(排行信息Json, UserId) {
+    const files = fs.readdirSync(USER_FOLDER);
     const 用户数量 = files.length;
     for (let i = 0; i < 用户数量; i++) {
         if (排行信息Json[i].userId === UserId) {

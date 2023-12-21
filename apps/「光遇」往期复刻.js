@@ -1,4 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js'
 import fs from "fs";
 
 export class 光遇_往期复刻 extends plugin {

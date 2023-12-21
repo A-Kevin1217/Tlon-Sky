@@ -1,9 +1,7 @@
-import plugin from '../../../lib/plugins/plugin.js';
-import { render } from '../components/index.js'
+import fs from 'fs';
+import lodash from 'lodash';
 import fetch from "node-fetch";
-import lodash from 'lodash'
-import fs from 'fs'
-
+import { render } from '../components/index.js';
 
 export class 光遇_公告 extends plugin {
   constructor () {

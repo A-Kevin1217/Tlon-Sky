@@ -1,7 +1,6 @@
-import plugin from '../../../lib/plugins/plugin.js';
+import fs from 'fs';
 import { render } from '../components/index.js';
 import { Leaderboard } from '../utils/Leaderboard.js';
-import fs from 'fs';
 
 export class 娱乐_光遇排行榜 extends plugin {
   constructor() {

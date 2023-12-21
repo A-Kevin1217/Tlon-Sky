@@ -1,6 +1,5 @@
 import fs from 'fs';
 import lodash from 'lodash';
-import plugin from '../../../lib/plugins/plugin.js';
 import { render } from '../components/index.js';
 import { GetData, SaveData } from '../utils/db.js';
 

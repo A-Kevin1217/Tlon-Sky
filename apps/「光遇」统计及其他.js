@@ -1,5 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js'
-
 export class 光遇_统计及其他 extends plugin {
   constructor () {
     super({

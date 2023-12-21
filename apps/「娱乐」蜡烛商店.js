@@ -1,6 +1,5 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import { render } from '../components/index.js'
 import fs from 'fs'
+import { render } from '../components/index.js'
 
 export class 娱乐_蜡烛商店 extends plugin {
     constructor() {

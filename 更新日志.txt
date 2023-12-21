@@ -2,7 +2,10 @@
 -------------------
 * 2023/12/21
  - 优化细节
-："Tlon-Sky\apps\「娱乐」签到.js"
+："Tlon-Sky\apps\all.js"
+
+ - 优化逻辑，减少重复代码
+："Tlon-Sky\utils\Leaderboard.js"
 
 -------------------
 * 2023/12/16

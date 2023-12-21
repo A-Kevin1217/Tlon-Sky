@@ -1,8 +1,7 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import { Restart } from '../../other/restart.js'
-import { createRequire } from 'module'
-import lodash from 'lodash'
 import fs from 'fs'
+import lodash from 'lodash'
+import { createRequire } from 'module'
+import { Restart } from '../../other/restart.js'
 
 const require = createRequire(import.meta.url)
 const { exec, execSync } = require('child_process')

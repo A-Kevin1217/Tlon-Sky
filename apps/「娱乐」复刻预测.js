@@ -1,5 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js'
-
 export class 光遇_复刻预测 extends plugin {
     constructor() {
         super({

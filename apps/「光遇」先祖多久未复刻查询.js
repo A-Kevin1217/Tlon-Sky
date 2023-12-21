@@ -1,5 +1,3 @@
-import plugin from '../../../lib/plugins/plugin.js'
-
 const 感恩 = [
   { name: '刁蛮浪者', date: new Date('2021-11-08') },
   { name: '挑衅艺伎', date: new Date('2023-05-22') },
