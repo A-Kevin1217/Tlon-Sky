@@ -59,7 +59,7 @@ export class 娱乐_签到 extends plugin {
       }
       SaveData(UserFile, Userinfo)
       SaveData(UserBackpackFile, UserBackpack)
-      e.reply('用户第一次执行光遇签到\n创建基础信息成功！\n使用"设置昵称+昵称"可设置昵称呦~\n"+"不用带')
+      e.reply('"设置昵称[昵称]"指令可设置昵称')
     }
 
     const UserData = GetData(UserFile)
