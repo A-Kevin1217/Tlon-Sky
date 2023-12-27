@@ -1,7 +1,7 @@
 import fs from "fs";
 
 export class 光遇_往期复刻 extends plugin {
-  constructor () {
+  constructor() {
     super({
       name: '[Tlon-Sky]光遇:往期复刻',
       dsc: '光遇往期复刻',
@@ -15,22 +15,22 @@ export class 光遇_往期复刻 extends plugin {
       ]
     })
   }
+
   async 往期复刻(e) {
-    let msg = e.msg;
-    let 往期复刻 = msg.replace(/#?\/|年复刻记录/g, "").trim();
-    if (往期复刻 === '20') {往期复刻 = '2020'}
-    if (往期复刻 === '21') {往期复刻 = '2021'}
-    if (往期复刻 === '22') {往期复刻 = '2022'}
-    if (往期复刻 === '23') {往期复刻 = '2023'}
-    const imgreply = `plugins/Tlon-Sky/resource/复刻记录/${往期复刻}年光遇复刻记录.png`;
+    let gc = e.msg.match(/^(#|\/)?(.*)年复刻记录$/)
+    let year = '';
+    if (gc[2] === '20') { year = '2020' }
+    if (gc[2] === '21') { year = '2021' }
+    if (gc[2] === '22') { year = '2022' }
+    if (gc[2] === '23') { year = '2023' }
+    const imgreply = `plugins/Tlon-Sky/resource/复刻记录/${year}年光遇复刻记录.png`;
     if (!fs.existsSync(imgreply)) {
-      await e.reply(`抱歉，没有找到${往期复刻}年复刻记录\n请检查名称是否正确`);
-      return false;
+      return e.reply(`抱歉，没有找到${year}年复刻记录\n请检查名称是否正确`);
     } else {
-        await this.reply([
-          segment.at(this.e.user_id),
-          segment.image(imgreply),
-        ]);
-      }
+      await e.reply([
+        segment.at(e.user_id),
+        segment.image(imgreply),
+      ]);
+    }
   }
 }

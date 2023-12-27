@@ -1,10 +1,8 @@
-import fs from 'fs';
-import lodash from 'lodash';
 import fetch from "node-fetch";
 import { render } from '../components/index.js';
 
 export class 光遇_公告 extends plugin {
-  constructor () {
+  constructor() {
     super({
       name: '[Tlon-Sky]光遇:公告',
       dsc: '光遇公告',
@@ -18,9 +16,8 @@ export class 光遇_公告 extends plugin {
       ]
     })
   }
-  
+
   async 光遇公告(e) {
-    const 昵称 = e.sender.nickname;
     let url = `https://ma75.update.netease.com/game_notice/announcement_live.json`;
     let res = await fetch(url).catch((err) => logger.error(err))
     res = await res.json()
@@ -31,23 +28,12 @@ export class 光遇_公告 extends plugin {
     let data = {
       msg1: msg1,
       msg: msg,
-      qq: 昵称
     }
     await render('admin/公告', {
-      ...data,
-      bg: await rodom()
+      ...data
     }, {
       e,
       scale: 1.4
     })
   }
-}
-const rodom = async function () {
-  let image = fs.readdirSync('./plugins/Tlon-Sky/resource/admin/imgs/bg')
-  let listImg = []
-  for (let val of image) {
-    listImg.push(val)
-  }
-  let imgs = listImg.length == 1 ? listImg[0] : listImg[lodash.random(0, listImg.length - 1)]
-  return imgs
 }

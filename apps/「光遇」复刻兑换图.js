@@ -1,5 +1,5 @@
 export class 光遇_复刻兑换图 extends plugin {
-  constructor () {
+  constructor() {
     super({
       name: '[Tlon-Sky]光遇:复刻兑换图',
       dsc: '光遇复刻兑换图',
@@ -14,13 +14,7 @@ export class 光遇_复刻兑换图 extends plugin {
     })
   }
   async 复刻兑换图(e) {
-    const Textreply = '仅供参考,以正式上线为准'
-    const imgreply = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png';
-    let msg = [
-      imgreply ? segment.image(imgreply) : ""
-    ]
-    e.reply(Textreply)
-    e.reply(msg)
-    return true;
+    e.reply('仅供参考,以正式上线为准')
+    return e.reply(segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png'))
   }
 }

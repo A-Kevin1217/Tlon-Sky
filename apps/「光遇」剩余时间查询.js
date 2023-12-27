@@ -60,7 +60,7 @@ ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒
     };
 
     countdown();
-    await e.reply(msg, true, false, true);
+    await e.reply(msg, true);
     return;
   }
 }
