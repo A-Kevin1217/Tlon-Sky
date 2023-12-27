@@ -25,6 +25,9 @@ export class 光遇_季节兑换图 extends plugin {
         break;
       case '凌冬': season = '音韵';
         break;
+      default:
+        season = gc[2];
+        break;
     }
     const imgreply = `plugins/Tlon-Sky/resource/季节兑换图/${season}季.png`;
     if (!fs.existsSync(imgreply)) {
