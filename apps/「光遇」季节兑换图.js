@@ -16,18 +16,23 @@ export class 光遇_季节兑换图 extends plugin {
     })
   }
   async 季节兑换图(e) {
-    let gc = e.msg.match(/^(#|\/)?(.*)季兑换图$/)
-    let season = ''
-    if (gc[2] === '欧若拉') { season = 'AURORA' }
-    if (gc[2] === '集结') { season = '重组' }
-    if (gc[2] === '凌冬') { season = '音韵' }
-    const imgreply = `plugins/Tlon-Sky/resource/季节兑换图/${season}季.png`
+    const gc = e.msg.match(/^(#|\/)?(.*)季兑换图$/);
+    let season = '';
+    switch (gc[2]) {
+      case '欧若拉': season = 'AURORA';
+        break;
+      case '集结': season = '重组';
+        break;
+      case '凌冬': season = '音韵';
+        break;
+    }
+    const imgreply = `plugins/Tlon-Sky/resource/季节兑换图/${season}季.png`;
     if (!fs.existsSync(imgreply)) {
       return e.reply(`抱歉，没有找到${season}季兑换图\n请检查名称是否正确`);
     } else {
-      return this.e.reply([
-        segment.at(this.e.user_id),
-        segment.image(imgreply),
+      return e.reply([
+        segment.at(e.user_id),
+        segment.image(imgreply)
       ]);
     }
   }
