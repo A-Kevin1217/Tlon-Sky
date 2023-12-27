@@ -9,9 +9,6 @@ export class 光遇_剩余时间 extends plugin {
         {
           reg: /^(#|\/)?季节剩余$/,
           fnc: '季节剩余'
-        }, {
-          reg: /^(#|\/)?季节结束时间$/,
-          fnc: '季节结束时间'
         }
       ]
     })
@@ -65,11 +62,5 @@ ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒
     countdown();
     await e.reply(msg, true, false, true);
     return;
-  }
-
-
-  async 季节结束时间(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/季节结束时间.png'
-    await e.reply([imgreply ? segment.image(imgreply) : ""], true)
   }
 }
