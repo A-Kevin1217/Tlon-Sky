@@ -109,6 +109,7 @@ const seasons = {
     { name: '星光收藏家', date: new Date('2023-07-17') }
   ],
   '风行': [
-    { name: '风铃修补匠', date: new Date('2023-12-04') }
+    { name: '风铃修补匠', date: new Date('2023-12-04') },
+    { name: '天才建筑者', data: new Date('2024-01-01') }
   ]
 };
