@@ -1,5 +1,12 @@
 直接丢到plugins合并替换
 -------------------
+* 2024/01/12
+ - 优化抢蜡烛图片，删除部分背景图
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+："Tlon-Sky\resource\admin\抢蜡烛.html"
+："Tlon-Sky\resource\admin\imgs\bg"
+
+-------------------
 * 2024/01/11
  - 更新先祖多久未复刻时间
 ："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"

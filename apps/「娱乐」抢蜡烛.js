@@ -13,6 +13,10 @@ export class 娱乐_抢蜡烛 extends plugin {
         {
           reg: /^(#|\/)?抢蜡烛$/,
           fnc: '抢蜡烛'
+        },
+        {
+          reg: /^图片测试$/,
+          fnc: 'test'
         }
       ]
     });
@@ -136,5 +140,23 @@ export class 娱乐_抢蜡烛 extends plugin {
     } else {
       return e.reply(`对不起，被抢的人蜡烛数量不足！\n【${UsersNickname}】 仅剩「${UsersData[Users]['白蜡']}」个白蜡\n无法被抢走「${UsersNumber}」个白蜡，请再次发送抢蜡烛`, true, { recallMsg: 15 });
     }
+  }
+
+  async test(e) {
+    const html = {
+      抢蜡烛状态: '',
+      头像: `https://q.qlogo.cn/g?b=qq&nk=3620060826&s=640`,
+      被抢人头像: `https://q.qlogo.cn/g?b=qq&nk=1947425850&s=640`,
+      用户ID: 3620060826,
+      被抢用户ID: 1947425850,
+      昵称: 'Tloml-Starry',
+      被抢人昵称: '傅卿何',
+      当前蜡烛: 100,
+      被抢人当前蜡烛: 100,
+      当前抢蜡烛次数: 10,
+      当前被抢次数: 10,
+      抢得蜡烛: 10
+    }
+    await render('admin/抢蜡烛', { ...html }, { e, scale: 1.4 })
   }
 }
