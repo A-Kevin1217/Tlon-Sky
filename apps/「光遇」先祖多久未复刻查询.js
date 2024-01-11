@@ -52,7 +52,7 @@ const seasons = {
     { name: '蓬头青年', date: new Date('2023-01-25') },
     { name: '不舍家长', date: new Date('2023-01-17') },
     { name: '踏舞孩童', date: new Date('2023-12-27') },
-    { name: '彩纸表亲', date: new Date('2022-10-05') },
+    { name: '彩纸表亲', date: new Date('2024-01-15') },
     { name: '火花家长', date: new Date('2022-01-31') },
     { name: '智慧长者', date: new Date('2021-12-29') }
   ],
