@@ -21,7 +21,7 @@ export class 光遇_先祖多久未复刻查询 extends plugin {
 
   async snrd(e) {
     const SEASON_NAME = e.msg.match(/^(#|\/)?(.*)季多久未复刻$/)
-    let msg = '数据更新时间：2023-12-25\n此表不计入集体复刻\n'
+    let msg = '数据更新时间：2024-01-11\n此表不计入集体复刻\n'
     if (!seasons[SEASON_NAME[2]]) { return e.reply('不存在该季节,请输入以下季节名：\n感恩丨追光丨归属丨音韵\n魔法丨圣岛丨预言丨梦想\n集结丨小王子丨风行') }
     for (const role of seasons[SEASON_NAME[2]]) {
       const dayDiff = this.getDayDiff(role.date)
@@ -110,6 +110,6 @@ const seasons = {
   ],
   '风行': [
     { name: '风铃修补匠', date: new Date('2023-12-04') },
-    { name: '天才建筑者', data: new Date('2024-01-01') }
+    { name: '天才建筑者', date: new Date('2024-01-01') }
   ]
 };
