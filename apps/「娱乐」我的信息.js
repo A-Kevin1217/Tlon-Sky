@@ -31,7 +31,8 @@ export class 我的信息 extends plugin {
     }
 
     async si(e) {
-        await Leaderboard();
+        Leaderboard();
+
         const USER_ID = e.user_id;
         if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到'); }
 
@@ -96,7 +97,7 @@ export class 我的信息 extends plugin {
     }
 
     async 排行信息(e) {
-        await Leaderboard()
+        Leaderboard()
 
         const USER_ID = e.user_id;
         if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到') }

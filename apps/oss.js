@@ -31,7 +31,7 @@ export class oss extends plugin {
 
             const USER_ID = FILE_NAME.replace(/.json/g, "");
 
-            USER_DATA = {
+            const New_USER_DATA = {
                 ID: USER_ID,
                 昵称: (USER_DATA[USER_ID]['昵称'] || null),
                 头像: 3620060826,
@@ -59,9 +59,9 @@ export class oss extends plugin {
                     签到双倍卡: (USER_BACKPACK_DATA[USER_ID]['签到双倍卡'] || 0),
                 }
             }
-            SaveData(USER_FILE, USER_DATA);
+            SaveData(USER_FILE, New_USER_DATA);
             logger.mark('已整理文件' + FILE_NAME);
         });
-        return e.reply('整理完成');
+        return this.e.reply('整理完成');
     }
 }
