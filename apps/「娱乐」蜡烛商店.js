@@ -1,5 +1,8 @@
 import fs from 'fs'
 import { render } from '../components/index.js'
+import { GetData, UserFiles, SaveData } from '../utils/db.js';
+
+const SHOP_FILE = 'plugins/Tlon-Sky/data/商店/秋风商店.json'
 
 export class 娱乐_蜡烛商店 extends plugin {
     constructor() {
@@ -11,100 +14,72 @@ export class 娱乐_蜡烛商店 extends plugin {
             rule: [
                 {
                     reg: /^(#|\/)?蜡烛商店$/,
-                    fnc: '蜡烛商店'
+                    fnc: 'SHOP'
                 },
                 {
                     reg: /^(#|\/)购买(.*)$/,
-                    fnc: '购买'
+                    fnc: 'PURCHASE'
                 }
             ]
         })
     }
 
-    async 蜡烛商店(e) {
-        const 秋风商店 = 'plugins/Tlon-Sky/data/商店/秋风商店.json'
-        if (!fs.existsSync(秋风商店)) {
-            let 信息 = {}
-            fs.writeFileSync(秋风商店, JSON.stringify(信息, null, 4))
-            const _秋风商店Data = fs.readFileSync(秋风商店)
-            const _秋风商店Json = JSON.parse(_秋风商店Data.toString())
-            _秋风商店Json = {
-                蜡烛保护卡: 0,
-                签到双倍卡: 0
-            }
-            fs.writeFileSync(秋风商店, JSON.stringify(_秋风商店Json, null, 4))
-            logger.mark(`已创建秋风商店信息`)
-        }
-        const 秋风商店Data = fs.readFileSync(秋风商店)
-        const 秋风商店Json = JSON.parse(秋风商店Data.toString())
-        let html = {
-            蜡烛保护卡: 秋风商店Json['蜡烛保护卡'],
-            签到双倍卡: 秋风商店Json['签到双倍卡']
-        }
-        await render('admin/蜡烛商店', {
-            ...html
-        }, {
-            e,
-            scale: 1.4
-        })
+    async SHOP(e) {
+        if (!fs.existsSync(SHOP_FILE)) { await CREATE_SHOP(); }
+        const SHOP_DATA = GetData(SHOP_FILE);
+        const html = { 蜡烛保护卡: SHOP_DATA['蜡烛保护卡'], 签到双倍卡: SHOP_DATA['签到双倍卡'] }
+        await render('admin/蜡烛商店', { ...html }, { e, scale: 1.4 })
     }
 
-    async 购买(e) {
-        const 购买物品 = e.msg.replace(/#|\/|购买/g, "")
-        const 用户ID = e.user_id
-        const 用户背包文件 = `plugins/Tlon-Sky/data/背包/${用户ID}.json`
-        const 用户文件 = `plugins/Tlon-Sky/data/Sky签到/${用户ID}.json`
-        const 秋风商店 = 'plugins/Tlon-Sky/data/商店/秋风商店.json'
-        if (!fs.existsSync(用户背包文件)) {
-            let 背包信息 = {}
-            fs.writeFileSync(用户背包文件, JSON.stringify(背包信息, null, 4))
-            const _用户背包文件Data = fs.readFileSync(用户背包文件)
-            const _用户背包文件Json = JSON.parse(_用户背包文件Data.toString())
-            _用户背包文件Json[用户ID] = {
-                蜡烛保护卡: 0,
-                签到双倍卡: 0,
+    async PURCHASE(e) {
+        const USER_ID = e.user_id;
+        if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到'); }
+        if (!fs.existsSync(SHOP_FILE)) { await CREATE_SHOP(); }
+
+        const MATCH = e.msg.match(/^(#|\/)购买(.*)$/);
+        const BUY_A_PRODUCT = MATCH[2];
+
+        const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
+
+        const USER_DATA = GetData(USER_FILE);
+        const SHOP_DATA = GetData(SHOP_FILE);
+
+        let REPLY;
+        const COMMODITY = ['蜡烛保护卡', '签到双倍卡'];
+        if (COMMODITY.includes(BUY_A_PRODUCT)) {
+            if (BUY_A_PRODUCT === '蜡烛保护卡') {
+                if (USER_DATA['季蜡'] >= 10) {
+                    USER_DATA['季蜡'] -= 10;
+                    SHOP_DATA['蜡烛保护卡'] += 1;
+                    SaveData(USER_FILE, USER_DATA);
+                    SaveData(SHOP_FILE, SHOP_DATA);
+                    REPLY = [
+                        '购买成功！消耗季蜡：10\n' +
+                        '剩余季蜡：' + USER_DATA['季蜡'] + '根\n' +
+                        '蜡烛保护卡：' + USER_DATA['背包']['蜡烛保护卡'] + '张'
+                    ];
+                    return e.reply(REPLY);
+                } else { return e.reply('季蜡不足！'); }
+            } else if (BUY_A_PRODUCT === '签到双倍卡') {
+                if (USER_DATA['季蜡'] >= 30) {
+                    USER_DATA['季蜡'] -= 30;
+                    SHOP_DATA['签到双倍卡'] += 1;
+                    SaveData(USER_FILE, USER_DATA);
+                    SaveData(SHOP_FILE, SHOP_DATA);
+                    REPLY = [
+                        '购买成功！消耗季蜡：30\n' +
+                        '剩余季蜡：' + USER_DATA['季蜡'] + '根\n' +
+                        '签到双倍卡：' + USER_DATA['背包']['签到双倍卡'] + '张'
+                    ];
+                    return e.reply(REPLY);
+                } else { return e.reply('季蜡不足！'); }
             }
-            fs.writeFileSync(用户背包文件, JSON.stringify(_用户背包文件Json, null, 4))
-            logger.mark(`\n已为用户${用户ID}\n创建背包信息`)
-        }
-        const 用户背包文件Data = await fs.promises.readFile(用户背包文件)
-        const 用户背包文件Json = JSON.parse(用户背包文件Data.toString())
-        const 用户文件Data = await fs.promises.readFile(用户文件)
-        const 用户文件Json = JSON.parse(用户文件Data.toString())
-        const 秋风商店Data = fs.readFileSync(秋风商店)
-        const 秋风商店Json = JSON.parse(秋风商店Data.toString())
-        if (购买物品 === '蜡烛保护卡') {
-            if (用户文件Json[用户ID]['季蜡'] >= 10) {
-                用户文件Json[用户ID]['季蜡'] -= 10
-                用户背包文件Json[用户ID]['蜡烛保护卡'] += 1
-                秋风商店Json['蜡烛保护卡'] += 1
-                fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4))
-                fs.writeFileSync(秋风商店, JSON.stringify(秋风商店Json, null, 4))
-                fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
-                return e.reply(`购买成功！消耗季蜡：10\n剩余季蜡：${用户文件Json[用户ID]['季蜡']} 根\n蜡烛保护卡：${用户背包文件Json[用户ID]['蜡烛保护卡']} 张`)
-            } else {
-                return e.reply('季蜡不足！')
-            }
-        } else if (购买物品 === '签到双倍卡') {
-            if (用户文件Json[用户ID]['季蜡'] >= 30) {
-                if (用户背包文件Json[用户ID]['签到双倍卡'] === null || 用户背包文件Json[用户ID]['签到双倍卡'] === undefined) {
-                    用户背包文件Json[用户ID]['签到双倍卡'] = 0
-                }
-                if (秋风商店Json['签到双倍卡'] === null || 秋风商店Json['签到双倍卡'] === undefined) {
-                    秋风商店Json['签到双倍卡'] = 0
-                }
-                用户文件Json[用户ID]['季蜡'] -= 30
-                用户背包文件Json[用户ID]['签到双倍卡'] += 1
-                秋风商店Json['签到双倍卡'] += 1
-                fs.writeFileSync(用户文件, JSON.stringify(用户文件Json, null, 4))
-                fs.writeFileSync(秋风商店, JSON.stringify(秋风商店Json, null, 4))
-                fs.writeFileSync(用户背包文件, JSON.stringify(用户背包文件Json, null, 4))
-                return e.reply(`购买成功！消耗季蜡：30\n剩余季蜡：${用户文件Json[用户ID]['季蜡']} 根\n签到双倍卡：${用户背包文件Json[用户ID]['签到双倍卡']} 张`)
-            } else {
-                return e.reply('季蜡不足！')
-            }
-        } else {
-            return e.reply('购买物品错误，商店无此物品')
-        }
+        } else { return e.reply('购买物品错误，商店无此物品'); }
     }
+}
+
+async function CREATE_SHOP() {
+    const DATA = { 蜡烛保护卡: 0, 签到双倍卡: 0 }
+    SaveData(SHOP_FILE, DATA);
+    logger.mark(`已创建秋风商店信息`);
 }

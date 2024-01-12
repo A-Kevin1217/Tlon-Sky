@@ -10,48 +10,44 @@ export class 娱乐_送蜡烛 extends plugin {
             rule: [
                 {
                     reg: /^(#|\/)?送蜡烛(\d+)$/,
-                    fnc: '送蜡烛'
+                    fnc: 'SEND'
                 }
             ]
         })
     }
 
-    async 送蜡烛(e) {
-        const UserId = e.user_id;
-        const UsersId = e.at
-        if (e.atme === true) {
-            return e.reply('不可赠送机器人');
-        } else if (!UsersId) {
-            return e.reply('请at对方');
-        } else if (UsersId === UserId) {
-            return e.reply('不可自己赠送自己');
-        } else if (e.msg === '送蜡烛') {
-            return e.reply('使用方法：\n送蜡烛@用户999（999为蜡烛数量）');
-        }
-        if (!UserFiles(UserId)) { return e.reply('请先发送光遇签到') }
-        if (!UserFiles(UsersId)) { return e.reply('对方没有Tlon-Sky存档') }
-        const UserFile = `plugins/Tlon-Sky/data/Sky签到/${UserId}.json`
-        const UsersFile = `plugins/Tlon-Sky/data/Sky签到/${UsersId}.json`
+    async SEND(e) {
+        const USER_ID = e.user_id;
+        const OBJECTS_USER_ID = e.at;
 
-        const extraction = e.msg.match(/^#?\/|送蜡烛(\d+)$/)
-        const GiveNumber = Number(extraction[1])
-        if (!Number.isInteger(GiveNumber)) {
-            return e.reply('请输入有效的整数赠送金额。');
-        }
-        const UserData = GetData(UserFile)
-        const UsersData = GetData(UsersFile)
-        if (UserData[UserId]['白蜡'] >= GiveNumber) {
-            UserData[UserId]['白蜡'] -= GiveNumber
-            UserData[UserId]['总赠送数量'] = (UserData[UserId]['总赠送数量'] || 0) + GiveNumber
+        if (e.atme === true) { return e.reply('不可赠送机器人'); }
+        if (!OBJECTS_USER_ID) { return e.reply('请at对方'); }
+        if (OBJECTS_USER_ID === USER_ID) { return e.reply('不可自己赠送自己'); }
 
-            UsersData[UsersId]['白蜡'] += GiveNumber
-            UsersData[UsersId]['总收入数量'] = (UsersData[UsersId]['总收入数量'] || 0) + GiveNumber
+        if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到'); }
+        if (!UserFiles(OBJECTS_USER_ID)) { return e.reply('对方没有Tlon-Sky存档'); }
 
-            SaveData(UserFile, UserData)
-            SaveData(UsersFile, UsersData)
-            return e.reply(`赠送成功！\n赠送数量：${GiveNumber}`)
-        } else {
-            return e.reply('赠送失败！白蜡不足')
-        }
+        const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
+        const OBJECTS_USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${OBJECTS_USER_ID}.json`;
+
+        const USER_DATA = GetData(USER_FILE);
+        const OBJECTS_USER_DATA = GetData(OBJECTS_USER_FILE);
+
+        const MATCH = e.msg.match(/^#?\/|送蜡烛(\d+)$/);
+        const GIVE_NUMBER = Number(MATCH[1]);
+
+        if (!Number.isInteger(GIVE_NUMBER)) { return e.reply('请输入有效的整数赠送金额。'); }
+
+        if (USER_DATA['白蜡'] >= GIVE_NUMBER) {
+            USER_DATA['白蜡'] -= GIVE_NUMBER;
+            USER_DATA['总赠送数量'] += GIVE_NUMBER;
+
+            OBJECTS_USER_DATA['白蜡'] += GIVE_NUMBER;
+            OBJECTS_USER_DATA['总收入数量'] += GIVE_NUMBER;
+
+            SaveData(USER_FILE, USER_DATA);
+            SaveData(OBJECTS_USER_FILE, OBJECTS_USER_DATA);
+            return e.reply(`赠送成功！\n赠送数量：${GIVE_NUMBER}`);
+        } else { return e.reply('赠送失败！白蜡不足'); }
     }
 }

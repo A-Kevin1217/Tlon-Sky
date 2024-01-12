@@ -6,6 +6,16 @@
 ："Tlon-Sky\resource\admin\抢蜡烛.html"
 ："Tlon-Sky\resource\admin\imgs\bg"
 
+ - 优化蜡烛娱乐功能
+："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\apps\「娱乐」送蜡烛.js"
+："Tlon-Sky\apps\「娱乐」蜡烛商店.js"
+："Tlon-Sky\apps\「娱乐」oss.js"
+："Tlon-Sky\apps\「娱乐」签到.js"
+："Tlon-Sky\utils\Leaderboard.js"
+
 -------------------
 * 2024/01/11
  - 更新先祖多久未复刻时间

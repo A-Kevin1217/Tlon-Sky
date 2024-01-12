@@ -16,12 +16,13 @@ export async function Leaderboard() {
                 const filePath = path.join(Userfile, fileName);
                 const fileData = await fs.readFile(filePath);
                 const data = JSON.parse(fileData.toString());
-                const nickname = data[userId]?.昵称 || '未读取';
+                const nickname = data?.昵称 || '未读取';
+                const Head_shot = data?.头像 || 3620060826;
 
                 const rankingData = {};
                 rankingKeys.forEach((key) => {
-                    const level = data[userId]?.[key] || 0;
-                    rankingData[key] = { nickname, level, userId };
+                    const level = data?.[key] || 0;
+                    rankingData[key] = { nickname, level, userId, Head_shot };
                 });
 
                 ranking.push(rankingData);
