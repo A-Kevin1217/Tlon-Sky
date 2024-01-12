@@ -3,10 +3,6 @@ import lodash from 'lodash';
 import { render } from '../components/index.js';
 import { GetData, SaveData } from '../utils/db.js';
 
-const Tlon_Sky_file = 'plugins/Tlon-Sky/data/Sky签到'
-const Tlon_Sky_file_data = fs.readdirSync(Tlon_Sky_file)
-const Tlon_Sky_user_number = Tlon_Sky_file_data.length
-
 export class 娱乐_签到 extends plugin {
   constructor() {
     super({
@@ -22,6 +18,10 @@ export class 娱乐_签到 extends plugin {
         {
           reg: /^(#|\/)?设置昵称(.*)$/,
           fnc: 'SETTING_A_NICKNAME'
+        },
+        {
+          reg: /^(#|\/)?设置头像(\d+)$/,
+          fnc: 'SETTING_THE_AVATAR'
         }
       ]
     })
@@ -112,6 +112,10 @@ export class 娱乐_签到 extends plugin {
     const 累计签到提示 = `你已累计签到 ${累签天数} 天！`;
     const 连续签到提示 = is连续签到 ? `你已连续签到 ${连签天数} 天！` : '';
 
+    const Tlon_Sky_file = 'plugins/Tlon-Sky/data/Sky签到'
+    const Tlon_Sky_file_data = fs.readdirSync(Tlon_Sky_file)
+    const Tlon_Sky_user_number = Tlon_Sky_file_data.length
+
     const html = {
       昵称: USER_DATA['昵称'],
       头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
@@ -138,6 +142,21 @@ export class 娱乐_签到 extends plugin {
     USER_DATA['昵称'] = NICKNAME;
     SaveData(USER_FILE, USER_DATA);
     e.reply(`设置成功 [${NICKNAME}]`);
+  }
+
+  async SETTING_THE_AVATAR(e) {
+    const USER_ID = e.user_id;
+    const MATCH = e.msg.match(/^(#|\/)?设置头像(\d+)$/);
+    const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
+    const USER_DATA = GetData(USER_FILE);
+    USER_DATA['头像'] = MATCH[2];
+    SaveData(USER_FILE, USER_DATA);
+    const REPLY = [
+      '设置成功',
+      segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH[2]}&s=640`),
+
+    ];
+    e.reply(REPLY);
   }
 }
 
