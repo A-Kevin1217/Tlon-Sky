@@ -76,7 +76,7 @@ export class 娱乐_赌蜡烛 extends plugin {
             const AWGSData = GetData(AWGSFile)
 
             //  判断是否押注
-            if (BetData[UserID]['押注金额'] > 0) {
+            if (BetData['押注金额'] > 0) {
 
                 const PG = ['剪刀', '石头', '布']
                 const Random = Math.floor(Math.random() * PG.length);
@@ -84,7 +84,7 @@ export class 娱乐_赌蜡烛 extends plugin {
 
                 if (UserPunches === SPunches) {
                     重置押注信息(e)
-                    UserData['白蜡'] = (UserData['白蜡']) + (BetData[UserID]['押注金额'])
+                    UserData['白蜡'] = (UserData['白蜡']) + (BetData['押注金额'])
                     UserData['平'] = (UserData['平'] || 0) + 1
                     UserData['上次赌蜡烛时间戳'] = NowDate
                     SaveData(UserFile, UserData)
@@ -98,8 +98,8 @@ export class 娱乐_赌蜡烛 extends plugin {
                     (UserPunches === SCISSORS && SPunches === PAPER)
                 ) {
                     重置押注信息(e)
-                    const GetAmount = BetData[UserID]['押注金额'] * BetData[UserID]['倍率']
-                    const NetProfit = BetData[UserID]['押注金额'] * (BetData[UserID]['倍率'] - 1)
+                    const GetAmount = BetData['押注金额'] * BetData['倍率']
+                    const NetProfit = BetData['押注金额'] * (BetData['倍率'] - 1)
 
                     UserData['胜'] = (UserData['胜'] || 0) + 1
                     UserData['赚取'] = (UserData['赚取'] || 0) + NetProfit
@@ -114,15 +114,15 @@ export class 娱乐_赌蜡烛 extends plugin {
                 } else {
                     重置押注信息(e)
                     UserData['负'] = (UserData['负'] || 0) + 1
-                    UserData['亏损'] = (UserData['亏损'] || 0) + BetData[UserID]['押注金额']
+                    UserData['亏损'] = (UserData['亏损'] || 0) + BetData['押注金额']
                     UserData['上次赌蜡烛时间戳'] = NowDate
                     SaveData(UserFile, UserData)
 
                     //  秋风信息处理
-                    AWGSData['赚'] = (AWGSData['赚']) + BetData[UserID]['押注金额']
+                    AWGSData['赚'] = (AWGSData['赚']) + BetData['押注金额']
                     AWGSData['胜'] += 1
                     SaveData(AWGSFile, AWGSData)
-                    return e.reply(`用户出拳：${UserPunches}\n系统出拳：${SPunches}\n出拳结果：输\n损失蜡烛数量：${BetData[UserID]['押注金额']}根`)
+                    return e.reply(`用户出拳：${UserPunches}\n系统出拳：${SPunches}\n出拳结果：输\n损失蜡烛数量：${BetData['押注金额']}根`)
                 }
             } else {
                 return e.reply('您尚未押注，请先押注')
