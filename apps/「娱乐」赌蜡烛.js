@@ -222,7 +222,7 @@ const 重置押注信息 = async function (e) {
     const 押注信息Json = JSON.parse(押注信息Data.toString());
 
     //  重置
-    押注信息Json[UserID]['押注金额'] = 0
-    押注信息Json[UserID]['倍率'] = null
+    押注信息Json['押注金额'] = 0
+    押注信息Json['倍率'] = null
     fs.writeFileSync(押注信息, JSON.stringify(押注信息Json, null, 4));
 }
