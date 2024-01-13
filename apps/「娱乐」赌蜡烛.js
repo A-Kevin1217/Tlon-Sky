@@ -164,7 +164,7 @@ export class 娱乐_赌蜡烛 extends plugin {
             const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 2.0);
             GetDatas = { 押注金额: (GetDatas['押注金额'] || 0) + GetNumber, 倍率: X }
             SaveData(GetFile, GetDatas)
-            e.reply(`你已成功押注 ${GetNumber}根白蜡，倍率为 ${X}。`);
+            e.reply(`你已成功押注 ${(GetDatas['押注金额'] || 0) + GetNumber}根白蜡，倍率为 ${X}。`);
         } else {
             return e.reply('白蜡不足！')
         }
