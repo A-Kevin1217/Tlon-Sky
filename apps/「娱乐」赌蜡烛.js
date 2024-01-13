@@ -18,7 +18,7 @@ export class 娱乐_赌蜡烛 extends plugin {
                     reg: /^(#|\/)?dlz(.*)$/,
                     fnc: '赌蜡烛'
                 }, {
-                    reg: /^(#|\/)?押注(.*)$/,
+                    reg: /^(#|\/)?(押注|Bo)(.*)$/,
                     fnc: '押注'
                 }, {
                     reg: /^(#|\/)?(赌坊信息|秋风赌坊)$/,
@@ -137,7 +137,7 @@ export class 娱乐_赌蜡烛 extends plugin {
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
 
-        const GetAmount = e.msg.replace(/#?\/|押注/g, "");
+        const GetAmount = e.msg.replace(/#?\/|(押注|Bo)/g, "");
         const GetNumber = parseFloat(GetAmount);
 
         if (isNaN(GetNumber) || GetNumber <= 0 || !Number.isInteger(GetNumber)) {
