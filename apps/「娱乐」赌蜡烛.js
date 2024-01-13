@@ -136,8 +136,10 @@ export class 娱乐_赌蜡烛 extends plugin {
     async 押注(e) {
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
+
         const GetAmount = e.msg.replace(/#?\/|押注/g, "");
         const GetNumber = parseFloat(GetAmount);
+
         if (isNaN(GetNumber) || GetNumber <= 0 || !Number.isInteger(GetNumber)) {
             return e.reply('请输入有效的整数押注金额。');
         }
@@ -149,12 +151,7 @@ export class 娱乐_赌蜡烛 extends plugin {
         const GetFile = `plugins/Tlon-Sky/data/押注信息/${UserID}.json`
 
         if (!fs.existsSync(GetFile)) {
-            const GetDatas = {
-                [UserID]: {
-                    押注金额: 0,
-                    倍率: null
-                }
-            }
+            const GetDatas = { 押注金额: 0, 倍率: null }
             SaveData(GetFile, GetDatas)
         }
 
@@ -165,7 +162,7 @@ export class 娱乐_赌蜡烛 extends plugin {
             SaveData(UserFile, UserData)
 
             const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 2.0);
-            GetDatas = { 押注金额: GetDatas['押注金额'] + GetNumber, 倍率: X }
+            GetDatas = { 押注金额: (GetDatas['押注金额'] || 0) + GetNumber, 倍率: X }
             SaveData(GetFile, GetDatas)
             e.reply(`你已成功押注 ${GetNumber}根白蜡，倍率为 ${X}。`);
         } else {
