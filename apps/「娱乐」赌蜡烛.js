@@ -158,7 +158,7 @@ export class 娱乐_赌蜡烛 extends plugin {
             SaveData(GetFile, GetDatas)
         }
 
-        const GetDatas = GetData(GetFile)
+        let GetDatas = GetData(GetFile)
 
         if (UserData['白蜡'] > GetNumber) {
             UserData['白蜡'] = UserData['白蜡'] - GetNumber
