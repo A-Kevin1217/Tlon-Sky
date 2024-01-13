@@ -43,7 +43,7 @@ export class 娱乐_赌蜡烛 extends plugin {
         const UserID = e.user_id;
         if (!UserFiles(UserID)) { return e.reply('请先发送光遇签到') }
         const UserDatas = GetData(`plugins/Tlon-Sky/data/Sky签到/${UserID}.json`)
-        const LastExecutionTime = UserDatas[UserID]['上次赌蜡烛时间戳'] || 0;
+        const LastExecutionTime = UserDatas['上次赌蜡烛时间戳'] || 0;
         const ROCK = '石头';
         const PAPER = '布';
         const SCISSORS = '剪刀';
