@@ -12,7 +12,12 @@ export async function Leaderboard() {
 
         await Promise.all(Allfile.map(async (fileName) => {
             if (fileName.endsWith('.json')) {
-                const userId = parseFloat(fileName.split('.')[0]);
+                let userId = fileName.split('.')[0]
+                if (userId.length > 31) {
+                    userId
+                } else {
+                    userId = parseFloat(userId)
+                }
                 const filePath = path.join(Userfile, fileName);
                 const fileData = await fs.readFile(filePath);
                 const data = JSON.parse(fileData.toString());

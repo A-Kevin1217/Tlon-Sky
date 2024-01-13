@@ -84,9 +84,9 @@ export class 娱乐_赌蜡烛 extends plugin {
 
                 if (UserPunches === SPunches) {
                     重置押注信息(e)
-                    UserData[UserID]['白蜡'] = (UserData[UserID]['白蜡']) + (BetData[UserID]?.押注金额)
-                    UserData[UserID]['平'] = (UserData[UserID]['平'] || 0) + 1
-                    UserData[UserID]['上次赌蜡烛时间戳'] = NowDate
+                    UserData['白蜡'] = (UserData['白蜡']) + (BetData[UserID]['押注金额'])
+                    UserData['平'] = (UserData['平'] || 0) + 1
+                    UserData['上次赌蜡烛时间戳'] = NowDate
                     SaveData(UserFile, UserData)
 
                     AWGSData['平'] += 1
@@ -101,10 +101,10 @@ export class 娱乐_赌蜡烛 extends plugin {
                     const GetAmount = BetData[UserID]['押注金额'] * BetData[UserID]['倍率']
                     const NetProfit = BetData[UserID]['押注金额'] * (BetData[UserID]['倍率'] - 1)
 
-                    UserData[UserID]['胜'] = (UserData[UserID]['胜'] || 0) + 1
-                    UserData[UserID]['赚取'] = (UserData[UserID]['赚取'] || 0) + NetProfit
-                    UserData[UserID]['白蜡'] = (UserData[UserID]['白蜡']) + GetAmount
-                    UserData[UserID]['上次赌蜡烛时间戳'] = NowDate
+                    UserData['胜'] = (UserData['胜'] || 0) + 1
+                    UserData['赚取'] = (UserData['赚取'] || 0) + NetProfit
+                    UserData['白蜡'] = (UserData['白蜡']) + GetAmount
+                    UserData['上次赌蜡烛时间戳'] = NowDate
                     SaveData(UserFile, UserData)
 
                     AWGSData['赔'] = AWGSData['赔'] + NetProfit
@@ -113,13 +113,13 @@ export class 娱乐_赌蜡烛 extends plugin {
                     return e.reply(`用户出拳：${UserPunches}\n系统出拳：${SPunches}\n出拳结果：赢\n赚取蜡烛数量：${NetProfit}根`)
                 } else {
                     重置押注信息(e)
-                    UserData[UserID]['负'] = (UserData[UserID]['负'] || 0) + 1
-                    UserData[UserID]['亏损'] = (UserData[UserID]['亏损'] || 0) + BetData[UserID]['押注金额']
-                    UserData[UserID]['上次赌蜡烛时间戳'] = NowDate
+                    UserData['负'] = (UserData['负'] || 0) + 1
+                    UserData['亏损'] = (UserData['亏损'] || 0) + BetData[UserID]['押注金额']
+                    UserData['上次赌蜡烛时间戳'] = NowDate
                     SaveData(UserFile, UserData)
 
                     //  秋风信息处理
-                    AWGSData['赚'] = (AWGSData?.['赚']) + BetData[UserID]['押注金额']
+                    AWGSData['赚'] = (AWGSData['赚']) + BetData[UserID]['押注金额']
                     AWGSData['胜'] += 1
                     SaveData(AWGSFile, AWGSData)
                     return e.reply(`用户出拳：${UserPunches}\n系统出拳：${SPunches}\n出拳结果：输\n损失蜡烛数量：${BetData[UserID]['押注金额']}根`)
@@ -160,12 +160,12 @@ export class 娱乐_赌蜡烛 extends plugin {
 
         const GetDatas = GetData(GetFile)
 
-        if (UserData[UserID]['白蜡'] > GetNumber) {
-            UserData[UserID]['白蜡'] = UserData[UserID]['白蜡'] - GetNumber
+        if (UserData['白蜡'] > GetNumber) {
+            UserData['白蜡'] = UserData['白蜡'] - GetNumber
             SaveData(UserFile, UserData)
 
             const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 2.0);
-            GetDatas[UserID] = { 押注金额: GetDatas[UserID]['押注金额'] + GetNumber, 倍率: X }
+            GetDatas = { 押注金额: GetDatas['押注金额'] + GetNumber, 倍率: X }
             SaveData(GetFile, GetDatas)
             e.reply(`你已成功押注 ${GetNumber}根白蜡，倍率为 ${X}。`);
         } else {

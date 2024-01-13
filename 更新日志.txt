@@ -1,5 +1,12 @@
 直接丢到plugins合并替换
 -------------------
+* 2024/01/14
+ - 优化蜡烛娱乐功能
+ ："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
+ ："Tlon-Sky\apps\「娱乐」我的信息.js"
+ ："Tlon-Sky\utils\Leaderboard.js"
+
+-------------------
 * 2024/01/12
  - 优化抢蜡烛图片，删除部分背景图
 ："Tlon-Sky\apps\「娱乐」抢蜡烛.js"

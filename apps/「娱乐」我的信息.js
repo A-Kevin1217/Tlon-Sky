@@ -123,7 +123,7 @@ export class 我的信息 extends plugin {
 
         const leaderboardRanks = [];
         for (let i = 0; i < leaderboardJsons.length; i++) {
-            leaderboardRanks.push(calculateRank(leaderboardJsons[i], UserId));
+            leaderboardRanks.push(calculateRank(leaderboardJsons[i], USER_ID));
         }
         const html = {
             头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
