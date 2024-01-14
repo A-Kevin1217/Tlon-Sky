@@ -51,6 +51,7 @@ export class 娱乐_蜡烛商店 extends plugin {
                 if (USER_DATA['季蜡'] >= 10) {
                     USER_DATA['季蜡'] -= 10;
                     SHOP_DATA['蜡烛保护卡'] += 1;
+                    USER_DATA['背包']['蜡烛保护卡'] += 1
                     SaveData(USER_FILE, USER_DATA);
                     SaveData(SHOP_FILE, SHOP_DATA);
                     REPLY = [
@@ -64,6 +65,7 @@ export class 娱乐_蜡烛商店 extends plugin {
                 if (USER_DATA['季蜡'] >= 30) {
                     USER_DATA['季蜡'] -= 30;
                     SHOP_DATA['签到双倍卡'] += 1;
+                    USER_DATA['背包']['签到双倍卡'] += 1
                     SaveData(USER_FILE, USER_DATA);
                     SaveData(SHOP_FILE, SHOP_DATA);
                     REPLY = [
