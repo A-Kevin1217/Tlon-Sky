@@ -2,9 +2,15 @@
 -------------------
 * 2024/01/14
  - 优化蜡烛娱乐功能
- ："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
- ："Tlon-Sky\apps\「娱乐」我的信息.js"
- ："Tlon-Sky\utils\Leaderboard.js"
+："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
+："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\utils\Leaderboard.js"
+
+ - 优化菜单代码逻辑，删除Sky版本
+："Tlon-Sky\apps\「光遇」菜单.js"
+
+ - 载入文件修改
+："Tlon-Sky\index.js"
 
 -------------------
 * 2024/01/12
