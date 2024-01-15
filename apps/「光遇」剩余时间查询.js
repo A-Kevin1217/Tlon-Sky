@@ -55,7 +55,7 @@ ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒
 本季节毕业需：${graduationWax}季蜡
 [有季卡]毕业需：${graduationDaysWithCard}天
 [无季卡]毕业需：${graduationDaysWithoutCard}天
-(包括非必要的魔法节点)`;
+(无季卡包括非必要的魔法节点)`;
 
       setTimeout(countdown, 1000);
     };
