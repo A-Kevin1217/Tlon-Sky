@@ -39,7 +39,7 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
     let season = match[2];
     const seasonMapping = { '欧若拉': 'AURORA', '集结': '重组', '凌冬': '音韵' };
     if (seasonMapping.hasOwnProperty(season)) { season = seasonMapping[season]; }
-    const imgreply = `${PICTURE_RESOURCE}/Exchange picture/Season/${season}.png`;
+    const imgreply = `${PICTURE_RESOURCE}/Exchange picture/Season/${season}季.png`;
     if (!fs.existsSync(imgreply)) { return e.reply('无此季节兑换图，请检查名称是否正确'); }
     return e.reply(segment.image(imgreply), true)
   }
