@@ -1,5 +1,12 @@
 直接丢到plugins合并替换
 -------------------
+* 2024/01/15
+ - 优化兑换图功能，添加九色鹿兑换图
+："Tlon-Sky\apps\「光遇」兑换图.js"
+："Tlon-Sky\apps\「光遇」兑换图列表.js"
+："Tlon-Sky\resource\Picture\Exchange picture\Season\九色鹿季.png"
+
+-------------------
 * 2024/01/14
  - 优化蜡烛娱乐功能
 ："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
