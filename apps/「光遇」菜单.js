@@ -25,7 +25,7 @@ async function HELP(e) {
   const help_file = match[3] === '娱乐' ? '娱乐help' : 'index';
 
   let help = {};
-  const { diyCfg, sysCfg } = await Data.importCfg('help');
+  const { diyCfg, sysCfg } = await Data.importCfg(help_file);
   const custom = help;
 
   const helpConfig = lodash.defaults(diyCfg.helpCfg || {}, custom.helpCfg, sysCfg.helpCfg);
