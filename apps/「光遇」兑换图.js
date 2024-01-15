@@ -35,7 +35,7 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
   }
 
   async SEASON_EXCHANGE_PICTURE(e) {
-    const match = e.msg.match(PERMANENT_REGEX);
+    const match = e.msg.match(SEASON_REGEX);
     let season = match[2];
     const seasonMapping = { '欧若拉': 'AURORA', '集结': '重组', '凌冬': '音韵' };
     if (seasonMapping.hasOwnProperty(season)) { season = seasonMapping[season]; }
