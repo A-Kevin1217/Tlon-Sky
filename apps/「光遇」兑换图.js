@@ -30,7 +30,6 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
   async PERMANENT_EXCHANGE_PICTURE(e) {
     const match = e.msg.match(PERMANENT_REGEX);
     const imgreply = `${PICTURE_RESOURCE}/Exchange picture/Permanent/${match[2]}.png`;
-    if (!fs.existsSync(imgreply)) { return e.reply('无此常驻兑换图，请检查名称是否正确\n晨岛丨云野丨雨林丨霞谷丨暮土丨禁阁'); }
     return e.reply(segment.image(imgreply), true)
   }
 
@@ -40,7 +39,6 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
     const seasonMapping = { '欧若拉': 'AURORA', '集结': '重组', '凌冬': '音韵' };
     if (seasonMapping.hasOwnProperty(season)) { season = seasonMapping[season]; }
     const imgreply = `${PICTURE_RESOURCE}/Exchange picture/Season/${season}季.png`;
-    if (!fs.existsSync(imgreply)) { return e.reply('无此季节兑换图，请检查名称是否正确'); }
     return e.reply(segment.image(imgreply), true)
   }
 
