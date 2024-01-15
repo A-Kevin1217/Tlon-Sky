@@ -1,13 +1,5 @@
 import { render } from '../components/index.js'
 
-const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg';
-const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg';
-const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg';
-const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg';
-const FK_URL = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png';
-const DB_URL = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/代币.png';
-const JR_URL = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/季节任务.png';
-
 export class 光遇_每日功能 extends plugin {
   constructor() {
     super({
@@ -27,31 +19,28 @@ export class 光遇_每日功能 extends plugin {
         {
           reg: /^(#|\/)?季节任务$/,
           fnc: '季任'
+        },
+        {
+          reg: /^(#|\/)?任务图$/,
+          fnc: '任务图'
         }
       ],
     });
   }
-  async 每日(e) {
-    let html = {
-      魔法Url: MF_URL,
-      任务Url: RW_URL,
-      季蜡Url: JL_URL,
-      大蜡Url: DL_URL,
-      复刻Url: FK_URL
-    }
-    await render('admin/每日任务', {
-      ...html
-    }, {
-      e,
-      scale: 1.4
-    })
-  }
 
-  async 代币(e) {
-    e.reply(segment.image(DB_URL))
-  }
-
-  async 季任(e) {
-    e.reply(segment.image(JR_URL))
+  async 每日(e) { await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }) }
+  async 代币(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/代币.png')) }
+  async 季任(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/季节任务.png')) }
+  async 任务图(e) {
+    const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg';
+    const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg';
+    const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg';
+    const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg';
+    return e.reply([
+      RW_URL ? segment.image(RW_URL) : "",
+      JL_URL ? segment.image(JL_URL) : "",
+      DL_URL ? segment.image(DL_URL) : "",
+      MF_URL ? segment.image(MF_URL) : "",
+    ])
   }
 }

@@ -1,59 +1,97 @@
 <style>
-    .container {
-        width: 1260px;
-        padding: 20px 15px 10px 15px;
-        background-color: #D9D9F3;
+    body {
+        background: #D9D9F3 top;
+        width: 3280px;
     }
 
-    .head_box {
-        border-radius: 15px;
-        font-family: tttgbnumber;
-        padding: 10px 20px;
+    .cfg-box {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 5px 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
         position: relative;
-        box-shadow: 0 5px 10px 0 rgb(0 0 0 / 15%);
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        background: rgba(35, 38, 57, 0.8);
+        -webkit-backdrop-filter: blur(7px);
+        backdrop-filter: blur(7px);
+        background-color: rgba(255, 255, 255, 0.24);
+        border-radius: 26px;
+        box-shadow: 30px 30px 30px -10px rgba(0, 0, 0, 0.15), inset 15px 15px 10px rgba(75, 142, 230, 0.123), -15px -15px 35px rgba(111, 175, 248, 0.144), inset -1px -1px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .center-image {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+    .cfg-li {
+        height: 1800;
+        color: #4e5769;
+        font-weight: normal;
+        border-radius: 18px;
+        min-height: 36px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 10px;
+        background: rgba(203, 196, 190, 0);
+    }
+
+    .img {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 66px;
+    }
+
+    .img:last-child {
+        margin-bottom: 0;
+    }
+
+    .img1 {
+        display: flex;
+        gap: 10px;
+        margin-top: 66px;
+    }
+
+    .img1:first-child {
+        margin-top: 0;
+    }
+
+    .img img:last-child {
+        margin-right: 0;
+    }
+
+    .long-image {
+        position: absolute;
+        top: 0px;
+        left: 2280px;
+        width: 1200px;
+        height: 1800px;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .text-container {
+        font-size: 50px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 </style>
-<div class="container" id="container">
-    <div class="head_box">
-        <h1>===============今日魔法===============</h1>
-    </div>
-    <img src="https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg" alt="每日魔法加载失败" class="center-image">
-    <div class="head_box">
-        <h1>===============今日任务===============</h1>
-    </div>
-    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg" alt="每日任务加载失败" class="center-image">
-    <div class="head_box">
-        <h1>===============今日季蜡===============</h1>
-    </div>
-    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg" alt="今日季蜡加载失败" class="center-image">
-    <div class="head_box">
-        <h1>===============今日大蜡===============</h1>
-    </div>
-    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg" alt="今日大蜡加载失败" class="center-image">
-    <div class="head_box">
-        <h1>===============本周复刻===============</h1>
-    </div>
-    <img src="https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png" alt="本周复刻加载失败" class="center-image">
-</div>
 
-<script>
-    window.addEventListener('load', function() {
-        var images = document.querySelectorAll('.center-image');
-        images.forEach(function(image) {
-            var timestamp = new Date().getTime(); // 获取当前时间戳
-            var src = image.getAttribute('src');
-            var newSrc = src + '?timestamp=' + timestamp; // 将时间戳添加到图片URL的末尾
-            image.setAttribute('src', newSrc); // 更新图片的URL
-        });
-    });
-</script>
+<body>
+    <section class="cfg-box">
+        <ul class="cfg-ul">
+            <li class="cfg-li">
+                <div class="img">
+                    <img src="https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg" style="width: 1260px; height: 800px;">
+                    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg"
+                        style="width: 1260px; height: 800px;">
+                </div>
+                <h1 class="text-container">{{text}}</h1>
+                <div class="img1">
+                    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg"
+                        style="width: 1260px; height: 800px;">
+                    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg"
+                        style="width: 1260px; height: 800px;">
+                </div>
+                <img src="D:\Gitee\Tlon-Sky-reprint\Past\预言季·火先知.jpg" class="long-image">
+            </li>
+        </ul>
+    </section>
+</body>
