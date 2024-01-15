@@ -29,7 +29,8 @@ export class 光遇_剩余时间 extends plugin {
       }
 
       const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
-      const daysBetween = Math.floor((END_TIME - START_TIME) / DAY_IN_MILLISECONDS);
+
+      const daysBetween = (Math.floor((END_TIME - START_TIME) / DAY_IN_MILLISECONDS) + 1);
 
       const { days, hours, minutes, seconds } = {
         days: Math.floor(MILLISECOND / (24 * 60 * 60 * 1000)),
