@@ -6,6 +6,9 @@
 ："Tlon-Sky\apps\「光遇」兑换图列表.js"
 ："Tlon-Sky\resource\Picture\Exchange picture\Season\九色鹿季.png"
 
+ - 更新剩余时间功能
+："Tlon-Sky\apps\「光遇」剩余时间查询.js"
+
 -------------------
 * 2024/01/14
  - 优化蜡烛娱乐功能

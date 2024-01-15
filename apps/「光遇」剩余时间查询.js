@@ -16,7 +16,7 @@ export class 光遇_剩余时间 extends plugin {
 
   async 季节剩余(e) {
     const START_TIME = new Date('2024-01-15 10:00:00').getTime();
-    const END_TIME = new Date('2024-01-10 23:59:59').getTime();
+    const END_TIME = new Date('2024-04-07 23:59:59').getTime();
     let msg = '';
 
     const countdown = () => {
@@ -38,7 +38,7 @@ export class 光遇_剩余时间 extends plugin {
         seconds: Math.floor((MILLISECOND % (60 * 1000)) / 1000)
       };
 
-      const graduationWax = 396;
+      const graduationWax = 398;
       const seasonWaxWithCard = (days + 1) * 6;
       const seasonWaxWithoutCard = (days + 1) * 5;
       const graduationDaysWithCard = Math.ceil((graduationWax - 30) / 6);
@@ -46,7 +46,7 @@ export class 光遇_剩余时间 extends plugin {
 
       msg = `距离九色鹿季结束还剩
 ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒
-截止至2024-**-** 23:59:59
+截止至2024-04-07 23:59:59[随时更改]
 本季节一共[${daysBetween}]天
 季蜡还可获得
 [有季卡]：${seasonWaxWithCard}季蜡
