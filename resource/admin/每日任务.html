@@ -79,20 +79,56 @@
         <ul class="cfg-ul">
             <li class="cfg-li">
                 <div class="img">
-                    <img src="https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg" style="width: 1260px; height: 800px;">
-                    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg"
+                    <img id="img1" src="https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg"
+                        style="width: 1260px; height: 800px;">
+                    <img id="img2" src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg"
                         style="width: 1260px; height: 800px;">
                 </div>
                 <h1 class="text-container">{{text}}</h1>
                 <div class="img1">
-                    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg"
+                    <img id="img3" src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg"
                         style="width: 1260px; height: 800px;">
-                    <img src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg"
+                    <img id="img4" src="https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg"
                         style="width: 1260px; height: 800px;">
                 </div>
-                <img src="https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png"
+                <img id="img5" src="https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png"
                     class="long-image">
             </li>
         </ul>
     </section>
+
+    <script>
+        // 获取图片元素
+        const imgElement1 = document.getElementById('img1');
+        const imgElement2 = document.getElementById('img2');
+        const imgElement3 = document.getElementById('img3');
+        const imgElement4 = document.getElementById('img4');
+        const imgElement5 = document.getElementById('img5');
+
+        // 生成随机数
+        const randomNum1 = Math.floor(Math.random() * 10000);
+        const randomNum2 = Math.floor(Math.random() * 10000);
+        const randomNum3 = Math.floor(Math.random() * 10000);
+        const randomNum4 = Math.floor(Math.random() * 10000);
+        const randomNum5 = Math.floor(Math.random() * 10000);
+
+        // 修改图片URL
+        const imageUrl1 = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg';
+        const imageUrl2 = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg';
+        const imageUrl3 = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg';
+        const imageUrl4 = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg';
+        const imageUrl5 = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png';
+        const newImageUrl1 = `${imageUrl1}?random=${randomNum1}`;
+        const newImageUrl2 = `${imageUrl2}?random=${randomNum2}`;
+        const newImageUrl3 = `${imageUrl3}?random=${randomNum3}`;
+        const newImageUrl4 = `${imageUrl4}?random=${randomNum4}`;
+        const newImageUrl5 = `${imageUrl5}?random=${randomNum5}`;
+
+        // 更新图片元素
+        imgElement1.src = newImageUrl1;
+        imgElement2.src = newImageUrl2;
+        imgElement3.src = newImageUrl3;
+        imgElement4.src = newImageUrl4;
+        imgElement5.src = newImageUrl5;
+    </script>
 </body>
