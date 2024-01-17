@@ -93,6 +93,7 @@ export class 娱乐_签到 extends plugin {
     if (USER_DATA['背包']['签到双倍卡'] >= 1) {
       Get白蜡 *= 2;
       Get季蜡 *= 2;
+      USER_DATA['背包']['签到双倍卡'] -= 1
       e.reply('消耗蜡烛双倍卡，蜡烛翻倍！');
     }
 
@@ -102,7 +103,6 @@ export class 娱乐_签到 extends plugin {
     USER_DATA['白蜡'] = (USER_DATA['白蜡'] || 0) + Get白蜡;
     USER_DATA['季蜡'] = (USER_DATA['季蜡'] || 0) + Get季蜡;;
     USER_DATA['能量值'] = (USER_DATA['能量值'] || 0) + Get能量值
-    USER_DATA['背包']['签到双倍卡'] -= 1
     if (USER_DATA['能量值'] >= 100) {
       USER_DATA['等级'] = (USER_DATA['等级'] || 0) + 1;
       USER_DATA['能量值'] = USER_DATA['能量值'] - 100;

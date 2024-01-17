@@ -5,6 +5,9 @@
 ："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
 ："Tlon-Sky\utils\Leaderboard.js"
 
+ - 修复签到无双倍卡依旧消耗问题
+："Tlon-Sky\apps\「娱乐」签到.js"
+
 -------------------
 * 2024/01/17
  - 修复每日任务图片不刷新问题
