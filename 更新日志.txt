@@ -5,9 +5,12 @@
 ："Tlon-Sky\resource/admin/每日任务.html"
 
  - 光遇背包信息移入光遇信息
- ："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\apps\「娱乐」我的信息.js"
 ："Tlon-Sky\resource\admin\光遇背包.html"
 ："Tlon-Sky\resource\admin\光遇信息.html"
+
+ - 修复签到不消耗双倍卡的问题
+："Tlon-Sky\apps\「娱乐」签到.js"
 
 -------------------
 * 2024/01/15
