@@ -15,12 +15,8 @@ export class 我的信息 extends plugin {
             priority: 5000,
             rule: [
                 {
-                    reg: '^(#|\/)?光遇信息$',
+                    reg: '^(#|\/)?光遇(信息|背包)$',
                     fnc: 'si'
-                },
-                {
-                    reg: '^(#|\/)?光遇背包$',
-                    fnc: '光遇背包'
                 },
                 {
                     reg: '^(#|\/)?排行信息$',
@@ -74,26 +70,11 @@ export class 我的信息 extends plugin {
             总赠送数量: 总赠送数量,
             总收入数量: 总收入数量,
             白蜡排名: RANKING_A,
-            季蜡排名: RANKING_B
-        }
-        await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 })
-    }
-
-    async 光遇背包(e) {
-        const USER_ID = e.user_id;
-        if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到') }
-
-        const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-        const USER_DATA = GetData(USER_FILE);
-
-        let html = {
-            头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
-            用户ID: USER_ID,
+            季蜡排名: RANKING_B,
             蜡烛保护卡: USER_DATA['背包']['蜡烛保护卡'],
             签到双倍卡: USER_DATA['背包']['签到双倍卡']
         }
-
-        await render('admin/光遇背包', { ...html, }, { e, scale: 1.4 })
+        await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 })
     }
 
     async 排行信息(e) {
