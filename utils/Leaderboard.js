@@ -13,7 +13,7 @@ export async function Leaderboard() {
         await Promise.all(Allfile.map(async (fileName) => {
             if (fileName.endsWith('.json')) {
                 let userId = fileName.split('.')[0]
-                if (userId.length > 31) {
+                if (userId.length > 20) {
                     userId
                 } else {
                     userId = parseFloat(userId)
