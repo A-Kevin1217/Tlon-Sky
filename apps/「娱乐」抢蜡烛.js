@@ -33,11 +33,10 @@ export class 娱乐_抢蜡烛 extends plugin {
     const ALL_USER_FILE_LOCATION = 'plugins/Tlon-Sky/data/Sky签到/';
     const USER_FILE = `${ALL_USER_FILE_LOCATION}${USER_ID}.json`;
 
-    if (e.atme === true) { return e.reply('机器人不可被抢哦'); }
     if (e.at === USER_ID) { return e.reply('不可自己抢自己'); }
 
     let OBJECTS_USER_ID;
-    if (e.at === undefined || e.at === null) {
+    if (e.atme === true || e.at === undefined || e.at === null) {
       const ALL_USER_FILE_LISTS = fs.readdirSync(ALL_USER_FILE_LOCATION);
       const RANDOM_FILE = ALL_USER_FILE_LISTS[Math.floor(Math.random() * ALL_USER_FILE_LISTS.length)];
       const RANDOM_FILENAME = RANDOM_FILE.replace(/.json/g, "");
