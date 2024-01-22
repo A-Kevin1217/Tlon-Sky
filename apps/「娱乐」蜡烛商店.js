@@ -47,6 +47,7 @@ export class 娱乐_蜡烛商店 extends plugin {
     }
 
     SELECTION_QUANTITY(e) {
+        const USER_ID = e.user_id;
         const MATCH = e.msg.match(/^(#|\/)购买(.*)$/);
         const BUY_A_PRODUCT = MATCH[2];
 
