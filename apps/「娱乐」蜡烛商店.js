@@ -39,44 +39,60 @@ export class 娱乐_蜡烛商店 extends plugin {
         const MATCH = e.msg.match(/^(#|\/)购买(.*)$/);
         const BUY_A_PRODUCT = MATCH[2];
 
+        const COMMODITY = ['蜡烛保护卡', '签到双倍卡'];
+        if (COMMODITY.includes(BUY_A_PRODUCT)) {
+            e.reply('请发送购买数量')
+            this.setContext('SELECTION_QUANTITY')
+        } else { return e.reply('购买物品错误，商店无此物品'); }
+    }
+
+    SELECTION_QUANTITY(e) {
+        const MATCH = e.msg.match(/^(#|\/)购买(.*)$/);
+        const BUY_A_PRODUCT = MATCH[2];
+
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
 
         const USER_DATA = GetData(USER_FILE);
         const SHOP_DATA = GetData(SHOP_FILE);
 
-        let REPLY;
-        const COMMODITY = ['蜡烛保护卡', '签到双倍卡'];
-        if (COMMODITY.includes(BUY_A_PRODUCT)) {
-            if (BUY_A_PRODUCT === '蜡烛保护卡') {
-                if (USER_DATA['季蜡'] >= 10) {
-                    USER_DATA['季蜡'] -= 10;
-                    SHOP_DATA['蜡烛保护卡'] += 1;
-                    USER_DATA['背包']['蜡烛保护卡'] += 1
-                    SaveData(USER_FILE, USER_DATA);
-                    SaveData(SHOP_FILE, SHOP_DATA);
-                    REPLY = [
-                        '购买成功！消耗季蜡：10\n' +
-                        '剩余季蜡：' + USER_DATA['季蜡'] + '根\n' +
-                        '蜡烛保护卡：' + USER_DATA['背包']['蜡烛保护卡'] + '张'
-                    ];
-                    return e.reply(REPLY);
-                } else { return e.reply('季蜡不足！'); }
-            } else if (BUY_A_PRODUCT === '签到双倍卡') {
-                if (USER_DATA['季蜡'] >= 30) {
-                    USER_DATA['季蜡'] -= 30;
-                    SHOP_DATA['签到双倍卡'] += 1;
-                    USER_DATA['背包']['签到双倍卡'] += 1
-                    SaveData(USER_FILE, USER_DATA);
-                    SaveData(SHOP_FILE, SHOP_DATA);
-                    REPLY = [
-                        '购买成功！消耗季蜡：30\n' +
-                        '剩余季蜡：' + USER_DATA['季蜡'] + '根\n' +
-                        '签到双倍卡：' + USER_DATA['背包']['签到双倍卡'] + '张'
-                    ];
-                    return e.reply(REPLY);
-                } else { return e.reply('季蜡不足！'); }
-            }
-        } else { return e.reply('购买物品错误，商店无此物品'); }
+        const QUANTITY = parseInt(this.e.msg)
+        if (QUANTITY === NaN) { return e.reply('请发送纯数字！') }
+        if (!Number.isInteger(QUANTITY)) { return e.reply('请输入整数！') }
+
+        let REPLY
+        if (BUY_A_PRODUCT === '蜡烛保护卡') {
+            const Price = QUANTITY * 10
+            if (USER_DATA['季蜡'] >= Price) {
+                USER_DATA['季蜡'] -= Price;
+                SHOP_DATA['蜡烛保护卡'] += QUANTITY;
+                USER_DATA['背包']['蜡烛保护卡'] += QUANTITY;
+                SaveData(USER_FILE, USER_DATA);
+                SaveData(SHOP_FILE, SHOP_DATA);
+                REPLY = [
+                    '购买成功！消耗季蜡：' + Price + '\n' +
+                    '剩余季蜡：' + USER_DATA['季蜡'] + '根\n' +
+                    '蜡烛保护卡：' + USER_DATA['背包']['蜡烛保护卡'] + '张'
+                ];
+                e.reply(REPLY);
+                return this.finish('SELECTION_QUANTITY')
+            } else { return e.reply('季蜡不足！'); }
+        } else if (BUY_A_PRODUCT === '签到双倍卡') {
+            const Price = QUANTITY * 30
+            if (USER_DATA['季蜡'] >= Price) {
+                USER_DATA['季蜡'] -= Price;
+                SHOP_DATA['签到双倍卡'] += QUANTITY;
+                USER_DATA['背包']['签到双倍卡'] += QUANTITY;
+                SaveData(USER_FILE, USER_DATA);
+                SaveData(SHOP_FILE, SHOP_DATA);
+                REPLY = [
+                    '购买成功！消耗季蜡：' + Price + '\n' +
+                    '剩余季蜡：' + USER_DATA['季蜡'] + '根\n' +
+                    '签到双倍卡：' + USER_DATA['背包']['签到双倍卡'] + '张'
+                ];
+                e.reply(REPLY);
+                return this.finish('SELECTION_QUANTITY')
+            } else { return e.reply('季蜡不足！'); }
+        }
     }
 }
 
