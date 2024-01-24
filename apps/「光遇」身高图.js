@@ -17,7 +17,7 @@ export class 光遇_身高图 extends plugin {
 
   async STATURE_PIC(e) {
     if (e.msg === '身高图') {
-      return e.reply([segment.at(e.user_id), '发送[身高透明图]查看透明格式', segment.image(`${PIC_PATH}身高图.png`)]);
+      return e.reply([segment.at(e.user_id), '\n发送[身高透明图]查看透明格式', segment.image(`${PIC_PATH}身高图.png`)]);
     } else if (e.msg === '身高透明图' || e.msg === '透明身高图') {
       return e.reply([segment.at(e.user_id), segment.image(`${PIC_PATH}透明身高图.png`)]);
     }
