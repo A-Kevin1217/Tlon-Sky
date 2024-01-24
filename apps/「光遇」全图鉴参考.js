@@ -8,16 +8,12 @@ export class 光遇_全图鉴参考 extends plugin {
       rule: [
         {
           reg: /^(#|\/)?全图鉴参考$/,
-          fnc: '全图鉴参考'
+          fnc: 'REFERENCE_PIC'
         },
       ]
     })
   }
-  async 全图鉴参考(e) {
-    e.reply('国际服全图鉴,国服仅供参考')
-    return e.reply([
-      segment.at(e.user_id),
-      segment.image('plugins/Tlon-Sky/resource/统计及其他/全图鉴参考.png')
-    ])
+  async REFERENCE_PIC(e) {
+    return e.reply([segment.at(e.user_id), '国际服全图鉴,国服仅供参考', segment.image('plugins/Tlon-Sky/resource/统计及其他/全图鉴参考.png')])
   }
 }
