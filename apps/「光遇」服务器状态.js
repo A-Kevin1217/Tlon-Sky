@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
 
-export class 光遇_服务器状态 extends plugin {
+export class SERVER_STATUS extends plugin {
   constructor() {
     super({
       name: '[Tlon-Sky]光遇:服务器状态',

@@ -1,6 +1,6 @@
 import { render } from '../components/index.js'
 
-export class 光遇_每日功能 extends plugin {
+export class DAILY_FUNCTION extends plugin {
   constructor() {
     super({
       name: '[Tlon-Sky]光遇:每日功能',

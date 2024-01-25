@@ -1,7 +1,7 @@
 import fetch from "node-fetch"
 import { render } from '../components/index.js'
 
-export class 光遇_公告 extends plugin {
+export class SKY_ANNOUNCEMENT extends plugin {
   constructor() {
     super({
       name: '[Tlon-Sky]光遇:公告',

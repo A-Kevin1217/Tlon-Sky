@@ -3,7 +3,7 @@ import lodash from 'lodash';
 import fs from 'fs';
 
 const regex = /^(#|\/)?(SKY|Sky|sky|光遇)(娱乐)?(帮助|菜单|使用说明)$/;
-export class 光遇_菜单 extends plugin {
+export class SKY_HELP extends plugin {
   constructor() {
     super({
       name: '[Tlon-Sky]光遇:菜单',

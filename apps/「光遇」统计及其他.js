@@ -1,5 +1,5 @@
-export class 光遇_统计及其他 extends plugin {
-  constructor () {
+export class STATISTICS_AND_OTHERS extends plugin {
+  constructor() {
     super({
       name: '[Tlon-Sky]光遇:统计及其他',
       dsc: '光遇统计及其他',
@@ -7,55 +7,26 @@ export class 光遇_统计及其他 extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^(#|\/)?好友树兑换图$/,
-          fnc: '好友树兑换图'
-        },{
-          reg: /^(#|\/)?测量规则$/,
-          fnc: '测量规则'
-        },{
-          reg: /^(#|\/)?蜡烛合成机制$/,
-          fnc: '蜡烛合成机制'
-        },{
-          reg: /^(#|\/)?身高进阶知识$/,
-          fnc: '身高进阶知识'
+          reg: /^(#|\/)?(透明)?身高(透明)?图$|(#|\/)?身高进阶知识$|(#|\/)?蜡烛合成机制$|(#|\/)?测量规则$|(#|\/)?好友树兑换图$/,
+          fnc: 'STATISTICS_AND_OTHERS'
         }
       ]
     })
   }
-  async 好友树兑换图(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/好友树兑换图.png';
-    let msg = [
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ]
-    e.reply (msg )
-    return true;
-  }
-  async 测量规则(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/测量规则.png';
-    let msg = [
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ]
-    e.reply( msg )
-    return true;
-  }
-  async 蜡烛合成机制(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/蜡烛合成机制.png';
-    let msg = [
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ]
-    e.reply( msg )
-    return true;
-  }
-  async 身高进阶知识(e) {
-    const imgreply = 'plugins/Tlon-Sky/resource/统计及其他/身高进阶知识.png';
-    let msg = [
-      segment.at(this.e.user_id),
-      imgreply ? segment.image(imgreply) : "",
-    ]
-    e.reply ( msg )
-    return true;
+  async STATISTICS_AND_OTHERS(e) {
+    const PIC_PATH = 'plugins/Tlon-Sky/resource/Picture/Statistics and others/'
+    if (/(#|\/)?身高图/.test(e.msg)) {
+      return e.reply([segment.at(e.user_id), '\n发送[身高透明图]查看透明格式', segment.image(`${PIC_PATH}身高图.png`)]);
+    } else if (/(#|\/)?透明身高图/.test(e.msg) || /(#|\/)?身高透明图/.test(e.msg)) {
+      return e.reply([segment.at(e.user_id), segment.image(`${PIC_PATH}透明身高图.png`)]);
+    } else if (/(#|\/)?身高进阶知识/.test(e.msg)) {
+      return e.reply([segment.at(e.user_id), segment.image(`${PIC_PATH}身高进阶知识.png`)]);
+    } else if (/(#|\/)?蜡烛合成机制/.test(e.msg)) {
+      return e.reply([segment.at(e.user_id), segment.image(`${PIC_PATH}蜡烛合成机制.png`)]);
+    } else if (/(#|\/)?测量规则/.test(e.msg)) {
+      return e.reply([segment.at(e.user_id), segment.image(`${PIC_PATH}测量规则.png`)]);
+    } else if (/(#|\/)?好友树兑换图/.test(e.msg)) {
+      return e.reply([segment.at(e.user_id), segment.image(`plugins/Tlon-Sky/resource/Picture/Exchange picture/好友树兑换图.png`)]);
+    }
   }
 }

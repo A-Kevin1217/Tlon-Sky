@@ -1,4 +1,4 @@
-export class 光遇_全图鉴参考 extends plugin {
+export class REFERENCE_PIC extends plugin {
   constructor() {
     super({
       name: '[Tlon-Sky]光遇:全图鉴参考',
