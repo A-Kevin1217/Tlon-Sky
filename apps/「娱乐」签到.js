@@ -40,7 +40,7 @@ export class 娱乐_签到 extends plugin {
         RANDOM_NICKNAMES += RANDOM_CHAR;
       }
       let AVATAR
-      if (USER_ID.length <= 10) { AVATAR = USER_ID } else { AVATAR = 3620060826 }
+      if (USER_ID.toString().length <= 10) { AVATAR = USER_ID } else { AVATAR = 3620060826 }
       const USER_INFO = {
         ID: USER_ID,
         昵称: RANDOM_NICKNAMES,
