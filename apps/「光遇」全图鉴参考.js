@@ -14,6 +14,6 @@ export class REFERENCE_PIC extends plugin {
     })
   }
   async REFERENCE_PIC(e) {
-    return e.reply([segment.at(e.user_id), '\n国际服全图鉴,国服仅供参考', segment.image('plugins/Tlon-Sky/resource/统计及其他/全图鉴参考.png')])
+    return e.reply([segment.at(e.user_id), '\n国际服全图鉴,国服仅供参考', segment.image('plugins/Tlon-Sky/resource/Picture/Statistics and others/全图鉴参考.png')])
   }
 }
