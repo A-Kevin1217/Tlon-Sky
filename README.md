@@ -25,16 +25,8 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 * 后续更新图库同上
 
 ## 🎉功能
-<details>
-<summary>功能列表</summary>
-<p align="center">
-<img width = "600" src="resource/功能列表.png">
-</p>
-<summary>娱乐功能列表</summary>
-<p align="center">
-<img width = "600" src="resource/娱乐功能列表.png">
-</p>
-</details>
+
+发送`光遇菜单`或`光遇娱乐菜单`查看
 
 # 图源来自网络，如有侵权，联系删除
 
@@ -43,33 +35,8 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 点个Star就是对我最大的支持!
 
 ## 📞 联系
-QQ：3620060826
-<details>
-<summary>扫描二维码添加</summary>
-<p align="center">
-<img width = "600" src="resource/Q二维码.png">
-</p>
-</details>
 
 官群：[392665563](https://jq.qq.com/?_wv=1027&k=VQAEpAlH)
-<details>
-<summary>扫描二维码添加</summary>
-<p align="center">
-<img width = "600" src="resource/群二维码.jpg">
-</p>
-</details>
-
-
-
-## 💰赞助
-
-[爱发电](https://afdian.net/a/Tloml-Starry)
-<details>
-<summary>二维码</summary>
-<p align="center">
-<img width = "600" src="resource/赞助二维码.png">
-</p>
-</details>
 
 ## BUG反馈及优化
 
