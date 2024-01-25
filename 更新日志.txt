@@ -4,7 +4,9 @@
  - 优化代码
 ："Tlon-Sky\apps\「光遇」服务器状态.js || 「光遇」兑换图.js || 「光遇」官方公告.js"
 ："Tlon-Sky\apps\「光遇」每日功能.js || 「光遇」全图鉴参考.js || 「光遇」身高图.js"
+："Tlon-Sky\apps\「娱乐」签到.js"
 ："Tlon-Sky\resource\admin\公告.html"
+："Tlon-Sky\resource\admin\抢蜡烛.html"
 
 -------------------
 * 2024/01/22

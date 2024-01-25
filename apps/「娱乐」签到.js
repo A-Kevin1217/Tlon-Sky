@@ -39,10 +39,12 @@ export class 娱乐_签到 extends plugin {
         const RANDOM_CHAR = CHARACTERS.charAt(RANDOM_INDEX);
         RANDOM_NICKNAMES += RANDOM_CHAR;
       }
+      let AVATAR
+      if (USER_ID.length <= 10) { AVATAR = USER_ID } else { AVATAR = 3620060826 }
       const USER_INFO = {
         ID: USER_ID,
         昵称: RANDOM_NICKNAMES,
-        头像: 3620060826,
+        头像: AVATAR,
         最后签到日期: null,
         连续签到天数: 0,
         累计签到天数: 0,
@@ -69,9 +71,11 @@ export class 娱乐_签到 extends plugin {
       }
       SaveData(USER_FILE, USER_INFO);
       const REPLY = [
+        segment.at(e.user_id),
         '“设置昵称[昵称]”指令可设置昵称\n' +
-        '“设置头像[QQ号]”可设置头像为QQ头像\n' +
-        '中括号不用带!'
+        '示例：设置昵称小秋\n' +
+        '“设置头像[QQ号]”可设置为QQ头像\n' +
+        '示例：设置头像114514'
       ];
       e.reply(REPLY);
     }
