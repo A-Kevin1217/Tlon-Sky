@@ -26,7 +26,7 @@ export class 娱乐_抢蜡烛 extends plugin {
     const USER_ID = e.user_id;
     if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到'); }
 
-    const COOLING_TIME = 2 * 60 * 60 * 1000;
+    const COOLING_TIME = (2 * 60 * 60 * 1000) - 1000;
 
     const NOW_DATE = Date.now();
 
