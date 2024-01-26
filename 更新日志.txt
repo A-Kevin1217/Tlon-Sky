@@ -18,7 +18,7 @@
  - 修改菜单内容
 ："Tlon-Sky\config\model\index_model.js"
 
- - 修改CD减少一秒
+ - 修改CD减少五秒
 ："Tlon-Sky\apps\「娱乐」抢蜡烛.js"
 
 -------------------
