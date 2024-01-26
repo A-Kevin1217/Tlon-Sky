@@ -15,6 +15,9 @@
  - 更新复刻记录图片
 ："Tlon-Sky\resource\复刻记录\2024年光遇复刻记录.png"
 
+ - 修改菜单内容
+："Tlon-Sky\config\model\index_model.js"
+
 -------------------
 * 2024/01/25
  - 优化代码
