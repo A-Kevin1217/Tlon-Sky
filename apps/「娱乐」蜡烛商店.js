@@ -39,9 +39,12 @@ export class 娱乐_蜡烛商店 extends plugin {
         const MATCH = e.msg.match(/^(#|\/)购买(.*)$/);
         const BUY_A_PRODUCT = MATCH[2];
 
+        const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
+        const USER_DATA = GetData(USER_FILE);
+
         const COMMODITY = ['蜡烛保护卡', '签到双倍卡'];
         if (COMMODITY.includes(BUY_A_PRODUCT)) {
-            e.reply('请发送购买数量')
+            e.reply(`请发送购买数量\n您当前季蜡：${USER_DATA['季蜡']} 根,可购买：\n蜡烛保护卡：${Math.floor(USER_DATA['季蜡'] / 10)} 张\n签到双倍卡：${Math.floor(USER_DATA['季蜡'] / 30)} 张`)
             this.setContext('SELECTION_QUANTITY')
         } else { return e.reply('购买物品错误，商店无此物品'); }
     }
