@@ -72,7 +72,7 @@ export class 娱乐_签到 extends plugin {
       SaveData(USER_FILE, USER_INFO);
       const REPLY = [
         segment.at(e.user_id),
-        '“设置昵称[昵称]”指令可设置昵称\n' +
+        '\n“设置昵称[昵称]”指令可设置昵称\n' +
         '示例：设置昵称小秋\n' +
         '“设置头像[QQ号]”可设置为QQ头像\n' +
         '示例：设置头像114514'
@@ -156,12 +156,8 @@ export class 娱乐_签到 extends plugin {
     const USER_DATA = GetData(USER_FILE);
     USER_DATA['头像'] = MATCH[2];
     SaveData(USER_FILE, USER_DATA);
-    const REPLY = [
-      '设置成功',
-      segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH[2]}&s=640`),
-
-    ];
-    e.reply(REPLY);
+    e.reply([segment.at(USER_ID), '设置成功',]);
+    e.reply([segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH[2]}&s=640`)]);
   }
 }
 
