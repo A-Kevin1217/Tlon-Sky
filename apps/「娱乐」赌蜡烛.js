@@ -15,10 +15,10 @@ export class 娱乐_赌蜡烛 extends plugin {
             priority: 5000,
             rule: [
                 {
-                    reg: /^(#|\/)?dlz(.*)$/,
+                    reg: /^(#|\/)?(dlz|赌蜡烛)(.*)$/,
                     fnc: '赌蜡烛'
                 }, {
-                    reg: /^(#|\/)?(押注|Bo)(.*)$/,
+                    reg: /^(#|\/)?(押注|yz)(.*)$/,
                     fnc: '押注'
                 }, {
                     reg: /^(#|\/)?(赌坊信息|秋风赌坊)$/,
@@ -39,7 +39,7 @@ export class 娱乐_赌蜡烛 extends plugin {
         const NowDate = Date.now();
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
-        const UserPunches = e.msg.replace(/#?\/|dlz/g, "")
+        const UserPunches = e.msg.replace(/#?\/|dlz|赌蜡烛/g, "")
         const UserID = e.user_id;
         if (!UserFiles(UserID)) { return e.reply('请先发送光遇签到') }
         const UserDatas = GetData(`plugins/Tlon-Sky/data/Sky签到/${UserID}.json`)
@@ -137,7 +137,7 @@ export class 娱乐_赌蜡烛 extends plugin {
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
 
-        const GetAmount = e.msg.replace(/#?\/|(押注|Bo)/g, "");
+        const GetAmount = e.msg.replace(/#?\/|(押注|yz)/g, "");
         const GetNumber = parseFloat(GetAmount);
 
         if (isNaN(GetNumber) || GetNumber <= 0 || !Number.isInteger(GetNumber)) {
