@@ -28,7 +28,9 @@ export class DAILY_FUNCTION extends plugin {
     });
   }
 
-  async TASK_AND_OTHER(e) { await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }) }
+  async TASK_AND_OTHER(e) {
+    if (e.msg === '#' || e.msg === '/' || e.msg === '') { return }; await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 })
+  }
   async CURRENCY_LOCATION(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/代币.png')) }
   async SEASON_TASK(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/季节任务.png')) }
   async TASK_AND_OTHER_PIC(e) {
