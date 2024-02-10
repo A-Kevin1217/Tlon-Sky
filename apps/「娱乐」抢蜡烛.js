@@ -67,6 +67,7 @@ export class 娱乐_抢蜡烛 extends plugin {
     }
 
     const OBJECTS_USER_FILE = `${ALL_USER_FILE_LOCATION}${OBJECTS_USER_ID}.json`;
+    if (!UserFiles(OBJECTS_USER_ID)) { return e.reply('对方没有存档，无法抢蜡烛'); }
     const OBJECTS_USER_DATA = GetData(OBJECTS_USER_FILE);
 
     let STATE = 0;
