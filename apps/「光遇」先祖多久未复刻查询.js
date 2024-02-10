@@ -62,7 +62,7 @@ const seasons = {
     { name: '献情演员', date: new Date('2022-08-16') },
     { name: '抛球杂耍', date: new Date('2023-06-26') },
     { name: '沉思编导', date: new Date('2022-09-27') },
-    { name: '旋转舞者', date: new Date('2022-10-10') }
+    { name: '旋转舞者', date: new Date('2024-02-12') }
   ],
   '魔法': [
     { name: '稻草人农夫', date: new Date('2022-08-29') },
