@@ -4,6 +4,9 @@
 ："Tlon-Sky\apps\「光遇」先祖多久未复刻查询.js"
 
  - 更新复刻记录图片
+："Tlon-Sky\resource\复刻记录\2021年光遇复刻记录.png"
+："Tlon-Sky\resource\复刻记录\2022年光遇复刻记录.png"
+："Tlon-Sky\resource\复刻记录\2023年光遇复刻记录.png"
 ："Tlon-Sky\resource\复刻记录\2024年光遇复刻记录.png"
 
  - 优化细节
