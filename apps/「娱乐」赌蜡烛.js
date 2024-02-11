@@ -40,9 +40,9 @@ export class 娱乐_赌蜡烛 extends plugin {
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
         const UserPunches = e.msg.replace(/#?\/|dlz|赌蜡烛/g, "")
-        const UserID = e.user_id;
-        if (!UserFiles(UserID)) { return e.reply('请先发送光遇签到') }
-        const UserDatas = GetData(`plugins/Tlon-Sky/data/Sky签到/${UserID}.json`)
+        const USER_ID = e.user_id;
+        if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到') }
+        const UserDatas = GetData(`plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`)
         const LastExecutionTime = UserDatas['上次赌蜡烛时间戳'] || 0;
         const ROCK = '石头';
         const PAPER = '布';
@@ -66,11 +66,11 @@ export class 娱乐_赌蜡烛 extends plugin {
         }
         if (UserPunches === '剪刀' || UserPunches === '石头' || UserPunches === '布') {
 
-            const BetFile = `plugins/Tlon-Sky/data/押注信息/${UserID}.json`;
+            const BetFile = `plugins/Tlon-Sky/data/押注信息/${USER_ID}.json`;
             if (!fs.existsSync(BetFile)) { return e.reply('您尚未押注，请先押注') }
             const BetData = GetData(BetFile)
 
-            const UserFile = `plugins/Tlon-Sky/data/Sky签到/${UserID}.json`;
+            const UserFile = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
             const UserData = GetData(UserFile)
 
             const AWGSData = GetData(AWGSFile)
@@ -137,37 +137,31 @@ export class 娱乐_赌蜡烛 extends plugin {
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
 
-        const GetAmount = e.msg.replace(/#?\/|(押注|yz)/g, "");
-        const GetNumber = parseFloat(GetAmount);
+        const GetNumber = parseFloat(e.msg.replace(/#?\/|(押注|yz)/g, ""))
 
-        if (isNaN(GetNumber) || GetNumber <= 0 || !Number.isInteger(GetNumber)) {
-            return e.reply('请输入有效的整数押注金额。');
-        }
+        if (isNaN(GetNumber) || GetNumber <= 0 || !Number.isInteger(GetNumber)) { return e.reply('请输入有效的整数押注金额。') }
 
-        const UserID = e.user_id;
-        const UserFile = `plugins/Tlon-Sky/data/Sky签到/${UserID}.json`;
+        const USER_ID = e.user_id;
+        const UserFile = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
         const UserData = GetData(UserFile)
+        if (UserData['白蜡'] < GetNumber) { return e.reply('白蜡不足！') }
 
-        const GetFile = `plugins/Tlon-Sky/data/押注信息/${UserID}.json`
-
+        const GetFile = `plugins/Tlon-Sky/data/押注信息/${USER_ID}.json`
         if (!fs.existsSync(GetFile)) {
             const GetDatas = { 押注金额: 0, 倍率: null }
             SaveData(GetFile, GetDatas)
         }
 
-        let GetDatas = GetData(GetFile)
+        const GetDatas = GetData(GetFile)
 
-        if (UserData['白蜡'] > GetNumber) {
-            UserData['白蜡'] = UserData['白蜡'] - GetNumber
-            SaveData(UserFile, UserData)
+        UserData['白蜡'] = UserData['白蜡'] - GetNumber
+        SaveData(UserFile, UserData)
 
-            const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 2.0);
-            GetDatas = { 押注金额: (GetDatas['押注金额'] || 0) + GetNumber, 倍率: X }
-            SaveData(GetFile, GetDatas)
-            e.reply(`你已成功押注 ${(GetDatas['押注金额'] || 0) + GetNumber}根白蜡，倍率为 ${X}。`);
-        } else {
-            return e.reply('白蜡不足！')
-        }
+        const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 2.0);
+        GetDatas = { 押注金额: (GetDatas['押注金额'] || 0) + GetNumber, 倍率: X }
+        SaveData(GetFile, GetDatas)
+        e.reply(`你已成功押注 ${GetDatas['押注金额'] || 0}根白蜡，倍率为 ${X}。`);
+
     }
 
     async 赌坊信息(e) {
@@ -211,10 +205,10 @@ export class 娱乐_赌蜡烛 extends plugin {
 
 const 重置押注信息 = async function (e) {
     //  获取用户ID
-    const UserID = e.user_id;
+    const USER_ID = e.user_id;
 
     //  读取押注信息
-    const 押注信息 = `plugins/Tlon-Sky/data/押注信息/${UserID}.json`;
+    const 押注信息 = `plugins/Tlon-Sky/data/押注信息/${USER_ID}.json`;
     const 押注信息Data = await fs.promises.readFile(押注信息);
     const 押注信息Json = JSON.parse(押注信息Data.toString());
 
