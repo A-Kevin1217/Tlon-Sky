@@ -1,3 +1,5 @@
+import fetch from "node-fetch"
+
 const PERMANENT_REGEX = /^(#|\/)?(晨岛|云野|雨林|峡谷|霞谷|暮土|禁阁)兑换图$/
 const SEASON_REGEX = /^(#|\/)?(AURORA|表演|风行|感恩|归巢|归属|九色鹿|梦想|魔法|破晓|潜海|圣岛|拾光|小王子|夜行|音韵|预言|重组|追光|追忆|欧若拉|集结|凌冬)(季)?兑换图$/
 const PICTURE_RESOURCE = 'plugins/Tlon-Sky/resource/Picture'
@@ -46,8 +48,15 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
   }
 
   async RETURN_EXCHANGE_PICTURE(e) {
-    e.reply('仅供参考,以正式上线为准', false, { recallMsg: 10 })
-    return e.reply([segment.at(e.user_id), segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/image/Reprint.png')])
+    const URL_DATA = await (await fetch('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/FK.json')).json()
+
+    const endTime = URL_DATA['endTime']
+    const now = new Date();
+    const specifiedTime = new Date(endTime['years'], endTime['month'], endTime['day'], endTime['Hour'], endTime['minute'], endTime['second']);
+
+    if (now > specifiedTime) { return e.reply([segment.at(e.user_id), segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/FK.jpg')]) }
+
+    return e.reply([segment.at(e.user_id), segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/PICTURE/FK.jpg')])
   }
 
   async CURRENT_SEASON_EXCHANGE_PICTURE(e) {
