@@ -34,7 +34,7 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
   async PERMANENT_EXCHANGE_PICTURE(e) {
     const match = e.msg.match(PERMANENT_REGEX)
     const imgreply = `${PICTURE_RESOURCE}/Exchange picture/Permanent/${match[2]}.png`
-    return e.reply([segment.at(e.user_id), segment.image(imgreply)])
+    return e.reply([segment.image(imgreply)])
   }
 
   async SEASON_EXCHANGE_PICTURE(e) {
@@ -44,7 +44,7 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
     const seasonMapping = { '欧若拉': 'AURORA', '集结': '重组', '凌冬': '音韵' }
     if (seasonMapping.hasOwnProperty(season)) { season = seasonMapping[season] }
     const imgreply = `${PICTURE_RESOURCE}/Exchange picture/Season/${season}.png`
-    return e.reply([segment.at(e.user_id), segment.image(imgreply)])
+    return e.reply([segment.image(imgreply)])
   }
 
   async RETURN_EXCHANGE_PICTURE(e) {
@@ -52,11 +52,11 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
     const CURRENT_DATE = new Date();
     const SPECIFIED_DATE = new Date(URL_DATA['endTime']);
     if (CURRENT_DATE > SPECIFIED_DATE || CURRENT_DATE.toISOString() === SPECIFIED_DATE.toISOString()) {
-      return e.reply([segment.at(e.user_id), segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/FK.jpg')])
+      return e.reply([segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/FK.jpg')])
     } else {
-      return e.reply([segment.at(e.user_id), segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/PICTURE/FK.jpg')])
+      return e.reply([segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/PICTURE/FK.jpg')])
     }
   }
 
-  async CURRENT_SEASON_EXCHANGE_PICTURE(e) { return e.reply([segment.at(e.user_id), segment.image(`${PICTURE_RESOURCE}/Exchange picture/Season/九色鹿季.png`)]) }
+  async CURRENT_SEASON_EXCHANGE_PICTURE(e) { return e.reply([segment.image(`${PICTURE_RESOURCE}/Exchange picture/Season/九色鹿季.png`)]) }
 }

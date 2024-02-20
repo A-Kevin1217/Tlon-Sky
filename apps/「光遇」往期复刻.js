@@ -1,5 +1,6 @@
 import fs from "fs";
 
+const REGEX = /^(#|\/)?(.*)年复刻记录$/
 export class A_COPY_OF_THE_PAST extends plugin {
   constructor() {
     super({
@@ -9,7 +10,7 @@ export class A_COPY_OF_THE_PAST extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^(#|\/)?(.*)年复刻记录$/,
+          reg: REGEX,
           fnc: 'A_COPY_OF_THE_PAST'
         }
       ]
@@ -17,8 +18,7 @@ export class A_COPY_OF_THE_PAST extends plugin {
   }
 
   async A_COPY_OF_THE_PAST(e) {
-    let gc = e.msg.match(/^(#|\/)?(.*)年复刻记录$/);
-    let year = '';
+    let year = (e.msg.match(REGEX))[2]
     const yearMap = {
       '20': '2020',
       '21': '2021',
@@ -26,8 +26,8 @@ export class A_COPY_OF_THE_PAST extends plugin {
       '23': '2023',
       '24': '2024'
     };
-    if (yearMap.hasOwnProperty(gc[2])) {
-      year = yearMap[gc[2]];
+    if (yearMap.hasOwnProperty(year)) {
+      year = yearMap[year];
     }
     const imgreply = `plugins/Tlon-Sky/resource/Picture/Duplicate recording/${year}年光遇复刻记录.png`;
     if (!fs.existsSync(imgreply)) {
