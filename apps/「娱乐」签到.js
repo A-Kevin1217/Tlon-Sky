@@ -140,7 +140,7 @@ export class 娱乐_签到 extends plugin {
 
   async SETTING_A_NICKNAME(e) {
     const USER_ID = e.user_id;
-    const NICKNAME = e.msg.replace(/#?\/|设置昵称/g, "");
+    const NICKNAME = e.msg.replace(/#?\/|设置昵称/g, "").replace(/\s/g, '');
     if (NICKNAME.length > 15) { return e.reply('昵称长度不可大于十五位！'); }
     const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
     const USER_DATA = GetData(USER_FILE);
@@ -151,7 +151,7 @@ export class 娱乐_签到 extends plugin {
 
   async SETTING_THE_AVATAR(e) {
     const USER_ID = e.user_id;
-    const MATCH = e.msg.match(/^(#|\/)?设置头像(\d+)$/);
+    const MATCH = e.msg.match(/^(#|\/)?设置头像(\d+)$/).replace(/\s/g, '');
     const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
     const USER_DATA = GetData(USER_FILE);
     USER_DATA['头像'] = MATCH[2];
