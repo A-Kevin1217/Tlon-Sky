@@ -112,7 +112,7 @@ const seasons = {
   '风行': [ // 11
     { name: '风铃修补匠', date: new Date('2023-12-04') },
     { name: '天才建筑者', date: new Date('2024-01-01') },
-    { name: '风行领航员', data: new Date('2024-01-29') }
+    { name: '风行领航员', date: new Date('2024-01-29') }
   ]
 };
 
