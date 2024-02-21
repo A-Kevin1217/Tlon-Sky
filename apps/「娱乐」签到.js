@@ -20,7 +20,7 @@ export class 娱乐_签到 extends plugin {
           fnc: 'SETTING_A_NICKNAME'
         },
         {
-          reg: /^(#|\/)?设置头像(\d+)$/,
+          reg: /^(#|\/)?设置头像(.*)$/,
           fnc: 'SETTING_THE_AVATAR'
         }
       ]
@@ -151,13 +151,13 @@ export class 娱乐_签到 extends plugin {
 
   async SETTING_THE_AVATAR(e) {
     const USER_ID = e.user_id;
-    const MATCH = e.msg.match(/^(#|\/)?设置头像(\d+)$/).replace(/\s/g, '');
+    const MATCH = parseFloat((e.msg.match(/^(#|\/)?设置头像(.*)$/))[2].replace(/\s/g, ''))
     const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
     const USER_DATA = GetData(USER_FILE);
-    USER_DATA['头像'] = MATCH[2];
+    USER_DATA['头像'] = MATCH
     SaveData(USER_FILE, USER_DATA);
-    e.reply([segment.at(USER_ID), '设置成功',]);
-    e.reply([segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH[2]}&s=640`)]);
+    e.reply([segment.at(USER_ID), '设置成功']);
+    e.reply([segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH}&s=640`)]);
   }
 }
 
