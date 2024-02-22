@@ -40,6 +40,7 @@ export default async function (path, params, cfg, text) {
   let base64 = await puppeteer.screenshot(`${Plugin_Name}/${app}/${tpl}`, data)
   let ret = true
   if (base64) {
+    if (!text) text = ''
     ret = await e.reply([text, base64])
   }
   return cfg.retMsgId ? ret : true
