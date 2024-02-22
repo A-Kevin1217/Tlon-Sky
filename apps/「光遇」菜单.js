@@ -1,6 +1,6 @@
 import { render, Data } from '../components/index.js';
 import lodash from 'lodash';
-import fs from 'fs';
+import fs from 'fs'
 
 const REGEX = /^(#|\/)?((S|s)(K|k)(Y|y)|光遇)(娱乐)?(帮助|菜单)$/;
 export class SKY_HELP extends plugin {
@@ -18,29 +18,32 @@ export class SKY_HELP extends plugin {
           fmc: 'SKY_HELP'
         }
       ]
-    })
+    });
   }
-  async SKY_HELP(e) { return await HELP(e); }
+
+  async SKY_HELP(e) {
+    return await HELP(e);
+  }
 }
 
 async function HELP(e) {
-  let HELP_FILE = 'HELP_1'
+  let HELP_FILE = 'HELP_1';
+
   if (REGEX.test(e.msg)) {
     const match = e.msg.match(REGEX);
-    if (match[6] === '娱乐') { HELP_FILE = 'HELP_2' }
+    if (match[6] === '娱乐') { HELP_FILE = 'HELP_2'; }
   } else if (/^(#|\/)?季节兑换图列表$/.test(e.msg)) {
-    HELP_FILE = 'HELP_3'
+    HELP_FILE = 'HELP_3';
   } else if (/^(#|\/)?常驻兑换图列表$/.test(e.msg)) {
-    HELP_FILE = 'HELP_4'
+    HELP_FILE = 'HELP_4';
   }
-
 
   let help = {};
   const { diyCfg, sysCfg } = await Data.importCfg(HELP_FILE);
   const custom = help;
 
   const helpConfig = lodash.defaults(diyCfg.helpCfg || {}, custom.helpCfg, sysCfg.helpCfg);
-  const helpList = diyCfg.helpList || custom.helpList || sysCfg.helpList;
+  const helpList = diyCfg.helpList || custom.helpList || sysCfg.helpList || [];
 
   const helpGroup = helpList
     .filter(group => !group.auth || (group.auth === 'master' && e.isMaster))
