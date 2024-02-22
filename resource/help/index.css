@@ -25,11 +25,24 @@ body {
   margin-bottom: 20px;
   overflow: hidden;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
-  /* 阴影 */
   position: relative;
   color: #a8a7a7;
-  /* 功能分区 */
+  backdrop-filter: blur(10px);
 }
+
+.cont-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.137);
+  /* 半透明灰色背景 */
+  z-index: -1;
+}
+
+
 
 .help-group {
   font-size: 18px;
@@ -45,7 +58,7 @@ body {
   display: table;
   overflow: hidden;
   width: 100%;
-  color: #56d9d2;
+  color: #62fff7;
   /* 功能描述 */
 }
 
@@ -84,19 +97,22 @@ body {
   left: 6px;
   top: 12px;
   transform: scale(0.85);
-  background-color: black;
+  background-color: rgb(120, 120, 120);
   /* 添加黑色背景 */
-  border-radius: 50%;
+  border-radius: 20%;
   /* 边缘圆化 */
+  box-shadow: 0 0 0 1px black;
+  /* 添加黑色描边 */
 }
 
 .help-title {
   display: block;
-  color: #67d491;
+  color: #48fa8c;
   /* 功能名称 */
   font-size: 16px;
   line-height: 24px;
 }
+
 
 .help-desc {
   display: block;
