@@ -1,4 +1,4 @@
-import { GetData, SaveData, UserFiles } from '../utils/db.js';
+import { GD, SD, ITUE } from '../utils/db.js';
 
 export class 娱乐_送蜡烛 extends plugin {
     constructor() {
@@ -20,18 +20,18 @@ export class 娱乐_送蜡烛 extends plugin {
         const USER_ID = e.user_id;
         const OBJECTS_USER_ID = e.at;
 
-        if (e.atme === true) { return e.reply('不可赠送机器人'); }
-        if (!OBJECTS_USER_ID) { return e.reply('请at对方'); }
-        if (OBJECTS_USER_ID === USER_ID) { return e.reply('不可自己赠送自己'); }
+        if (e.atme === true) { return e.reply('不可赠送机器人') }
+        if (!OBJECTS_USER_ID) { return e.reply('请at对方') }
+        if (OBJECTS_USER_ID === USER_ID) { return e.reply('不可自己赠送自己') }
 
-        if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到'); }
-        if (!UserFiles(OBJECTS_USER_ID)) { return e.reply('对方没有Tlon-Sky存档'); }
+        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
+        if (!ITUE(OBJECTS_USER_ID)) { return e.reply('对方没有Tlon-Sky存档') }
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
         const OBJECTS_USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${OBJECTS_USER_ID}.json`;
 
-        const USER_DATA = GetData(USER_FILE);
-        const OBJECTS_USER_DATA = GetData(OBJECTS_USER_FILE);
+        const USER_DATA = GD(USER_FILE);
+        const OBJECTS_USER_DATA = GD(OBJECTS_USER_FILE);
 
         const MATCH = e.msg.match(/^#?\/|送蜡烛(\d+)$/);
         const GIVE_NUMBER = Number(MATCH[1]);
@@ -45,8 +45,8 @@ export class 娱乐_送蜡烛 extends plugin {
             OBJECTS_USER_DATA['白蜡'] += GIVE_NUMBER;
             OBJECTS_USER_DATA['总收入数量'] += GIVE_NUMBER;
 
-            SaveData(USER_FILE, USER_DATA);
-            SaveData(OBJECTS_USER_FILE, OBJECTS_USER_DATA);
+            SD(USER_FILE, USER_DATA);
+            SD(OBJECTS_USER_FILE, OBJECTS_USER_DATA);
             return e.reply(`赠送成功！\n赠送数量：${GIVE_NUMBER}`);
         } else { return e.reply('赠送失败！白蜡不足'); }
     }

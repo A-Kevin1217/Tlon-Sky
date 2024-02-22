@@ -1,12 +1,12 @@
 import fs from 'fs';
-import { GetData, SaveData } from '../utils/db.js';
+import { GD, SD } from '../utils/db.js';
 
 const FriendCodeFile = 'plugins/Tlon-Sky/data/FriendCodeFile.json'
 const FriendRemarksFile = 'plugins/Tlon-Sky/data/FriendRemarks.json'
 const FriendCodeCDFile = 'plugins/Tlon-Sky/data/FriendCodeCD'
 if (!fs.existsSync(FriendCodeFile)) {
     const Code = []
-    SaveData(FriendCodeFile, Code); SaveData(FriendRemarksFile, Code)
+    SD(FriendCodeFile, Code); SD(FriendRemarksFile, Code)
 }
 const CoolingTime = 1 * 60 * 60 * 1000;
 
@@ -35,9 +35,9 @@ export class RandomFriend extends plugin {
             const Cd = {
                 CD: Date.now() - CoolingTime
             }
-            SaveData(UserCdFile, Cd)
+            SD(UserCdFile, Cd)
         }
-        const UserCdData = GetData(UserCdFile)
+        const UserCdData = GD(UserCdFile)
         const UserCd = UserCdData['CD']
         if (Date.now() - UserCd < CoolingTime) {
             const RemainingTimestamp = CoolingTime - (Date.now() - UserCd);
@@ -58,8 +58,8 @@ export class RandomFriend extends plugin {
                 }
             }
         }
-        const FriendCodeData = GetData(FriendCodeFile);
-        const FriendRemarksData = GetData(FriendRemarksFile);
+        const FriendCodeData = GD(FriendCodeFile);
+        const FriendRemarksData = GD(FriendRemarksFile);
         const FriendCodeNumber = FriendCodeData.length;
 
         if (FriendCodeNumber === 0) {
@@ -71,9 +71,9 @@ export class RandomFriend extends plugin {
         const FriendRemarks = FriendRemarksData.splice(RandomNumber, 1)[0];
 
         UserCdData['CD'] = Date.now()
-        SaveData(FriendCodeFile, FriendCodeData);
-        SaveData(FriendRemarksFile, FriendRemarksData);
-        SaveData(UserCdFile, UserCdData)
+        SD(FriendCodeFile, FriendCodeData);
+        SD(FriendRemarksFile, FriendRemarksData);
+        SD(UserCdFile, UserCdData)
         e.reply(`来咯~请及时添加好友哦~\n好友代码：${FriendCode}\n对方备注：${FriendRemarks}\n防骗提示：盲盒来源网友，请谨防受骗`, true);
         return e.reply(`如果您不需要这个盲盒请添加回去指令：\n存入盲盒${FriendCode}*${FriendRemarks}`, true);
     }
@@ -88,14 +88,14 @@ export class RandomFriend extends plugin {
             return e.reply('好友代码不符合格式要求\n示例：\n存入盲盒xxxx-xxxx-xxxx*国服|备注小光|平常晚上在线');
         }
 
-        const FriendCodeData = GetData(FriendCodeFile);
-        const FriendRemarksData = GetData(FriendRemarksFile);
+        const FriendCodeData = GD(FriendCodeFile);
+        const FriendRemarksData = GD(FriendRemarksFile);
 
         FriendCodeData.push(FriendCode);
         FriendRemarksData.push(FriendRemarks);
 
-        SaveData(FriendCodeFile, FriendCodeData);
-        SaveData(FriendRemarksFile, FriendRemarksData);
+        SD(FriendCodeFile, FriendCodeData);
+        SD(FriendRemarksFile, FriendRemarksData);
 
         return e.reply('好友代码已存入盲盒！', true);
     }

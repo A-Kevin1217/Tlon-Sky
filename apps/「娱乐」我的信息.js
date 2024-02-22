@@ -2,7 +2,7 @@ import fs from 'fs';
 import lodash from 'lodash';
 import { render } from '../components/index.js';
 import { Leaderboard } from '../utils/Leaderboard.js';
-import { GetData, UserFiles } from '../utils/db.js';
+import { GD, ITUE } from '../utils/db.js';
 
 const USER_FOLDER = 'plugins/Tlon-Sky/data/Sky签到';
 
@@ -30,15 +30,15 @@ export class 我的信息 extends plugin {
         Leaderboard();
 
         const USER_ID = e.user_id;
-        if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到'); }
+        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到'); }
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
         const RANKING_A_FILE = 'plugins/Tlon-Sky/data/排行榜/白蜡.json';
         const RANKING_B_FILE = 'plugins/Tlon-Sky/data/排行榜/季蜡.json';
 
-        const USER_DATA = GetData(USER_FILE);
-        const RANKING_A_DATA = GetData(RANKING_A_FILE);
-        const RANKING_B_DATA = GetData(RANKING_B_FILE);
+        const USER_DATA = GD(USER_FILE);
+        const RANKING_A_DATA = GD(RANKING_A_FILE);
+        const RANKING_B_DATA = GD(RANKING_B_FILE);
 
         const RANKING_A = calculateRank(RANKING_A_DATA, USER_ID);
         const RANKING_B = calculateRank(RANKING_B_DATA, USER_ID);
@@ -81,10 +81,10 @@ export class 我的信息 extends plugin {
         Leaderboard()
 
         const USER_ID = e.user_id;
-        if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到') }
+        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-        const USER_DATA = GetData(USER_FILE);
+        const USER_DATA = GD(USER_FILE);
 
         const leaderboardFiles = [
             'plugins/Tlon-Sky/data/排行榜/白蜡.json',
@@ -99,7 +99,7 @@ export class 我的信息 extends plugin {
 
         const leaderboardJsons = [];
         for (const file of leaderboardFiles) {
-            leaderboardJsons.push(GetData(file));
+            leaderboardJsons.push(GD(file));
         }
 
         const leaderboardRanks = [];

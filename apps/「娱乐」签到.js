@@ -1,178 +1,170 @@
 import fs from 'fs';
-import lodash from 'lodash';
 import { render } from '../components/index.js';
-import { GetData, SaveData } from '../utils/db.js';
+import { SD, GUD, ITUE } from '../utils/db.js';
 
-export class 娱乐_签到 extends plugin {
+export class SKY_YL_QD extends plugin {
   constructor() {
     super({
-      name: '[Tlon-Sky]娱乐:签到',
-      dsc: '娱乐签到',
-      event: 'message',
-      priority: 1,
-      rule: [
-        {
-          reg: /^(#|\/)?(光遇签到|冒泡)$/,
-          fnc: 'SIGN_IN'
-        },
-        {
-          reg: /^(#|\/)?设置昵称(.*)$/,
-          fnc: 'SETTING_A_NICKNAME'
-        },
-        {
-          reg: /^(#|\/)?设置头像(.*)$/,
-          fnc: 'SETTING_THE_AVATAR'
-        }
-      ]
+      name: '[Tlon-Sky]娱乐:签到', dsc: 'Tlon-Sky', event: 'message', priority: 1, rule: [{
+        reg: /^(#|\/)?(光遇签到|冒泡)$/,
+        fnc: 'SI'
+      }, {
+        reg: /^(#|\/)?设置昵称(.*)$/,
+        fnc: 'SAN'
+      }, {
+        reg: /^(#|\/)?设置头像(.*)$/,
+        fnc: 'STA'
+      }]
     })
   }
-  async SIGN_IN(e) {
+
+  async SI(e) {
+    // 用户ID和用户文件
     const USER_ID = e.user_id;
+    const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
 
-    const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-
-    if (!fs.existsSync(USER_FILE)) {
-      const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let RANDOM_NICKNAMES = '';
-      for (let i = 0; i < 15; i++) {
-        const RANDOM_INDEX = Math.floor(Math.random() * CHARACTERS.length);
-        const RANDOM_CHAR = CHARACTERS.charAt(RANDOM_INDEX);
-        RANDOM_NICKNAMES += RANDOM_CHAR;
-      }
-      let AVATAR
-      if (USER_ID.toString().length <= 10) { AVATAR = USER_ID } else { AVATAR = 3620060826 }
-      const USER_INFO = {
-        ID: USER_ID,
-        昵称: RANDOM_NICKNAMES,
-        头像: AVATAR,
-        最后签到日期: null,
-        连续签到天数: 0,
-        累计签到天数: 0,
-        能量值: 0,
-        等级: 0,
-        白蜡: 0,
-        季蜡: 0,
-        抢蜡烛次数: 0,
-        被抢次数: 0,
-        抢蜡烛总数: 0,
-        被抢蜡烛总数: 0,
-        上次抢蜡烛时间戳: 0,
-        胜: 0,
-        负: 0,
-        平: 0,
-        赚取: 0,
-        亏损: 0,
-        总赠送数量: 0,
-        总收入数量: 0,
-        背包: {
-          蜡烛保护卡: 0,
-          签到双倍卡: 0
-        }
-      }
-      SaveData(USER_FILE, USER_INFO);
-    }
-
-    const USER_DATA = GetData(USER_FILE);
-
-    if (USER_DATA['最后签到日期'] === getCurrentDate()) { return e.reply('今日已签'); }
-
-    const 连签天数 = USER_DATA['连续签到天数'] || 0;
-    const 累签天数 = USER_DATA['累计签到天数'] || 0;
-
-    let is连续签到 = false;
-    if (USER_DATA['最后签到日期'] === getYesterdayDate()) { is连续签到 = true; }
-
-    let Get白蜡 = Math.floor(Math.random() * (31 - 20 + 1)) + 20;
-    let Get季蜡 = Math.floor(Math.random() * (11 - 5 + 1)) + 5;
-    const Get能量值 = Math.floor(Math.random() * 30 - 20 + 1) + 20;
-
-    if (USER_DATA['背包']['签到双倍卡'] >= 1) {
-      Get白蜡 *= 2;
-      Get季蜡 *= 2;
-      USER_DATA['背包']['签到双倍卡'] -= 1
-      e.reply('消耗蜡烛双倍卡，蜡烛翻倍！');
-    }
-
-    USER_DATA['最后签到日期'] = getCurrentDate();
-    USER_DATA['连续签到天数'] = is连续签到 ? (连签天数 + 1) : 1;
-    USER_DATA['累计签到天数'] = 累签天数 + 1;
-    USER_DATA['白蜡'] = (USER_DATA['白蜡'] || 0) + Get白蜡;
-    USER_DATA['季蜡'] = (USER_DATA['季蜡'] || 0) + Get季蜡;;
-    USER_DATA['能量值'] = (USER_DATA['能量值'] || 0) + Get能量值
-    if (USER_DATA['能量值'] >= 100) {
-      USER_DATA['等级'] = (USER_DATA['等级'] || 0) + 1;
-      USER_DATA['能量值'] = USER_DATA['能量值'] - 100;
-    }
-
-    SaveData(USER_FILE, USER_DATA);
-
-    const 累计签到提示 = `你已累计签到 ${累签天数} 天！`;
-    const 连续签到提示 = is连续签到 ? `你已连续签到 ${连签天数} 天！` : '';
-
-    const Tlon_Sky_file = 'plugins/Tlon-Sky/data/Sky签到'
-    const Tlon_Sky_file_data = fs.readdirSync(Tlon_Sky_file)
-    const Tlon_Sky_user_number = Tlon_Sky_file_data.length
-
-    const html = {
-      昵称: USER_DATA['昵称'],
-      头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
-      获得白蜡: Get白蜡,
-      数量_白: USER_DATA['白蜡'] - Get白蜡,
-      获得季蜡: Get季蜡,
-      数量_季: USER_DATA['季蜡'] - Get季蜡,
-      获得能量值: Get能量值,
-      数量_能量: USER_DATA['能量值'] - Get能量值,
-      等级: USER_DATA['等级'],
-      累计签到提示: 累计签到提示,
-      连续签到提示: 连续签到提示,
-      UserNumber: Tlon_Sky_user_number
-    }
     let REPLY = []
-    if (e.adapter === 'QQBot') {
-      REPLY = [
-        '> [设置昵称(昵称)]指令可设置昵称\n' +
-        '> 示例：设置昵称小秋\n' +
-        '> [设置头像(QQ号)]可设置为QQ头像\n' +
-        '> 示例：设置头像114514'
-      ]
-      return render('admin/签到', { ...html, bg: await rodom() }, { e, scale: 1.4 }, REPLY)
+    // 用户是否存在
+    if (!ITUE(USER_ID)) {
+      // 随机昵称
+      const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      let RANDOM_NICKNAMES = ''
+      for (let i = 0; i < 15; i++) {
+        const RANDOM_INDEX = Math.floor(Math.random() * CHARACTERS.length)
+        const RANDOM_CHAR = CHARACTERS.charAt(RANDOM_INDEX)
+        RANDOM_NICKNAMES += RANDOM_CHAR
+      }
+
+      // 用户ID是否为number类型，不是则使用3620060826作为头像
+      let AVATAR
+      if (typeof USER_ID === 'number') { AVATAR = USER_ID } else { AVATAR = 3620060826 }
+
+      // 存储
+      SD(USER_FILE, { ID: USER_ID, 昵称: RANDOM_NICKNAMES, 头像: AVATAR, 最后签到日期: '', 连续签到天数: 0, 累计签到天数: 0, 能量值: 0, 等级: 0, 白蜡: 0, 季蜡: 0, 抢蜡烛次数: 0, 被抢次数: 0, 抢蜡烛总数: 0, 被抢蜡烛总数: 0, 上次抢蜡烛时间戳: 0, 胜: 0, 负: 0, 平: 0, 赚取: 0, 亏损: 0, 总赠送数量: 0, 总收入数量: 0, 背包: { 蜡烛保护卡: 0, 签到双倍卡: 0 } })
+
+      // 是否为QQ机器人，新用户提示
+      if (e.adapter === 'QQBot') {
+        REPLY = [
+          '> [设置昵称(昵称)]指令可设置昵称\n' +
+          '> 示例：设置昵称小秋\n' +
+          '> [设置头像(QQ号)]可设置为QQ头像\n' +
+          '> 示例：设置头像114514'
+        ]
+      } else {
+        REPLY = [
+          segment.at(e.user_id),
+          '\n“设置昵称[昵称]”指令可设置昵称\n' +
+          '示例：设置昵称小秋\n' +
+          '“设置头像[QQ号]”可设置为QQ头像\n' +
+          '示例：设置头像114514'
+        ]
+      }
     }
-    REPLY = [
-      segment.at(e.user_id),
-      '\n“设置昵称[昵称]”指令可设置昵称\n' +
-      '示例：设置昵称小秋\n' +
-      '“设置头像[QQ号]”可设置为QQ头像\n' +
-      '示例：设置头像114514'
-    ]
-    await render('admin/签到', { ...html, bg: await rodom() }, { e, scale: 1.4 }, REPLY)
+
+    // 读取用户数据
+    const USER_DATA = GUD(USER_ID)
+
+    // 获取相应数据
+    const CONSECUTIVE_DAYS = USER_DATA['连续签到天数']
+    const CUMULATIVE_DAYS = USER_DATA['累计签到天数']
+    const DATE_LAST = USER_DATA['最后签到日期']
+
+    // 今日是否已签到
+    if (DATE_LAST === getCurrentDate()) { return e.reply('今日已签，请明日再来') }
+
+    // 是否连续签到
+    let IS_CONSECUTIVE = false
+    if (DATE_LAST === getYesterdayDate()) IS_CONSECUTIVE = true
+
+    // 今日获得白蜡，季蜡和能量值
+    let GET_BL = Math.floor(Math.random() * (31 - 20 + 1)) + 20;
+    let GET_JL = Math.floor(Math.random() * (11 - 5 + 1)) + 5;
+    const GET_NLZ = Math.floor(Math.random() * 30 - 20 + 1) + 20;
+
+    // 是否双倍
+    let IS_DOUBLE = false
+    if (USER_DATA['背包']['签到双倍卡'] >= 1) { GET_BL *= 2; GET_JL *= 2; USER_DATA['背包']['签到双倍卡'] -= 1; IS_DOUBLE = true }
+
+    // 数据处理
+    USER_DATA['最后签到日期'] = getCurrentDate();
+    USER_DATA['连续签到天数'] = IS_CONSECUTIVE ? (CONSECUTIVE_DAYS + 1) : 1;
+    USER_DATA['累计签到天数'] = CUMULATIVE_DAYS + 1;
+    USER_DATA['白蜡'] += GET_BL;
+    USER_DATA['季蜡'] += GET_JL;
+    USER_DATA['能量值'] += GET_NLZ;
+
+    // 是否升级
+    if (USER_DATA['能量值'] >= 100) { USER_DATA['等级'] = (USER_DATA['等级'] || 0) + 1; USER_DATA['能量值'] = USER_DATA['能量值'] - 100 }
+
+    // 存储
+    SD(USER_FILE, USER_DATA);
+
+    // 提示
+    const CUMULATIVE_HINT = `你已累计签到 ${CUMULATIVE_DAYS} 天！`;
+    const CONSECUTIVE_HINT = IS_CONSECUTIVE ? `你已连续签到 ${CONSECUTIVE_DAYS} 天！` : '';
+
+    // 传入并返回图片
+    await render('admin/签到', {
+      NICKNAME: USER_DATA['昵称'],
+      HEAD_PORTRAIT: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
+      GET_BL,
+      GET_JL,
+      GET_NLZ,
+      LEVEL: USER_DATA['等级'],
+      CUMULATIVE_HINT,
+      CONSECUTIVE_HINT,
+      USER_NUMBER: (fs.readdirSync('plugins/Tlon-Sky/data/Sky签到')).length
+    }, { e, scale: 1.4 }, REPLY)
   }
 
-  async SETTING_A_NICKNAME(e) {
+  async SAN(e) {
+    // 用户ID和用户文件
     const USER_ID = e.user_id;
-    const NICKNAME = e.msg.replace(/#|\/|设置昵称/g, "").replace(/\s/g, '');
-    if (NICKNAME.length > 15) { return e.reply('昵称长度不可大于十五位！'); }
-    const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-    const USER_DATA = GetData(USER_FILE);
-    USER_DATA['昵称'] = NICKNAME;
-    SaveData(USER_FILE, USER_DATA);
-    if (e.adapter === 'QQBot') {
-      return e.reply(['> 设置成功!', `# [${NICKNAME}]`])
-    }
-    e.reply(`设置成功 [${NICKNAME}]`);
+    const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
+
+    // 用户是否存在
+    if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
+
+    // 使用正则删除无关字符
+    const NICKNAME = e.msg.replace(/#|\/|设置昵称/g, "").replace(/\s/g, '')
+
+    // 昵称长度是否大于15位
+    if (NICKNAME.length > 15) { return e.reply('昵称长度不可大于十五位！') }
+
+    // 用户数据
+    const USER_DATA = GUD(USER_ID)
+
+    // 数据处理和存储
+    USER_DATA['昵称'] = NICKNAME
+    SD(USER_FILE, USER_DATA)
+
+    // 告诉用户设置成功
+    if (e.adapter === 'QQBot') return e.reply(['> 设置成功!', `# [${NICKNAME}]`])
+    e.reply(`设置成功 [${NICKNAME}]`)
   }
 
-  async SETTING_THE_AVATAR(e) {
+  async STA(e) {
+    // 用户ID和用户文件
     const USER_ID = e.user_id;
+    const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
+
+    // 用户是否存在
+    if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
+
+    // 匹配，删除空格并转换为浮点数
     const MATCH = parseFloat((e.msg.match(/^(#|\/)?设置头像(.*)$/))[2].replace(/\s/g, ''))
-    const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-    const USER_DATA = GetData(USER_FILE);
+
+    // 用户数据
+    const USER_DATA = GUD(USER_ID)
+
+    // 数据处理和存储
     USER_DATA['头像'] = MATCH
-    SaveData(USER_FILE, USER_DATA);
-    if (e.adapter === 'QQBot') {
-      return e.reply(['> 设置成功！'], segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH}&s=640`))
-    }
-    e.reply([segment.at(USER_ID), '设置成功']);
-    e.reply([segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH}&s=640`)]);
+    SD(USER_FILE, USER_DATA)
+
+    // 告诉用户设置成功
+    if (e.adapter === 'QQBot') return e.reply(['> 设置成功！'], segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH}&s=640`))
+    e.reply([segment.at(USER_ID), '设置成功'], true)
+    e.reply([segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH}&s=640`)], true)
   }
 }
 
@@ -193,14 +185,4 @@ function getYesterdayDate() {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
-}
-
-const rodom = async function () {
-  let image = fs.readdirSync('./plugins/Tlon-Sky/resource/admin/imgs/bg')
-  let listImg = []
-  for (let val of image) {
-    listImg.push(val)
-  }
-  let imgs = listImg.length == 1 ? listImg[0] : listImg[lodash.random(0, listImg.length - 1)]
-  return imgs
 }

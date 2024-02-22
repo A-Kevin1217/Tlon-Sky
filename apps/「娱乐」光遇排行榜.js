@@ -1,6 +1,6 @@
 import { render } from '../components/index.js';
 import { Leaderboard } from '../utils/Leaderboard.js';
-import { GetData } from '../utils/db.js';
+import { GD } from '../utils/db.js';
 
 export class 娱乐_光遇排行榜 extends plugin {
   constructor() {
@@ -46,8 +46,8 @@ export class 娱乐_光遇排行榜 extends plugin {
       TITLE_B = '连签排行';
     }
 
-    const LEADERBOARD_DATA_A = GetData(LEADERBOARD_FILE_A);
-    const LEADERBOARD_DATA_B = GetData(LEADERBOARD_FILE_B);
+    const LEADERBOARD_DATA_A = GD(LEADERBOARD_FILE_A);
+    const LEADERBOARD_DATA_B = GD(LEADERBOARD_FILE_B);
 
     const Top_nickname_A = LEADERBOARD_DATA_A.slice(0, 10).map(item => item.nickname);
     const Top_nickname_B = LEADERBOARD_DATA_B.slice(0, 10).map(item => item.nickname);

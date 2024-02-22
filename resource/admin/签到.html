@@ -11,6 +11,7 @@
 		background-size: cover !important;
 		width: 400px;
 	}
+
 	.profile-picture {
 		float: left;
 		width: 200px;
@@ -25,9 +26,9 @@
 <div class="cfg-box">
 	<ul class="cfg-ul">
 		<li class="cfg-li">
-			<img src="{{头像}}" alt="头像" class="profile-picture" style="width:170px; height:170px;">
-			<h1>{{昵称}}</h1>
-			<h1>当前等级：{{等级}}</h1>
+			<img src="{{HEAD_PORTRAIT}}" alt="头像" class="profile-picture" style="width:170px; height:170px;">
+			<h1>{{NICKNAME}}</h1>
+			<h1>当前等级：{{LEVEL}}</h1>
 			<h1>签到成功！</h1>
 			<h1></h1>
 		</li>
@@ -37,18 +38,18 @@
 	<ul class="cfg-ul">
 		<li class="cfg-li">
 			<h1><em>签到信息</em></h1>
-			<h2>白蜡 + <span class="color: lime;">{{获得白蜡}}</span></h2>
-			<h2>季蜡 + <span class="color: lime;">{{获得季蜡}}</span></h2>
-			<h2>能量值 + <span class="color: lime;">{{获得能量值}}</span></h2>
-			<h2>{{累计签到提示}}</h2>
-			<h2>{{连续签到提示}}</h2>
+			<h2>白蜡 + <span class="color: lime;">{{GET_BL}}</span></h2>
+			<h2>季蜡 + <span class="color: lime;">{{GET_JL}}</span></h2>
+			<h2>能量值 + <span class="color: lime;">{{GET_NLZ}}</span></h2>
+			<h2>{{CUMULATIVE_HINT}}</h2>
+			<h2>{{CONSECUTIVE_HINT}}</h2>
 		</li>
 	</ul>
 </div>
 <div class="cfg-box">
 	<ul class="cfg-ul">
 		<li class="cfg-li">
-			<h2>Tlon-Sky当前用户数量：{{UserNumber}}</h2>
+			<h2>用户总数量：{{USER_NUMBER}}</h2>
 		</li>
 	</ul>
 </div>

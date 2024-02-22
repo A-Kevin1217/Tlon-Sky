@@ -1,4 +1,13 @@
 -------------------
+* 2024/02/23
+ - 优化细节
+："Tlon-Sky\apps\「娱乐」签到.js || 「娱乐」赌蜡烛.js || 「娱乐」光遇排行榜.js"
+："Tlon-Sky\apps\「娱乐」蜡烛商店.js || 「娱乐」抢蜡烛.js || 「娱乐」送蜡烛.js"
+："Tlon-Sky\apps\「娱乐」随机好友.js || 「娱乐」我的信息.js"
+："Tlon-Sky\utils\db.js"
+："Tlon-Sky\resource\admin\签到.html || 抢蜡烛.html"
+
+-------------------
 * 2024/02/22
  - 优化细节，适配LainQQBot按钮
 ："Tlon-Sky\apps\「光遇」全图鉴参考.js || 「光遇」剩余时间查询.js"

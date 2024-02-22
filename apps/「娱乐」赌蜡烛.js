@@ -1,7 +1,7 @@
 import fs from 'fs';
 import yaml from 'yaml';
 import { render } from '../components/index.js';
-import { GetData, SaveData, UserFiles } from '../utils/db.js';
+import { GD, SD, ITUE } from '../utils/db.js';
 
 const AWGSFile = `plugins/Tlon-Sky/data/秋风赌坊.json`;
 const GroupYaml = 'plugins/Tlon-Sky/config/Gambling.yaml'
@@ -41,8 +41,8 @@ export class 娱乐_赌蜡烛 extends plugin {
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
         const UserPunches = e.msg.replace(/#?\/|dlz|赌蜡烛/g, "")
         const USER_ID = e.user_id;
-        if (!UserFiles(USER_ID)) { return e.reply('请先发送光遇签到') }
-        const UserDatas = GetData(`plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`)
+        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
+        const UserDatas = GD(`plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`)
         const LastExecutionTime = UserDatas['上次赌蜡烛时间戳'] || 0;
         const ROCK = '石头';
         const PAPER = '布';
@@ -68,12 +68,12 @@ export class 娱乐_赌蜡烛 extends plugin {
 
             const BetFile = `plugins/Tlon-Sky/data/押注信息/${USER_ID}.json`;
             if (!fs.existsSync(BetFile)) { return e.reply('您尚未押注，请先押注') }
-            const BetData = GetData(BetFile)
+            const BetData = GD(BetFile)
 
             const UserFile = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-            const UserData = GetData(UserFile)
+            const UserData = GD(UserFile)
 
-            const AWGSData = GetData(AWGSFile)
+            const AWGSData = GD(AWGSFile)
 
             //  判断是否押注
             if (BetData['押注金额'] > 0) {
@@ -87,10 +87,10 @@ export class 娱乐_赌蜡烛 extends plugin {
                     UserData['白蜡'] = (UserData['白蜡']) + (BetData['押注金额'])
                     UserData['平'] = (UserData['平'] || 0) + 1
                     UserData['上次赌蜡烛时间戳'] = NowDate
-                    SaveData(UserFile, UserData)
+                    SD(UserFile, UserData)
 
                     AWGSData['平'] += 1
-                    SaveData(AWGSFile, AWGSData)
+                    SD(AWGSFile, AWGSData)
                     return e.reply(`平局！你和系统都选择了${SPunches}\n赌注已全部返还用户`)
                 } else if (
                     (UserPunches === ROCK && SPunches === SCISSORS) ||
@@ -105,23 +105,23 @@ export class 娱乐_赌蜡烛 extends plugin {
                     UserData['赚取'] = (UserData['赚取'] || 0) + NetProfit
                     UserData['白蜡'] = (UserData['白蜡']) + GetAmount
                     UserData['上次赌蜡烛时间戳'] = NowDate
-                    SaveData(UserFile, UserData)
+                    SD(UserFile, UserData)
 
                     AWGSData['赔'] = AWGSData['赔'] + NetProfit
                     AWGSData['负'] += 1
-                    SaveData(AWGSFile, AWGSData)
+                    SD(AWGSFile, AWGSData)
                     return e.reply(`用户出拳：${UserPunches}\n系统出拳：${SPunches}\n出拳结果：赢\n赚取蜡烛数量：${NetProfit}根`)
                 } else {
                     重置押注信息(e)
                     UserData['负'] = (UserData['负'] || 0) + 1
                     UserData['亏损'] = (UserData['亏损'] || 0) + BetData['押注金额']
                     UserData['上次赌蜡烛时间戳'] = NowDate
-                    SaveData(UserFile, UserData)
+                    SD(UserFile, UserData)
 
                     //  秋风信息处理
                     AWGSData['赚'] = (AWGSData['赚']) + BetData['押注金额']
                     AWGSData['胜'] += 1
-                    SaveData(AWGSFile, AWGSData)
+                    SD(AWGSFile, AWGSData)
                     return e.reply(`用户出拳：${UserPunches}\n系统出拳：${SPunches}\n出拳结果：输\n损失蜡烛数量：${BetData['押注金额']}根`)
                 }
             } else {
@@ -143,30 +143,30 @@ export class 娱乐_赌蜡烛 extends plugin {
 
         const USER_ID = e.user_id;
         const UserFile = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-        const UserData = GetData(UserFile)
+        const UserData = GD(UserFile)
         if (UserData['白蜡'] < GetNumber) { return e.reply('白蜡不足！') }
 
         const GetFile = `plugins/Tlon-Sky/data/押注信息/${USER_ID}.json`
         if (!fs.existsSync(GetFile)) {
-            const GetDatas = { 押注金额: 0, 倍率: null }
-            SaveData(GetFile, GetDatas)
+            const GDs = { 押注金额: 0, 倍率: null }
+            SD(GetFile, GDs)
         }
 
-        const GetDatas = GetData(GetFile)
+        const GDs = GD(GetFile)
 
         UserData['白蜡'] = UserData['白蜡'] - GetNumber
-        SaveData(UserFile, UserData)
+        SD(UserFile, UserData)
 
         const X = Math.min(1.5 + (Math.floor(GetNumber / 1000) * 0.5), 2.0);
-        GetDatas['押注金额'] = (GetDatas['押注金额'] || 0) + GetNumber
-        GetDatas['倍率'] = X
-        SaveData(GetFile, GetDatas)
-        e.reply(`你已成功押注 ${GetDatas['押注金额'] || 0}根白蜡，倍率为 ${X}。`);
+        GDs['押注金额'] = (GDs['押注金额'] || 0) + GetNumber
+        GDs['倍率'] = X
+        SD(GetFile, GDs)
+        e.reply(`你已成功押注 ${GDs['押注金额'] || 0}根白蜡，倍率为 ${X}。`);
 
     }
 
     async INFO(e) {
-        const AWGSData = GetData(AWGSFile)
+        const AWGSData = GD(AWGSFile)
         let html = {
             秋风赌坊: 'plugins/Tlon-Sky/resource/Tlon-Sky.png',
             赢: `赢：${AWGSData['胜']} 次`,
