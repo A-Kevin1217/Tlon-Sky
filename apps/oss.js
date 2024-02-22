@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { SaveData } from "../utils/db.js";
+import { SD } from "../utils/db.js";
 
 export class oss extends plugin {
     constructor() {
@@ -59,7 +59,7 @@ export class oss extends plugin {
                     签到双倍卡: (USER_BACKPACK_DATA[USER_ID]['签到双倍卡'] || 0),
                 }
             }
-            SaveData(USER_FILE, New_USER_DATA);
+            SD(USER_FILE, New_USER_DATA);
             logger.mark('已整理文件' + FILE_NAME);
         });
         return this.e.reply('整理完成');
