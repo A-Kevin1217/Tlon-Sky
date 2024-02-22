@@ -15,7 +15,7 @@ export class SKY_HELP extends plugin {
           fnc: 'SKY_HELP',
         }, {
           reg: /^(#|\/)?(季节|常驻)兑换图列表$/,
-          fmc: 'SKY_HELP'
+          fnc: 'SKY_HELP'
         }
       ]
     });
