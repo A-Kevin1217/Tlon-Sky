@@ -16,7 +16,7 @@ export const helpList = [{
   }, {
     "icon": 43,
     "title": "光遇信息",
-    "desc": "查看Tlon-Sky的个人信息"
+    "desc": "个人信息"
   }, {
     "icon": 53,
     "title": "设置昵称",
@@ -30,18 +30,18 @@ export const helpList = [{
     "desc": "查看商店物品与价格"
   }, {
     "icon": 73,
-    "title": "#购买+物品名",
+    "title": "#购买[物品名]",
     "desc": "购买商店物品，记得带#号"
   }]
 }, {
   "group": "蜡烛操作",
   "list": [{
     "icon": 83,
-    "title": "押注+数字",
+    "title": "押注[数字]",
     "desc": "每多一千赌注倍率增加0.5"
   }, {
     "icon": 93,
-    "title": "dlz+剪刀 石头 布",
+    "title": "dlz[剪刀,石头,布]",
     "desc": "与系统进行猜拳"
   }, {
     "icon": 103,
@@ -56,20 +56,20 @@ export const helpList = [{
   "group": "排行榜",
   "list": [{
     "icon": 24,
-    "title": "蜡烛排行",
-    "desc": "查看白蜡与季蜡排行Top10"
+    "title": "排行信息",
+    "desc": "查看个人所有排行信息"
   }, {
     "icon": 34,
-    "title": "赌博排行",
-    "desc": "查看赚取与亏损排行Top10"
+    "title": "蜡烛排行",
+    "desc": "查看白蜡与季蜡排行"
   }, {
     "icon": 44,
     "title": "抢蜡排行",
-    "desc": "查看抢蜡与被抢排行Top10"
+    "desc": "查看抢蜡与被抢排行"
   }, {
     "icon": 54,
     "title": "签到排行",
-    "desc": "查看累签与连签排行Top10"
+    "desc": "查看累签与连签排行"
   }]
 }, {
   "group": "后续功能待添加 · 欢迎来392665563提议",
