@@ -20,4 +20,4 @@ export function ITUE(ID) {
 }
 
 /** 读取用户数据 */
-export function GUD(ID) { return GetData(`plugins/Tlon-Sky/data/Sky签到/${ID}.json`) }
+export function GUD(ID) { return GD(`plugins/Tlon-Sky/data/Sky签到/${ID}.json`) }
