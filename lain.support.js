@@ -150,14 +150,14 @@ export default class Button {
 
     SKY_HELP_4() {
         return Bot.Button([[
-            { labeli: '晨岛', callback: '/晨岛兑换图' },
-            { labeli: '云野', callback: '/云野兑换图' },
-            { labeli: '雨林', callback: '/雨林兑换图' }
+            { label: '晨岛', callback: '/晨岛兑换图' },
+            { label: '云野', callback: '/云野兑换图' },
+            { label: '雨林', callback: '/雨林兑换图' }
         ], [
 
-            { labeli: '霞谷', callback: '/霞谷兑换图' },
-            { labeli: '暮土', callback: '/暮土兑换图' },
-            { labeli: '禁阁', callback: '/禁阁兑换图' }
+            { label: '霞谷', callback: '/霞谷兑换图' },
+            { label: '暮土', callback: '/暮土兑换图' },
+            { label: '禁阁', callback: '/禁阁兑换图' }
         ]])
     }
 
