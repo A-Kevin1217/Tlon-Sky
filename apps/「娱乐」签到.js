@@ -70,14 +70,6 @@ export class 娱乐_签到 extends plugin {
         }
       }
       SaveData(USER_FILE, USER_INFO);
-      const REPLY = [
-        segment.at(e.user_id),
-        '\n“设置昵称[昵称]”指令可设置昵称\n' +
-        '示例：设置昵称小秋\n' +
-        '“设置头像[QQ号]”可设置为QQ头像\n' +
-        '示例：设置头像114514'
-      ];
-      e.reply(REPLY);
     }
 
     const USER_DATA = GetData(USER_FILE);
@@ -135,17 +127,37 @@ export class 娱乐_签到 extends plugin {
       连续签到提示: 连续签到提示,
       UserNumber: Tlon_Sky_user_number
     }
-    await render('admin/签到', { ...html, bg: await rodom() }, { e, scale: 1.4 });
+    let REPLY = []
+    if (e.adapter === 'QQBot') {
+      REPLY = [
+        '> [设置昵称(昵称)]指令可设置昵称\n' +
+        '> 示例：设置昵称小秋\n' +
+        '> [设置头像(QQ号)]可设置为QQ头像\n' +
+        '> 示例：设置头像114514'
+      ]
+      return render('admin/签到', { ...html, bg: await rodom() }, { e, scale: 1.4 }, REPLY)
+    }
+    REPLY = [
+      segment.at(e.user_id),
+      '\n“设置昵称[昵称]”指令可设置昵称\n' +
+      '示例：设置昵称小秋\n' +
+      '“设置头像[QQ号]”可设置为QQ头像\n' +
+      '示例：设置头像114514'
+    ]
+    await render('admin/签到', { ...html, bg: await rodom() }, { e, scale: 1.4 }, REPLY)
   }
 
   async SETTING_A_NICKNAME(e) {
     const USER_ID = e.user_id;
-    const NICKNAME = e.msg.replace(/#?\/|设置昵称/g, "").replace(/\s/g, '');
+    const NICKNAME = e.msg.replace(/#|\/|设置昵称/g, "").replace(/\s/g, '');
     if (NICKNAME.length > 15) { return e.reply('昵称长度不可大于十五位！'); }
     const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
     const USER_DATA = GetData(USER_FILE);
     USER_DATA['昵称'] = NICKNAME;
     SaveData(USER_FILE, USER_DATA);
+    if (e.adapter === 'QQBot') {
+      return e.reply(['> 设置成功!', `# [${NICKNAME}]`])
+    }
     e.reply(`设置成功 [${NICKNAME}]`);
   }
 
@@ -156,6 +168,9 @@ export class 娱乐_签到 extends plugin {
     const USER_DATA = GetData(USER_FILE);
     USER_DATA['头像'] = MATCH
     SaveData(USER_FILE, USER_DATA);
+    if (e.adapter === 'QQBot') {
+      return e.reply(['> 设置成功！'], segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH}&s=640`))
+    }
     e.reply([segment.at(USER_ID), '设置成功']);
     e.reply([segment.image(`https://q.qlogo.cn/g?b=qq&nk=${MATCH}&s=640`)]);
   }

@@ -12,6 +12,10 @@
 ："Tlon-Sky\apps\「光遇」菜单.js"
 ："Tlon-Sky\config\HELP_1.js || HELP_2.js || HELP_3.js || HELP_4.js"
 
+ - 优化新用户签到提示
+："Tlon-Sky\apps\「娱乐」签到.js"
+："Tlon-Sky\components/renderer.js"
+
 -------------------
 * 2024/02/21
  - 优化细节
