@@ -1,6 +1,4 @@
-import fs from "fs";
-
-const REGEX = /^(#|\/)?(.*)年复刻记录$/
+const REGEX = /^(#|\/)?(20|21|22|23|24)年复刻记录$/
 export class A_COPY_OF_THE_PAST extends plugin {
   constructor() {
     super({
@@ -18,22 +16,6 @@ export class A_COPY_OF_THE_PAST extends plugin {
   }
 
   async A_COPY_OF_THE_PAST(e) {
-    let year = (e.msg.match(REGEX))[2]
-    const yearMap = {
-      '20': '2020',
-      '21': '2021',
-      '22': '2022',
-      '23': '2023',
-      '24': '2024'
-    };
-    if (yearMap.hasOwnProperty(year)) {
-      year = yearMap[year];
-    }
-    const imgreply = `plugins/Tlon-Sky/resource/Picture/Duplicate recording/${year}年光遇复刻记录.png`;
-    if (!fs.existsSync(imgreply)) {
-      return e.reply(`抱歉，没有找到${year}年复刻记录\n请检查名称是否正确`);
-    } else {
-      await e.reply([segment.at(e.user_id), segment.image(imgreply)]);
-    }
+    return e.reply([segment.image(`plugins/Tlon-Sky/resource/Picture/Duplicate recording/${(e.msg.match(REGEX))[2]}年光遇复刻记录.png`)]);
   }
 }

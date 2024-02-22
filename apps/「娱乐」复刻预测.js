@@ -8,13 +8,13 @@ export class 光遇_复刻预测 extends plugin {
             rule: [
                 {
                     reg: /^(#|\/)?复刻预测$/,
-                    fnc: '复刻预测'
+                    fnc: 'FORECAST'
                 }
             ]
         })
     }
 
-    async 复刻预测(e) {
+    async FORECAST(e) {
         let name = [
             '火先知', '水先知', '土先知', '风先知',
             '刁蛮浪者', '挑衅艺伎', '敬礼护卫', '舒展大师', '跳跃舞者', '拳礼武僧',

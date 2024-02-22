@@ -16,13 +16,13 @@ export class 娱乐_赌蜡烛 extends plugin {
             rule: [
                 {
                     reg: /^(#|\/)?(dlz|赌蜡烛)(.*)$/,
-                    fnc: '赌蜡烛'
+                    fnc: 'GAMBLE'
                 }, {
                     reg: /^(#|\/)?(押注|yz)(.*)$/,
-                    fnc: '押注'
+                    fnc: 'BET_OM'
                 }, {
                     reg: /^(#|\/)?(赌坊信息|秋风赌坊)$/,
-                    fnc: '赌坊信息'
+                    fnc: 'INFO'
                 }, {
                     reg: /^(#|\/)?开启赌蜡烛$/,
                     fnc: 'StartGambling'
@@ -34,7 +34,7 @@ export class 娱乐_赌蜡烛 extends plugin {
         });
     }
 
-    async 赌蜡烛(e) {
+    async GAMBLE(e) {
         const CoolingTime = 30 * 60 * 1000;
         const NowDate = Date.now();
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
@@ -133,7 +133,7 @@ export class 娱乐_赌蜡烛 extends plugin {
     }
 
 
-    async 押注(e) {
+    async BET_OM(e) {
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
         if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
 
@@ -165,7 +165,7 @@ export class 娱乐_赌蜡烛 extends plugin {
 
     }
 
-    async 赌坊信息(e) {
+    async INFO(e) {
         const AWGSData = GetData(AWGSFile)
         let html = {
             秋风赌坊: 'plugins/Tlon-Sky/resource/Tlon-Sky.png',

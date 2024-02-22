@@ -1,7 +1,11 @@
-const SEASON_NAME = '九色鹿季'; // 季节名称
-const graduationWax = 398; // 季节毕业所需季蜡数量
-const START_TIME = '2024-01-15 10:00:00'; // 季节开始时间
-const END_TIME = '2024-04-07 23:59:59'; // 季节结束时间
+/** 季节名称 */
+const SEASON_NAME = '九色鹿季';
+/** 季节毕业所需季蜡数量 */
+const graduationWax = 398;
+/** 季节开始时间 */
+const START_TIME = '2024-01-15 10:00:00';
+/** 季节结束时间 */
+const END_TIME = '2024-04-07 23:59:59';
 export class SEASONAL_INFO_CALCULATION extends plugin {
   constructor() {
     super({
