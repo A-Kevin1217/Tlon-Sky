@@ -152,15 +152,19 @@ export class SKY_YL_QD extends plugin {
     if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
 
     // 匹配，删除空格并转换为浮点数
-    let MATCH = parseFloat((e.msg.match(/^(#|\/)?设置头像(.*)$/))[2].replace(/\s/g, ''))
+    let match = e.msg.match(/^(#|\/)?设置头像(.*)$/);
+    let setting = match ? match[2].replace(/\s/g, '') : null;
+    let avatar = Number.isNaN(parseFloat(setting)) ? null : parseFloat(setting);
 
-    if (MATCH.length <= 5) { e.reply('输入QQ号不符合规范，默认设置3620060826为头像'); MATCH = 3620060826 }
+    if (!avatar) { return e.reply('请输入纯数字QQ号!') }
+
+    if (avatar <= 10001) { e.reply('输入QQ号不符合规范，默认设置3620060826为头像'); avatar = 3620060826 }
 
     // 用户数据
     const USER_DATA = GUD(USER_ID)
 
     // 数据处理和存储
-    USER_DATA['头像'] = MATCH
+    USER_DATA['头像'] = avatar
     SD(USER_FILE, USER_DATA)
 
     // 告诉用户设置成功
