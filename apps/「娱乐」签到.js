@@ -168,7 +168,7 @@ export class SKY_YL_QD extends plugin {
     SD(USER_FILE, USER_DATA)
 
     // 告诉用户设置成功
-    if (e.adapter === 'QQBot') return e.reply(['> 设置成功！'], segment.image(`https://q.qlogo.cn/g?b=qq&nk=${avatar}&s=640`))
+    if (e.adapter === 'QQBot') return e.reply(['> 设置成功！', segment.image(`https://q.qlogo.cn/g?b=qq&nk=${avatar}&s=640`)])
     e.reply([segment.at(USER_ID), '设置成功'], true)
     e.reply([segment.image(`https://q.qlogo.cn/g?b=qq&nk=${avatar}&s=640`)], true)
   }
