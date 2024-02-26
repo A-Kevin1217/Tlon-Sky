@@ -38,7 +38,7 @@ export class 娱乐_赌蜡烛 extends plugin {
         const CoolingTime = 30 * 60 * 1000;
         const NowDate = Date.now();
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
-        if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
+        if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能\n请您联系主人开启') }
         const UserPunches = e.msg.replace(/#?\/|dlz|赌蜡烛/g, "")
         const USER_ID = e.user_id;
         if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
@@ -135,7 +135,7 @@ export class 娱乐_赌蜡烛 extends plugin {
 
     async BET_OM(e) {
         let data = yaml.parse(fs.readFileSync(GroupYaml, 'utf-8'))
-        if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能') }
+        if (!data.group.includes(e.group_id)) { return e.reply('该群尚未开启赌蜡烛功能\n请您联系主人开启') }
 
         const GetNumber = parseFloat(e.msg.replace(/#?\/|(押注|yz)/g, ""))
 
