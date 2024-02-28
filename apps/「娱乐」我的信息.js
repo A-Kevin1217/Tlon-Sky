@@ -1,7 +1,7 @@
 import fs from 'fs';
 import lodash from 'lodash';
 import { render } from '../components/index.js';
-import { leaderboard } from '../utils/Leaderboard.js';
+import { Leaderboard } from '../utils/Leaderboard.js';
 import { GD, ITUE } from '../utils/db.js';
 
 const USER_FOLDER = 'plugins/Tlon-Sky/data/Sky签到';
@@ -15,11 +15,11 @@ export class 我的信息 extends plugin {
             priority: 5000,
             rule: [
                 {
-                    reg: '^(#|\\/)?光遇(信息|背包)$',
+                    reg: '^(#|\/)?光遇(信息|背包)$',
                     fnc: 'si'
                 },
                 {
-                    reg: '^(#|\\/)?排行信息$',
+                    reg: '^(#|\/)?排行信息$',
                     fnc: '排行信息'
                 }
             ]
@@ -27,42 +27,61 @@ export class 我的信息 extends plugin {
     }
 
     async si(e) {
-        leaderboard();
+        Leaderboard();
 
         const USER_ID = e.user_id;
         if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到'); }
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-        const [USER_DATA, RANKING_A_DATA, RANKING_B_DATA] = await Promise.all([
-            GD(USER_FILE),
-            GD('plugins/Tlon-Sky/data/排行榜/白蜡.json'),
-            GD('plugins/Tlon-Sky/data/排行榜/季蜡.json')
-        ]);
+        const RANKING_A_FILE = 'plugins/Tlon-Sky/data/排行榜/白蜡.json';
+        const RANKING_B_FILE = 'plugins/Tlon-Sky/data/排行榜/季蜡.json';
+
+        const USER_DATA = GD(USER_FILE);
+        const RANKING_A_DATA = GD(RANKING_A_FILE);
+        const RANKING_B_DATA = GD(RANKING_B_FILE);
 
         const RANKING_A = calculateRank(RANKING_A_DATA, USER_ID);
         const RANKING_B = calculateRank(RANKING_B_DATA, USER_ID);
 
-        const { 头像, 等级, 能量值, 白蜡, 昵称, 季蜡, 抢蜡烛次数, 被抢次数, 抢蜡烛总数, 被抢蜡烛总数, 连续签到天数, 累计签到天数, 最后签到日期, 胜, 负, 平, 赚取, 亏损, 总赠送数量 } = USER_DATA;
-        const AVERAGE_ROB = (抢蜡烛次数 === 0) ? 0 : (抢蜡烛总数 / 抢蜡烛次数).toFixed(1);
-        const AVERAGE_GET_ROBBED = (被抢次数 === 0) ? 0 : (被抢蜡烛总数 / 被抢次数).toFixed(1);
-
+        const { 昵称, 头像, 总收入数量, 最后签到日期, 连续签到天数, 累计签到天数, 白蜡, 季蜡, 能量值, 等级, 抢蜡烛次数, 被抢次数, 抢蜡烛总数, 被抢蜡烛总数, 胜, 负, 平, 赚取, 亏损, 总赠送数量 } = USER_DATA;
+        const AVERAGE_ROB = isNaN(抢蜡烛总数 / 抢蜡烛次数) ? 0 : (抢蜡烛总数 / 抢蜡烛次数).toFixed(1);
+        const AVERAGE_GET_ROBBED = isNaN(被抢蜡烛总数 / 被抢次数) ? 0 : (被抢蜡烛总数 / 被抢次数).toFixed(1);
         const html = {
             头像: `https://q.qlogo.cn/g?b=qq&nk=${头像}&s=640`,
-            等级, 能量值, 白蜡, 昵称, 季蜡, 抢蜡烛次数, 被抢次数, 抢蜡烛总数, 被抢蜡烛总数, 连续签到天数, 累计签到天数, 最后签到日期, 胜, 负, 平, 赚取, 亏损, 总赠送数量,
-            平均抢: AVERAGE_ROB, 平均被抢: AVERAGE_GET_ROBBED,
-            白蜡排名: RANKING_A, 季蜡排名: RANKING_B,
+            等级: 等级,
+            能量值: 能量值,
+            白蜡数: 白蜡,
+            昵称: 昵称,
+            季蜡数: 季蜡,
+            抢次数: 抢蜡烛次数,
+            被抢次数: 被抢次数,
+            抢蜡烛总数: 抢蜡烛总数,
+            被抢蜡烛总数: 被抢蜡烛总数,
+            连续签到: 连续签到天数,
+            累计签到: 累计签到天数,
+            最后签到日期: 最后签到日期,
+            胜: 胜,
+            负: 负,
+            平: 平,
+            总赚取: 赚取,
+            总亏损: 亏损,
+            平均抢: AVERAGE_ROB,
+            平均被抢: AVERAGE_GET_ROBBED,
+            总赠送数量: 总赠送数量,
+            总收入数量: 总收入数量,
+            白蜡排名: RANKING_A,
+            季蜡排名: RANKING_B,
             蜡烛保护卡: USER_DATA['背包']['蜡烛保护卡'],
             签到双倍卡: USER_DATA['背包']['签到双倍卡']
-        };
-
-        await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 });
+        }
+        await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 })
     }
 
     async 排行信息(e) {
-        leaderboard();
+        Leaderboard()
 
         const USER_ID = e.user_id;
-        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到'); }
+        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
         const USER_DATA = GD(USER_FILE);
@@ -78,9 +97,15 @@ export class 我的信息 extends plugin {
             'plugins/Tlon-Sky/data/排行榜/累计签到天数.json'
         ];
 
-        const leaderboardJsons = await Promise.all(leaderboardFiles.map(file => GD(file)));
-        const leaderboardRanks = leaderboardJsons.map(json => calculateRank(json, USER_ID));
+        const leaderboardJsons = [];
+        for (const file of leaderboardFiles) {
+            leaderboardJsons.push(GD(file));
+        }
 
+        const leaderboardRanks = [];
+        for (let i = 0; i < leaderboardJsons.length; i++) {
+            leaderboardRanks.push(calculateRank(leaderboardJsons[i], USER_ID));
+        }
         const html = {
             头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
             白蜡排名: leaderboardRanks[0],
@@ -91,12 +116,10 @@ export class 我的信息 extends plugin {
             被抢排名: leaderboardRanks[5],
             连签排名: leaderboardRanks[6],
             累签排名: leaderboardRanks[7]
-        };
-
-        await render('admin/排行信息', { ...html }, { e, scale: 1.4 });
+        }
+        await render('admin/排行信息', { ...html, }, { e, scale: 1.4 })
     }
 }
-
 function calculateRank(RANKING_DATA, USER_ID) {
     const files = fs.readdirSync(USER_FOLDER);
     const USER_NUMBER = files.length;
@@ -109,7 +132,11 @@ function calculateRank(RANKING_DATA, USER_ID) {
 }
 
 const rodom = async function () {
-    const image = fs.readdirSync('./plugins/Tlon-Sky/resource/admin/imgs/bg');
-    const imgs = image.length === 1 ? image[0] : image[lodash.random(0, image.length - 1)];
-    return imgs;
-};
+    let image = fs.readdirSync('./plugins/Tlon-Sky/resource/admin/imgs/bg')
+    let listImg = []
+    for (let val of image) {
+        listImg.push(val)
+    }
+    let imgs = listImg.length == 1 ? listImg[0] : listImg[lodash.random(0, listImg.length - 1)]
+    return imgs
+}
