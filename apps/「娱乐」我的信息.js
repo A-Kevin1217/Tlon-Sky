@@ -1,7 +1,7 @@
 import fs from 'fs';
 import lodash from 'lodash';
 import { render } from '../components/index.js';
-import { Leaderboard } from '../utils/Leaderboard.js';
+import { leaderboard } from '../utils/Leaderboard.js';
 import { GD, ITUE } from '../utils/db.js';
 
 const USER_FOLDER = 'plugins/Tlon-Sky/data/Sky签到';
@@ -27,7 +27,7 @@ export class 我的信息 extends plugin {
     }
 
     async si(e) {
-        Leaderboard();
+        leaderboard();
 
         const USER_ID = e.user_id;
         if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到'); }
@@ -59,7 +59,7 @@ export class 我的信息 extends plugin {
     }
 
     async 排行信息(e) {
-        Leaderboard();
+        leaderboard();
 
         const USER_ID = e.user_id;
         if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到'); }

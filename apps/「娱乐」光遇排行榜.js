@@ -1,5 +1,5 @@
 import { render } from '../components/index.js';
-import { Leaderboard } from '../utils/Leaderboard.js';
+import { leaderboard } from '../utils/Leaderboard.js';
 import { GD } from '../utils/db.js';
 
 export class 娱乐_光遇排行榜 extends plugin {
@@ -19,7 +19,7 @@ export class 娱乐_光遇排行榜 extends plugin {
   }
 
   async Ranking(e) {
-    Leaderboard();
+    leaderboard();
     const MATCH = e.msg.match(/^(#|\/)?(蜡烛|赌博|抢蜡|签到)排行$/);
     const LEADERBOARD_TYPE = MATCH[2];
 

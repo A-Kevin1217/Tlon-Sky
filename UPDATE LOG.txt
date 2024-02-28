@@ -1,7 +1,7 @@
 -------------------
 * 2024/02/28
  - 优化细节
-："Tlon-Sky\apps\「娱乐」我的信息.js"
+："Tlon-Sky\apps\「娱乐」我的信息.js || 「娱乐」光遇排行榜.js"
 ："Tlon-Sky\utils\Leaderboard.js"
 
 -------------------
@@ -303,8 +303,8 @@
 -------------------
 * 2023/11/28
  - 优化排行榜功能，更改排行榜样式，删除赌博次数排行, 添加抢蜡排行，添加签到排行
-："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
-："Tlon-Sky\apps\「娱乐」「娱乐」我的信息.js"
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
+："Tlon-Sky\apps\「娱乐」我的信息.js"
 ："Tlon-Sky\config\model\help_model_.js"
 ："Tlon-Sky\resource\admin\Leaderboard.html"
 ："Tlon-Sky\resource\admin\Leaderboard.css"
@@ -578,7 +578,7 @@
 -------------------
 * 2023/10/15
  - 将白蜡和季蜡排行榜合并显示，指令：蜡烛排行
-："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
 ："Tlon-Sky\resource\admin\白蜡排行榜.html"
 ："Tlon-Sky\resource\admin\季蜡排行榜.html"
 ："Tlon-Sky\resource\admin\蜡烛排行榜.html"
@@ -601,7 +601,7 @@
 -------------------
 * 2023/10/11
  - '白蜡排行'和'季蜡排行'整体UI修改
-："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
 ："Tlon-Sky\resource\admin\白蜡排行榜.html"
 ："Tlon-Sky\resource\admin\季蜡排行榜.html"
 ："Tlon-Sky\resource\admin\排行榜.css"
@@ -614,7 +614,7 @@
 -------------------
 * 2023/10/09
  - '白蜡排行'和'季蜡排行'展示信息缩减，只显示前25位
-："Tlon-Sky\apps\「娱乐」「娱乐」光遇排行榜.js"
+："Tlon-Sky\apps\「娱乐」光遇排行榜.js"
 
  - 缩减排行榜字体大小
 ："Tlon-Sky\resource\admin\白蜡排行榜.html"
