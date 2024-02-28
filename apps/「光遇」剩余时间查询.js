@@ -50,9 +50,24 @@ export class SEASONAL_INFO_CALCULATION extends plugin {
     const graduationDaysWithCard = Math.ceil((graduationWax - 30) / 6);
     const graduationDaysWithoutCard = Math.ceil((graduationWax - 12) / 5);
 
+    if (e.adapter === 'QQBot') return e.reply([
+      `# 当前季节${SEASON_NAME}`,
+      '> 距离季节结束还剩',
+      `${days}天${hours}小时${minutes}分钟${seconds}秒`,
+      `截至至${END_TIME}`,
+      `本季节一共[${daysBetween}]天`,
+      '季蜡还可获得：',
+      `[有季卡]：${seasonWaxWithCard}季蜡`,
+      `[无季卡]：${seasonWaxWithoutCard}季蜡`,
+      `本季节毕业需：${graduationWax}季蜡`,
+      `[有季卡]毕业需：${graduationDaysWithCard}天`,
+      `[无季卡]毕业需：${graduationDaysWithoutCard}天`,
+      '(无季卡包括非必要的魔法节点)'
+    ])
+
     return e.reply([
       segment.at(e.user_id),
-      '距离' + SEASON_NAME + '结束还剩\n' +
+      '\n距离' + SEASON_NAME + '结束还剩\n' +
       days + '天' + hours + '小时' + minutes + '分钟' + seconds + '秒\n' +
       '截至至' + END_TIME + '\n' +
       '本季节一共[' + daysBetween + ']天\n' +

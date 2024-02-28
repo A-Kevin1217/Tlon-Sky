@@ -23,8 +23,10 @@ export class SERVER_STATUS extends plugin {
       const POS = JSON.pos
       const WAIT_TIME = JSON.wait_time
       if (RET === 0) {
+        if (e.adapter === 'QQBot') return e.reply(['> 当前SKY服务器畅通，无需排队'])
         return e.reply('当前未排队')
       } else if (RET === 1) {
+        if (e.adapter === 'QQBot') return e.reply(['# 当前排队中', `排队人数：${POS} 位`, `预计等待时间：${WAIT_TIME} 秒`])
         return e.reply([segment.at(e.user_id), `当前排队中\n排队人数：${POS} 位\n等待时间：${WAIT_TIME} 秒`])
       }
     } catch (err) {

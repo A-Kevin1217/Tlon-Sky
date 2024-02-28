@@ -16,6 +16,8 @@ export class A_COPY_OF_THE_PAST extends plugin {
   }
 
   async A_COPY_OF_THE_PAST(e) {
-    return e.reply([segment.image(`plugins/Tlon-Sky/resource/Picture/Duplicate recording/${(e.msg.match(REGEX))[2]}年光遇复刻记录.png`)]);
+    const image = `plugins/Tlon-Sky/resource/Picture/Duplicate recording/${(e.msg.match(REGEX))[2]}年光遇复刻记录.png`
+    if (e.adapter === 'QQBot') return e.reply(['> 此表不计入集体复刻', segment.image(image)])
+    return e.reply([segment.image(image)])
   }
 }

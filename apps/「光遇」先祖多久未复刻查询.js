@@ -22,12 +22,13 @@ export class 光遇_先祖多久未复刻查询 extends plugin {
 
   async snrd(e) {
     const SEASON_NAME = (e.msg.match(REGEX))[2]
-    let msg = '数据更新时间：2024-02-19\n此表不计入集体复刻\n'
+    let msg = '数据更新时间：2024-02-29\n此表不计入集体复刻\n'
     if (!seasons[SEASON_NAME]) { return e.reply('不存在该季节,请输入以下季节名：\n感恩丨追光丨归属丨音韵\n魔法丨圣岛丨预言丨梦想\n集结丨小王子丨风行') }
     for (const role of seasons[SEASON_NAME]) {
       const dayDiff = this.getDayDiff(role.date)
       msg += `${role.name}已[ ${dayDiff} ]天！未复刻\n`
     }
+    if (e.adapter === 'QQBot') return e.reply([`> ${msg.trim()}`])
     return e.reply(msg.trim());
   }
 }
@@ -79,7 +80,7 @@ const seasons = {
     { name: '固执登山者', date: new Date('2023-04-10') },
     { name: '热血运动员', date: new Date('2023-09-11') },
     { name: '内秀书虫', date: new Date('2022-10-25') },
-    { name: '母语者', date: new Date('2022-08-01') }
+    { name: '母语者', date: new Date('2024-02-26') }
   ],
   '预言': [ // 7
     { name: '水先知', date: new Date('2022-12-19') },
