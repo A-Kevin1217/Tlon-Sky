@@ -1,23 +1,29 @@
 import fs from 'fs';
 import { render } from '../components/index.js';
-import { GD, ITUE, SD } from '../utils/db.js';
+import { GUD, ITUE, SD } from '../utils/db.js';
 
-export class SKY_YL_QLZ extends plugin {
+export class SKY extends plugin {
   constructor() {
     super({
-      name: '[Tlon-Sky]娱乐:抢蜡烛', dsc: 'Tlon-Sky', event: 'message', priority: 1,
-      rule: [{ reg: /^(#|\/)?抢蜡烛$/, fnc: 'RC' }]
+      name: '[Tlon-Sky]娱乐:抢蜡烛',
+      dsc: 'Tlon-Sky',
+      event: 'message',
+      priority: 1,
+      rule: [{
+        reg: /^(#|\/)?抢蜡烛$/,
+        fnc: 'grabCandle'
+      }]
     })
   }
 
-  async RC(e) {
+  async grabCandle(e) {
     const USER_ID = e.user_id
 
     // 提前结束因素判断
     if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
     if (e.at === USER_ID) { return e.reply('不可自己抢自己') }
 
-    // CD时间 (2小时 60分钟 60秒 1000毫秒) - 5秒
+    // CD时间 (小时 分钟 秒 毫秒) 2小时减五秒
     const COOLING_TIME = (2 * 60 * 60 * 1000) - 5000;
 
     // 当前时间 毫秒
@@ -28,7 +34,7 @@ export class SKY_YL_QLZ extends plugin {
     const USER_FILE = `${ALL_USER_FILE_LOCATION}${USER_ID}.json`;
 
     // 读取用户数据
-    const USER_DATA = GD(USER_FILE)
+    const USER_DATA = GUD(USER_ID)
 
     // 获取相应数据
     const LAST_EXECUTION_TIME = USER_DATA['上次抢蜡烛时间戳']
@@ -67,7 +73,7 @@ export class SKY_YL_QLZ extends plugin {
     if (!ITUE(OBJECTS_USER_ID)) { return e.reply('对方没有存档，无法抢蜡烛') }
 
     // 读取被抢方数据
-    const OBJECTS_USER_DATA = GD(OBJECTS_USER_FILE);
+    const OBJECTS_USER_DATA = GUD(OBJECTS_USER_ID);
 
     // 被抢方是否保护
     let IS_PROTECTION = false
@@ -108,10 +114,16 @@ export class SKY_YL_QLZ extends plugin {
         抢得蜡烛: QUANTITY
       }, { e, scale: 1.4 });
     } else {
+      if (e.adapter === 'QQBot') return e.reply([
+        '# 被抢方太穷啦~',
+        `> 对方仅剩[${OBJECTS_USER_DATA['白蜡']}]个白蜡`,
+        `无法被抢走[${QUANTITY}]个白蜡，请再次发送抢蜡烛`
+      ])
+
       return e.reply([
         '被抢用户太穷啦~',
-        '\他仅剩「' + OBJECTS_USER_DATA['白蜡'], '」个白蜡',
-        '\n无法被抢走「' + QUANTITY, '」个白蜡，请再次发送抢蜡烛'
+        '\n他仅剩[' + OBJECTS_USER_DATA['白蜡'], ']个白蜡',
+        '\n无法被抢走[' + QUANTITY, ']个白蜡，请再次发送抢蜡烛'
       ], true)
     }
   }

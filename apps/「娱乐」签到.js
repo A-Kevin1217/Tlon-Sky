@@ -2,23 +2,27 @@ import fs from 'fs';
 import { render } from '../components/index.js';
 import { SD, GUD, ITUE } from '../utils/db.js';
 
-export class SKY_YL_QD extends plugin {
+export class SKY extends plugin {
   constructor() {
     super({
-      name: '[Tlon-Sky]娱乐:签到', dsc: 'Tlon-Sky', event: 'message', priority: 1, rule: [{
-        reg: /^(#|\/)?(光遇签到|冒泡)$/,
-        fnc: 'SI'
+      name: '[Tlon-Sky]娱乐:签到',
+      dsc: 'Tlon-Sky',
+      event: 'message',
+      priority: 1,
+      rule: [{
+        reg: /^(#|\/)?光遇签到$/,
+        fnc: 'skyEncounterCheckIn'
       }, {
         reg: /^(#|\/)?设置昵称(.*)$/,
-        fnc: 'SAN'
+        fnc: 'setNickname'
       }, {
         reg: /^(#|\/)?设置头像(.*)$/,
-        fnc: 'STA'
+        fnc: 'setAvatar'
       }]
     })
   }
 
-  async SI(e) {
+  async skyEncounterCheckIn(e) {
     // 用户ID和用户文件
     const USER_ID = e.user_id;
     const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
@@ -117,7 +121,7 @@ export class SKY_YL_QD extends plugin {
     }, { e, scale: 1.4 }, REPLY)
   }
 
-  async SAN(e) {
+  async setNickname(e) {
     // 用户ID和用户文件
     const USER_ID = e.user_id;
     const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
@@ -143,7 +147,7 @@ export class SKY_YL_QD extends plugin {
     e.reply(`设置成功 [${NICKNAME}]`)
   }
 
-  async STA(e) {
+  async setAvatar(e) {
     // 用户ID和用户文件
     const USER_ID = e.user_id;
     const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`

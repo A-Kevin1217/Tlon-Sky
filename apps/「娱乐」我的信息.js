@@ -2,41 +2,35 @@ import fs from 'fs';
 import lodash from 'lodash';
 import { render } from '../components/index.js';
 import { Leaderboard } from '../utils/Leaderboard.js';
-import { GD, ITUE } from '../utils/db.js';
+import { GD, GUD, ITUE } from '../utils/db.js';
 
-const USER_FOLDER = 'plugins/Tlon-Sky/data/Sky签到';
-
-export class 我的信息 extends plugin {
+export class SKY extends plugin {
     constructor() {
         super({
             name: '[Tlon-Sky]娱乐:我的信息',
-            dsc: '娱乐我的信息',
+            dsc: 'Tlon-Sky',
             event: 'message',
-            priority: 5000,
-            rule: [
-                {
-                    reg: '^(#|\/)?光遇(信息|背包)$',
-                    fnc: 'si'
-                },
-                {
-                    reg: '^(#|\/)?排行信息$',
-                    fnc: '排行信息'
-                }
-            ]
-        });
+            priority: 1,
+            rule: [{
+                reg: /^(#|\/)?光遇信息$/,
+                fnc: 'skyEncounterData'
+            }, {
+                reg: /^(#|\/)?排行信息$/,
+                fnc: 'rankingData'
+            }]
+        })
     }
 
-    async si(e) {
+    async skyEncounterData(e) {
         Leaderboard();
 
         const USER_ID = e.user_id;
-        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到'); }
+        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
 
-        const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
         const RANKING_A_FILE = 'plugins/Tlon-Sky/data/排行榜/白蜡.json';
         const RANKING_B_FILE = 'plugins/Tlon-Sky/data/排行榜/季蜡.json';
 
-        const USER_DATA = GD(USER_FILE);
+        const USER_DATA = GUD(USER_ID);
         const RANKING_A_DATA = GD(RANKING_A_FILE);
         const RANKING_B_DATA = GD(RANKING_B_FILE);
 
@@ -77,14 +71,13 @@ export class 我的信息 extends plugin {
         await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 })
     }
 
-    async 排行信息(e) {
+    async rankingData(e) {
         Leaderboard()
 
         const USER_ID = e.user_id;
         if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
 
-        const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-        const USER_DATA = GD(USER_FILE);
+        const USER_DATA = GUD(USER_ID);
 
         const leaderboardFiles = [
             'plugins/Tlon-Sky/data/排行榜/白蜡.json',
@@ -120,23 +113,16 @@ export class 我的信息 extends plugin {
         await render('admin/排行信息', { ...html, }, { e, scale: 1.4 })
     }
 }
+
 function calculateRank(RANKING_DATA, USER_ID) {
-    const files = fs.readdirSync(USER_FOLDER);
+    const files = fs.readdirSync('plugins/Tlon-Sky/data/Sky签到');
     const USER_NUMBER = files.length;
-    for (let i = 0; i < USER_NUMBER; i++) {
-        if (RANKING_DATA[i].userId === USER_ID) {
-            return i + 1;
-        }
-    }
-    return -1;
+    for (let i = 0; i < USER_NUMBER; i++) { if (RANKING_DATA[i].userId === USER_ID) { return i + 1 } }
+    return -1
 }
 
 const rodom = async function () {
-    let image = fs.readdirSync('./plugins/Tlon-Sky/resource/admin/imgs/bg')
-    let listImg = []
-    for (let val of image) {
-        listImg.push(val)
-    }
-    let imgs = listImg.length == 1 ? listImg[0] : listImg[lodash.random(0, listImg.length - 1)]
-    return imgs
+    let image = await fs.promises.readdir('plugins/Tlon-Sky/resource/admin/imgs/bg');
+    let imgs = image.length === 1 ? image[0] : lodash.sample(image);
+    return imgs;
 }

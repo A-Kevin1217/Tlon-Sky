@@ -2,23 +2,21 @@ import { render } from '../components/index.js';
 import { Leaderboard } from '../utils/Leaderboard.js';
 import { GD } from '../utils/db.js';
 
-export class 娱乐_光遇排行榜 extends plugin {
+export class Sky extends plugin {
   constructor() {
     super({
       name: '[Tlon-Sky]娱乐:光遇排行榜',
-      dsc: '娱乐光遇排行榜',
+      dsc: 'Tlon-Sky',
       event: 'message',
-      priority: 5000,
-      rule: [
-        {
-          reg: /^(#|\/)?(蜡烛|赌博|抢蜡|签到)排行$/,
-          fnc: 'Ranking'
-        }
-      ]
-    });
+      priority: 1,
+      rule: [{
+        reg: /^(#|\/)?(蜡烛|赌博|抢蜡|签到)排行$/,
+        fnc: 'leaderboard'
+      }]
+    })
   }
 
-  async Ranking(e) {
+  async leaderboard(e) {
     Leaderboard();
     const MATCH = e.msg.match(/^(#|\/)?(蜡烛|赌博|抢蜡|签到)排行$/);
     const LEADERBOARD_TYPE = MATCH[2];

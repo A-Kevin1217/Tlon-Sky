@@ -1,22 +1,20 @@
-import { GD, SD, ITUE } from '../utils/db.js';
+import { GUD, ITUE, SD } from '../utils/db.js';
 
-export class 娱乐_送蜡烛 extends plugin {
+export class SKY extends plugin {
     constructor() {
         super({
             name: '[Tlon-Sky]娱乐:送蜡烛',
-            dsc: '娱乐送蜡烛',
+            dsc: 'Tlon-Sky',
             event: 'message',
-            priority: 5000,
-            rule: [
-                {
-                    reg: /^(#|\/)?送蜡烛(\d+)$/,
-                    fnc: 'SEND'
-                }
-            ]
+            priority: 1,
+            rule: [{
+                reg: /^(#|\/)?送蜡烛(\d+)$/,
+                fnc: 'candleGift'
+            }]
         })
     }
 
-    async SEND(e) {
+    async candleGift(e) {
         const USER_ID = e.user_id;
         const OBJECTS_USER_ID = e.at;
 
@@ -31,13 +29,13 @@ export class 娱乐_送蜡烛 extends plugin {
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
         const OBJECTS_USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${OBJECTS_USER_ID}.json`;
 
-        const USER_DATA = GD(USER_FILE);
-        const OBJECTS_USER_DATA = GD(OBJECTS_USER_FILE);
+        const USER_DATA = GUD(USER_ID);
+        const OBJECTS_USER_DATA = GUD(OBJECTS_USER_ID);
 
-        const MATCH = e.msg.match(/^#?\/|送蜡烛(\d+)$/);
-        const GIVE_NUMBER = Number(MATCH[1]);
+        const MATCH = e.msg.match(/^(#|\/)?送蜡烛(\d+)$/);
+        const GIVE_NUMBER = Number(MATCH[2]);
 
-        if (!Number.isInteger(GIVE_NUMBER)) { return e.reply('请输入有效的整数赠送金额。'); }
+        if (!Number.isInteger(GIVE_NUMBER)) { return e.reply('请输入有效的整数赠送金额') }
 
         if (USER_DATA['白蜡'] >= GIVE_NUMBER) {
             USER_DATA['白蜡'] -= GIVE_NUMBER;
@@ -48,7 +46,7 @@ export class 娱乐_送蜡烛 extends plugin {
 
             SD(USER_FILE, USER_DATA);
             SD(OBJECTS_USER_FILE, OBJECTS_USER_DATA);
-            return e.reply(`赠送成功！\n赠送数量：${GIVE_NUMBER}`);
+            return e.reply(`已赠送${GIVE_NUMBER}根白蜡给对方`);
         } else { return e.reply('赠送失败！白蜡不足'); }
     }
 }

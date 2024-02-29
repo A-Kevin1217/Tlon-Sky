@@ -1,20 +1,18 @@
-export class 光遇_复刻预测 extends plugin {
+export class SKY extends plugin {
     constructor() {
         super({
             name: '[Tlon-Sky]娱乐:复刻预测',
-            dsc: '光遇复刻预测',
+            dsc: 'Tlon-Sky',
             event: 'message',
-            priority: 4800,
-            rule: [
-                {
-                    reg: /^(#|\/)?复刻预测$/,
-                    fnc: 'FORECAST'
-                }
-            ]
+            priority: 1,
+            rule: [{
+                reg: /^(#|\/)?复刻预测$/,
+                fnc: 'replicaPrediction'
+            }]
         })
     }
 
-    async FORECAST(e) {
+    async replicaPrediction(e) {
         let name = [
             '火先知', '水先知', '土先知', '风先知',
             '刁蛮浪者', '挑衅艺伎', '敬礼护卫', '舒展大师', '跳跃舞者', '拳礼武僧',
@@ -41,8 +39,13 @@ export class 光遇_复刻预测 extends plugin {
 
         const RANDOM_NUMBER_2 = Math.ceil(Math.random() * name.length - 1)
         const name_2 = name[RANDOM_NUMBER_2]
-        name.splice(RANDOM_NUMBER_1, 1)
 
-        return e.reply(`\n我猜下次有可能复刻下面其中一个\n【${name_1}】&【${name_2}】`, true)
+        if (e.adapter === 'QQBot') return e.reply([
+            '# 预测下一次复刻',
+            '> 我猜可能复刻这两其中一个',
+            `[**${name_1}**] || [**${name_2}**]`,
+            'BOT娱乐功能，仅供参考'
+        ])
+        return e.reply(`我猜可能复刻这两其中一个\n[${name_1}] || [${name_2}]`)
     }
 }

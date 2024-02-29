@@ -13,11 +13,7 @@ directories.forEach((directory) => {
   fs.mkdirSync(directory, { recursive: true });
 });
 
-const configFile = 'plugins/Tlon-Sky/config/Gambling.yaml';
-if (!fs.existsSync(configFile)) {
-  const initialConfig = { group: [] };
-  fs.writeFileSync(configFile, yaml.stringify(initialConfig));
-}
+
 const dir1 = './plugins/Tlon-Sky/apps'
 
 const file = [...fs.readdirSync(dir1)].filter(file => file.endsWith('.js'));
