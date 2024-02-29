@@ -43,7 +43,7 @@ export class SKY extends plugin {
         if (e.adapter === 'QQBot') return e.reply([
             '# 预测下一次复刻',
             '> 我猜可能复刻这两其中一个',
-            `[**${name_1}**] || [**${name_2}**]`,
+            `[**${name_1}**] ———— [**${name_2}**]`,
             'BOT娱乐功能，仅供参考'
         ])
         return e.reply(`我猜可能复刻这两其中一个\n[${name_1}] || [${name_2}]`)

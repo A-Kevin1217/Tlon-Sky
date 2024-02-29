@@ -4,86 +4,105 @@ export default class Button {
             name: 'Tlon-Sky',
             dsc: 'Tlon-Sky',
             priority: 1,
-            rule: [
-                {
-                    reg: /^(#|\/)?((S|s)(K|k)(Y|y)|光遇)(帮助|菜单)$/,
-                    fnc: 'SKY_HELP_1'
-                }, {
-                    reg: /^(#|\/)?((S|s)(K|k)(Y|y)|光遇)娱乐(帮助|菜单)$/,
-                    fnc: 'SKY_HELP_2'
-                }, {
-                    reg: /^季节兑换图列表$/,
-                    fnc: 'SKY_HELP_3'
-                }, {
-                    reg: /^常驻兑换图列表$/,
-                    fnc: 'SKY_HELP_4'
-                }, {
-                    reg: /^(#|\/)?(晨岛|云野|雨林|峡谷|霞谷|暮土|禁阁)兑换图$/,
-                    fnc: 'PERMANENT_EXCHANGE_PICTURE'
-                }, {
-                    reg: /^(#|\/)?(AURORA|表演|风行|感恩|归巢|归属|九色鹿|梦想|魔法|破晓|潜海|圣岛|拾光|小王子|夜行|音韵|预言|重组|追光|追忆|欧若拉|集结|凌冬)(季)?兑换图$/,
-                    fnc: 'SEASON_EXCHANGE_PICTURE'
-                }, {
-                    reg: /^(#|\/)?(复刻兑换图|国服复刻)$/,
-                    fnc: 'RETURN_EXCHANGE_PICTURE'
-                }, {
-                    reg: /^(#|\/)?季节兑换图$/,
-                    fnc: 'SEASON_EXCHANGE_PICTURE'
-                }, {
-                    reg: /^(#|\/)?(S|s)(K|k)(Y|y)(服务器)?状态$/,
-                    fnc: 'SERVER_STATUS'
-                }, {
-                    reg: /^(#|\/)?光遇公告$/,
-                    fnc: 'RETURN_EXCHANGE_PICTURE'
-                }, {
-                    reg: /^(#|\/)?(光遇|国服)?(今日|每日)?(任务|魔法|季蜡|大蜡)?(烛)?(位置)?$/,
-                    fnc: 'TASK_AND_OTHER'
-                }, {
-                    reg: /^(#|\/)?(今日)?代币(位置)?$/,
-                    fnc: 'CURRENCY_LOCATION'
-                }, {
-                    reg: /^(#|\/)?季节任务$/,
-                    fnc: 'CURRENCY_LOCATION'
-                }, {
-                    reg: /^(#|\/)?季节剩余$/,
-                    fnc: 'SEASONAL_INFO_CALCULATION'
-                }, {
-                    reg: /^(#|\/)?(20|21|22|23|24)年复刻记录$/,
-                    fnc: 'A_COPY_OF_THE_PAST'
-                }, {
-                    reg: /^(#|\/)?(.*)季多久未复刻$/,
-                    fnc: 'snrd'
-                }, {
-                    reg: /^(#|\/)?复刻预测$/,
-                    fnc: 'FORECAST'
-                },
-                {
-                    reg: '^(#|\/)?光遇(信息|背包)$',
-                    fnc: '光遇信息'
-                }, {
-                    reg: '^(#|\/)?抢蜡烛$',
-                    fnc: '抢蜡烛'
-                }, {
-                    reg: '^(#|\/)?(光遇签到|冒泡)$',
-                    fnc: '光遇签到'
-                }, {
-                    reg: '^(#|\/)?蜡烛商店$',
-                    fnc: '蜡烛商店'
-                }, {
-                    reg: '^(#|\/)购买(.*)$',
-                    fnc: '购买'
-                }, {
-                    reg: '^(#|\/)?排行信息$',
-                    fnc: '排行信息'
-                }, {
-                    reg: '^(#|\/)?(绘画|绘画分享|绘图分享)$',
-                    fnc: '绘画分享'
-                }, {
-                    reg: '^(#|\/)?(蜡烛|赌博|抢蜡|签到)排行$',
-                    fnc: '排行榜'
-                }
-            ]
+            rule: [{
+                reg: /^(#|\/)?((S|s)(K|k)(Y|y)|光遇)(帮助|菜单)$/,
+                fnc: 'SKY_HELP_1'
+            }, {
+                reg: /^(#|\/)?((S|s)(K|k)(Y|y)|光遇)娱乐(帮助|菜单)$/,
+                fnc: 'SKY_HELP_2'
+            }, {
+                reg: /^季节兑换图列表$/,
+                fnc: 'SKY_HELP_3'
+            }, {
+                reg: /^常驻兑换图列表$/,
+                fnc: 'SKY_HELP_4'
+            }, {
+                reg: /^(#|\/)?(晨岛|云野|雨林|峡谷|霞谷|暮土|禁阁)兑换图$/,
+                fnc: 'PERMANENT_EXCHANGE_PICTURE'
+            }, {
+                reg: /^(#|\/)?(AURORA|表演|风行|感恩|归巢|归属|九色鹿|梦想|魔法|破晓|潜海|圣岛|拾光|小王子|夜行|音韵|预言|重组|追光|追忆|欧若拉|集结|凌冬)(季)?兑换图$/,
+                fnc: 'SEASON_EXCHANGE_PICTURE'
+            }, {
+                reg: /^(#|\/)?(复刻兑换图|国服复刻)$/,
+                fnc: 'RETURN_EXCHANGE_PICTURE'
+            }, {
+                reg: /^(#|\/)?季节兑换图$/,
+                fnc: 'SEASON_EXCHANGE_PICTURE'
+            }, {
+                reg: /^(#|\/)?(S|s)(K|k)(Y|y)(服务器)?状态$/,
+                fnc: 'SERVER_STATUS'
+            }, {
+                reg: /^(#|\/)?光遇公告$/,
+                fnc: 'RETURN_EXCHANGE_PICTURE'
+            }, {
+                reg: /^(#|\/)?(光遇|国服)?(今日|每日)?(任务|魔法|季蜡|大蜡)?(烛)?(位置)?$/,
+                fnc: 'TASK_AND_OTHER'
+            }, {
+                reg: /^(#|\/)?(今日)?代币(位置)?$/,
+                fnc: 'CURRENCY_LOCATION'
+            }, {
+                reg: /^(#|\/)?季节任务$/,
+                fnc: 'CURRENCY_LOCATION'
+            }, {
+                reg: /^(#|\/)?季节剩余$/,
+                fnc: 'SEASONAL_INFO_CALCULATION'
+            }, {
+                reg: /^(#|\/)?(20|21|22|23|24)年复刻记录$/,
+                fnc: 'A_COPY_OF_THE_PAST'
+            }, {
+                reg: /^(#|\/)?(.*)季多久未复刻$/,
+                fnc: 'snrd'
+            }, {
+                reg: /^(#|\/)?复刻预测$/,
+                fnc: 'replicaPrediction'
+            }, {
+                reg: /^(#|\/)?光遇信息$/,
+                fnc: 'skyEncounterData'
+            }, {
+                reg: /^(#|\/)?抢蜡烛$/,
+                fnc: 'grabCandle'
+            }, {
+                reg: /^(#|\/)?光遇签到$/,
+                fnc: 'skyEncounterCheckIn'
+            }, {
+                reg: /^(#|\/)?蜡烛商店$/,
+                fnc: 'candleShop'
+            }, {
+                reg: /^(#|\/)购买(.*)$/,
+                fnc: 'purchaseXXX'
+            }, {
+                reg: /^(#|\/)?排行信息$/,
+                fnc: 'rankingData'
+            }, {
+                reg: /^(#|\/)?(绘画|绘画分享|绘图分享)$/,
+                fnc: 'paintingSharing'
+            }, {
+                reg: /^(#|\/)?(蜡烛|赌博|抢蜡|签到)排行$/,
+                fnc: 'leaderboard'
+            }, {
+                reg: /^(#|\/)?(dlz|赌蜡烛)(.*)$/,
+                fnc: 'gamble'
+            }, {
+                reg: /^(#|\/)?(押注|yz)(.*)$/,
+                fnc: 'wager'
+            }]
         }
+    }
+
+    wager() {
+        return Bot.Button([[
+            { label: '出剪刀', callback: '/赌蜡烛剪刀' },
+            { label: '出石头', callback: '/赌蜡烛石头' },
+            { label: '出布', callback: '/赌蜡烛布' }
+        ]])
+    }
+
+    gamble() {
+        return Bot.Button([[
+            { label: '赌坊信息', callback: '/秋风赌坊' },
+            { label: '继续押注', callback: '/押注' },
+            { label: '光遇信息', callback: '/光遇信息' }
+        ]])
     }
 
     SKY_HELP_1() {
@@ -270,13 +289,13 @@ export default class Button {
         ]])
     }
 
-    FORECAST() {
+    replicaPrediction() {
         return Bot.Button([[
             { label: '再测一次', callback: '/复刻预测' }
         ]])
     }
 
-    排行榜() {
+    leaderboard() {
         return Bot.Button([[
             { label: '蜡烛排行', enter: true },
             { label: '签到排行', enter: true },
@@ -284,13 +303,13 @@ export default class Button {
         ]])
     }
 
-    绘画分享() {
+    paintingSharing() {
         return Bot.Button([[
             { label: '再来一张', callback: '/绘画分享' }
         ]])
     }
 
-    排行信息() {
+    rankingData() {
         return Bot.Button([[
             { label: '光遇签到', enter: true },
             { label: '光遇信息', enter: true }
@@ -301,7 +320,7 @@ export default class Button {
         ]])
     }
 
-    购买() {
+    purchaseXXX() {
         return Bot.Button([[
             { label: '买一张', callback: '1' },
             { label: '买三张', callback: '3' },
@@ -310,14 +329,14 @@ export default class Button {
         ]])
     }
 
-    蜡烛商店() {
+    candleShop() {
         return Bot.Button([[
             { label: '买保护卡', callback: '/购买蜡烛保护卡' },
             { label: '买双倍卡', callback: '/购买签到双倍卡' }
         ]])
     }
 
-    光遇签到() {
+    skyEncounterCheckIn() {
         return Bot.Button([[
             { label: '光遇信息', enter: true },
             { label: '抢蜡烛', enter: true },
@@ -327,7 +346,7 @@ export default class Button {
         ]])
     }
 
-    抢蜡烛() {
+    grabCandle() {
         return Bot.Button([[
             { label: '我也抢', callback: '/抢蜡烛' },
             { label: '光遇信息', enter: true },
@@ -335,7 +354,7 @@ export default class Button {
         ]])
     }
 
-    光遇信息() {
+    skyEncounterData() {
         return Bot.Button([[
             { label: '光遇信息', enter: true },
             { label: '光遇签到', enter: true },

@@ -8,6 +8,8 @@
  - 取消创建文件操作
 ："Tlon-Sky\index.js"
 
+ - 优化细节，修改按钮
+："Tlon-Sky\lain.support.js"
 -------------------
 * 2024/02/29
  - 适配部分QQBot的MD发送消息
