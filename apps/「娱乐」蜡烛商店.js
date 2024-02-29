@@ -50,14 +50,14 @@ export class SKY extends plugin {
             if (e.adapter === 'QQBot') return e.reply([
                 '# 请直接发送购买数量',
                 '> 取消购买请发送[**取消购买**]',
-                `您的季蜡：${USER_JL}根,可购买：`,
+                `您的季蜡：${USER_JL}根，可购买：`,
                 `蜡烛保护卡：**${Math.floor(USER_JL / 10)}** 张`,
                 `签到双倍卡：**${Math.floor(USER_JL / 30)}** 张`
             ])
             e.reply([
                 '请直接发送购买数量',
                 '\n取消购买请发送[取消购买]',
-                `\n您的季蜡：${USER_JL}根,可购买：`,
+                `\n您的季蜡：${USER_JL}根，可购买：`,
                 `\n蜡烛保护卡：${Math.floor(USER_JL / 10)} 张`,
                 `\n签到双倍卡：${Math.floor(USER_JL / 30)} 张`
             ])
