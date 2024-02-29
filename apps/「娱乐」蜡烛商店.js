@@ -75,7 +75,7 @@ export class SKY extends plugin {
         const USER_DATA = GD(USER_FILE);
         const SHOP_DATA = GD(SHOP_FILE);
 
-        if (/^(#|\/)?取消购买$/.test(this.e.mag)) { e.reply('已取消本次购买'); return this.finish('SELECTION_QUANTITY') }
+        if (/^(#|\/)?取消购买$/.test(this.e.msg)) { e.reply('已取消本次购买'); return this.finish('SELECTION_QUANTITY') }
 
         const QUANTITY = parseInt(this.e.msg)
         if (QUANTITY === NaN) { return e.reply('请发送纯数字！') }
