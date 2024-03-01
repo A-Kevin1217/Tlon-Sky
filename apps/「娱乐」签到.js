@@ -49,6 +49,7 @@ export class SKY extends plugin {
       // 是否为QQ机器人，新用户提示
       if (e.adapter === 'QQBot') {
         REPLY = [
+          `# 第${(fs.readdirSync('plugins/Tlon-Sky/data/Sky签到')).length}位用户`,
           '> [设置昵称(昵称)]指令可设置昵称\n' +
           '> 示例：设置昵称小秋\n' +
           '> [设置头像(QQ号)]可设置为QQ头像\n' +
@@ -57,10 +58,10 @@ export class SKY extends plugin {
       } else {
         REPLY = [
           segment.at(e.user_id),
-          '\n“设置昵称[昵称]”指令可设置昵称\n' +
-          '示例：设置昵称小秋\n' +
-          '“设置头像[QQ号]”可设置为QQ头像\n' +
-          '示例：设置头像114514'
+          '\n设置昵称[昵称]指令可设置昵称' +
+          '\n示例：设置昵称小秋' +
+          '\n设置头像[QQ号]可设置为QQ头像' +
+          '\n示例：设置头像114514'
         ]
       }
     }
