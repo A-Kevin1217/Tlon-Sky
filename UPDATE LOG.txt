@@ -13,6 +13,9 @@
 
  - 更新自述
 ："Tlon-Sky\README.md"
+
+ - 优化光遇信息.html，Message.css
+："Tlon-Sky\resource\admin\光遇信息.html || Message.css"
 -------------------
 * 2024/02/29
  - 适配部分QQBot的MD发送消息

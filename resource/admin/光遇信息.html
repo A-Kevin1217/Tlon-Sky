@@ -18,6 +18,20 @@
 		height: 200px;
 		margin-right: 20px;
 	}
+
+	.energy-bar {
+		position: relative;
+		left: 180px;
+		width: 300px;
+		height: 30px;
+		border: 1px solid #333;
+		position: relative;
+	}
+
+	.energy-level {
+		height: 100%;
+		background-color: #4e5769;
+	}
 </style>
 {{/block}}
 {{block 'main'}}
@@ -29,6 +43,9 @@
 			<h1>昵称：{{昵称}}</h1>
 			<h1>等级：{{等级}}</h1>
 			<h1>能量值：{{能量值}}/100</h1>
+			<div class="energy-bar">
+				<div class="energy-level" style="width: {{能量值}}%;"></div>
+			</div>
 		</li>
 	</ul>
 </div>
