@@ -19,7 +19,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 
 如何更新？
  - 使用Yunzai自带指令`#全部更新`或指令`#光遇更新`
- - 运行`UPDATE.bat`文件，位置在"Yunzai/plugins/Cookie-plugin"内
+ - 运行`UPDATE.bat`文件，位置在"Yunzai/plugins/Tlon-Sky"内
 
 绘画分享图库安装
  - 使用指令`Sky更新图库`
