@@ -10,6 +10,9 @@
 
  - 优化细节，修改按钮
 ："Tlon-Sky\lain.support.js"
+
+ - 更新自述
+："Tlon-Sky\README.md"
 -------------------
 * 2024/02/29
  - 适配部分QQBot的MD发送消息
