@@ -4,6 +4,8 @@ import { GD, ITUE, SD } from '../utils/db.js';
 
 const SHOP_FILE = 'plugins/Tlon-Sky/data/商店/秋风商店.json'
 
+const purchaseXXX_REGEX = /^(#|\/)购买(蜡烛保护卡|签到双倍卡)$/
+const portion_REGEX = /^(#|\/)(.*)份$/
 export class SKY extends plugin {
     constructor() {
         super({
@@ -15,8 +17,11 @@ export class SKY extends plugin {
                 reg: /^(#|\/)?蜡烛商店$/,
                 fnc: 'candleShop'
             }, {
-                reg: /^(#|\/)购买(.*)$/,
+                reg: purchaseXXX_REGEX,
                 fnc: 'purchaseXXX'
+            }, {
+                reg: portion_REGEX,
+                fnc: 'portion'
             }]
         })
     }
@@ -33,8 +38,7 @@ export class SKY extends plugin {
         if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到'); }
         if (!fs.existsSync(SHOP_FILE)) { await CREATE_SHOP() }
 
-        const MATCH = e.msg.match(/^(#|\/)购买(.*)$/);
-        const BUY_A_PRODUCT = MATCH[2];
+        const BUY_A_PRODUCT = e.msg.match(purchaseXXX_REGEX)[2];
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
         const USER_DATA = GD(USER_FILE);
@@ -45,50 +49,71 @@ export class SKY extends plugin {
             BUY_A_PRODUCT === '签到双倍卡' && USER_JL < 30
         ) return e.reply('季蜡不足，无法购买')
 
-        const COMMODITY = ['蜡烛保护卡', '签到双倍卡'];
-        if (COMMODITY.includes(BUY_A_PRODUCT)) {
-            if (e.adapter === 'QQBot') return e.reply([
-                '# 请直接发送购买数量',
-                '> 取消购买请发送[**取消购买**]',
-                `您的季蜡：${USER_JL}根，可购买：`,
-                `蜡烛保护卡：**${Math.floor(USER_JL / 10)}** 张`,
-                `签到双倍卡：**${Math.floor(USER_JL / 30)}** 张`
-            ])
-            e.reply([
-                '请直接发送购买数量',
-                '\n取消购买请发送[取消购买]',
-                `\n您的季蜡：${USER_JL}根，可购买：`,
-                `\n蜡烛保护卡：${Math.floor(USER_JL / 10)} 张`,
-                `\n签到双倍卡：${Math.floor(USER_JL / 30)} 张`
-            ])
-            this.setContext('SELECTION_QUANTITY')
-        } else { return e.reply('购买物品错误，商店无此物品'); }
+        if (BUY_A_PRODUCT === '蜡烛保护卡') {
+            if (e.adapter === 'QQBot') {
+                e.reply([
+                    '# 请发送购买数量',
+                    `> 您的季蜡：${USER_JL}根，可购买：`,
+                    `蜡烛保护卡：**${Math.floor(USER_JL / 10)}** 张`
+                ])
+            } else {
+                e.reply([
+                    '请发送购买数量',
+                    '\n如[#1份]',
+                    '\n取消购买请发送[取消购买]',
+                    `\n您的季蜡：${USER_JL}根，可购买：`,
+                    `\n蜡烛保护卡：${Math.floor(USER_JL / 10)} 张`
+                ])
+            }
+            USER_DATA['购买物品'] = '蜡烛保护卡'
+        } else if (BUY_A_PRODUCT === '签到双倍卡') {
+            if (e.adapter === 'QQBot') {
+                e.reply([
+                    '# 请发送购买数量',
+                    `> 您的季蜡：${USER_JL}根，可购买：`,
+                    `签到双倍卡：**${Math.floor(USER_JL / 30)}** 张`
+                ])
+            } else {
+                e.reply([
+                    '请发送购买数量',
+                    '\n如[#1份]',
+                    '\n取消购买请发送[取消购买]',
+                    `\n您的季蜡：${USER_JL}根，可购买：`,
+                    `\n签到双倍卡：${Math.floor(USER_JL / 30)} 张`
+                ])
+            }
+            USER_DATA['购买物品'] = '签到双倍卡'
+        }
+        SD(USER_FILE, USER_DATA)
     }
 
-    SELECTION_QUANTITY(e) {
+    async portion(e) {
         const USER_ID = e.user_id;
-        const MATCH = e.msg.match(/^(#|\/)购买(.*)$/);
-        const BUY_A_PRODUCT = MATCH[2];
+        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到'); }
+
+        const portion = parseInt(e.msg.match(portion_REGEX)[2])
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
-
         const USER_DATA = GD(USER_FILE);
-        const SHOP_DATA = GD(SHOP_FILE);
+        const USER_PG = USER_DATA['购买物品']
 
-        if (/^(#|\/)?取消购买$/.test(this.e.msg)) { e.reply('已取消本次购买'); return this.finish('SELECTION_QUANTITY') }
+        if (!USER_PG) {
+            if (e.adapter === 'QQBot') return e.reply(['> 你尚未选择购买商品'])
+            return e.reply('你尚未选择购买商品')
+        }
 
-        const QUANTITY = parseInt(this.e.msg)
-        if (QUANTITY === NaN) { return e.reply('请发送纯数字！') }
-        if (!Number.isInteger(QUANTITY)) { return e.reply('请输入整数！') }
+        if (portion === NaN) return e.reply('请发送纯数字！')
+        if (!Number.isInteger(portion)) return e.reply('请输入整数！')
 
         let REPLY, Price = '';
-        if (BUY_A_PRODUCT === '蜡烛保护卡') { Price = QUANTITY * 10 }
-        if (BUY_A_PRODUCT === '签到双倍卡') { Price = QUANTITY * 30 }
+        if (USER_PG === '蜡烛保护卡') { Price = QUANTITY * 10 }
+        if (USER_PG === '签到双倍卡') { Price = QUANTITY * 30 }
 
         if (USER_DATA['季蜡'] >= Price) {
             USER_DATA['季蜡'] -= Price;
             SHOP_DATA[BUY_A_PRODUCT] += QUANTITY;
             USER_DATA['背包'][BUY_A_PRODUCT] += QUANTITY;
+            USER_DATA['购买物品'] = false
             SD(USER_FILE, USER_DATA);
             SD(SHOP_FILE, SHOP_DATA);
             REPLY = [
@@ -102,9 +127,8 @@ export class SKY extends plugin {
                 `现有${BUY_A_PRODUCT}：${USER_DATA['背包'][BUY_A_PRODUCT]}张`,
             ]
 
-            e.reply(REPLY);
-            return this.finish('SELECTION_QUANTITY')
-        } else { return e.reply('季蜡不足！') }
+            return e.reply(REPLY);
+        }
     }
 }
 

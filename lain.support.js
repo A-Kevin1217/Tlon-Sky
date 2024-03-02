@@ -322,10 +322,10 @@ export default class Button {
 
     purchaseXXX() {
         return Bot.Button([[
-            { label: '买一张', callback: '1' },
-            { label: '买三张', callback: '3' },
-            { label: '取消购买', callback: '取消购买' },
-            { label: '自选', data: ' ' },
+            { label: '买一张', callback: '/1份' },
+            { label: '买三张', callback: '/3份' },
+            { label: '买五张', callback: '/5份' },
+            { label: '自选', data: '/?份' },
         ]])
     }
 
