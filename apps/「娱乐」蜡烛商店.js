@@ -114,7 +114,7 @@ export class SKY extends plugin {
         if (USER_DATA['季蜡'] >= Price) {
             USER_DATA['季蜡'] -= Price;
             SHOP_DATA[USER_PG] += portion;
-            USER_DATA['背包'][BUY_A_PRODUCT] += portion;
+            USER_DATA['背包'][USER_PG] += portion;
             USER_DATA['购买物品'] = false
             SD(USER_FILE, USER_DATA);
             SD(SHOP_FILE, SHOP_DATA);
