@@ -74,7 +74,7 @@ export class SKY extends plugin {
     async rankingData(e) {
         Leaderboard()
 
-        const USER_ID = e.user_id;
+        let USER_ID = e.user_id;
         if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
 
         const USER_DATA = GUD(USER_ID);
@@ -100,19 +100,22 @@ export class SKY extends plugin {
             leaderboardRanks.push(calculateRank(leaderboardJsons[i], USER_ID));
         }
 
-        if (e.adapter === 'QQBot') return e.reply([
-            `# 用户：${USER_DATA['昵称']}`,
-            `> 用户ID：${USER_DATA['ID']}`,
-            `白蜡排名：${leaderboardRanks[0]}`,
-            `季蜡排名: ${leaderboardRanks[1]}`,
-            `亏损排名: ${leaderboardRanks[2]}`,
-            `赚取排名: ${leaderboardRanks[3]}`,
-            `抢蜡排名: ${leaderboardRanks[4]}`,
-            `被抢排名: ${leaderboardRanks[5]}`,
-            `连签排名: ${leaderboardRanks[6]}`,
-            `累签排名: ${leaderboardRanks[7]}`,
-            segment.image(`https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`)
-        ])
+        if (e.adapter === 'QQBot') {
+            USER_ID = USER_ID.substring(USER_ID.indexOf("-") + 1)
+            return e.reply([
+                `# 用户昵称：${USER_DATA['昵称']}`,
+                `> 用户ID：${USER_ID}`,
+                `白蜡排名: ${leaderboardRanks[0]}`,
+                `季蜡排名: ${leaderboardRanks[1]}`,
+                `亏损排名: ${leaderboardRanks[2]}`,
+                `赚取排名: ${leaderboardRanks[3]}`,
+                `抢蜡排名: ${leaderboardRanks[4]}`,
+                `被抢排名: ${leaderboardRanks[5]}`,
+                `连签排名: ${leaderboardRanks[6]}`,
+                `累签排名: ${leaderboardRanks[7]}`,
+                segment.image(`https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`)
+            ])
+        }
         return e.reply([
             `用户：${USER_DATA['昵称']}`,
             `\n用户ID：${USER_DATA['ID']}`,
