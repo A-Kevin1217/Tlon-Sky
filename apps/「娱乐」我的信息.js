@@ -78,6 +78,8 @@ export class SKY extends plugin {
         if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
 
         const USER_DATA = GUD(USER_ID);
+        let USER_NICKNAME = USER_DATA['昵称']
+        if (USER_NICKNAME.length > 10) { USER_NICKNAME = USER_NICKNAME.substring(0, 15) + "..." }
 
         const leaderboardFiles = [
             'plugins/Tlon-Sky/data/排行榜/白蜡.json',
@@ -104,7 +106,7 @@ export class SKY extends plugin {
             USER_ID = USER_ID.substring(USER_ID.indexOf("-") + 1)
             return e.reply([
                 `# 用户昵称：${USER_DATA['昵称']}`,
-                `> 用户ID：${USER_ID}`,
+                `> ID：${USER_ID}`,
                 `白蜡排名: ${leaderboardRanks[0]}`,
                 `季蜡排名: ${leaderboardRanks[1]}`,
                 `亏损排名: ${leaderboardRanks[2]}`,
@@ -117,8 +119,8 @@ export class SKY extends plugin {
             ])
         }
         return e.reply([
-            `用户：${USER_DATA['昵称']}`,
-            `\n用户ID：${USER_DATA['ID']}`,
+            `用户昵称：${USER_DATA['昵称']}`,
+            `\nID：${USER_DATA['ID']}`,
             `\n白蜡排名：${leaderboardRanks[0]}`,
             `\n季蜡排名: ${leaderboardRanks[1]}`,
             `\n亏损排名: ${leaderboardRanks[2]}`,
