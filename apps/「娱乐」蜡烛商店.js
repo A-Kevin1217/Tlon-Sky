@@ -5,7 +5,7 @@ import { GD, ITUE, SD } from '../utils/db.js';
 const SHOP_FILE = 'plugins/Tlon-Sky/data/商店/秋风商店.json'
 
 const purchaseXXX_REGEX = /^(#|\/)购买(蜡烛保护卡|签到双倍卡)$/
-const portion_REGEX = /^(#|\/)(.*)份$/
+const portion_REGEX = /^(#|\/)([1-9]\d*)份$/
 export class SKY extends plugin {
     constructor() {
         super({
