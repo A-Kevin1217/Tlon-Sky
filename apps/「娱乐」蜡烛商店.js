@@ -106,13 +106,13 @@ export class SKY extends plugin {
         if (!Number.isInteger(portion)) return e.reply('请输入整数！')
 
         let REPLY, Price = '';
-        if (USER_PG === '蜡烛保护卡') { Price = QUANTITY * 10 }
-        if (USER_PG === '签到双倍卡') { Price = QUANTITY * 30 }
+        if (USER_PG === '蜡烛保护卡') { Price = portion * 10 }
+        if (USER_PG === '签到双倍卡') { Price = portion * 30 }
 
         if (USER_DATA['季蜡'] >= Price) {
             USER_DATA['季蜡'] -= Price;
-            SHOP_DATA[BUY_A_PRODUCT] += QUANTITY;
-            USER_DATA['背包'][BUY_A_PRODUCT] += QUANTITY;
+            SHOP_DATA[BUY_A_PRODUCT] += portion;
+            USER_DATA['背包'][BUY_A_PRODUCT] += portion;
             USER_DATA['购买物品'] = false
             SD(USER_FILE, USER_DATA);
             SD(SHOP_FILE, SHOP_DATA);
