@@ -131,7 +131,7 @@ export class SKY extends plugin {
     if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
 
     // 使用正则删除无关字符
-    const NICKNAME = e.msg.replace(/#|\/|设置昵称/g, "").replace(/\s/g, '')
+    const NICKNAME = e.msg.replace(/#|\/|设置昵称/g, "").replace(/\s/g, '').replace(/_/g, '')
 
     // 昵称长度是否大于15位
     if (NICKNAME.length > 15) { return e.reply('昵称长度不可大于十五位！') }
