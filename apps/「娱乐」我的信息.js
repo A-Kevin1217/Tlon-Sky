@@ -107,14 +107,14 @@ export class SKY extends plugin {
             return e.reply([
                 `# 用户昵称：${USER_NICKNAME}`,
                 `> ID：${USER_ID}`,
-                `白蜡排名: ${leaderboardRanks[0]}`,
-                `季蜡排名: ${leaderboardRanks[1]}`,
-                `亏损排名: ${leaderboardRanks[2]}`,
-                `赚取排名: ${leaderboardRanks[3]}`,
-                `抢蜡排名: ${leaderboardRanks[4]}`,
-                `被抢排名: ${leaderboardRanks[5]}`,
-                `连签排名: ${leaderboardRanks[6]}`,
-                `累签排名: ${leaderboardRanks[7]}`,
+                `白蜡排名: **${leaderboardRanks[0]}**`,
+                `季蜡排名: **${leaderboardRanks[1]}**`,
+                `亏损排名: **${leaderboardRanks[2]}**`,
+                `赚取排名: **${leaderboardRanks[3]}**`,
+                `抢蜡排名: **${leaderboardRanks[4]}**`,
+                `被抢排名: **${leaderboardRanks[5]}**`,
+                `连签排名: **${leaderboardRanks[6]}**`,
+                `累签排名: **${leaderboardRanks[7]}**`,
                 segment.image(`https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`)
             ])
         }
