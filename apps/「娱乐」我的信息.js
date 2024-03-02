@@ -105,7 +105,7 @@ export class SKY extends plugin {
         if (e.adapter === 'QQBot') {
             USER_ID = USER_ID.substring(USER_ID.indexOf("-") + 1)
             return e.reply([
-                `# 用户昵称：${USER_DATA['昵称']}`,
+                `# 用户昵称：${USER_NICKNAME}`,
                 `> ID：${USER_ID}`,
                 `白蜡排名: ${leaderboardRanks[0]}`,
                 `季蜡排名: ${leaderboardRanks[1]}`,
@@ -119,7 +119,7 @@ export class SKY extends plugin {
             ])
         }
         return e.reply([
-            `用户昵称：${USER_DATA['昵称']}`,
+            `用户昵称：${USER_NICKNAME}`,
             `\nID：${USER_DATA['ID']}`,
             `\n白蜡排名：${leaderboardRanks[0]}`,
             `\n季蜡排名: ${leaderboardRanks[1]}`,
