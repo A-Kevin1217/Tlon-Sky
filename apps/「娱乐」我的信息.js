@@ -99,18 +99,32 @@ export class SKY extends plugin {
         for (let i = 0; i < leaderboardJsons.length; i++) {
             leaderboardRanks.push(calculateRank(leaderboardJsons[i], USER_ID));
         }
-        const html = {
-            头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
-            白蜡排名: leaderboardRanks[0],
-            季蜡排名: leaderboardRanks[1],
-            亏损排名: leaderboardRanks[2],
-            赚取排名: leaderboardRanks[3],
-            抢蜡排名: leaderboardRanks[4],
-            被抢排名: leaderboardRanks[5],
-            连签排名: leaderboardRanks[6],
-            累签排名: leaderboardRanks[7]
-        }
-        await render('admin/排行信息', { ...html, }, { e, scale: 1.4 })
+
+        if (e.adapter === 'QQBot') return e.reply([
+            `# 用户：${USER_DATA['昵称']}`,
+            `> 用户ID：${USER_DATA['ID']}`,
+            `白蜡排名：${leaderboardRanks[0]}`,
+            `季蜡排名: ${leaderboardRanks[1]}`,
+            `亏损排名: ${leaderboardRanks[2]}`,
+            `赚取排名: ${leaderboardRanks[3]}`,
+            `抢蜡排名: ${leaderboardRanks[4]}`,
+            `被抢排名: ${leaderboardRanks[5]}`,
+            `连签排名: ${leaderboardRanks[6]}`,
+            `累签排名: ${leaderboardRanks[7]}`,
+            segment.image(`https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`)
+        ])
+        return e.reply([
+            `用户：${USER_DATA['昵称']}`,
+            `\n用户ID：${USER_DATA['ID']}`,
+            `\n白蜡排名：${leaderboardRanks[0]}`,
+            `\n季蜡排名: ${leaderboardRanks[1]}`,
+            `\n亏损排名: ${leaderboardRanks[2]}`,
+            `\n赚取排名: ${leaderboardRanks[3]}`,
+            `\n抢蜡排名: ${leaderboardRanks[4]}`,
+            `\n被抢排名: ${leaderboardRanks[5]}`,
+            `\n连签排名: ${leaderboardRanks[6]}`,
+            `\n累签排名: ${leaderboardRanks[7]}`
+        ])
     }
 }
 
