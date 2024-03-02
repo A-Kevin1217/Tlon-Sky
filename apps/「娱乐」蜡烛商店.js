@@ -95,6 +95,8 @@ export class SKY extends plugin {
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`;
         const USER_DATA = GD(USER_FILE);
+        const SHOP_DATA = GD(SHOP_FILE);
+
         const USER_PG = USER_DATA['购买物品']
 
         if (!USER_PG) {
@@ -111,7 +113,7 @@ export class SKY extends plugin {
 
         if (USER_DATA['季蜡'] >= Price) {
             USER_DATA['季蜡'] -= Price;
-            SHOP_DATA[BUY_A_PRODUCT] += portion;
+            SHOP_DATA[USER_PG] += portion;
             USER_DATA['背包'][BUY_A_PRODUCT] += portion;
             USER_DATA['购买物品'] = false
             SD(USER_FILE, USER_DATA);
@@ -119,12 +121,12 @@ export class SKY extends plugin {
             REPLY = [
                 `购买成功！消耗季蜡：${Price}`,
                 `剩余季蜡：${USER_DATA['季蜡']}根`,
-                `现有${BUY_A_PRODUCT}：${USER_DATA['背包'][BUY_A_PRODUCT]}张`,
+                `现有${USER_PG}：${USER_DATA['背包'][USER_PG]}张`,
             ];
             if (e.adapter === 'QQBot') REPLY = [
                 `# 购买成功！消耗季蜡：${Price}`,
                 `> 剩余季蜡：${USER_DATA['季蜡']}根`,
-                `现有${BUY_A_PRODUCT}：${USER_DATA['背包'][BUY_A_PRODUCT]}张`,
+                `现有${USER_PG}：${USER_DATA['背包'][USER_PG]}张`,
             ]
 
             return e.reply(REPLY);
