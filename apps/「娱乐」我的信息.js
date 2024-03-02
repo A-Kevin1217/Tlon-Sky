@@ -79,7 +79,7 @@ export class SKY extends plugin {
 
         const USER_DATA = GUD(USER_ID);
         let USER_NICKNAME = USER_DATA['昵称']
-        if (USER_NICKNAME.length > 10) { USER_NICKNAME = USER_NICKNAME.substring(0, 15) + "..." }
+        if (USER_NICKNAME.length > 10) { USER_NICKNAME = USER_NICKNAME.substring(0, 10) + "..." }
 
         const leaderboardFiles = [
             'plugins/Tlon-Sky/data/排行榜/白蜡.json',
