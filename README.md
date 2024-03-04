@@ -1,4 +1,5 @@
 # Tlon-Sky
+![动态访问量](https://count.kjchmc.cn/get/@Tlon-Sky?theme=rule34)  
 为[Yunzai-Bot V3](https://gitee.com/Le-niao/Yunzai-Bot) & [A-Yunzai](https://gitee.com/ningmengchongshui/azai-bot)提供光遇相关功能
 插件内图片源自网络，如有侵权，请联系我删除  
 如出现插件报错或功能不适配等情况请及时联系[作者](https://gitee.com/Tloml-Starry)或发起[issues](https://gitee.com/Tloml-Starry/Plugin-Example/issues)  
