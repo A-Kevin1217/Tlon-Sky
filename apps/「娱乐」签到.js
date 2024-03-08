@@ -138,7 +138,7 @@ export class SKY extends plugin {
     // 昵称长度是否小于2位
     if (NICKNAME.length < 2) { return e.reply('昵称长度不可小于两位！') }
 
-    if (NICKNAME.length = 0) { return e.reply('请在指令后附带需要设置的昵称！\n如：设置昵称小秋') }
+    if (NICKNAME.length === 0) { return e.reply('请在指令后附带需要设置的昵称！\n如：设置昵称小秋') }
 
     // 用户数据
     const USER_DATA = GUD(USER_ID)
