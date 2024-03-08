@@ -52,39 +52,8 @@ export default class Button {
             }, {
                 reg: /^(#|\/)?(.*)季多久未复刻$/,
                 fnc: 'snrd'
-            }, {
-                reg: /^(#|\/)?复刻预测$/,
-                fnc: 'replicaPrediction'
-            }, {
-                reg: /^(#|\/)?(绘画|绘画分享|绘图分享)$/,
-                fnc: 'paintingSharing'
-            }, {
-                reg: /^(#|\/)?(蜡烛|赌博|抢蜡|签到)排行$/,
-                fnc: 'leaderboard'
-            }, {
-                reg: /^(#|\/)?(dlz|赌蜡烛)(.*)$/,
-                fnc: 'gamble'
-            }, {
-                reg: /^(#|\/)?(押注|yz)(.*)$/,
-                fnc: 'wager'
             }]
         }
-    }
-
-    wager() {
-        return Bot.Button([[
-            { label: '出剪刀', callback: '/赌蜡烛剪刀' },
-            { label: '出石头', callback: '/赌蜡烛石头' },
-            { label: '出布', callback: '/赌蜡烛布' }
-        ]])
-    }
-
-    gamble() {
-        return Bot.Button([[
-            { label: '赌坊信息', callback: '/秋风赌坊' },
-            { label: '继续押注', callback: '/押注' },
-            { label: '光遇信息', callback: '/光遇信息' }
-        ]])
     }
 
     SKY_HELP_1() {
@@ -268,26 +237,6 @@ export default class Button {
             { label: '集结', callback: '/集结季多久未复刻' },
             { label: '小王子', callback: '/小王子季多久未复刻' },
             { label: '风行', callback: '/风行季多久未复刻' },
-        ]])
-    }
-
-    replicaPrediction() {
-        return Bot.Button([[
-            { label: '再测一次', callback: '/复刻预测' }
-        ]])
-    }
-
-    leaderboard() {
-        return Bot.Button([[
-            { label: '蜡烛排行', enter: true },
-            { label: '签到排行', enter: true },
-            { label: '抢蜡排行', enter: true }
-        ]])
-    }
-
-    paintingSharing() {
-        return Bot.Button([[
-            { label: '再来一张', callback: '/绘画分享' }
         ]])
     }
 }

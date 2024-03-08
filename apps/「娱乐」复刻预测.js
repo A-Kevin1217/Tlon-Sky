@@ -46,6 +46,9 @@ export class SKY extends plugin {
             `[**${name_1}**] ———— [**${name_2}**]`,
             'BOT娱乐功能，仅供参考'
         ])
-        return e.reply(`我猜可能复刻这两其中一个\n[${name_1}] || [${name_2}]`)
+        e.reply(`我猜可能复刻这两其中一个\n[${name_1}] || [${name_2}]`)
+        return Bot.Button([[
+            { label: '再测一次', callback: '/复刻预测' }
+        ]])
     }
 }

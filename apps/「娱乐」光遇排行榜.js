@@ -97,5 +97,13 @@ export class Sky extends plugin {
     }
 
     await render('admin/Leaderboard', { ...html }, { e, scale: 1.4 });
+    return Bot.Button([[
+      { label: '蜡烛排行', enter: true },
+      { label: '签到排行', enter: true }
+    ], [
+
+      { label: '抢蜡排行', enter: true },
+      { label: '赌博排行', enter: true }
+    ]])
   }
 }

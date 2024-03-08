@@ -50,7 +50,7 @@ export class SKY extends plugin {
     const CUMULATIVE_DAYS = USER_DATA['累计签到天数']
     const DATE_LAST = USER_DATA['最后签到日期']
 
-    if (DATE_LAST === getCurrentDate()) { return e.reply('今日已签，请明日再来') }
+    if (DATE_LAST === getCurrentDate()) { return e.reply((e.adapter === 'QQBot') ? ['> 今日已签，请明日再来', Bot.Button([[{ label: '光遇信息', callback: '/光遇信息' }]])] : '今日已签，请明日再来') }
 
     let IS_CONSECUTIVE = false
     if (DATE_LAST === getYesterdayDate()) IS_CONSECUTIVE = true
