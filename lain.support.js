@@ -56,24 +56,6 @@ export default class Button {
                 reg: /^(#|\/)?复刻预测$/,
                 fnc: 'replicaPrediction'
             }, {
-                reg: /^(#|\/)?光遇信息$/,
-                fnc: 'skyEncounterData'
-            }, {
-                reg: /^(#|\/)?抢蜡烛$/,
-                fnc: 'grabCandle'
-            }, {
-                reg: /^(#|\/)?光遇签到$/,
-                fnc: 'skyEncounterCheckIn'
-            }, {
-                reg: /^(#|\/)?蜡烛商店$/,
-                fnc: 'candleShop'
-            }, {
-                reg: /^(#|\/)购买(.*)$/,
-                fnc: 'purchaseXXX'
-            }, {
-                reg: /^(#|\/)?排行信息$/,
-                fnc: 'rankingData'
-            }, {
                 reg: /^(#|\/)?(绘画|绘画分享|绘图分享)$/,
                 fnc: 'paintingSharing'
             }, {
@@ -306,59 +288,6 @@ export default class Button {
     paintingSharing() {
         return Bot.Button([[
             { label: '再来一张', callback: '/绘画分享' }
-        ]])
-    }
-
-    rankingData() {
-        return Bot.Button([[
-            { label: '光遇签到', enter: true },
-            { label: '光遇信息', enter: true }
-        ], [
-            { label: '蜡烛排行', enter: true },
-            { label: '抢蜡排行', enter: true },
-            { label: '签到排行', enter: true }
-        ]])
-    }
-
-    purchaseXXX() {
-        return Bot.Button([[
-            { label: '买一张', callback: '/1份' },
-            { label: '买三张', callback: '/3份' },
-            { label: '买五张', callback: '/5份' },
-            { label: '自选', data: '/?份' },
-        ]])
-    }
-
-    candleShop() {
-        return Bot.Button([[
-            { label: '买保护卡', callback: '/购买蜡烛保护卡' },
-            { label: '买双倍卡', callback: '/购买签到双倍卡' }
-        ]])
-    }
-
-    skyEncounterCheckIn() {
-        return Bot.Button([[
-            { label: '光遇信息', enter: true },
-            { label: '抢蜡烛', enter: true },
-        ], [
-            { label: '设置昵称', data: '/设置昵称' },
-            { label: '设置头像', data: '/设置头像' }
-        ]])
-    }
-
-    grabCandle() {
-        return Bot.Button([[
-            { label: '我也抢', callback: '/抢蜡烛' },
-            { label: '光遇信息', enter: true },
-            { label: '光遇签到', enter: true }
-        ]])
-    }
-
-    skyEncounterData() {
-        return Bot.Button([[
-            { label: '光遇信息', enter: true },
-            { label: '光遇签到', enter: true },
-            { label: '排行信息', enter: true }
         ]])
     }
 }

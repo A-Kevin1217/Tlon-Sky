@@ -18,7 +18,7 @@ export class SKY extends plugin {
         const USER_ID = e.user_id;
         const OBJECTS_USER_ID = e.at;
 
-        if (e.adapter === 'QQBot') { return e.reply('QQBot暂不支持赠送蜡烛') }
+        if (e.adapter === 'QQBot') { return e.reply(['> QQBot暂不支持赠送蜡烛']) }
         if (e.atme === true) { return e.reply('不可赠送机器人') }
         if (!OBJECTS_USER_ID) { return e.reply('请at对方') }
         if (OBJECTS_USER_ID === USER_ID) { return e.reply('不可自己赠送自己') }

@@ -25,7 +25,7 @@ export class SKY extends plugin {
         Leaderboard();
 
         const USER_ID = e.user_id;
-        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
+        if (!ITUE(USER_ID)) { return e.reply((e.adapter === 'QQBot') ? ['> 请先发送光遇签到', Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])] : '请先发送光遇签到') }
 
         const RANKING_A_FILE = 'plugins/Tlon-Sky/data/排行榜/白蜡.json';
         const RANKING_B_FILE = 'plugins/Tlon-Sky/data/排行榜/季蜡.json';
@@ -69,13 +69,17 @@ export class SKY extends plugin {
             签到双倍卡: USER_DATA['背包']['签到双倍卡']
         }
         await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 })
+        return Bot.Button([[
+            { label: '光遇信息', callback: '/光遇信息' },
+            { label: '排行信息', callback: '/排行信息' }
+        ]])
     }
 
     async rankingData(e) {
         Leaderboard()
 
         let USER_ID = e.user_id;
-        if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
+        if (!ITUE(USER_ID)) { return e.reply((e.adapter === 'QQBot') ? ['> 请先发送光遇签到', Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])] : '请先发送光遇签到') }
 
         const USER_DATA = GUD(USER_ID);
         let USER_NICKNAME = USER_DATA['昵称']
@@ -102,34 +106,8 @@ export class SKY extends plugin {
             leaderboardRanks.push(calculateRank(leaderboardJsons[i], USER_ID));
         }
 
-        if (e.adapter === 'QQBot') {
-            USER_ID = USER_ID.substring(USER_ID.indexOf("-") + 1)
-            return e.reply([
-                `# 用户昵称：${USER_NICKNAME}`,
-                `> ID：${USER_ID}`,
-                `白蜡排名: ${leaderboardRanks[0]}`,
-                `季蜡排名: ${leaderboardRanks[1]}`,
-                `亏损排名: ${leaderboardRanks[2]}`,
-                `赚取排名: ${leaderboardRanks[3]}`,
-                `抢蜡排名: ${leaderboardRanks[4]}`,
-                `被抢排名: ${leaderboardRanks[5]}`,
-                `连签排名: ${leaderboardRanks[6]}`,
-                `累签排名: ${leaderboardRanks[7]}`,
-                segment.image(`https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`)
-            ])
-        }
-        return e.reply([
-            `用户昵称：${USER_NICKNAME}`,
-            `\nID：${USER_DATA['ID']}`,
-            `\n白蜡排名：${leaderboardRanks[0]}`,
-            `\n季蜡排名: ${leaderboardRanks[1]}`,
-            `\n亏损排名: ${leaderboardRanks[2]}`,
-            `\n赚取排名: ${leaderboardRanks[3]}`,
-            `\n抢蜡排名: ${leaderboardRanks[4]}`,
-            `\n被抢排名: ${leaderboardRanks[5]}`,
-            `\n连签排名: ${leaderboardRanks[6]}`,
-            `\n累签排名: ${leaderboardRanks[7]}`
-        ])
+        USER_ID = USER_ID.substring(USER_ID.indexOf("-") + 1)
+        return e.reply((e.adapter === 'QQBot') ? [`# 用户昵称：${USER_NICKNAME}`, `> ID：${USER_ID}`, `白蜡排名: ${leaderboardRanks[0]}`, `季蜡排名: ${leaderboardRanks[1]}`, `亏损排名: ${leaderboardRanks[2]}`, `赚取排名: ${leaderboardRanks[3]}`, `抢蜡排名: ${leaderboardRanks[4]}`, `被抢排名: ${leaderboardRanks[5]}`, `连签排名: ${leaderboardRanks[6]}`, `累签排名: ${leaderboardRanks[7]}`, segment.image(`https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`), Bot.Botton([[{ label: '排行信息', callback: '/排行信息' }]])] : `用户昵称：${USER_NICKNAME}\nID：${USER_DATA['ID']}\n白蜡排名：${leaderboardRanks[0]}\n季蜡排名: ${leaderboardRanks[1]}\n亏损排名: ${leaderboardRanks[2]}\n赚取排名: ${leaderboardRanks[3]}\n抢蜡排名: ${leaderboardRanks[4]}\n被抢排名: ${leaderboardRanks[5]}\n连签排名: ${leaderboardRanks[6]}\n累签排名: ${leaderboardRanks[7]}`)
     }
 }
 

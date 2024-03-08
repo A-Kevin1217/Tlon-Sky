@@ -19,27 +19,19 @@ export class SKY extends plugin {
   async grabCandle(e) {
     const USER_ID = e.user_id
 
-    // 提前结束因素判断
-    if (!ITUE(USER_ID)) { return e.reply('请先发送光遇签到') }
-    if (e.at === USER_ID) { return e.reply('不可自己抢自己') }
+    if (!ITUE(USER_ID)) { return e.reply((e.adapter === 'QQBot') ? ['> 请先发送光遇签到', Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])] : '请先发送光遇签到') }
+    if (e.at === USER_ID) { return e.reply((e.adapter === 'QQBot') ? ['> 不可自己抢自己！', Bot.Botton([[{ label: '抢蜡烛', callback: '/抢蜡烛' }]])] : '不可自己抢自己！') }
 
-    // CD时间 (小时 分钟 秒 毫秒) 2小时减五秒
-    const COOLING_TIME = (2 * 60 * 60 * 1000) - 5000;
+    const COOLING_TIME = (2 * 60 * 60 * 1000) - 10000;
 
-    // 当前时间 毫秒
     const NOW_DATE = Date.now();
 
-    // 用户文件
     const ALL_USER_FILE_LOCATION = 'plugins/Tlon-Sky/data/Sky签到/';
     const USER_FILE = `${ALL_USER_FILE_LOCATION}${USER_ID}.json`;
 
-    // 读取用户数据
     const USER_DATA = GUD(USER_ID)
-
-    // 获取相应数据
     const LAST_EXECUTION_TIME = USER_DATA['上次抢蜡烛时间戳']
 
-    // CD判断
     if (NOW_DATE - LAST_EXECUTION_TIME < COOLING_TIME) {
       const REMAINING_TIME = COOLING_TIME - (NOW_DATE - LAST_EXECUTION_TIME)
       if (REMAINING_TIME > 0) {
@@ -50,17 +42,14 @@ export class SKY extends plugin {
         const END_TIME_STAMP = NOW_DATE + REMAINING_TIME;
         const END_TIME = new Date(END_TIME_STAMP).toLocaleString();
 
-        if (HOUR === 0) {
-          return e.reply(`抢蜡烛CD中！\n请等待 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`)
-        } else if (MINUTES === 0) {
-          return e.reply(`抢蜡烛CD中！\n请等待 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`)
-        } else {
-          return e.reply(`抢蜡烛CD中！\n请等待 ${HOUR} 小时 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`)
-        }
+        let Reply
+        if (HOUR === 0 && MINUTES === 0) { Reply = (e.adapter === 'QQBot') ? ['# CD中...', `> 请等待${SECOND}秒后再试`, `CD结束时间：**${END_TIME}**`] : `CD中...\n请等待 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}` }
+        else if (HOUR === 0 && MINUTES !== 0) { Reply = (e.adapter === 'QQBot') ? ['# CD中...', `> 请等待${MINUTES}分钟${SECOND}秒后再试`, `CD结束时间：**${END_TIME}**`] : `CD中...\n请等待 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}` }
+        else if (HOUR !== 0 && MINUTES !== 0) { Reply = (e.adapter === 'QQBot') ? ['# CD中...', `> 请等待${HOUR}小时${MINUTES}分钟${SECOND}秒后再试`, `CD结束时间：**${END_TIME}**`] : `CD中...\n请等待 ${HOUR} 小时 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}` }
+        return e.reply(Reply)
       }
     }
 
-    // 是否指定人抢
     let OBJECTS_USER_ID
     if (e.atme || !e.at) {
       const ALL_USER_FILE_LISTS = fs.readdirSync(ALL_USER_FILE_LOCATION)
@@ -68,63 +57,52 @@ export class SKY extends plugin {
       OBJECTS_USER_ID = RANDOM_FILE.replace(/.json/g, "")
     } else { OBJECTS_USER_ID = e.at }
 
-    // 被抢方文件
     const OBJECTS_USER_FILE = `${ALL_USER_FILE_LOCATION}${OBJECTS_USER_ID}.json`
+
     if (!ITUE(OBJECTS_USER_ID)) { return e.reply('对方没有存档，无法抢蜡烛') }
 
-    // 读取被抢方数据
     const OBJECTS_USER_DATA = GUD(OBJECTS_USER_ID);
+    const OBJECTS_BL = OBJECTS_USER_DATA['白蜡']
 
-    // 被抢方是否保护
     let IS_PROTECTION = false
     if (OBJECTS_USER_DATA['背包']['蜡烛保护卡'] >= 1) { OBJECTS_USER_DATA['背包']['蜡烛保护卡'] -= 1; IS_PROTECTION = true }
 
-    // 被抢多少蜡烛
     let QUANTITY
-    if (OBJECTS_USER_DATA['白蜡'] < 30) { QUANTITY = Math.floor(Math.random() * OBJECTS_USER_DATA['白蜡']) + 1 } else { QUANTITY = Math.floor(Math.random() * 30) + 1 }
+    if (OBJECTS_BL < 30) { QUANTITY = Math.floor(Math.random() * OBJECTS_BL) + 1 } else { QUANTITY = Math.floor(Math.random() * 30) + 1 }
 
 
     if (IS_PROTECTION) { IS_PROTECTION = '抢蜡烛失败，对方有保护卡'; QUANTITY = 0; } else { IS_PROTECTION = '' }
 
-    if (OBJECTS_USER_DATA['白蜡'] >= QUANTITY) {
-      // 数据处理，存储
-      OBJECTS_USER_DATA['白蜡'] -= QUANTITY
-      OBJECTS_USER_DATA['被抢次数'] += 1
-      OBJECTS_USER_DATA['被抢蜡烛总数'] += QUANTITY
-      USER_DATA['白蜡'] += QUANTITY
-      USER_DATA['抢蜡烛次数'] += 1
-      USER_DATA['抢蜡烛总数'] += QUANTITY
-      USER_DATA['上次抢蜡烛时间戳'] = NOW_DATE
-      SD(OBJECTS_USER_FILE, OBJECTS_USER_DATA)
-      SD(USER_FILE, USER_DATA)
+    if (OBJECTS_BL < QUANTITY) return e.reply((e.adapter === 'QQBot') ? ['# 被抢用户太穷啦~', `> 对方仅剩[${OBJECTS_BL}]个白蜡`, `无法被抢走[${QUANTITY}]个白蜡，请再次发送抢蜡烛`, Bot.Button([[{ label: '抢蜡烛', callback: '/抢蜡烛' }]])] : `被抢用户太穷啦~\n对方仅剩[${OBJECTS_BL}]个白蜡\n无法被抢走[${QUANTITY}]个白蜡，请再次发送抢蜡烛`)
 
-      // 传入并返回图片
-      await render('admin/抢蜡烛', {
-        抢蜡烛状态: IS_PROTECTION,
-        头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
-        被抢人头像: `https://q.qlogo.cn/g?b=qq&nk=${OBJECTS_USER_DATA['头像']}&s=640`,
-        用户ID: USER_ID,
-        被抢用户ID: OBJECTS_USER_ID,
-        昵称: USER_DATA['昵称'],
-        被抢人昵称: OBJECTS_USER_DATA['昵称'],
-        当前蜡烛: USER_DATA['白蜡'] - QUANTITY,
-        被抢人当前蜡烛: OBJECTS_USER_DATA['白蜡'] + QUANTITY,
-        当前抢蜡烛次数: USER_DATA['抢蜡烛次数'] - 1,
-        当前被抢次数: OBJECTS_USER_DATA['被抢次数'] - 1,
-        抢得蜡烛: QUANTITY
-      }, { e, scale: 1.4 });
-    } else {
-      if (e.adapter === 'QQBot') return e.reply([
-        '# 被抢方太穷啦~',
-        `> 对方仅剩[${OBJECTS_USER_DATA['白蜡']}]个白蜡`,
-        `无法被抢走[${QUANTITY}]个白蜡，请再次发送抢蜡烛`
-      ])
+    OBJECTS_USER_DATA['白蜡'] -= QUANTITY
+    OBJECTS_USER_DATA['被抢次数'] += 1
+    OBJECTS_USER_DATA['被抢蜡烛总数'] += QUANTITY
+    USER_DATA['白蜡'] += QUANTITY
+    USER_DATA['抢蜡烛次数'] += 1
+    USER_DATA['抢蜡烛总数'] += QUANTITY
+    USER_DATA['上次抢蜡烛时间戳'] = NOW_DATE
+    SD(OBJECTS_USER_FILE, OBJECTS_USER_DATA)
+    SD(USER_FILE, USER_DATA)
 
-      return e.reply([
-        '被抢用户太穷啦~',
-        '\n他仅剩[' + OBJECTS_USER_DATA['白蜡'], ']个白蜡',
-        '\n无法被抢走[' + QUANTITY, ']个白蜡，请再次发送抢蜡烛'
-      ], true)
-    }
+    await render('admin/抢蜡烛', {
+      抢蜡烛状态: IS_PROTECTION,
+      头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
+      被抢人头像: `https://q.qlogo.cn/g?b=qq&nk=${OBJECTS_USER_DATA['头像']}&s=640`,
+      用户ID: USER_ID,
+      被抢用户ID: OBJECTS_USER_ID,
+      昵称: USER_DATA['昵称'],
+      被抢人昵称: OBJECTS_USER_DATA['昵称'],
+      当前蜡烛: USER_DATA['白蜡'] - QUANTITY,
+      被抢人当前蜡烛: OBJECTS_BL,
+      当前抢蜡烛次数: USER_DATA['抢蜡烛次数'] - 1,
+      当前被抢次数: OBJECTS_USER_DATA['被抢次数'] - 1,
+      抢得蜡烛: QUANTITY
+    }, { e, scale: 1.4 })
+    return Bot.Button([[
+      { label: '我抢！', callback: '/抢蜡烛' },
+      { label: '光遇信息', callback: '/光遇信息' },
+      { label: '签到', callback: '/光遇签到' }
+    ]])
   }
 }
