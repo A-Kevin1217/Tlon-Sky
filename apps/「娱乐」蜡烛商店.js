@@ -29,11 +29,11 @@ export class SKY extends plugin {
 
     async candleShop(e) {
         const SHOP_DATA = GD(SHOP_FILE);
-        await render('admin/蜡烛商店', { 蜡烛保护卡: SHOP_DATA['蜡烛保护卡'], 签到双倍卡: SHOP_DATA['签到双倍卡'] }, { e, scale: 1.4 })
-        return Bot.Button([[
+        Bot.Button([[
             { label: '购买保护卡', callback: '/购买蜡烛保护卡' },
             { label: '购买双倍卡', callback: '/购买签到双倍卡' }
         ]])
+        await render('admin/蜡烛商店', { 蜡烛保护卡: SHOP_DATA['蜡烛保护卡'], 签到双倍卡: SHOP_DATA['签到双倍卡'] }, { e, scale: 1.4 })
     }
 
     async purchaseXXX(e) {

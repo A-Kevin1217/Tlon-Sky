@@ -18,9 +18,9 @@ export class SKY extends plugin {
     const imageFile = 'plugins/Tlon-Sky/resource/光遇绘画分享/image/';
     if (!fs.existsSync(imageFile)) { return e.reply("抱歉未找到光遇绘画分享文件夹！\n请使用指令 [#Sky更新图库] 安装") }
     const Pictrue = imageFile + fs.readdirSync(imageFile)[Math.floor(Math.random() * fs.readdirSync(imageFile).length)];
-    e.reply(segment.image(`file:///${Pictrue}`))
-    return Bot.Button([[
+    Bot.Button([[
       { label: '再来一张', callback: '/绘画分享' }
     ]])
+    e.reply(segment.image(`file:///${Pictrue}`))
   }
 }

@@ -68,7 +68,7 @@ export class SKY extends plugin {
             GH_DATA['平'] += 1
             SD(GH_FILE, GH_DATA)
 
-            return e.reply((e.adapter === 'QQBot') ? ['# 平局！', `> 你们都选择了**${SYSTEM_USE}**`, '白蜡已全额返还', Bot.Button([[{ label: '赌坊信息', callback: '/秋风赌坊' }, { label: '继续押注', callback: '/押注' }, { label: '光遇信息', callback: '/光遇信息' }]])] : `平局！你和系统都选择了${SYSTEM_USE}\n赌注已全部返还用户`)
+            return e.reply((e.adapter === 'QQBot') ? ['# 平局！', `> 你们都选择了**${SYSTEM_USE}**`, '白蜡已全额返还', Bot.Button([[{ label: '赌坊信息', callback: '/秋风赌坊' }, { label: '继续押注', data: '/押注' }, { label: '光遇信息', callback: '/光遇信息' }]])] : `平局！你和系统都选择了${SYSTEM_USE}\n赌注已全部返还用户`)
         } else if (
             USER_USE === ROCK && SYSTEM_USE === SCISSORS ||
             USER_USE === PAPER && SYSTEM_USE === ROCK ||
@@ -88,7 +88,7 @@ export class SKY extends plugin {
             GH_DATA['负'] += 1
             SD(GH_FILE, GH_DATA)
 
-            return e.reply((e.adapter === 'QQBot') ? ['# 获胜！', `> 您出了**${USER_USE}**`, `系统出了**${SYSTEM_USE}**`, `获得净利润白蜡：${NET_PROFIT}根`, Bot.Button([[{ label: '赌坊信息', callback: '/秋风赌坊' }, { label: '继续押注', callback: '/押注' }, { label: '光遇信息', callback: '/光遇信息' }]])] : `用户出拳：${USER_USE}\n系统出拳：${SYSTEM_USE}\n出拳结果：赢\n赚取蜡烛数量：${NET_PROFIT}根`)
+            return e.reply((e.adapter === 'QQBot') ? ['# 获胜！', `> 您出了**${USER_USE}**`, `系统出了**${SYSTEM_USE}**`, `获得净利润白蜡：${NET_PROFIT}根`, Bot.Button([[{ label: '赌坊信息', callback: '/秋风赌坊' }, { label: '继续押注', data: '/押注' }, { label: '光遇信息', callback: '/光遇信息' }]])] : `用户出拳：${USER_USE}\n系统出拳：${SYSTEM_USE}\n出拳结果：赢\n赚取蜡烛数量：${NET_PROFIT}根`)
         } else { // 输
             reset(USER_ID)
             USER_DATA['负'] += 1
@@ -100,7 +100,7 @@ export class SKY extends plugin {
             GH_DATA['胜'] += 1
             SD(GH_FILE, GH_DATA)
 
-            return e.reply((e.adapter === 'QQBot') ? ['# 失败！', `> 您出了**${USER_USE}**`, `系统出了**${SYSTEM_USE}**`, `损失白蜡：${BET_AMOUNT}根`, Bot.Button([[{ label: '赌坊信息', callback: '/秋风赌坊' }, { label: '继续押注', callback: '/押注' }, { label: '光遇信息', callback: '/光遇信息' }]])] : `用户出拳：${USER_USE}\n系统出拳：${SYSTEM_USE}\n出拳结果：输\n损失蜡烛数量：${BET_AMOUNT}根`)
+            return e.reply((e.adapter === 'QQBot') ? ['# 失败！', `> 您出了**${USER_USE}**`, `系统出了**${SYSTEM_USE}**`, `损失白蜡：${BET_AMOUNT}根`, Bot.Button([[{ label: '赌坊信息', callback: '/秋风赌坊' }, { label: '继续押注', data: '/押注' }, { label: '光遇信息', callback: '/光遇信息' }]])] : `用户出拳：${USER_USE}\n系统出拳：${SYSTEM_USE}\n出拳结果：输\n损失蜡烛数量：${BET_AMOUNT}根`)
         }
     }
 

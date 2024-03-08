@@ -62,6 +62,13 @@ export class Sky extends plugin {
       Top_ID_B[i] = `https://q.qlogo.cn/g?b=qq&nk=${LEADERBOARD_DATA_B[i].Head_shot}&s=640`;
     }
 
+    Bot.Button([[
+      { label: '蜡烛排行', enter: true },
+      { label: '签到排行', enter: true }
+    ], [
+      { label: '抢蜡排行', enter: true },
+      { label: '赌博排行', enter: true }
+    ]])
     let html = {
       Title1: TITLE_A, Title2: TITLE_B,
       NicknameTop1: Top_nickname_A[0], NicknameTop2: Top_nickname_A[1],
@@ -97,13 +104,5 @@ export class Sky extends plugin {
     }
 
     await render('admin/Leaderboard', { ...html }, { e, scale: 1.4 });
-    return Bot.Button([[
-      { label: '蜡烛排行', enter: true },
-      { label: '签到排行', enter: true }
-    ], [
-
-      { label: '抢蜡排行', enter: true },
-      { label: '赌博排行', enter: true }
-    ]])
   }
 }
