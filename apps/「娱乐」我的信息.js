@@ -40,10 +40,7 @@ export class SKY extends plugin {
         const { 昵称, 头像, 总收入数量, 最后签到日期, 连续签到天数, 累计签到天数, 白蜡, 季蜡, 能量值, 等级, 抢蜡烛次数, 被抢次数, 抢蜡烛总数, 被抢蜡烛总数, 胜, 负, 平, 赚取, 亏损, 总赠送数量 } = USER_DATA;
         const AVERAGE_ROB = isNaN(抢蜡烛总数 / 抢蜡烛次数) ? 0 : (抢蜡烛总数 / 抢蜡烛次数).toFixed(1);
         const AVERAGE_GET_ROBBED = isNaN(被抢蜡烛总数 / 被抢次数) ? 0 : (被抢蜡烛总数 / 被抢次数).toFixed(1);
-        Bot.Button([[
-            { label: '光遇信息', callback: '/光遇信息' },
-            { label: '排行信息', callback: '/排行信息' }
-        ]])
+
         const html = {
             头像: `https://q.qlogo.cn/g?b=qq&nk=${头像}&s=640`,
             等级: 等级,
@@ -72,7 +69,7 @@ export class SKY extends plugin {
             蜡烛保护卡: USER_DATA['背包']['蜡烛保护卡'],
             签到双倍卡: USER_DATA['背包']['签到双倍卡']
         }
-        await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 })
+        await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 }, '', [[{ label: '光遇信息', callback: '/光遇信息' }, { label: '排行信息', callback: '/排行信息' }]])
     }
 
     async rankingData(e) {
