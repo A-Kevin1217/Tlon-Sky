@@ -15,7 +15,7 @@ export class SKY extends plugin {
                 reg: /^(#|\/)?(dlz|赌蜡烛)(.*)$/,
                 fnc: 'gamble'
             }, {
-                reg: /^(#|\/)?(押注|yz)(.*)$/,
+                reg: /^(#|\/)?押注(.*)$/,
                 fnc: 'wager'
             }, {
                 reg: /^(#|\/)?(赌坊信息|秋风赌坊)$/,
