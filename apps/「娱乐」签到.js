@@ -76,6 +76,9 @@ export class SKY extends plugin {
     const CUMULATIVE_HINT = `你已累计签到 ${CUMULATIVE_DAYS} 天！`;
     const CONSECUTIVE_HINT = IS_CONSECUTIVE ? `你已连续签到 ${CONSECUTIVE_DAYS} 天！` : '';
 
+    let Button = ''
+    if (e.adapter === 'QQBot') Button = [[{ label: '设置昵称', data: '/设置昵称秋舞风' }, { label: '设置头像', data: '/设置头像1947425850' }]]
+
     await render('admin/签到', {
       NICKNAME: USER_DATA['昵称'],
       HEAD_PORTRAIT: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
@@ -86,7 +89,7 @@ export class SKY extends plugin {
       CUMULATIVE_HINT,
       CONSECUTIVE_HINT,
       USER_NUMBER: (fs.readdirSync('plugins/Tlon-Sky/data/Sky签到')).length
-    }, { e, scale: 1.4 }, REPLY, [[{ label: '光遇信息', enter: true }], [{ label: '设置昵称', data: '/设置昵称秋舞风' }, { label: '设置头像', data: '/设置头像1947425850' }]])
+    }, { e, scale: 1.4 }, REPLY, Button)
   }
 
   async setNickname(e) {

@@ -85,6 +85,9 @@ export class SKY extends plugin {
     SD(OBJECTS_USER_FILE, OBJECTS_USER_DATA)
     SD(USER_FILE, USER_DATA)
 
+    let Button = ''
+    if (e.adapter === 'QQBot') Button = [[{ label: '我抢！', callback: '/抢蜡烛' }, { label: '光遇信息', callback: '/光遇信息' }, { label: '签到', callback: '/光遇签到' }]]
+
     await render('admin/抢蜡烛', {
       抢蜡烛状态: IS_PROTECTION,
       头像: `https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`,
@@ -98,11 +101,6 @@ export class SKY extends plugin {
       当前抢蜡烛次数: USER_DATA['抢蜡烛次数'] - 1,
       当前被抢次数: OBJECTS_USER_DATA['被抢次数'] - 1,
       抢得蜡烛: QUANTITY
-    }, { e, scale: 1.4 })
-    return Bot.Button([[
-      { label: '我抢！', callback: '/抢蜡烛' },
-      { label: '光遇信息', callback: '/光遇信息' },
-      { label: '签到', callback: '/光遇签到' }
-    ]])
+    }, { e, scale: 1.4 }, '', Button)
   }
 }

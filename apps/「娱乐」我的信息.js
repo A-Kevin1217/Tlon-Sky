@@ -41,6 +41,9 @@ export class SKY extends plugin {
         const AVERAGE_ROB = isNaN(抢蜡烛总数 / 抢蜡烛次数) ? 0 : (抢蜡烛总数 / 抢蜡烛次数).toFixed(1);
         const AVERAGE_GET_ROBBED = isNaN(被抢蜡烛总数 / 被抢次数) ? 0 : (被抢蜡烛总数 / 被抢次数).toFixed(1);
 
+        let Button = ''
+        if (e.adapter === 'QQBot') Button = [[{ label: '光遇信息', callback: '/光遇信息' }, { label: '排行信息', callback: '/排行信息' }]]
+
         const html = {
             头像: `https://q.qlogo.cn/g?b=qq&nk=${头像}&s=640`,
             等级: 等级,
@@ -69,7 +72,7 @@ export class SKY extends plugin {
             蜡烛保护卡: USER_DATA['背包']['蜡烛保护卡'],
             签到双倍卡: USER_DATA['背包']['签到双倍卡']
         }
-        await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 }, '', [[{ label: '光遇信息', callback: '/光遇信息' }, { label: '排行信息', callback: '/排行信息' }]])
+        await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 }, '', Button)
     }
 
     async rankingData(e) {
