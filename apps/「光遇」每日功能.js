@@ -10,7 +10,15 @@ export class DAILY_FUNCTION extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: /^(#|\/)?(光遇|国服)?(今日|每日)?(任务|魔法|季蜡|大蜡)?(烛)?(位置)?$/,
+          reg: /^(#|\/)?(光遇|国服)?(每日|今日)?任务$/,
+          fnc: 'TASK_AND_OTHER'
+        },
+        {
+          reg: /^(#|\/)?(每日|今日)(魔法|季蜡|大蜡)(烛)?/,
+          fnc: 'TASK_AND_OTHER'
+        },
+        {
+          reg: /^(#|\/)?(魔法|季蜡|大蜡)(烛)?位置/,
           fnc: 'TASK_AND_OTHER'
         },
         {
@@ -30,7 +38,6 @@ export class DAILY_FUNCTION extends plugin {
   }
 
   async TASK_AND_OTHER(e) {
-    if (/^(#|\/| )$/.test(e.msg)) { return };
     await render('admin/每日任务', {
       text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]'
     }, {
