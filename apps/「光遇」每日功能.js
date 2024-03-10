@@ -41,8 +41,8 @@ export class DAILY_FUNCTION extends plugin {
 
     if (e.msg === '#' || e.msg === '/' || e.msg === '') { return }; await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]', fk }, { e, scale: 1.4 })
   }
-  async CURRENCY_LOCATION(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/PICTURE/DB.jpg')) }
-  async SEASON_TASK(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/PICTURE/JJRW.jpg')) }
+  async CURRENCY_LOCATION(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前/当前代币.jpg')) }
+  async SEASON_TASK(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前/当前季节任务.jpg')) }
   async TASK_AND_OTHER_PIC(e) {
     const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg';
     const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg';
