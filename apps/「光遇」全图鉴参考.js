@@ -14,16 +14,15 @@ export class REFERENCE_PIC extends plugin {
     })
   }
   async REFERENCE_PIC(e) {
-    if (e.adapter === 'QQBot') {
-      return e.reply([
-        '# 光遇全图鉴', '> 国际服全图鉴 国服仅供参考',
-        segment.image('plugins/Tlon-Sky/resource/Picture/Statistics and others/全图鉴参考.png')
-      ])
-    }
-    return e.reply([
+    const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/其他/全图鉴参考.jpg'
+    return e.reply((e.adapter === 'QQBot') ? [
+      '# 光遇全图鉴',
+      '> 国际服全图鉴 国服仅供参考',
+      segment.image(URL)
+    ] : [
       segment.at(e.user_id),
       '\n国际服全图鉴 国服仅供参考',
-      segment.image('plugins/Tlon-Sky/resource/Picture/Statistics and others/全图鉴参考.png')
+      segment.image(URL)
     ])
   }
 }

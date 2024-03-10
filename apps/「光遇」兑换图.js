@@ -65,9 +65,7 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
 
   async F1(e) {
     return e.reply([
-      segment.image([
-        segment.image(`${URL}其他/好友树兑换图.jpg`)
-      ])
+      segment.image(`${URL}其他/好友树兑换图.jpg`)
     ])
   }
 }

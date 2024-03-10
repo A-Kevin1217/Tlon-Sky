@@ -43,17 +43,14 @@ export class STATISTICS_AND_OTHERS extends plugin {
 
   async f3(e) {
     return e.reply([
-      segment.image([
-        segment.image(`${URL}蜡烛合成机制.jpg`)
-      ])
+      segment.image(`${URL}蜡烛合成机制.jpg`)
     ])
   }
 
   async f4(e) {
     return e.reply([
-      segment.image([
-        segment.image(`${URL}测量规则.jpg`)
-      ])
+      segment.image(`${URL}测量规则.jpg`)
+
     ])
   }
 }
