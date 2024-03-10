@@ -2,7 +2,7 @@
 
 <p align="center">
   </a>
-    <img src="resource/Tlon-Sky.png">
+    <img width = "150" src="resource/Tlon-Sky.png">
   </a>
 </p>
 
