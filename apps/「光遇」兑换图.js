@@ -57,14 +57,7 @@ export class SKY_EXCHANGE_PICTURE extends plugin {
   }
 
   async RETURN_EXCHANGE_PICTURE(e) {
-    const URL_DATA = await (await fetch('https://gitee.com/Tloml-Starry/resources/raw/master/复刻结束时间.json')).json()
-    const CURRENT_DATE = new Date();
-    const SPECIFIED_DATE = new Date(URL_DATA['endTime']);
-    if (CURRENT_DATE > SPECIFIED_DATE || CURRENT_DATE.toISOString() === SPECIFIED_DATE.toISOString()) {
-      return e.reply([segment.image('https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前/当前复刻.jpg')])
-    } else {
-      return e.reply([segment.image('https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前复刻.jpg')])
-    }
+    return e.reply([segment.image('https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前/当前复刻.jpg')])
   }
 
   async CURRENT_SEASON_EXCHANGE_PICTURE(e) { return e.reply([segment.image(`${PICTURE_RESOURCE}/Exchange picture/Season/九色鹿季.png`)]) }

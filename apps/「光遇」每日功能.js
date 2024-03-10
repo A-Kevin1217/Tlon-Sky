@@ -1,6 +1,6 @@
 import { render } from '../components/index.js'
-import fetch from "node-fetch"
 
+const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前/当前'
 export class DAILY_FUNCTION extends plugin {
   constructor() {
     super({
@@ -30,30 +30,33 @@ export class DAILY_FUNCTION extends plugin {
   }
 
   async TASK_AND_OTHER(e) {
-    const URL_DATA = await (await fetch('https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/FK.json')).json()
-
-    const endTime = URL_DATA['endTime']
-    const now = new Date();
-    const specifiedTime = new Date(endTime['years'], endTime['month'], endTime['day'], endTime['Hour'], endTime['minute'], endTime['second']);
-
-    let fk = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/PICTURE/FK.jpg'
-    if (now > specifiedTime) { fk = 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/raw/master/FK.jpg' }
-
-    if (e.msg === '#' || e.msg === '/' || e.msg === '') { return }; await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]', fk }, { e, scale: 1.4 })
+    if (/^(#|\/| )$/.test(e.msg)) { return };
+    await render('admin/每日任务', {
+      text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]'
+    }, {
+      e,
+      scale: 1.4
+    })
   }
-  async CURRENCY_LOCATION(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前/当前代币.jpg')) }
-  async SEASON_TASK(e) { return e.reply(segment.image('https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前/当前季节任务.jpg')) }
+  async CURRENCY_LOCATION(e) {
+    return e.reply([
+      segment.image(`${URL}代币.jpg`)
+    ])
+  }
+
+  async SEASON_TASK(e) {
+    return e.reply([
+      segment.image(`${URL}季节任务.jpg`)
+    ])
+  }
+
   async TASK_AND_OTHER_PIC(e) {
-    const RW_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg';
-    const JL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg';
-    const DL_URL = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg';
-    const MF_URL = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg';
     return e.reply([
       segment.at(e.user_id),
-      RW_URL ? segment.image(RW_URL) : "",
-      JL_URL ? segment.image(JL_URL) : "",
-      DL_URL ? segment.image(DL_URL) : "",
-      MF_URL ? segment.image(MF_URL) : "",
+      segment.image('https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg'),
+      segment.image('https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg'),
+      segment.image('https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg'),
+      segment.image('https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg'),
     ])
   }
 }
