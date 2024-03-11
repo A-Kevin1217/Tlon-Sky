@@ -1,5 +1,5 @@
 const REGEX = /^(#|\/)?(20|21|22|23|24)年复刻记录$/
-const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/复刻记录/'
+const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/复刻记录/'
 export class A_COPY_OF_THE_PAST extends plugin {
   constructor() {
     super({

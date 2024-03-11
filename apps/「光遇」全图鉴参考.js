@@ -14,7 +14,7 @@ export class REFERENCE_PIC extends plugin {
     })
   }
   async REFERENCE_PIC(e) {
-    const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/其他/全图鉴参考.jpg'
+    const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/其他/全图鉴参考.jpg'
     return e.reply((e.adapter === 'QQBot') ? [
       '# 光遇全图鉴',
       '> 国际服全图鉴 国服仅供参考',

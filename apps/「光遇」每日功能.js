@@ -1,6 +1,6 @@
 import { render } from '../components/index.js'
 
-const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/当前/当前'
+const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/当前/当前'
 export class DAILY_FUNCTION extends plugin {
   constructor() {
     super({

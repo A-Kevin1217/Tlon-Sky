@@ -1,4 +1,4 @@
-const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/其他/'
+const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/其他/'
 export class STATISTICS_AND_OTHERS extends plugin {
   constructor() {
     super({
