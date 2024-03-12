@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { render } from '../components/index.js';
-import { SD, GUD, ITUE } from '../utils/db.js';
+import { SD, GUD, ITUE, GD } from '../utils/db.js';
 
 const NOSUT_FILE = 'plugins/Tlon-Sky/data/NOSUT.json'
 if (!fs.existsSync(NOSUT_FILE)) fs.writeFileSync(NOSUT_FILE, JSON.stringify({ Number: 0 }, null, 4))
