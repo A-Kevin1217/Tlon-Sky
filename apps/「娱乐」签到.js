@@ -3,7 +3,7 @@ import { render } from '../components/index.js';
 import { SD, GUD, ITUE, GD } from '../utils/db.js';
 
 const NOSUT_FILE = 'plugins/Tlon-Sky/data/NOSUT.json'
-if (!fs.existsSync(NOSUT_FILE)) fs.writeFileSync(NOSUT_FILE, JSON.stringify({ Number: 0 }, null, 4))
+if (!fs.existsSync(NOSUT_FILE)) fs.writeFileSync(NOSUT_FILE, JSON.stringify({}, null, 4))
 export class SKY extends plugin {
   constructor() {
     super({
@@ -61,7 +61,7 @@ export class SKY extends plugin {
       USER_DATA['背包']['签到双倍卡'] -= 1;
     }
 
-    NOSUT_DATA['TODAY_TIME'] = (NOSUT_DATA['TODAY_TIME'] || 0) + 1
+    NOSUT_DATA[TODAY_TIME] = (NOSUT_DATA['TODAY_TIME'] || 0) + 1
 
     USER_DATA['最后签到日期'] = TODAY_TIME;
     USER_DATA['连续签到天数'] = IS_CONSECUTIVE ? (CONSECUTIVE_DAYS + 1) : 1;
@@ -96,7 +96,7 @@ export class SKY extends plugin {
       CUMULATIVE_HINT: `你已累计签到 ${USER_DATA['累计签到天数']} 天！`,
       CONSECUTIVE_HINT: IS_CONSECUTIVE ? `你已连续签到 ${CONSECUTIVE_DAYS} 天！` : '',
       USER_NUMBER: (fs.readdirSync('plugins/Tlon-Sky/data/Sky签到')).length,
-      OTD: NOSUT_DATA['TODAY_TIME']
+      OTD: NOSUT_DATA[TODAY_TIME]
     }, { e, scale: 1.4 }, REPLY, BUTTON)
   }
 
