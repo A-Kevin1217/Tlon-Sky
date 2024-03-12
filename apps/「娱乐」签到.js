@@ -236,6 +236,7 @@ function getYesterdayDate() {
 
 function newUser(e) {
   const USER_ID = e.user_id
+  const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
   if (!ITUE(USER_ID)) {
     const CHARACTER = [
       '0', '1', '2', '3', '4', '5',
