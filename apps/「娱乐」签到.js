@@ -61,7 +61,7 @@ export class SKY extends plugin {
       USER_DATA['背包']['签到双倍卡'] -= 1;
     }
 
-    NOSUT_DATA[TODAY_TIME] = (NOSUT_DATA['TODAY_TIME'] || 0) + 1
+    NOSUT_DATA[TODAY_TIME] = (NOSUT_DATA[TODAY_TIME] || 0) + 1
 
     USER_DATA['最后签到日期'] = TODAY_TIME;
     USER_DATA['连续签到天数'] = IS_CONSECUTIVE ? (CONSECUTIVE_DAYS + 1) : 1;
