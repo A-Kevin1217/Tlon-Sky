@@ -40,9 +40,25 @@ export class SKY extends plugin {
         const ROCK = '石头';
         const PAPER = '布';
         const SCISSORS = '剪刀';
-        const PG = [SCISSORS, PAPER, ROCK]
-        const Random = Math.floor(Math.random() * PG.length);
-        const SYSTEM_USE = PG[Random];
+
+        // 为每个选项分配权重
+        const weights = {
+            [ROCK]: 1,
+            [PAPER]: 2,
+            [SCISSORS]: 3
+        };
+
+        // 生成一个随机数，范围在1到6之间
+        const random = Math.floor(Math.random() * 6) + 1;
+
+        let SYSTEM_USE;
+        if (random <= weights[ROCK]) {
+            SYSTEM_USE = ROCK;
+        } else if (random <= weights[ROCK] + weights[PAPER]) {
+            SYSTEM_USE = PAPER;
+        } else {
+            SYSTEM_USE = SCISSORS;
+        }
 
         if (!PG.includes(USER_USE)) return e.reply((e.adapter === 'QQBot') ? ['# 请您输入正确的猜拳'] : '请您输入正确的猜拳，如：\n"赌蜡烛剪刀" "赌蜡烛石头" "赌蜡烛布"')
 
