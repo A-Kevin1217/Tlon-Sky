@@ -159,7 +159,7 @@ export class SKY extends plugin {
             ])
         } else { // 输
             reset(USER_ID)
-            const restitution = (BET_AMOUNT * 0.2).toFixed(0)
+            const restitution = parseFloat(BET_AMOUNT * 0.2).toFixed(0)
             USER_DATA['负'] += 1
             USER_DATA['亏损'] += BET_AMOUNT
             USER_DATA['白蜡'] += restitution
