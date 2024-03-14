@@ -204,7 +204,7 @@ export class SKY extends plugin {
 
         if (isNaN(BET_AMOUNT) || BET_AMOUNT <= 0 || !Number.isInteger(BET_AMOUNT)) return e.reply((e.adapter === 'QQBot') ? [
             '> 请输入有效的整数押注金额',
-            Bot.Button([[{ label: '继续押注', callback: '/押注' }]])
+            Bot.Button([[{ label: '继续押注', data: '/押注' }]])
         ] : [
             segment.at(USER_ID),
             '\n请输入有效的整数押注金额。'
@@ -218,7 +218,7 @@ export class SKY extends plugin {
         if (USER_DATA['白蜡'] < BET_AMOUNT) {
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 您没有这么多白蜡',
-                Bot.Button([[{ label: '重新押注', callback: '/押注' }]])
+                Bot.Button([[{ label: '重新押注', data: '/押注' }]])
             ] : [
                 segment.at(USER_ID),
                 '\n您没有这么多白蜡'
@@ -227,7 +227,7 @@ export class SKY extends plugin {
 
         if (BET_AMOUNT < 100) return e.reply((e.adapter === 'QQBot') ? [
             '# 押注金额不可低于100',
-            Bot.Button([[{ label: '重新押注', callback: '/押注' }]])
+            Bot.Button([[{ label: '重新押注', data: '/押注' }]])
         ] : [
             segment.at(USER_ID),
             '\n押注金额不可低于100'
