@@ -40,6 +40,7 @@ export class SKY extends plugin {
         const ROCK = '石头';
         const PAPER = '布';
         const SCISSORS = '剪刀';
+        const PG = [ROCK, PAPER, SCISSORS]
 
         // 为每个选项分配权重
         const weights = {
