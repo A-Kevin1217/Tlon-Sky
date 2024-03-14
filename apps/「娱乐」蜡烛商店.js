@@ -56,19 +56,33 @@ export class SKY extends plugin {
         ) return e.reply((e.adapter === 'QQBot') ? ['> **季蜡不足，无法购买**'] : '季蜡不足，无法购买')
 
         if (BUY_A_PRODUCT === '蜡烛保护卡') {
-            e.reply((e.adapter === 'QQBot') ? ['# 请发送购买数量', `> 您的季蜡：${USER_JL}根，可购买：`, `蜡烛保护卡：**${Math.floor(USER_JL / 10)}** 张`] : [segment.at(USER_ID), '\n请发送购买数量', '\n如[#1份]', `\n您的季蜡：${USER_JL}根，可购买：`, `\n蜡烛保护卡：${Math.floor(USER_JL / 10)} 张`])
+            e.reply((e.adapter === 'QQBot') ? [
+                '# 请发送购买数量',
+                `> 您的季蜡：${USER_JL}根，可购买：`,
+                `蜡烛保护卡：**${Math.floor(USER_JL / 10)}** 张`,
+                Bot.Button([[
+                    { label: '买一张', callback: '/1份' },
+                    { label: '买三张', callback: '/3份' },
+                    { label: '买五张', callback: '/5份' },
+                    { label: '自选', data: '/?份' },
+                ]])
+            ] : [segment.at(USER_ID), '\n请发送购买数量', '\n如[#1份]', `\n您的季蜡：${USER_JL}根，可购买：`, `\n蜡烛保护卡：${Math.floor(USER_JL / 10)} 张`])
             USER_DATA['购买物品'] = '蜡烛保护卡'
         } else if (BUY_A_PRODUCT === '签到双倍卡') {
-            e.reply((e.adapter === 'QQBot') ? ['# 请发送购买数量', `> 您的季蜡：${USER_JL}根，可购买：`, `签到双倍卡：**${Math.floor(USER_JL / 30)}** 张`] : [segment.at(USER_ID), '\n请发送购买数量', '\n如[#1份]', `\n您的季蜡：${USER_JL}根，可购买：`, `\n签到双倍卡：${Math.floor(USER_JL / 30)} 张`])
+            e.reply((e.adapter === 'QQBot') ? [
+                '# 请发送购买数量',
+                `> 您的季蜡：${USER_JL}根，可购买：`,
+                `签到双倍卡：**${Math.floor(USER_JL / 30)}** 张`,
+                Bot.Button([[
+                    { label: '买一张', callback: '/1份' },
+                    { label: '买三张', callback: '/3份' },
+                    { label: '买五张', callback: '/5份' },
+                    { label: '自选', data: '/?份' },
+                ]])
+            ] : [segment.at(USER_ID), '\n请发送购买数量', '\n如[#1份]', `\n您的季蜡：${USER_JL}根，可购买：`, `\n签到双倍卡：${Math.floor(USER_JL / 30)} 张`])
             USER_DATA['购买物品'] = '签到双倍卡'
         }
         SD(USER_FILE, USER_DATA)
-        return Bot.Button([[
-            { label: '买一张', callback: '/1份' },
-            { label: '买三张', callback: '/3份' },
-            { label: '买五张', callback: '/5份' },
-            { label: '自选', data: '/?份' },
-        ]])
     }
 
     async portion(e) {
