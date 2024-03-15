@@ -50,7 +50,7 @@ export const helpList = [{
     "desc": "衣柜图鉴参考[国际服版]"
   }, {
     "icon": 25,
-    "title": "光翼数量",
+    "title": "光翼统计",
     "desc": "光翼数量统计"
   }]
 }, {

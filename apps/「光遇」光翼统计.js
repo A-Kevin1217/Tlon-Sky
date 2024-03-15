@@ -52,7 +52,7 @@ export class SKY extends plugin {
 
         return e.reply((e.adapter === 'QQBot') ? [
             '# 光翼统计',
-            `总光翼数量：${URL_DATA.length}`,
+            `> 总光翼数量：${URL_DATA.length}`,
             `永久翼：${tagCounts["复刻永久"] + tagCounts["普通永久"]}`,
             `复刻先祖永久翼：${tagCounts["复刻永久"]}`,
             `常驻先祖永久翼：${tagCounts["普通永久"]}`,
