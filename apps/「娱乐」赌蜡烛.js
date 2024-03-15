@@ -130,7 +130,7 @@ export class SKY extends plugin {
             reset(USER_ID)
             USER_DATA['白蜡'] += BET_AMOUNT
             USER_DATA['平'] += 1
-            USER_DATA['上次赌蜡烛时间戳'] = NowDate
+            USER_DATA['上次赌蜡烛时间戳'] = NOW_DATE
             SD(USER_FILE, USER_DATA)
 
             GH_DATA['平'] += 1
@@ -161,7 +161,7 @@ export class SKY extends plugin {
             USER_DATA['胜'] += 1
             USER_DATA['赚取'] += NET_PROFIT
             USER_DATA['白蜡'] += GET_BL
-            USER_DATA['上次赌蜡烛时间戳'] = NowDate
+            USER_DATA['上次赌蜡烛时间戳'] = NOW_DATE
             SD(USER_FILE, USER_DATA)
 
             GH_DATA['赔'] += NET_PROFIT
@@ -188,7 +188,7 @@ export class SKY extends plugin {
             USER_DATA['负'] += 1
             USER_DATA['亏损'] += BET_AMOUNT
             USER_DATA['白蜡'] += restitution
-            USER_DATA['上次赌蜡烛时间戳'] = NowDate
+            USER_DATA['上次赌蜡烛时间戳'] = NOW_DATE
             SD(USER_FILE, USER_DATA)
 
             GH_DATA['赚'] += BET_AMOUNT
