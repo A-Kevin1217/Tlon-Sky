@@ -48,6 +48,10 @@ export const helpList = [{
     "icon": 101,
     "title": "#全图鉴参考",
     "desc": "衣柜图鉴参考[国际服版]"
+  }, {
+    "icon": 25,
+    "title": "光翼数量",
+    "desc": "光翼数量统计"
   }]
 }, {
   "group": "兑换图功能",
