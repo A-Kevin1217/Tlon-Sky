@@ -3,7 +3,7 @@ import { render } from '../components/index.js';
 import { GD, GUD, ITUE, SD } from '../utils/db.js';
 
 const GH_FILE = `plugins/Tlon-Sky/data/秋风赌坊.json`
-const COOLING_TIME = 5 * 60 * 1000
+const COOLING_TIME = 60 * 1000
 export class SKY extends plugin {
     constructor() {
         super({
