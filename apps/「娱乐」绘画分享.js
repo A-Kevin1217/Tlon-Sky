@@ -1,4 +1,5 @@
-import fs from "fs";
+import fetch from 'node-fetch'
+import _ from 'lodash'
 
 export class SKY extends plugin {
   constructor() {
@@ -15,9 +16,15 @@ export class SKY extends plugin {
   }
 
   async paintingSharing(e) {
-    const imageFile = 'plugins/Tlon-Sky/resource/光遇绘画分享/image/';
-    if (!fs.existsSync(imageFile)) { return e.reply("抱歉未找到光遇绘画分享文件夹！\n请使用指令 [#Sky更新图库] 安装") }
-    const Pictrue = imageFile + fs.readdirSync(imageFile)[Math.floor(Math.random() * fs.readdirSync(imageFile).length)];
-    e.reply((e.adapter === 'QQBot') ? [segment.image(`file:///${Pictrue}`), Bot.Button([[{ label: '再来一张', callback: '/绘画分享' }]])] : segment.image(`file:///${Pictrue}`))
+    const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/绘画分享/'
+    const TU_N = (await (await fetch(`${URL}HHFX.json`)).json())['n']
+    const IMAGE = segment.image(`${URL}${_.random(0, TU_N)}.jpg`)
+    e.reply((e.adapter === 'QQBot') ? [
+      IMAGE,
+      Bot.Button([[{ label: '再来一张', callback: '/绘画分享' }]])
+    ] : [
+      segment.at(e.user_id),
+      IMAGE
+    ])
   }
 }
