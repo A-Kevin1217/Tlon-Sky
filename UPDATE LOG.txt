@@ -4,7 +4,7 @@
 ："Tlon-Sky\apps\「光遇」光翼统计.js"
 ："Tlon-Sky\config\HELP_1.js"
 
- - 修改赌蜡烛最高倍率，以及概率
+ - 修改赌蜡烛最高倍率，以及概率，增加CD
 ："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
 
 -------------------

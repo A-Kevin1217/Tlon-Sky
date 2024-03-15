@@ -19,8 +19,15 @@ export class SKY extends plugin {
   async grabCandle(e) {
     const USER_ID = e.user_id
 
-    if (!ITUE(USER_ID)) { return e.reply((e.adapter === 'QQBot') ? ['> 请先发送光遇签到', Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])] : '请先发送光遇签到') }
-    if (e.at === USER_ID) { return e.reply((e.adapter === 'QQBot') ? ['> 不可自己抢自己！', Bot.Botton([[{ label: '抢蜡烛', callback: '/抢蜡烛' }]])] : '不可自己抢自己！') }
+    if (!ITUE(USER_ID)) return e.reply((e.adapter === 'QQBot') ? [
+      '> 请先发送光遇签到',
+      Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])
+    ] : '请先发送光遇签到')
+
+    if (e.at === USER_ID) return e.reply((e.adapter === 'QQBot') ? [
+      '> 不可自己抢自己！',
+      Bot.Botton([[{ label: '抢蜡烛', callback: '/抢蜡烛' }]])
+    ] : '不可自己抢自己！')
 
     const COOLING_TIME = (2 * 60 * 60 * 1000) - 10000;
 
@@ -43,9 +50,21 @@ export class SKY extends plugin {
         const END_TIME = new Date(END_TIME_STAMP).toLocaleString();
 
         let Reply
-        if (HOUR === 0 && MINUTES === 0) { Reply = (e.adapter === 'QQBot') ? ['# CD中...', `> 请等待${SECOND}秒后再试`, `CD结束时间：**${END_TIME}**`] : `CD中...\n请等待 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}` }
-        else if (HOUR === 0 && MINUTES !== 0) { Reply = (e.adapter === 'QQBot') ? ['# CD中...', `> 请等待${MINUTES}分钟${SECOND}秒后再试`, `CD结束时间：**${END_TIME}**`] : `CD中...\n请等待 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}` }
-        else if (HOUR !== 0 && MINUTES !== 0) { Reply = (e.adapter === 'QQBot') ? ['# CD中...', `> 请等待${HOUR}小时${MINUTES}分钟${SECOND}秒后再试`, `CD结束时间：**${END_TIME}**`] : `CD中...\n请等待 ${HOUR} 小时 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}` }
+        if (HOUR === 0 && MINUTES === 0) Reply = (e.adapter === 'QQBot') ? [
+          '# CD中...',
+          `> 请等待${SECOND}秒后再试`,
+          `CD结束时间：**${END_TIME}**`
+        ] : `CD中...\n请等待 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`
+        else if (HOUR === 0 && MINUTES !== 0) Reply = (e.adapter === 'QQBot') ? [
+          '# CD中...',
+          `> 请等待${MINUTES}分钟${SECOND}秒后再试`
+            `CD结束时间：**${END_TIME}**`
+        ] : `CD中...\n请等待 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`
+        else if (HOUR !== 0 && MINUTES !== 0) Reply = (e.adapter === 'QQBot') ? [
+          '# CD中...',
+          `> 请等待${HOUR}小时${MINUTES}分钟${SECOND}秒后再试`,
+          `CD结束时间：**${END_TIME}**`
+        ] : `CD中...\n请等待 ${HOUR} 小时 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`
         return e.reply(Reply)
       }
     }

@@ -3,7 +3,7 @@ import { render } from '../components/index.js';
 import { GD, GUD, ITUE, SD } from '../utils/db.js';
 
 const GH_FILE = `plugins/Tlon-Sky/data/秋风赌坊.json`
-
+const COOLING_TIME = 5 * 60 * 1000
 export class SKY extends plugin {
     constructor() {
         super({
@@ -35,13 +35,38 @@ export class SKY extends plugin {
             '\n请先发送光遇签到'
         ])
 
-        const NowDate = Date.now();
+        const NOW_DATE = Date.now();
 
         /** 用户出拳 */
         const USER_USE = e.msg.match(/^(#|\/)?(dlz|赌蜡烛)(.*)$/)[3]
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
         const USER_DATA = GUD(USER_ID)
+        const LAST_EXECUTION_TIME = USER_DATA['上次赌蜡烛时间戳']
+
+        if (NOW_DATE - LAST_EXECUTION_TIME < COOLING_TIME) {
+            const REMAINING_TIME = COOLING_TIME - (NOW_DATE - LAST_EXECUTION_TIME)
+            if (REMAINING_TIME > 0) {
+                const MINUTES = Math.floor((REMAINING_TIME % (60 * 60 * 1000)) / (60 * 1000));
+                const SECOND = Math.floor((REMAINING_TIME % (60 * 1000)) / 1000);
+
+                const END_TIME_STAMP = NOW_DATE + REMAINING_TIME;
+                const END_TIME = new Date(END_TIME_STAMP).toLocaleString();
+
+                let Reply
+                if (MINUTES === 0) Reply = (e.adapter === 'QQBot') ? [
+                    '# CD中...',
+                    `> 请等待${SECOND}秒后再试`,
+                    `CD结束时间：**${END_TIME}**`
+                ] : `CD中...\n请等待 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`
+                else if (MINUTES !== 0) Reply = (e.adapter === 'QQBot') ? [
+                    '# CD中...',
+                    `> 请等待${MINUTES}分钟${SECOND}秒后再试`
+                        `CD结束时间：**${END_TIME}**`
+                ] : `CD中...\n请等待 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`
+                return e.reply(Reply)
+            }
+        }
 
         const ROCK = '石头';
         const PAPER = '布';
@@ -50,13 +75,13 @@ export class SKY extends plugin {
 
         // 为每个选项分配权重
         const weights = {
-            [ROCK]: 1,
-            [PAPER]: 1,
-            [SCISSORS]: 1
+            [ROCK]: 200,
+            [PAPER]: 200,
+            [SCISSORS]: 200
         };
 
         // 生成一个随机数，范围在1到6之间
-        const random = Math.floor(Math.random() * 6) + 1;
+        const random = Math.floor(Math.random() * 600) + 1;
 
         let SYSTEM_USE;
         if (random <= weights[ROCK]) {
@@ -231,6 +256,13 @@ export class SKY extends plugin {
         ] : [
             segment.at(USER_ID),
             '\n押注金额不可低于100'
+        ])
+        if (BET_AMOUNT > 3000) return e.reply((e.adapter === 'QQBot') ? [
+            '# 押注金额不可大于3000',
+            Bot.Button([[{ label: '重新押注', data: '/押注' }]])
+        ] : [
+            segment.at(USER_ID),
+            '\n押注金额不可大于3000'
         ])
 
         if (!fs.existsSync(BET_FILE)) { SD(BET_FILE, { 押注金额: 0, 倍率: null }) }
