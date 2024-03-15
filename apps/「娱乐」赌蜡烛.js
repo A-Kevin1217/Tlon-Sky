@@ -51,8 +51,8 @@ export class SKY extends plugin {
         // 为每个选项分配权重
         const weights = {
             [ROCK]: 1,
-            [PAPER]: 2,
-            [SCISSORS]: 3
+            [PAPER]: 1,
+            [SCISSORS]: 1
         };
 
         // 生成一个随机数，范围在1到6之间
@@ -240,7 +240,7 @@ export class SKY extends plugin {
         USER_DATA['白蜡'] -= BET_AMOUNT
         SD(USER_FILE, USER_DATA)
 
-        const X = Math.min(1.5 + (Math.floor(BET_AMOUNT / 1000) * 0.5), 2.0);
+        const X = Math.min(1.5 + (Math.floor(BET_AMOUNT / 1000) * 0.5), 1.8);
 
         BET_DATA['押注金额'] += BET_AMOUNT
         BET_DATA['倍率'] = X
