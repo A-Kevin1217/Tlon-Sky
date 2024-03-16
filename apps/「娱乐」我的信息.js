@@ -70,7 +70,8 @@ export class SKY extends plugin {
             白蜡排名: RANKING_A,
             季蜡排名: RANKING_B,
             蜡烛保护卡: USER_DATA['背包']['蜡烛保护卡'],
-            签到双倍卡: USER_DATA['背包']['签到双倍卡']
+            签到双倍卡: USER_DATA['背包']['签到双倍卡'],
+            代币: (USER_DATA['代币'] || 0)
         }
         await render('admin/光遇信息', { ...html, bg: await rodom() }, { e, scale: 1.4 }, '', Button)
     }
