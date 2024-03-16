@@ -68,7 +68,7 @@ export class SKY extends plugin {
     USER_DATA['累计签到天数'] += 1;
     USER_DATA['白蜡'] += GET_BL;
     USER_DATA['季蜡'] += GET_JL;
-    USER_DATA['代币'] += 1000
+    USER_DATA['代币'] = (USER_DATA['代币'] || 0) + 1000
     USER_DATA['能量值'] += GET_NLZ;
 
     if (USER_DATA['能量值'] >= 100) {
@@ -264,7 +264,7 @@ function newUser(e) {
       头像: AVATAR,
       最后签到日期: '',
       连续签到天数: 0, 累计签到天数: 0,
-      能量值: 0, 等级: 0, 白蜡: 0, 季蜡: 0,
+      能量值: 0, 等级: 0, 白蜡: 0, 季蜡: 0, 代币: 0,
       抢蜡烛次数: 0, 被抢次数: 0,
       抢蜡烛总数: 0, 被抢蜡烛总数: 0,
       上次抢蜡烛时间戳: 0,
