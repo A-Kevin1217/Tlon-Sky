@@ -20,8 +20,46 @@ export class SKY extends plugin {
             }, {
                 reg: /^(#|\/)?(赌坊信息|秋风赌坊)$/,
                 fnc: 'gamblingHouseIformation'
+            }, {
+                reg: /^(#|\/)?(白换代|代换白)(.*)$/,
+                fnc: 'h'
             }]
         })
+    }
+
+    async h(e) {
+        const USER_ID = e.user_id;
+        if (!ITUE(USER_ID)) return e.reply((e.adapter === 'QQBot') ? [
+            '> 请先发送光遇签到',
+            Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])
+        ] : [
+            segment.at(USER_ID),
+            '\n请先发送光遇签到'
+        ])
+        const htype = e.msg.match(/^(#|\/)?(白换代|代换白)(.*)$/)[2]
+        const n = e.msg.match(/^(#|\/)?(白换代|代换白)(.*)$/)[3]
+
+        const USER_DATA = GUD(USER_ID)
+
+        if (htype === '白换代') {
+            if (USER_DATA['白蜡'] < n) return e.reply(['穷鬼哪来那么多白蜡'])
+            USER_DATA['白蜡'] -= n * 8
+            USER_DATA['代币'] += n
+            return e.reply([
+                '兑换成功',
+                '\n兑换比例8 : 1',
+                `\n获得代币：${n}`
+            ])
+        } else if (htype === '代换白') {
+            if (USER_DATA['代币'] < n) return e.reply(['穷鬼哪来那么多代币'])
+            USER_DATA['代币'] -= n * 16
+            USER_DATA['白蜡'] += n
+            return e.reply([
+                '兑换成功',
+                '\n兑换比例16 : 1',
+                `\n获得白蜡：${n}`
+            ])
+        }
     }
 
     async gamble(e) {

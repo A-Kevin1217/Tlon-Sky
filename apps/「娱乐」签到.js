@@ -68,7 +68,7 @@ export class SKY extends plugin {
     USER_DATA['累计签到天数'] += 1;
     USER_DATA['白蜡'] += GET_BL;
     USER_DATA['季蜡'] += GET_JL;
-    USER_DATA['代币'] = (USER_DATA['代币'] || 0) + 1000
+    USER_DATA['代币'] = (USER_DATA['代币'] || 0)
     USER_DATA['能量值'] += GET_NLZ;
 
     if (USER_DATA['能量值'] >= 100) {
