@@ -18,16 +18,12 @@ export class oss extends plugin {
 
     async oss() {
         const USER_FOLDER = 'plugins/Tlon-Sky/data/Sky签到';
-        const USER_BACKPACK_FOLDER = 'plugins/Tlon-Sky/data/背包';
         const USER_FILE_DIRECTORY = fs.readdirSync(USER_FOLDER);
 
         USER_FILE_DIRECTORY.forEach((FILE_NAME) => {
             const USER_FILE = `${USER_FOLDER}/${FILE_NAME}`;
-            const USER_BACKPACK_FILE = `${USER_BACKPACK_FOLDER}/${FILE_NAME}`;
             const GET_USER_FILE = fs.readFileSync(USER_FILE, 'utf8');
-            const GET_USER_BACKPACK_FILE = fs.readFileSync(USER_BACKPACK_FILE, 'utf8');
             const USER_DATA = JSON.parse(GET_USER_FILE);
-            const USER_BACKPACK_DATA = JSON.parse(GET_USER_BACKPACK_FILE);
 
             const USER_ID = FILE_NAME.replace(/.json/g, "");
 
@@ -42,6 +38,7 @@ export class oss extends plugin {
                 等级: (USER_DATA[USER_ID]['等级'] || 0),
                 白蜡: (USER_DATA[USER_ID]['白蜡'] || 0),
                 季蜡: (USER_DATA[USER_ID]['季蜡'] || 0),
+                代币: (USER_DATA[USER_ID]['代币'] || 0),
                 抢蜡烛次数: (USER_DATA[USER_ID]['抢蜡烛次数'] || 0),
                 被抢次数: (USER_DATA[USER_ID]['被抢次数'] || 0),
                 抢蜡烛总数: (USER_DATA[USER_ID]['抢蜡烛总数'] || 0),
@@ -55,8 +52,8 @@ export class oss extends plugin {
                 总赠送数量: (USER_DATA[USER_ID]['总赠送数量'] || 0),
                 总收入数量: (USER_DATA[USER_ID]['总收入数量'] || 0),
                 背包: {
-                    蜡烛保护卡: (USER_BACKPACK_DATA[USER_ID]['蜡烛保护卡'] || 0),
-                    签到双倍卡: (USER_BACKPACK_DATA[USER_ID]['签到双倍卡'] || 0),
+                    蜡烛保护卡: (USER_DATA[USER_ID]['蜡烛保护卡'] || 0),
+                    签到双倍卡: (USER_DATA[USER_ID]['签到双倍卡'] || 0),
                 }
             }
             SD(USER_FILE, New_USER_DATA);
