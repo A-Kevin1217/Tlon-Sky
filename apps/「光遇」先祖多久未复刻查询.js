@@ -79,7 +79,7 @@ const seasons = {
     { name: '鸣谢收藏家', date: new Date('2023-10-03') },
     { name: '固执登山者', date: new Date('2023-04-10') },
     { name: '热血运动员', date: new Date('2023-09-11') },
-    { name: '内秀书虫', date: new Date('2022-10-25') },
+    { name: '内秀书虫', date: new Date('2024-03-11') },
     { name: '母语者', date: new Date('2024-02-26') }
   ],
   '预言': [ // 7
