@@ -269,10 +269,14 @@ export class SKY extends plugin {
 
         const BET_DATA = GD(BET_FILE)
 
+        if (BET_DATA['押注金额'] !== 0) {
+            return e.reply('已有押注')
+        }
+
         USER_DATA['白蜡'] -= BET_AMOUNT
         SD(USER_FILE, USER_DATA)
 
-        const X = Math.min(1.5 + (Math.floor(BET_AMOUNT / 1000) * 0.5), 1.8);
+        const X = Math.min(1.5 + (Math.floor(BET_AMOUNT / 1000) * 0.2), 1.4);
 
         BET_DATA['押注金额'] += BET_AMOUNT
         BET_DATA['倍率'] = X
