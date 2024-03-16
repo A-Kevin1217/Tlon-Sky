@@ -45,6 +45,7 @@ export class SKY extends plugin {
             if (USER_DATA['白蜡'] < n) return e.reply(['穷鬼哪来那么多白蜡'])
             USER_DATA['白蜡'] -= n * 8
             USER_DATA['代币'] += n
+            SD(`plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`, USER_DATA)
             return e.reply([
                 '兑换成功',
                 '\n兑换比例8 : 1',
@@ -54,6 +55,7 @@ export class SKY extends plugin {
             if (USER_DATA['代币'] < n) return e.reply(['穷鬼哪来那么多代币'])
             USER_DATA['代币'] -= n * 16
             USER_DATA['白蜡'] += n
+            SD(`plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`, USER_DATA)
             return e.reply([
                 '兑换成功',
                 '\n兑换比例16 : 1',
