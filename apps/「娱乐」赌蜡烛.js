@@ -4,6 +4,7 @@ import { GD, GUD, ITUE, SD } from '../utils/db.js';
 
 const GH_FILE = `plugins/Tlon-Sky/data/秋风赌坊.json`
 const COOLING_TIME = 2 * 60 * 1000
+const CONVERSION_REGEX = /^(#|\/)?(白换代|代换白)(.*)$/
 export class SKY extends plugin {
     constructor() {
         super({
@@ -21,14 +22,16 @@ export class SKY extends plugin {
                 reg: /^(#|\/)?(赌坊信息|秋风赌坊)$/,
                 fnc: 'gamblingHouseIformation'
             }, {
-                reg: /^(#|\/)?(白换代|代换白)(.*)$/,
-                fnc: 'h'
+                reg: CONVERSION_REGEX,
+                fnc: 'Conversion'
             }]
         })
     }
 
-    async h(e) {
+    async Conversion(e) {
         const USER_ID = e.user_id;
+        const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
+
         if (!ITUE(USER_ID)) return e.reply((e.adapter === 'QQBot') ? [
             '> 请先发送光遇签到',
             Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])
@@ -36,30 +39,71 @@ export class SKY extends plugin {
             segment.at(USER_ID),
             '\n请先发送光遇签到'
         ])
+
+        const USER_DATA = GUD(USER_ID)
+        const USER_BL = USER_DATA['白蜡']
+        const USER_DB = USER_DATA['代币']
+
+        const MATCH = e.msg.match(CONVERSION_REGEX)
+        const CONVERSION_TYPE = MATCH[2]
+        const CONVERSION_NUMBER = MATCH[3]
         const htype = e.msg.match(/^(#|\/)?(白换代|代换白)(.*)$/)[2]
         const n = e.msg.match(/^(#|\/)?(白换代|代换白)(.*)$/)[3]
 
-        const USER_DATA = GUD(USER_ID)
+        if (CONVERSION_TYPE === '白换代') {
+            const RATIO_CONVERSION = CONVERSION_NUMBER * 8
 
-        if (htype === '白换代') {
-            if (USER_DATA['白蜡'] < n) return e.reply(['穷鬼哪来那么多白蜡'])
-            USER_DATA['白蜡'] -= n * 8
-            USER_DATA['代币'] += n
-            SD(`plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`, USER_DATA)
-            return e.reply([
-                '兑换成功',
-                '\n兑换比例8 : 1',
-                `\n获得代币：${n}`
+            if (USER_BL < CONVERSION_NUMBER) return e.reply((e.adapter === 'QQBot') ? [
+                '# 白蜡不足，无法转换',
+                Bot.Button([[
+                    { label: '白转代', data: '/白转代' },
+                    { label: '代转白', data: '/代转白' }
+                ]])
+            ] : [
+                segment.at(USER_ID),
+                '\n白蜡不足，无法转换'
+            ])
+
+            USER_DATA['白蜡'] -= CONVERSION_NUMBER
+            USER_DATA['代币'] += RATIO_CONVERSION
+            SD(USER_FILE, USER_DATA)
+
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 转换成功',
+                '> 转换比例[1 : 8]',
+                `获得代币：${RATIO_CONVERSION}`
+            ] : [
+                segment.at(USER_ID),
+                '\n转换成功',
+                '\n转换比例[1 : 8]',
+                `\n获得代币：${RATIO_CONVERSION}`
             ])
         } else if (htype === '代换白') {
-            if (USER_DATA['代币'] < n) return e.reply(['穷鬼哪来那么多代币'])
-            USER_DATA['代币'] -= n * 16
-            USER_DATA['白蜡'] += n
-            SD(`plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`, USER_DATA)
-            return e.reply([
-                '兑换成功',
-                '\n兑换比例16 : 1',
-                `\n获得白蜡：${n}`
+            const RATIO_CONVERSION = CONVERSION_NUMBER * 16
+
+            if (USER_DB < RATIO_CONVERSION) return e.reply((e.adapter === 'QQBot') ? [
+                '# 代币不足，无法转换',
+                Bot.Button([[
+                    { label: '白转代', data: '/白转代' },
+                    { label: '代转白', data: '/代转白' }
+                ]])
+            ] : [
+                segment.at(USER_ID),
+                '\n代币不足，无法转换'
+            ])
+            USER_DATA['代币'] -= RATIO_CONVERSION
+            USER_DATA['白蜡'] += CONVERSION_NUMBER
+            SD(USER_FILE, USER_DATA)
+
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 转换成功',
+                '> 转换比例[16 : 1]',
+                `获得白蜡：${CONVERSION_NUMBER}`
+            ] : [
+                segment.at(USER_ID),
+                '\n转换成功',
+                '\n转换比例[16 : 1]',
+                `\n获得白蜡：${CONVERSION_NUMBER}`
             ])
         }
     }
