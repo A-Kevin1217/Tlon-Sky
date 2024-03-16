@@ -3,7 +3,7 @@ import { render } from '../components/index.js';
 import { GD, GUD, ITUE, SD } from '../utils/db.js';
 
 const GH_FILE = `plugins/Tlon-Sky/data/秋风赌坊.json`
-const COOLING_TIME = 60 * 1000
+const COOLING_TIME = 2 * 60 * 1000
 export class SKY extends plugin {
     constructor() {
         super({
@@ -12,7 +12,7 @@ export class SKY extends plugin {
             event: 'message',
             priority: 1,
             rule: [{
-                reg: /^(#|\/)?(dlz|赌蜡烛)(.*)$/,
+                reg: /^(#|\/)?赌代币(.*)$/,
                 fnc: 'gamble'
             }, {
                 reg: /^(#|\/)?押注(.*)$/,
@@ -38,11 +38,11 @@ export class SKY extends plugin {
         const NOW_DATE = Date.now();
 
         /** 用户出拳 */
-        const USER_USE = e.msg.match(/^(#|\/)?(dlz|赌蜡烛)(.*)$/)[3]
+        const USER_USE = e.msg.match(/^(#|\/)?赌代币(.*)$/)[2]
 
         const USER_FILE = `plugins/Tlon-Sky/data/Sky签到/${USER_ID}.json`
         const USER_DATA = GUD(USER_ID)
-        const LAST_EXECUTION_TIME = USER_DATA['上次赌蜡烛时间戳']
+        const LAST_EXECUTION_TIME = USER_DATA['上次赌代币时间戳']
 
         if (NOW_DATE - LAST_EXECUTION_TIME < COOLING_TIME) {
             const REMAINING_TIME = COOLING_TIME - (NOW_DATE - LAST_EXECUTION_TIME)
@@ -95,13 +95,13 @@ export class SKY extends plugin {
         if (!PG.includes(USER_USE)) return e.reply((e.adapter === 'QQBot') ? [
             '# 请您输入正确的猜拳',
             Bot.Button([[
-                { label: '剪刀', callback: '/赌蜡烛剪刀' },
-                { label: '石头', callback: '/赌蜡烛石头' },
-                { label: '布', callback: '/赌蜡烛布' }
+                { label: '剪刀', callback: '/赌代币剪刀' },
+                { label: '石头', callback: '/赌代币石头' },
+                { label: '布', callback: '/赌代币布' }
             ]])
         ] : [
             segment.at(USER_ID),
-            '\n请您输入正确的猜拳，如：\n"赌蜡烛剪刀" "赌蜡烛石头" "赌蜡烛布"'
+            '\n请您输入正确的猜拳，如：\n"赌代币剪刀" "赌代币石头" "赌代币布"'
         ])
 
         const BET_FILE = `plugins/Tlon-Sky/data/押注信息/${USER_ID}.json`;
@@ -128,9 +128,9 @@ export class SKY extends plugin {
 
         if (USER_USE === SYSTEM_USE) {
             reset(USER_ID)
-            USER_DATA['白蜡'] += BET_AMOUNT
+            USER_DATA['代币'] += BET_AMOUNT
             USER_DATA['平'] += 1
-            USER_DATA['上次赌蜡烛时间戳'] = NOW_DATE
+            USER_DATA['上次赌代币时间戳'] = NOW_DATE
             SD(USER_FILE, USER_DATA)
 
             GH_DATA['平'] += 1
@@ -139,7 +139,7 @@ export class SKY extends plugin {
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 平局！',
                 `> 你们都选择了**${SYSTEM_USE}**`,
-                '白蜡已全额返还',
+                '代币已全额返还',
                 Bot.Button([[
                     { label: '赌坊信息', callback: '/秋风赌坊' },
                     { label: '继续押注', data: '/押注' },
@@ -160,8 +160,8 @@ export class SKY extends plugin {
 
             USER_DATA['胜'] += 1
             USER_DATA['赚取'] += NET_PROFIT
-            USER_DATA['白蜡'] += GET_BL
-            USER_DATA['上次赌蜡烛时间戳'] = NOW_DATE
+            USER_DATA['代币'] += GET_BL
+            USER_DATA['上次赌代币时间戳'] = NOW_DATE
             SD(USER_FILE, USER_DATA)
 
             GH_DATA['赔'] += NET_PROFIT
@@ -172,7 +172,7 @@ export class SKY extends plugin {
                 '# 获胜！',
                 `> 您出了**${USER_USE}**`,
                 `系统出了**${SYSTEM_USE}**`,
-                `获得净利润白蜡：${NET_PROFIT}根`,
+                `获得净利润代币：${NET_PROFIT}根`,
                 Bot.Button([[
                     { label: '赌坊信息', callback: '/秋风赌坊' },
                     { label: '继续押注', data: '/押注' },
@@ -180,15 +180,15 @@ export class SKY extends plugin {
                 ]])
             ] : [
                 segment.at(USER_ID),
-                `\n用户出拳：${USER_USE}\n系统出拳：${SYSTEM_USE}\n出拳结果：赢\n赚取蜡烛数量：${NET_PROFIT}根`
+                `\n用户出拳：${USER_USE}\n系统出拳：${SYSTEM_USE}\n出拳结果：赢\n赚取代币数量：${NET_PROFIT}根`
             ])
         } else { // 输
             reset(USER_ID)
-            const restitution = parseFloat((BET_AMOUNT * 0.2).toFixed(0))
+            const restitution = parseFloat((BET_AMOUNT * 0.1).toFixed(0))
             USER_DATA['负'] += 1
             USER_DATA['亏损'] += BET_AMOUNT
-            USER_DATA['白蜡'] += restitution
-            USER_DATA['上次赌蜡烛时间戳'] = NOW_DATE
+            USER_DATA['代币'] += restitution
+            USER_DATA['上次赌代币时间戳'] = NOW_DATE
             SD(USER_FILE, USER_DATA)
 
             GH_DATA['赚'] += BET_AMOUNT
@@ -199,8 +199,8 @@ export class SKY extends plugin {
                 '# 失败！',
                 `> 您出了**${USER_USE}**`,
                 `系统出了**${SYSTEM_USE}**`,
-                `损失白蜡：${BET_AMOUNT - restitution}根`,
-                '已返还20%蜡烛',
+                `损失代币：${BET_AMOUNT - restitution}根`,
+                '已返还20%代币',
                 Bot.Button([[
                     { label: '赌坊信息', callback: '/秋风赌坊' },
                     { label: '继续押注', data: '/押注' },
@@ -208,7 +208,7 @@ export class SKY extends plugin {
                 ]])
             ] : [
                 segment.at(USER_ID),
-                `用户出拳：${USER_USE}\n系统出拳：${SYSTEM_USE}\n出拳结果：输\n损失蜡烛数量：${BET_AMOUNT - restitution}根\n已返还20%蜡烛`
+                `用户出拳：${USER_USE}\n系统出拳：${SYSTEM_USE}\n出拳结果：输\n损失代币数量：${BET_AMOUNT - restitution}根\n已返还10%代币`
             ])
         }
     }
@@ -240,13 +240,13 @@ export class SKY extends plugin {
 
         const USER_DATA = GUD(USER_ID)
 
-        if (USER_DATA['白蜡'] < BET_AMOUNT) {
+        if (USER_DATA['代币'] < BET_AMOUNT) {
             return e.reply((e.adapter === 'QQBot') ? [
-                '# 您没有这么多白蜡',
+                '# 您没有这么多代币',
                 Bot.Button([[{ label: '重新押注', data: '/押注' }]])
             ] : [
                 segment.at(USER_ID),
-                '\n您没有这么多白蜡'
+                '\n您没有这么多代币'
             ])
         }
 
@@ -273,7 +273,7 @@ export class SKY extends plugin {
             return e.reply('已有押注')
         }
 
-        USER_DATA['白蜡'] -= BET_AMOUNT
+        USER_DATA['代币'] -= BET_AMOUNT
         SD(USER_FILE, USER_DATA)
 
         const X = Math.min(1.5 + (Math.floor(BET_AMOUNT / 1000) * 0.2), 1.4);
@@ -286,13 +286,13 @@ export class SKY extends plugin {
             `> 您已押注：**${BET_DATA['押注金额']}**`,
             `当前倍率：**${X}**`,
             Bot.Button([[
-                { label: '剪刀', callback: '/赌蜡烛剪刀' },
-                { label: '石头', callback: '/赌蜡烛石头' },
-                { label: '布', callback: '/赌蜡烛布' }
+                { label: '剪刀', callback: '/赌代币剪刀' },
+                { label: '石头', callback: '/赌代币石头' },
+                { label: '布', callback: '/赌代币布' }
             ]])
         ] : [
             segment.at(USER_ID),
-            `\n你已成功押注 ${BET_DATA['押注金额']}根白蜡，倍率为 ${X}`
+            `\n你已成功押注 ${BET_DATA['押注金额']}根代币，倍率为 ${X}`
         ])
 
 
@@ -306,8 +306,8 @@ export class SKY extends plugin {
             赢: `赢：${GH_DATA['胜']} 次`,
             输: `输：${GH_DATA['负']} 次`,
             平: `平：${GH_DATA['平']} 次`,
-            总赚取: `总赚取：${GH_DATA['赚']} 根白蜡`,
-            总亏损: `总亏损：${GH_DATA['赔']} 根白蜡`,
+            总赚取: `总赚取：${GH_DATA['赚']} 根代币`,
+            总亏损: `总亏损：${GH_DATA['赔']} 根代币`,
         }, { e, scale: 1.4 })
     }
 }
