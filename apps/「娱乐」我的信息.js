@@ -25,7 +25,10 @@ export class SKY extends plugin {
         Leaderboard();
 
         const USER_ID = e.user_id;
-        if (!ITUE(USER_ID)) { return e.reply((e.adapter === 'QQBot') ? ['> 请先发送光遇签到', Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])] : '请先发送光遇签到') }
+        if (!ITUE(USER_ID)) return e.reply((e.adapter === 'QQBot') ? [
+            '> 请先发送光遇签到',
+            Bot.Button([[{ label: '光遇签到', callback: '/光遇签到' }]])
+        ] : '请先发送光遇签到')
 
         const RANKING_A_FILE = 'plugins/Tlon-Sky/data/排行榜/白蜡.json';
         const RANKING_B_FILE = 'plugins/Tlon-Sky/data/排行榜/季蜡.json';
@@ -107,7 +110,7 @@ export class SKY extends plugin {
             leaderboardRanks.push(calculateRank(leaderboardJsons[i], USER_ID));
         }
 
-        USER_ID = USER_ID.substring(USER_ID.indexOf("-") + 1)
+        USER_ID = USER_ID.substring(USER_ID.lastIndexOf("-") + 1)
         return e.reply((e.adapter === 'QQBot') ? [`# 用户昵称：${USER_NICKNAME}`, `> ID：${USER_ID}`, `白蜡排名: ${leaderboardRanks[0]}`, `季蜡排名: ${leaderboardRanks[1]}`, `亏损排名: ${leaderboardRanks[2]}`, `赚取排名: ${leaderboardRanks[3]}`, `抢蜡排名: ${leaderboardRanks[4]}`, `被抢排名: ${leaderboardRanks[5]}`, `连签排名: ${leaderboardRanks[6]}`, `累签排名: ${leaderboardRanks[7]}`, segment.image(`https://q.qlogo.cn/g?b=qq&nk=${USER_DATA['头像']}&s=640`), Bot.Button([[{ label: '排行信息', callback: '/排行信息' }]])] : `用户昵称：${USER_NICKNAME}\nID：${USER_DATA['ID']}\n白蜡排名：${leaderboardRanks[0]}\n季蜡排名: ${leaderboardRanks[1]}\n亏损排名: ${leaderboardRanks[2]}\n赚取排名: ${leaderboardRanks[3]}\n抢蜡排名: ${leaderboardRanks[4]}\n被抢排名: ${leaderboardRanks[5]}\n连签排名: ${leaderboardRanks[6]}\n累签排名: ${leaderboardRanks[7]}`)
     }
 }

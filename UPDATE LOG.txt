@@ -4,7 +4,7 @@
 ："Tlon-Sky\apps\「娱乐」赌蜡烛.js"
 ："Tlon-Sky\config\HELP_2.js"
 
- - 光遇信息展示代币
+ - 光遇信息展示代币，修改排行信息错误
 ："Tlon-Sky\apps\「娱乐」我的信息.js"
 
  - 修改整理文件
