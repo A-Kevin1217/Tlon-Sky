@@ -73,8 +73,8 @@ export class SKY extends plugin {
                 '\n白蜡不足，无法转换'
             ])
 
-            USER_DATA['白蜡'] -= CONVERSION_NUMBER
-            USER_DATA['代币'] += RATIO_CONVERSION
+            USER_DATA['白蜡'] -= parseFloat(CONVERSION_NUMBER)
+            USER_DATA['代币'] += parseFloat(RATIO_CONVERSION)
             SD(USER_FILE, USER_DATA)
 
             return e.reply((e.adapter === 'QQBot') ? [
@@ -100,8 +100,8 @@ export class SKY extends plugin {
                 segment.at(USER_ID),
                 '\n代币不足，无法转换'
             ])
-            USER_DATA['代币'] -= RATIO_CONVERSION
-            USER_DATA['白蜡'] += CONVERSION_NUMBER
+            USER_DATA['代币'] -= parseFloat(RATIO_CONVERSION)
+            USER_DATA['白蜡'] += parseFloat(CONVERSION_NUMBER)
             SD(USER_FILE, USER_DATA)
 
             return e.reply((e.adapter === 'QQBot') ? [
