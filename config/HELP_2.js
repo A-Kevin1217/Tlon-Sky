@@ -41,7 +41,7 @@ export const helpList = [{
     "desc": "每多一千赌注倍率增加0.5"
   }, {
     "icon": 93,
-    "title": "dlz[剪刀,石头,布]",
+    "title": "赌代币[剪刀,石头,布]",
     "desc": "与系统进行猜拳"
   }, {
     "icon": 103,
@@ -51,6 +51,10 @@ export const helpList = [{
     "icon": 113,
     "title": "送蜡烛",
     "desc": "将自己的蜡烛赠予别人"
+  }, {
+    "icon": 35,
+    "title": "(代|白)换(白|代)[数量]",
+    "desc": "代币与白蜡之间转换"
   }]
 }, {
   "group": "排行榜",

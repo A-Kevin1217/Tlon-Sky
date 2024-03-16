@@ -47,8 +47,17 @@ export class SKY extends plugin {
         const MATCH = e.msg.match(CONVERSION_REGEX)
         const CONVERSION_TYPE = MATCH[2]
         const CONVERSION_NUMBER = MATCH[3]
-        const htype = e.msg.match(/^(#|\/)?(白换代|代换白)(.*)$/)[2]
-        const n = e.msg.match(/^(#|\/)?(白换代|代换白)(.*)$/)[3]
+
+        if (CONVERSION_NUMBER <= 0) return e.reply((e.adapter === 'QQBot') ? [
+            '# 请输入需要转换的数量',
+            Bot.Button([[
+                { label: '白转代', data: '/白转代' },
+                { label: '代转白', data: '/代转白' }
+            ]])
+        ] : [
+            segment.at(USER_ID),
+            '\n请输入需要转换的数量'
+        ])
 
         if (CONVERSION_TYPE === '白换代') {
             const RATIO_CONVERSION = CONVERSION_NUMBER * 8
@@ -78,7 +87,7 @@ export class SKY extends plugin {
                 '\n转换比例[1 : 8]',
                 `\n获得代币：${RATIO_CONVERSION}`
             ])
-        } else if (htype === '代换白') {
+        } else if (CONVERSION_TYPE === '代换白') {
             const RATIO_CONVERSION = CONVERSION_NUMBER * 16
 
             if (USER_DB < RATIO_CONVERSION) return e.reply((e.adapter === 'QQBot') ? [
