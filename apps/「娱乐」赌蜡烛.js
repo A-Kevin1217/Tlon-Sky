@@ -371,7 +371,7 @@ export class SKY extends plugin {
 
         const X = Math.min(1.5 + (Math.floor(BET_AMOUNT / 1000) * 0.2), 1.4);
 
-        BET_DATA['押注金额'] += BET_AMOUNT
+        BET_DATA['押注金额'] += parseFloat(BET_AMOUNT)
         BET_DATA['倍率'] = X
         SD(BET_FILE, BET_DATA)
 
@@ -385,7 +385,7 @@ export class SKY extends plugin {
             ]])
         ] : [
             segment.at(USER_ID),
-            `\n你已成功押注 ${BET_DATA['押注金额']}根代币，倍率为 ${X}`
+            `\n你已押注 ${BET_DATA['押注金额']}份代币，倍率为 ${X}`
         ])
 
 
