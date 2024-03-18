@@ -274,9 +274,6 @@ function newUser(e) {
       背包: { 蜡烛保护卡: 0, 签到双倍卡: 0 }
     })
 
-
-    Leaderboard();
-
     let REPLY = []
     const TNOU = (fs.readdirSync('plugins/Tlon-Sky/data/Sky签到')).length
     if (e.adapter === 'QQBot') {
