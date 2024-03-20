@@ -58,12 +58,24 @@ export class DAILY_FUNCTION extends plugin {
   }
 
   async TASK_AND_OTHER_PIC(e) {
-    return e.reply([
+    const U1 = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg'
+    const U2 = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg'
+    const U3 = 'https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg'
+    const U4 = 'https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg'
+    return e.reply((e.adapter === 'QQBot') ? [
+      '> 点击按钮查看',
+      Bot.Button([[
+        { label: '任务', link: U1 },
+        { label: '季蜡', link: U2 },
+        { label: '大蜡烛', link: U3 },
+        { label: '魔法', link: U4 }
+      ]])
+    ] : [
       segment.at(e.user_id),
-      segment.image('https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/mrrw.jpg'),
-      segment.image('https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scjl.jpg'),
-      segment.image('https://api.t1qq.com/api/sky/gy/sc/tlonsky/json/scdl.jpg'),
-      segment.image('https://api.t1qq.com/api/sky/gy/sc/json/mf.jpg'),
+      segment.image(U1),
+      segment.image(U2),
+      segment.image(U3),
+      segment.image(U4),
     ])
   }
 }
