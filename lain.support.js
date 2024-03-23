@@ -1,3 +1,4 @@
+const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/季节兑换图/'
 export default class Button {
     constructor() {
         this.plugin = {
@@ -147,29 +148,29 @@ export default class Button {
 
     SEASON_EXCHANGE_PICTURE() {
         return Bot.Button([[
-            { label: '感恩', callback: '/感恩季兑换图' },
-            { label: '追光', callback: '/追光季兑换图' },
-            { label: '归属', callback: '/归属季兑换图' },
-            { label: '音韵', callback: '/音韵季兑换图' },
-            { label: '魔法', callback: '/魔法季兑换图' }
+            { label: '感恩', link: `${URL}感恩季.jpg` },
+            { label: '追光', link: `${URL}追光季.jpg` },
+            { label: '归属', link: `${URL}归属季.jpg` },
+            { label: '音韵', link: `${URL}音韵季.jpg` },
+            { label: '魔法', link: `${URL}魔法季.jpg` }
         ], [
-            { label: '圣岛', callback: '/圣岛季兑换图' },
-            { label: '预言', callback: '/预言季兑换图' },
-            { label: '梦想', callback: '/梦想季兑换图' },
-            { label: '集结', callback: '/集结季兑换图' },
-            { label: '小王子', callback: '/小王子季兑换图' },
+            { label: '圣岛', link: `${URL}圣岛季.jpg` },
+            { label: '预言', link: `${URL}预言季.jpg` },
+            { label: '梦想', link: `${URL}梦想季.jpg` },
+            { label: '集结', link: `${URL}集结季.jpg` },
+            { label: '小王子', link: `${URL}小王子季.jpg` },
         ], [
-            { label: '风行', callback: '/风行季兑换图' },
-            { label: '潜海', callback: '/潜海季兑换图' },
-            { label: '表演', callback: '/表演季兑换图' },
-            { label: '破晓', callback: '/破晓季兑换图' },
-            { label: '欧若拉', callback: '/欧若拉季兑换图' },
+            { label: '风行', link: `${URL}风行季.jpg` },
+            { label: '潜海', link: `${URL}潜海季.jpg` },
+            { label: '表演', link: `${URL}表演季.jpg` },
+            { label: '破晓', link: `${URL}破晓季.jpg` },
+            { label: '欧若拉', link: `${URL}欧若拉季.jpg` },
         ], [
-            { label: '追忆', callback: '/追忆季兑换图' },
-            { label: '夜行', callback: '/夜行季兑换图' },
-            { label: '拾光', callback: '/拾光季兑换图' },
-            { label: '归巢', callback: '/归巢季兑换图' },
-            { label: '九色鹿', callback: '/九色鹿季兑换图' }
+            { label: '追忆', link: `${URL}追忆季.jpg` },
+            { label: '夜行', link: `${URL}夜行季.jpg` },
+            { label: '拾光', link: `${URL}拾光季.jpg` },
+            { label: '归巢', link: `${URL}归巢季.jpg` },
+            { label: '九色鹿', link: `${URL}九色鹿季.jpg` }
         ], [
             { label: '季节兑换图列表', enter: true }
         ]])
