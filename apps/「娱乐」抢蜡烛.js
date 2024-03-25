@@ -57,8 +57,8 @@ export class SKY extends plugin {
         ] : `CD中...\n请等待 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`
         else if (HOUR === 0 && MINUTES !== 0) Reply = (e.adapter === 'QQBot') ? [
           '# CD中...',
-          `> 请等待${MINUTES}分钟${SECOND}秒后再试`
-            `CD结束时间：**${END_TIME}**`
+          `> 请等待${MINUTES}分钟${SECOND}秒后再试`,
+          `CD结束时间：**${END_TIME}**`
         ] : `CD中...\n请等待 ${MINUTES} 分钟 ${SECOND} 秒后再试！\nCD结束时间：${END_TIME}`
         else if (HOUR !== 0 && MINUTES !== 0) Reply = (e.adapter === 'QQBot') ? [
           '# CD中...',
