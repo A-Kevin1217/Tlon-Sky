@@ -57,13 +57,14 @@ export class SKY extends plugin {
             `永久翼：${tagCounts["复刻永久"] + tagCounts["普通永久"]}`,
             `复刻先祖永久翼：${tagCounts["复刻永久"]}`,
             `常驻先祖永久翼：${tagCounts["普通永久"]}`,
+            '——————地图光翼——————',
             `晨岛光翼：${tagCounts["晨"]}`,
             `云野光翼：${tagCounts["云"]}`,
             `雨林光翼：${tagCounts["雨"]}`,
             `霞谷光翼：${tagCounts["霞"]}`,
             `暮土光翼：${tagCounts["暮"]}`,
             `禁阁光翼：${tagCounts["禁"]}`,
-            `暴风眼光翼：${tagCounts["暴"]}`
+            `伊甸光翼：${tagCounts["暴"]}`
         ] : [
             segment.at(e.user_id),
             `\n总光翼数量：${URL_DATA.length}`,
@@ -76,7 +77,7 @@ export class SKY extends plugin {
             `\n霞谷光翼：${tagCounts["霞"]}`,
             `\n暮土光翼：${tagCounts["暮"]}`,
             `\n禁阁光翼：${tagCounts["禁"]}`,
-            `\n暴风眼光翼：${tagCounts["暴"]}`
+            `\n伊甸光翼：${tagCounts["暴"]}`
         ])
     }
 }
