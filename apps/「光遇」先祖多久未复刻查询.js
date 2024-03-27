@@ -38,7 +38,7 @@ const seasons = {
     { name: '刁蛮浪者', date: new Date('2023-12-18') },
     { name: '挑衅艺伎', date: new Date('2023-05-22') },
     { name: '敬礼护卫', date: new Date('2023-03-27') },
-    { name: '舒展大师', date: new Date('2021-11-22') },
+    { name: '舒展大师', date: new Date('2024-03-25') },
     { name: '跳跃舞者', date: new Date('2023-04-24') },
     { name: '拳礼武僧', date: new Date('2023-02-13') }
   ],
