@@ -1,12 +1,11 @@
+import fetch from "node-fetch"
+
 /** 季节名称 */
 const SEASON_NAME = '九色鹿季';
 /** 季节毕业所需季蜡数量 */
 const graduationWax = 398;
-/** 季节开始时间 */
-const START_TIME = '2024-01-15 10:00:00';
-/** 季节结束时间 */
-const END_TIME = '2024-04-07 23:59:59';
-export class SEASONAL_INFO_CALCULATION extends plugin {
+
+export class SKY extends plugin {
   constructor() {
     super({
       name: '[Tlon-Sky]光遇:剩余时间',
@@ -23,8 +22,9 @@ export class SEASONAL_INFO_CALCULATION extends plugin {
   }
 
   async SEASONAL_INFO_CALCULATION(e) {
-    const START_MS = new Date(START_TIME).getTime();
-    const END_MS = new Date(END_TIME).getTime();
+    const URL_DATA = await (await fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节剩余.json')).json()
+    const START_MS = new Date(URL_DATA['start']).getTime();
+    const END_MS = new Date(URL_DATA['end']).getTime();
 
     const GET_TIME = Date.now();
     const MILLISECOND = END_MS - GET_TIME;
@@ -50,11 +50,11 @@ export class SEASONAL_INFO_CALCULATION extends plugin {
     const graduationDaysWithCard = Math.ceil((graduationWax - 30) / 6);
     const graduationDaysWithoutCard = Math.ceil((graduationWax - 12) / 5);
 
-    if (e.adapter === 'QQBot') return e.reply([
-      `# 当前季节${SEASON_NAME}`,
+    return e.reply((e.adapter === 'QQBot') ? [
+      `# 当前季节【${SEASON_NAME}】`,
       '> 距离季节结束还剩',
       `${days}天${hours}小时${minutes}分钟${seconds}秒`,
-      `截至至${END_TIME}`,
+      `截至至${URL_DATA['end']}`,
       `本季节一共[${daysBetween}]天`,
       '季蜡还可获得：',
       `[有季卡]：${seasonWaxWithCard}季蜡`,
@@ -62,22 +62,25 @@ export class SEASONAL_INFO_CALCULATION extends plugin {
       `本季节毕业需：${graduationWax}季蜡`,
       `[有季卡]毕业需：${graduationDaysWithCard}天`,
       `[无季卡]毕业需：${graduationDaysWithoutCard}天`,
-      '(无季卡包括非必要的魔法节点)'
-    ])
-
-    return e.reply([
+      '(无季卡包括非必要的魔法节点)',
+      Bot.Button([[
+        { label: '再看一次', callback: '/季节剩余' },
+        { label: '光遇公告', enter: true },
+        { label: '光遇菜单', enter: true }
+      ]])
+    ] : [
       segment.at(e.user_id),
-      '\n距离' + SEASON_NAME + '结束还剩\n' +
-      days + '天' + hours + '小时' + minutes + '分钟' + seconds + '秒\n' +
-      '截至至' + END_TIME + '\n' +
-      '本季节一共[' + daysBetween + ']天\n' +
-      '季蜡还可获得：\n' +
-      '[有季卡]：' + seasonWaxWithCard + '季蜡\n' +
-      '[无季卡]：' + seasonWaxWithoutCard + '季蜡\n' +
-      '本季节毕业需：' + graduationWax + '季蜡\n' +
-      '[有季卡]毕业需：' + graduationDaysWithCard + '天\n' +
-      '[无季卡]毕业需：' + graduationDaysWithoutCard + '天\n' +
-      '(无季卡包括非必要的魔法节点)'
-    ]);
+      `\n距离${SEASON_NAME}结束还剩`,
+      `\n${days}天${hours}小时${minutes}分钟${seconds}秒`,
+      `\n截至至${URL_DATA['end']}`,
+      `\n本季节一共${daysBetween}天`,
+      '\n季蜡还可获得：',
+      `\n[有季卡]：${seasonWaxWithCard}季蜡`,
+      `\n[无季卡]：${seasonWaxWithoutCard}季蜡`,
+      `\n本季节毕业需：${graduationWax}季蜡`,
+      `\n[有季卡]毕业需：${graduationDaysWithCard}天`,
+      `\n[无季卡]毕业需：${graduationDaysWithoutCard}天`,
+      '\n(无季卡包括非必要的魔法节点)'
+    ])
   }
 }

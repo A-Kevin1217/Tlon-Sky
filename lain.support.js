@@ -45,14 +45,8 @@ export default class Button {
                 reg: /^(#|\/)?季节任务$/,
                 fnc: 'CURRENCY_LOCATION'
             }, {
-                reg: /^(#|\/)?季节剩余$/,
-                fnc: 'SEASONAL_INFO_CALCULATION'
-            }, {
                 reg: /^(#|\/)?(20|21|22|23|24)年复刻记录$/,
                 fnc: 'A_COPY_OF_THE_PAST'
-            }, {
-                reg: /^(#|\/)?(.*)季多久未复刻$/,
-                fnc: 'snrd'
             }]
         }
     }
@@ -204,15 +198,6 @@ export default class Button {
     }
 
 
-
-    SEASONAL_INFO_CALCULATION() {
-        return Bot.Button([[
-            { label: '再看一次', callback: '/季节剩余' },
-            { label: '光遇公告', enter: true },
-            { label: '光遇菜单', enter: true }
-        ]])
-    }
-
     A_COPY_OF_THE_PAST() {
         return Bot.Button([[
             { label: '20年', callback: '/20年复刻记录' },
@@ -220,24 +205,6 @@ export default class Button {
             { label: '22年', callback: '/22年复刻记录' },
             { label: '23年', callback: '/23年复刻记录' },
             { label: '24年', callback: '/24年复刻记录' }
-        ]])
-    }
-
-    snrd() {
-        return Bot.Button([[
-            { label: '感恩', callback: '/感恩季多久未复刻' },
-            { label: '追光', callback: '/追光季多久未复刻' },
-            { label: '归属', callback: '/归属季多久未复刻' },
-            { label: '音韵', callback: '/音韵季多久未复刻' },
-        ], [
-            { label: '魔法', callback: '/魔法季多久未复刻' },
-            { label: '圣岛', callback: '/圣岛季多久未复刻' },
-            { label: '预言', callback: '/预言季多久未复刻' },
-            { label: '梦想', callback: '/梦想季多久未复刻' },
-        ], [
-            { label: '集结', callback: '/集结季多久未复刻' },
-            { label: '小王子', callback: '/小王子季多久未复刻' },
-            { label: '风行', callback: '/风行季多久未复刻' },
         ]])
     }
 }
