@@ -1,5 +1,5 @@
 export const helpCfg = {
-  title: '季节兑换图列表',
+  title: '常驻兑换图列表',
   subTitle: 'Tlon-Sky',
   columnCount: 0,
   colWidth: 265,
@@ -7,7 +7,7 @@ export const helpCfg = {
   themeExclude: ['default'],
 }
 export const helpList = [{
-  "group": "季节兑换图",
+  "group": "常驻兑换图",
   "auth": false,
   "list": [{
     "icon": 64,

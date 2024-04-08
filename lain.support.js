@@ -107,7 +107,7 @@ export default class Button {
         ], [
             { label: '追忆', callback: '/追忆季兑换图' },
             { label: '夜行', callback: '/夜行季兑换图' },
-            { label: '拾光', callback: '/拾光季兑换图' },
+            { label: '拾光', link: `${URL}拾光季.jpg` },
             { label: '归巢', callback: '/归巢季兑换图' },
             { label: '九色鹿', callback: '/九色鹿季兑换图' }
         ]])
@@ -193,7 +193,7 @@ export default class Button {
 
     CURRENCY_LOCATION() {
         return Bot.Button([[
-            { label: '没更新点我', link: 'https://gitee.com/Tloml-Starry/Tlon-Sky-reprint/blob/master/DB&JJRW.md' }
+            { label: '没更新点我', link: 'https://gitee.com/Tloml-Starry/resources/blob/master/UPDATE.md' }
         ]])
     }
 
