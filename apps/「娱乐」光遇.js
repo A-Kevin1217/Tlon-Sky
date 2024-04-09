@@ -50,8 +50,8 @@ export class SKY extends plugin {
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         if (USER_DATA['LAST_DATE'] === getCurrentDate())
             return e.reply((e.adapter === 'QQBot') ? [
-                '# ', segment.at(USER_ID),
-                '> 今日已签，请明日再来',
+                '# 今日已签，请明日再来',
+                segment.at(USER_ID),
                 Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图' }]])
             ] : [
                 segment.at(USER_ID),
@@ -66,11 +66,11 @@ export class SKY extends plugin {
 
         fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
         return e.reply((e.adapter === 'QQBot') ? [
-            '# ', segment.at(USER_ID),
-            '> 签到成功！',
-            `Game ID: ${USER_DATA['GAME_ID']}`,
+            '# 签到成功！',
+            `> Game ID: ${USER_DATA['GAME_ID']}`,
             `已累计签到 [${USER_DATA['ACCUMULATE']}] 天`,
-            `获得白蜡: ${CONFIGURATION['a']} | 季蜡：${CONFIGURATION['b']}`
+            `获得白蜡: ${CONFIGURATION['a']} | 季蜡：${CONFIGURATION['b']}`,
+            segment.at(USER_ID)
         ] : [
             segment.at(USER_ID),
             '\n签到成功！',
@@ -86,8 +86,8 @@ export class SKY extends plugin {
 
         if (!isExistenceUser(USER_ID))
             return e.reply((e.adapter === 'QQBot') ? [
-                '# ', segment.at(USER_ID),
-                '> 没有您的用户信息，请先发送[光遇签到]创建',
+                '# 没有您的用户信息，请先发送[光遇签到]创建',
+                segment.at(USER_ID),
                 Bot.Button([[{ label: '光遇签到' }]])
             ] : [
                 segment.at(USER_ID),
@@ -96,11 +96,11 @@ export class SKY extends plugin {
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         return e.reply((e.adapter === 'QQBot') ? [
-            '# ', segment.at(USER_ID),
-            `> [${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
-            `最近签到日期 [${USER_DATA['LAST_DATE']}]`,
+            `# [${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
+            `> 最近签到日期 [${USER_DATA['LAST_DATE']}]`,
             `白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
+            segment.at(USER_ID),
             Bot.Button([[{ label: '光遇签到' }, { label: '模拟跑图' }]])
         ] : [
             segment.at(USER_ID),
