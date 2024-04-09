@@ -5,18 +5,18 @@ const _path = process.cwd()
 export default async function (path, params, cfg, text, button) {
   let [app, tpl] = path.split('/')
   let { e } = cfg
-  let layoutPath = process.cwd() + `/plugins/${Plugin_Name}/resource/common/layout/`
-  let resPath = `../../../../../plugins/${Plugin_Name}/resource/`
+  let layoutPath = process.cwd() + `/plugins/${Plugin_Name}/resources/common/layout/`
+  let resPath = `../../../../../plugins/${Plugin_Name}/resources/`
   Data.createDir(`data/html/${Plugin_Name}/${app}/${tpl}`, 'root')
   let data = {
     ...params,
     _plugin: Plugin_Name,
     saveId: params.saveId || params.save_id || tpl,
-    tplFile: `./plugins/${Plugin_Name}/resource/${app}/${tpl}.html`,
+    tplFile: `./plugins/${Plugin_Name}/resources/${app}/${tpl}.html`,
     pluResPath: resPath,
     _res_path: resPath,
     _layout_path: layoutPath,
-    _tpl_path: process.cwd() + `/plugins/${Plugin_Name}/resource/common/tpl/`,
+    _tpl_path: process.cwd() + `/plugins/${Plugin_Name}/resources/common/tpl/`,
     defaultLayout: layoutPath + 'default.html',
     elemLayout: layoutPath + 'elem.html',
     pageGotoParams: {

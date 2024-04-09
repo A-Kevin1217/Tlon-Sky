@@ -79,7 +79,7 @@ async function HELP(e) {
 }
 
 async function rodom() {
-  const image = await fs.promises.readdir('./plugins/Tlon-Sky/resource/help/theme/');
+  const image = await fs.promises.readdir('./plugins/Tlon-Sky/resources/help/theme/');
   const list_img = Array.from(image);
   const theme = list_img.length === 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
   return theme;

@@ -8,14 +8,14 @@ export default async function (path, params, cfg) {
   }
   return e.runtime.render('Tlon-Sky', path, params, {
     retType: cfg.retMsgId ? 'msgId' : 'default',
-    beforeRender ({ data }) {
+    beforeRender({ data }) {
       let resPath = data.pluResPath
-      const layoutPath = process.cwd() + '/plugins/Tlon-Sky/resource/common/layout/'
+      const layoutPath = process.cwd() + '/plugins/Tlon-Sky/resources/common/layout/'
       return {
         ...data,
         _res_path: resPath,
         _layout_path: layoutPath,
-        _tpl_path: process.cwd() + '/plugins/Tlon-Sky/resource/common/tpl/',
+        _tpl_path: process.cwd() + '/plugins/Tlon-Sky/resources/common/tpl/',
         defaultLayout: layoutPath + 'default.html',
         elemLayout: layoutPath + 'elem.html',
         sys: {
