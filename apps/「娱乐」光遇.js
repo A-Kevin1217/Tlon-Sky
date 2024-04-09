@@ -209,8 +209,8 @@ export class SKY extends plugin {
         let GET_CURRENCY_1 = ((HOURS * 60) + MINUTES) * CONFIGURATION['d']
         let TIPS = ''
         if (GET_CURRENCY_1 > CONFIGURATION['c']) {
+            TIPS = `理论获得白蜡[${GET_CURRENCY_1}]，但超出上限，所以`
             GET_CURRENCY_1 = CONFIGURATION['c']
-            TIPS = `理论获得白蜡[${MINUTES * CONFIGURATION['d']}]，但超出上限，所以`
         }
 
         USER_DATA['SIMULATED_STATE'] = false
@@ -227,7 +227,7 @@ export class SKY extends plugin {
             Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图' }]])
         ] : [
             segment.at(USER_ID),
-            `已结束本次跑图\n用时[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
+            `\n已结束本次跑图\n用时[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
         ])
     }
 
