@@ -21,6 +21,12 @@ export class SKY extends plugin {
             }, {
                 reg: /^(#|\/)?光遇信息$/,
                 fnc: 'Feature_2'
+            }, {
+                reg: /^(#|\/)?模拟跑图$/,
+                fnc: 'Feature_3'
+            }, {
+                reg: /^(#|\/)?结束跑图$/,
+                fnc: 'Feature_4'
             }]
         })
     }
@@ -65,6 +71,7 @@ export class SKY extends plugin {
         USER_DATA['ACCUMULATE'] += 1
 
         fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
+
         return e.reply((e.adapter === 'QQBot') ? [
             '# 签到成功！',
             `> Game ID: ${USER_DATA['GAME_ID']}`,
@@ -109,6 +116,63 @@ export class SKY extends plugin {
             `\n白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `\n模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
         ])
+    }
+
+    async Feature_3(e) {
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+        const CONFIGURATION = getConfigInfo()
+
+        if (!isExistenceUser(USER_ID))
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 没有您的用户信息，请先发送[光遇签到]创建',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇签到' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n没有您的用户信息，请先发送[光遇签到]创建'
+            ])
+
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+
+        const TIME_DIFF = USER_DATA['TIMESTAMP'] - Date.now()
+        const HOURS = Math.floor(TIME_DIFF / 3600000)
+        const MINUTES = Math.floor((TIME_DIFF % 3600000) / 60000)
+        const SECONDS = Math.floor((TIME_DIFF % 60000) / 1000)
+
+        if (USER_DATA['SIMULATED_STATE'])
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 您当前已经在跑图了',
+                `> 已跑图[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒`,
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '结束跑图' }]])
+            ] : [
+                segment.at(USER_ID),
+                `\n您当前已经在跑图了\n已跑图[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒`
+            ])
+
+        USER_DATA['SIMULATED_STATE'] = true
+        USER_DATA['TIMESTAMP'] = Date.now()
+
+        fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
+
+        return e.reply((e.adapter === 'QQBot') ? [
+            '# 已开始模拟跑图',
+            `> 每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`,
+            segment.at(USER_ID),
+            Bot.Button([[{ label: '结束跑图' }]])
+        ] : [
+            segment.at(USER_ID),
+            `\n已开始模拟跑图\n每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`
+        ])
+    }
+
+    async Feature_4(e) {
+        return e.reply((e.adapter === 'QQBot') ? [
+            '> 待更新...',
+            segment.at(e.user_id),
+            Bot.Button([[{ label: '光遇娱乐菜单' }]])
+        ] : '待更新...')
     }
 }
 
