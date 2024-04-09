@@ -135,7 +135,7 @@ export class SKY extends plugin {
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
 
-        const TIME_DIFF = USER_DATA['TIMESTAMP'] - Date.now()
+        const TIME_DIFF = Date.now() - USER_DATA['TIMESTAMP']
         const HOURS = Math.floor(TIME_DIFF / 3600000)
         const MINUTES = Math.floor((TIME_DIFF % 3600000) / 60000)
         const SECONDS = Math.floor((TIME_DIFF % 60000) / 1000)
