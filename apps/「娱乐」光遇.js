@@ -6,7 +6,7 @@ const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
 const CONFIG_FILE_PATH = 'plugins/Tlon-Sky/config/config.json'
 
 
-if (!fs.existsSync(CONFIG_FILE_PATH)) fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify({ a: 20, b: 5, c: 50, d: 2 }, null, 4), 'utf8')
+if (!fs.existsSync(CONFIG_FILE_PATH)) fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify({ a: 20, b: 5, c: 60, d: 1 }, null, 4), 'utf8')
 
 export class SKY extends plugin {
     constructor() {
@@ -27,6 +27,9 @@ export class SKY extends plugin {
             }, {
                 reg: /^(#|\/)?结束跑图$/,
                 fnc: 'Feature_4'
+            }, {
+                reg: /^(#|\/)?跑图状态$/,
+                fnc: 'Feature_5'
             }]
         })
     }
@@ -93,7 +96,8 @@ export class SKY extends plugin {
 
         if (!isExistenceUser(USER_ID))
             return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息，请先发送[光遇签到]创建',
+                '# 没有您的用户信息',
+                '> 请先发送[光遇签到]创建',
                 segment.at(USER_ID),
                 Bot.Button([[{ label: '光遇签到' }]])
             ] : [
@@ -125,7 +129,8 @@ export class SKY extends plugin {
 
         if (!isExistenceUser(USER_ID))
             return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息，请先发送[光遇签到]创建',
+                '# 没有您的用户信息',
+                '> 请先发送[光遇签到]创建',
                 segment.at(USER_ID),
                 Bot.Button([[{ label: '光遇签到' }]])
             ] : [
@@ -168,11 +173,106 @@ export class SKY extends plugin {
     }
 
     async Feature_4(e) {
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+        const CONFIGURATION = getConfigInfo()
+
+        if (!isExistenceUser(USER_ID))
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 没有您的用户信息',
+                '> 请先发送[光遇签到]创建',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇签到' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n没有您的用户信息，请先发送[光遇签到]创建'
+            ])
+
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+
+
+        if (!USER_DATA['SIMULATED_STATE'])
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 您当前并没有在跑图呢',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '模拟跑图' }]])
+            ] : [
+                segment.at(USER_ID),
+                `\n您当前并没有在跑图呢`
+            ])
+
+        const TIME_DIFF = Date.now() - USER_DATA['TIMESTAMP']
+        const HOURS = Math.floor(TIME_DIFF / 3600000)
+        const MINUTES = Math.floor((TIME_DIFF % 3600000) / 60000)
+        const SECONDS = Math.floor((TIME_DIFF % 60000) / 1000)
+
+        let GET_CURRENCY_1 = ((HOURS * 60) + MINUTES) * CONFIGURATION['d']
+        let TIPS = ''
+        if (GET_CURRENCY_1 > CONFIGURATION['c']) {
+            GET_CURRENCY_1 = CONFIGURATION['c']
+            TIPS = `理论获得白蜡[${MINUTES * CONFIGURATION['d']}]，但超出上限，所以`
+        }
+
+        USER_DATA['SIMULATED_STATE'] = false
+
+        fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
+
         return e.reply((e.adapter === 'QQBot') ? [
-            '> 待更新...',
-            segment.at(e.user_id),
-            Bot.Button([[{ label: '光遇娱乐菜单' }]])
-        ] : '待更新...')
+            '# 已结束本次跑图',
+            `> 用时[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒`,
+            TIPS,
+            `获得白蜡[${GET_CURRENCY_1}]`,
+            segment.at(USER_ID),
+            Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图' }]])
+        ] : [
+            segment.at(USER_ID),
+            `已结束本次跑图\n用时[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
+        ])
+    }
+
+    async Feature_5(e) {
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+        const CONFIGURATION = getConfigInfo()
+
+        if (!isExistenceUser(USER_ID))
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 没有您的用户信息',
+                '> 请先发送[光遇签到]创建',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇签到' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n没有您的用户信息，请先发送[光遇签到]创建'
+            ])
+
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+
+        if (!USER_DATA['SIMULATED_STATE'])
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 您当前并没有在跑图呢',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '模拟跑图' }]])
+            ] : [
+                segment.at(USER_ID),
+                `\n您当前并没有在跑图呢`
+            ])
+
+        const TIME_DIFF = Date.now() - USER_DATA['TIMESTAMP']
+        const HOURS = Math.floor(TIME_DIFF / 3600000)
+        const MINUTES = Math.floor((TIME_DIFF % 3600000) / 60000)
+        const SECONDS = Math.floor((TIME_DIFF % 60000) / 1000)
+
+        return e.reply((e.adapter === 'QQBot') ? [
+            '# 正在跑图中',
+            `> 已跑图[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒`,
+            `每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`,
+            segment.at(USER_ID),
+            Bot.Button([[{ label: '光遇信息' }, { label: '结束跑图' }]])
+        ] : [
+            segment.at(USER_ID),
+            `正在跑图中\n已跑图[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒\n每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`
+        ])
     }
 }
 
