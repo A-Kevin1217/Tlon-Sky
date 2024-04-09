@@ -1,11 +1,22 @@
 import fs from 'fs'
 
-/** 用户信息位置 */
+/** 用户文件位置 */
 const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
 /** 配置文件位置 */
 const CONFIG_FILE_PATH = 'plugins/Tlon-Sky/config/config.json'
+/** 地图文件位置 */
+const MAP_FILE_PATH = 'plugins/Tlon-Sky/data/map.json'
 
-
+if (!fs.existsSync(MAP_FILE_PATH)) fs.writeFileSync(MAP_FILE_PATH, JSON.stringify({
+    遇境: [], 云巢: [],
+    晨岛: [], 预言山谷: [], 夜行石: [],
+    云野: [], 圣岛: [], 云峰: [],
+    雨林: [], 大树屋: [], 风行网道: [],
+    霞谷: [], 圆梦村: [], 雪隐峰: [], 圆梦村剧场: [], 音乐商店: [],
+    暮土: [], 遗忘方舟: [], 藏宝岛礁: [],
+    禁阁: [], 办公室: [], 星光沙漠: [], 庇护所: [], 月牙绿洲: [],
+    伊甸: []
+}, null, 4), 'utf8')
 if (!fs.existsSync(CONFIG_FILE_PATH)) fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify({ a: 20, b: 5, c: 60, d: 1 }, null, 4), 'utf8')
 
 export class SKY extends plugin {
@@ -30,10 +41,14 @@ export class SKY extends plugin {
             }, {
                 reg: /^(#|\/)?跑图状态$/,
                 fnc: 'Feature_5'
+            }, {
+                reg: /^(#|\/)?光遇地图$/,
+                fnc: 'Feature_6'
             }]
         })
     }
 
+    /** 光遇签到 */
     async Feature_1(e) {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
@@ -46,7 +61,10 @@ export class SKY extends plugin {
                 GAME_ID: USER_NUMBER, // 游戏ID
                 GAME_NICKNAME: `Tloml_${USER_NUMBER}`, // 游戏昵称
                 LAST_DATE: '2024-01-01', // 最近签到日期
+                LOCATION: '遇境', // 所在地图
                 ACCUMULATE: 0, // 累计签到次数
+                SACRIFICE: 0, // 献祭次数
+                LEVEL: 0, // 光翼
                 CURRENCY_1: 0, // 白蜡
                 CURRENCY_2: 0, // 季蜡
                 CURRENCY_3: 0, // 心
@@ -90,6 +108,7 @@ export class SKY extends plugin {
         ])
     }
 
+    /** 光遇信息 */
     async Feature_2(e) {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
@@ -122,6 +141,7 @@ export class SKY extends plugin {
         ])
     }
 
+    /** 模拟跑图 */
     async Feature_3(e) {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
@@ -140,20 +160,20 @@ export class SKY extends plugin {
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
 
-        const TIME_DIFF = Date.now() - USER_DATA['TIMESTAMP']
-        const HOURS = Math.floor(TIME_DIFF / 3600000)
-        const MINUTES = Math.floor((TIME_DIFF % 3600000) / 60000)
-        const SECONDS = Math.floor((TIME_DIFF % 60000) / 1000)
+        const TIME_TAKEN = getTimeTaken(USER_DATA['TIMESTAMP'])
+        const H = TIME_TAKEN['H']
+        const M = TIME_TAKEN['M']
+        const S = TIME_TAKEN['S']
 
         if (USER_DATA['SIMULATED_STATE'])
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 您当前已经在跑图了',
-                `> 已跑图[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒`,
+                `> 已跑图[${H}]时[${M}]分[${S}]秒`,
                 segment.at(USER_ID),
-                Bot.Button([[{ label: '结束跑图' }]])
+                Bot.Button([[{ label: '结束跑图' }, { label: '跑图状态' }]])
             ] : [
                 segment.at(USER_ID),
-                `\n您当前已经在跑图了\n已跑图[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒`
+                `\n您当前已经在跑图了\n已跑图[${H}]时[${M}]分[${S}]秒`
             ])
 
         USER_DATA['SIMULATED_STATE'] = true
@@ -172,6 +192,7 @@ export class SKY extends plugin {
         ])
     }
 
+    /** 结束跑图 */
     async Feature_4(e) {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
@@ -201,12 +222,12 @@ export class SKY extends plugin {
                 `\n您当前并没有在跑图呢`
             ])
 
-        const TIME_DIFF = Date.now() - USER_DATA['TIMESTAMP']
-        const HOURS = Math.floor(TIME_DIFF / 3600000)
-        const MINUTES = Math.floor((TIME_DIFF % 3600000) / 60000)
-        const SECONDS = Math.floor((TIME_DIFF % 60000) / 1000)
+        const TIME_TAKEN = getTimeTaken(USER_DATA['TIMESTAMP'])
+        const H = TIME_TAKEN['H']
+        const M = TIME_TAKEN['M']
+        const S = TIME_TAKEN['S']
 
-        let GET_CURRENCY_1 = ((HOURS * 60) + MINUTES) * CONFIGURATION['d']
+        let GET_CURRENCY_1 = ((H * 60) + M) * CONFIGURATION['d']
         let TIPS = ''
         if (GET_CURRENCY_1 > CONFIGURATION['c']) {
             TIPS = `理论获得白蜡[${GET_CURRENCY_1}]，但超出上限，所以`
@@ -220,17 +241,18 @@ export class SKY extends plugin {
 
         return e.reply((e.adapter === 'QQBot') ? [
             '# 已结束本次跑图',
-            `> 用时[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒`,
+            `> 用时[${H}]时[${M}]分[${S}]秒`,
             TIPS,
             `获得白蜡[${GET_CURRENCY_1}]`,
             segment.at(USER_ID),
             Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图' }]])
         ] : [
             segment.at(USER_ID),
-            `\n已结束本次跑图\n用时[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
+            `\n已结束本次跑图\n用时[${H}]时[${M}]分[${S}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
         ])
     }
 
+    /** 跑图状态 */
     async Feature_5(e) {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
@@ -259,22 +281,31 @@ export class SKY extends plugin {
                 `\n您当前并没有在跑图呢`
             ])
 
-        const TIME_DIFF = Date.now() - USER_DATA['TIMESTAMP']
-        const HOURS = Math.floor(TIME_DIFF / 3600000)
-        const MINUTES = Math.floor((TIME_DIFF % 3600000) / 60000)
-        const SECONDS = Math.floor((TIME_DIFF % 60000) / 1000)
+        const TIME_TAKEN = getTimeTaken(USER_DATA['TIMESTAMP'])
+        const H = TIME_TAKEN['H']
+        const M = TIME_TAKEN['M']
+        const S = TIME_TAKEN['S']
 
         return e.reply((e.adapter === 'QQBot') ? [
             '# 正在跑图中',
-            `> 已跑图[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒`,
+            `> 已跑图[${H}]时[${M}]分[${S}]秒`,
             `每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`,
             segment.at(USER_ID),
             Bot.Button([[{ label: '光遇信息' }, { label: '结束跑图' }]])
         ] : [
             segment.at(USER_ID),
-            `正在跑图中\n已跑图[${HOURS}]时[${MINUTES}]分[${SECONDS}]秒\n每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`
+            `正在跑图中\n已跑图[${H}]时[${M}]分[${S}]秒\n每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`
         ])
     }
+}
+
+/** 计算用时 */
+function getTimeTaken(startTimestamp) {
+    const TIME_DIFF = Date.now() - startTimestamp
+    const H = Math.floor(TIME_DIFF / 3600000)
+    const M = Math.floor((TIME_DIFF % 3600000) / 60000)
+    const S = Math.floor((TIME_DIFF % 60000) / 1000)
+    return { H, M, S }
 }
 
 /** 读取配置 */
