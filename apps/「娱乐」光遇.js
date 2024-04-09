@@ -214,6 +214,7 @@ export class SKY extends plugin {
         }
 
         USER_DATA['SIMULATED_STATE'] = false
+        USER_DATA['CURRENCY_1'] += GET_CURRENCY_1
 
         fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
 
