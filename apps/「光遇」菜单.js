@@ -1,4 +1,4 @@
-import { render, Data } from '../components/index.js';
+import { Version, Common, render, Data } from '../components/index.js';
 import lodash from 'lodash';
 import fs from 'fs'
 
@@ -16,6 +16,9 @@ export class SKY_HELP extends plugin {
         }, {
           reg: /^(#|\/)?(季节|常驻)兑换图列表$/,
           fnc: 'SKY_HELP'
+        }, {
+          reg: /^(sky|光遇)版本$/i,
+          fnc: 'SKY_VERSION'
         }
       ]
     });
@@ -23,6 +26,13 @@ export class SKY_HELP extends plugin {
 
   async SKY_HELP(e) {
     return await HELP(e);
+  }
+  async Sky_version(e) {
+    return await Common.render('help/version-info', {
+      currentVersion: Version.version,
+      changelogs: Version.changelogs,
+      elem: 'dendro'
+    }, { e, scale: 1.2 })
   }
 }
 

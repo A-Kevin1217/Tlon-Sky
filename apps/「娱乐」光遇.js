@@ -1,0 +1,142 @@
+import fs from 'fs'
+
+/** 用户信息位置 */
+const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
+/** 配置文件位置 */
+const CONFIG_FILE_PATH = 'plugins/Tlon-Sky/config/config.json'
+
+
+if (!fs.existsSync(CONFIG_FILE_PATH)) fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify({ a: 20, b: 5, c: 50, d: 2 }, null, 4), 'utf8')
+
+export class SKY extends plugin {
+    constructor() {
+        super({
+            name: '[Tlon-Sky]娱乐',
+            dsc: 'Tlon-Sky',
+            event: 'message',
+            priority: 1,
+            rule: [{
+                reg: /^(#|\/)?光遇签到$/,
+                fnc: 'Feature_1'
+            }, {
+                reg: /^(#|\/)?光遇信息$/,
+                fnc: 'Feature_2'
+            }]
+        })
+    }
+
+    async Feature_1(e) {
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+        const CONFIGURATION = getConfigInfo()
+        const USER_NUMBER = fs.readdirSync(ALL_USER_FILE_PATH).length
+
+        if (!isExistenceUser(USER_ID))
+            fs.writeFileSync(USER_FILE, JSON.stringify({
+                ID: USER_ID, // 用户ID
+                GAME_ID: USER_NUMBER, // 游戏ID
+                GAME_NICKNAME: `Tloml_${USER_NUMBER}`, // 游戏昵称
+                LAST_DATE: '2024-01-01', // 最近签到日期
+                ACCUMULATE: 0, // 累计签到次数
+                CURRENCY_1: 0, // 白蜡
+                CURRENCY_2: 0, // 季蜡
+                CURRENCY_3: 0, // 心
+                CURRENCY_4: 0, // 红蜡
+                SIMULATED_STATE: false, // 模拟跑图状态
+                TIMESTAMP: Date.now() // 模拟跑图时间戳
+            }, null, 4), 'utf8')
+
+
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+        if (USER_DATA['LAST_DATE'] === getCurrentDate())
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# ', segment.at(USER_ID),
+                '> 今日已签，请明日再来',
+                Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n今日已签，请明日再来'
+            ])
+
+
+        USER_DATA['CURRENCY_1'] += CONFIGURATION['a']
+        USER_DATA['CURRENCY_2'] += CONFIGURATION['b']
+        USER_DATA['LAST_DATE'] = getCurrentDate()
+        USER_DATA['ACCUMULATE'] += 1
+
+        fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
+        return e.reply((e.adapter === 'QQBot') ? [
+            '# ', segment.at(USER_ID),
+            '> 签到成功！',
+            `Game ID: ${USER_DATA['GAME_ID']}`,
+            `已累计签到 [${USER_DATA['ACCUMULATE']}] 天`,
+            `获得白蜡: ${CONFIGURATION['a']} | 季蜡：${CONFIGURATION['b']}`
+        ] : [
+            segment.at(USER_ID),
+            '\n签到成功！',
+            `\nGame ID: ${USER_DATA['GAME_ID']}`,
+            `\n已累计签到 [${USER_DATA['ACCUMULATE']}] 天`,
+            `\n获得白蜡: ${CONFIGURATION['a']} | 季蜡：${CONFIGURATION['b']}`
+        ])
+    }
+
+    async Feature_2(e) {
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+
+        if (!isExistenceUser(USER_ID))
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# ', segment.at(USER_ID),
+                '> 没有您的用户信息，请先发送[光遇签到]创建',
+                Bot.Button([[{ label: '光遇签到' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n没有您的用户信息，请先发送[光遇签到]创建'
+            ])
+
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+        return e.reply((e.adapter === 'QQBot') ? [
+            '# ', segment.at(USER_ID),
+            `> [${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
+            `最近签到日期 [${USER_DATA['LAST_DATE']}]`,
+            `白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
+            `模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
+            Bot.Button([[{ label: '光遇签到' }, { label: '模拟跑图' }]])
+        ] : [
+            segment.at(USER_ID),
+            `\n[${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
+            `\n最近签到日期 [${USER_DATA['LAST_DATE']}]`,
+            `\n白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
+            `\n模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
+        ])
+    }
+}
+
+/** 读取配置 */
+function getConfigInfo() {
+    const DATA = JSON.parse(fs.readFileSync(CONFIG_FILE_PATH, 'utf8'))
+    /** 签到获得白蜡 */
+    const a = DATA['a']
+    /** 签到获得季蜡 */
+    const b = DATA['b']
+    /** 模拟跑图上限 */
+    const c = DATA['c']
+    /** 模拟跑图1分钟多少白蜡 */
+    const d = DATA['d']
+    return { a, b, c, d }
+}
+
+/** 是否存在用户 */
+function isExistenceUser(USER_ID) {
+    if (!fs.existsSync(ALL_USER_FILE_PATH + USER_ID + '.json')) return false
+    return true
+}
+
+/** 当前日期(YYYY-MM-DD) */
+function getCurrentDate() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}

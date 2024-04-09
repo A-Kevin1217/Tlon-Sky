@@ -1,12 +1,10 @@
-import yaml from 'yaml'
 import fs from 'node:fs'
 import Version from './components/Version.js'
 
 if (!global.segment) { global.segment = (await import("oicq")).segment }
 const directories = [
   'plugins/Tlon-Sky/data',
-  'plugins/Tlon-Sky/data/Sky签到',
-  'plugins/Tlon-Sky/data/FriendCodeCD'
+  'plugins/Tlon-Sky/data/USER'
 ];
 
 directories.forEach((directory) => {
