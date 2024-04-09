@@ -27,7 +27,7 @@ export class SKY_HELP extends plugin {
   async SKY_HELP(e) {
     return await HELP(e);
   }
-  async Sky_version(e) {
+  async SKY_VERSION(e) {
     return await Common.render('help/version-info', {
       currentVersion: Version.version,
       changelogs: Version.changelogs,
