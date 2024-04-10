@@ -148,6 +148,8 @@ export class SKY extends plugin {
         return e.reply((e.adapter === 'QQBot') ? [
             `# [${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
             `> 最近签到日期 [${USER_DATA['LAST_DATE']}]`,
+            `累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
+            `所在位置 [${USER_DATA['LOCATION']}]`,
             `白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
             segment.at(USER_ID),
@@ -156,6 +158,8 @@ export class SKY extends plugin {
             segment.at(USER_ID),
             `\n[${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
             `\n最近签到日期 [${USER_DATA['LAST_DATE']}]`,
+            `\n累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
+            `\n所在位置 [${USER_DATA['LOCATION']}]`,
             `\n白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `\n模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
         ])
@@ -418,12 +422,12 @@ export class SKY extends plugin {
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 传送成功！',
                 `> 您已抵达[${LOCATION}]`,
-                `耗时[${TIME.toFixed(2)}]秒`,
+                `耗时[${(TIME / 1000).toFixed(2)}]秒`,
                 segment.at(USER_ID),
                 Bot.Button([[{ label: '光遇地图' }]])
             ] : [
                 segment.at(USER_ID),
-                `\n传送成功！\n您已抵达[${LOCATION}]\n耗时[${TIME.toFixed(2)}]秒`
+                `\n传送成功！\n您已抵达[${LOCATION}]\n耗时[${(TIME / 1000).toFixed(2)}]秒`
             ])
         }, TIME);
     }
