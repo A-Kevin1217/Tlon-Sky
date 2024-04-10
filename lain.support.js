@@ -68,20 +68,15 @@ export default class Button {
 
     SKY_HELP_2() {
         return Bot.Button([[
-            { label: '光遇签到', enter: true },
-            { label: '光遇信息', enter: true },
-            // { label: '排行信息', enter: true },
-            // ], [
-            //     { label: '设置昵称小秋' },
-            //     { label: '设置头像114514' }
-            // ], [
-            //     { label: '蜡烛商店', enter: true },
-            //     { label: '买保护卡', callback: '/购买蜡烛保护卡' },
-            //     { label: '买双倍卡', callback: '/购买签到双倍卡' }
-            // ], [
-            //     { label: '蜡烛排行', enter: true },
-            //     { label: '签到排行', enter: true },
-            //     { label: '抢蜡排行', enter: true }
+            { label: '光遇签到' },
+            { label: '光遇信息' },
+        ], [
+            { label: '模拟跑图' },
+            { label: '跑图状态' },
+            { label: '结束跑图' }
+        ], [
+            { label: '光遇地图' },
+            { label: '传送' }
         ]])
     }
 
