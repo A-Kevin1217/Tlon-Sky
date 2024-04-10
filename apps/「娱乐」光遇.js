@@ -421,7 +421,7 @@ export class SKY extends plugin {
         ])
 
         USER_DATA['LOCATION'] = LOCATION
-        MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
+        MAP_DATA[USER_LOCATION] = MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
         MAP_DATA[LOCATION].push(USER_DATA['ID'])
         saveData(USER_FILE, USER_DATA)
         saveData(MAP_FILE_PATH, MAP_DATA)
