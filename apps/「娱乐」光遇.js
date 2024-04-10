@@ -341,7 +341,7 @@ export class SKY extends plugin {
 
         let OTHER_LOCATION_NUMBER = []
         for (let i = 0; i < MAP_LISTS.length; i++) {
-            OTHER_LOCATION_NUMBER.push(MAP_LISTS[i] + '人数[' + MAP_DATA[MAP_LISTS[i]] + ']')
+            OTHER_LOCATION_NUMBER.push(MAP_LISTS[i] + '人数[' + MAP_DATA[MAP_LISTS[i]].length + ']')
             if (e.adapter !== 'QQBot') OTHER_LOCATION_NUMBER.push('\n')
         }
 
