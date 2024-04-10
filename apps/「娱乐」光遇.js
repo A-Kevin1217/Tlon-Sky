@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 
 /** 用户文件位置 */
 const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
@@ -6,8 +7,19 @@ const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
 const CONFIG_FILE_PATH = 'plugins/Tlon-Sky/config/config.json'
 /** 地图文件位置 */
 const MAP_FILE_PATH = 'plugins/Tlon-Sky/data/map.json'
+/** 地图列表 */
+const MAP_LIST = [
+    '遇境', '云巢',
+    '晨岛', '预言山谷', '夜行石',
+    '云野', '圣岛', '云峰',
+    '雨林', '大树屋', '风行网道',
+    '霞谷', '圆梦村', '雪隐峰', '圆梦村剧场', '音乐商店',
+    '暮土', '遗忘方舟', '藏宝岛礁',
+    '禁阁', '办公室', '星光沙漠', '庇护所', '月牙绿洲',
+    '伊甸'
+]
 
-if (!fs.existsSync(MAP_FILE_PATH)) fs.writeFileSync(MAP_FILE_PATH, JSON.stringify({
+if (!fs.existsSync(MAP_FILE_PATH)) saveData(MAP_FILE_PATH, {
     遇境: [], 云巢: [],
     晨岛: [], 预言山谷: [], 夜行石: [],
     云野: [], 圣岛: [], 云峰: [],
@@ -16,8 +28,8 @@ if (!fs.existsSync(MAP_FILE_PATH)) fs.writeFileSync(MAP_FILE_PATH, JSON.stringif
     暮土: [], 遗忘方舟: [], 藏宝岛礁: [],
     禁阁: [], 办公室: [], 星光沙漠: [], 庇护所: [], 月牙绿洲: [],
     伊甸: []
-}, null, 4), 'utf8')
-if (!fs.existsSync(CONFIG_FILE_PATH)) fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify({ a: 20, b: 5, c: 60, d: 1 }, null, 4), 'utf8')
+})
+if (!fs.existsSync(CONFIG_FILE_PATH)) saveData(CONFIG_FILE_PATH, { a: 20, b: 5, c: 60, d: 1 })
 
 export class SKY extends plugin {
     constructor() {
@@ -55,8 +67,11 @@ export class SKY extends plugin {
         const CONFIGURATION = getConfigInfo()
         const USER_NUMBER = fs.readdirSync(ALL_USER_FILE_PATH).length
 
-        if (!isExistenceUser(USER_ID))
-            fs.writeFileSync(USER_FILE, JSON.stringify({
+        if (!isExistenceUser(USER_ID)) {
+            const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
+            MAP_DATA['遇境'].push(USER_ID)
+            saveData(MAP_FILE_PATH, MAP_DATA)
+            saveData(USER_FILE, {
                 ID: USER_ID, // 用户ID
                 GAME_ID: USER_NUMBER, // 游戏ID
                 GAME_NICKNAME: `Tloml_${USER_NUMBER}`, // 游戏昵称
@@ -71,7 +86,8 @@ export class SKY extends plugin {
                 CURRENCY_4: 0, // 红蜡
                 SIMULATED_STATE: false, // 模拟跑图状态
                 TIMESTAMP: Date.now() // 模拟跑图时间戳
-            }, null, 4), 'utf8')
+            })
+        }
 
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
@@ -91,7 +107,7 @@ export class SKY extends plugin {
         USER_DATA['LAST_DATE'] = getCurrentDate()
         USER_DATA['ACCUMULATE'] += 1
 
-        fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
+        saveData(USER_FILE, USER_DATA)
 
         return e.reply((e.adapter === 'QQBot') ? [
             '# 签到成功！',
@@ -179,7 +195,7 @@ export class SKY extends plugin {
         USER_DATA['SIMULATED_STATE'] = true
         USER_DATA['TIMESTAMP'] = Date.now()
 
-        fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
+        saveData(USER_FILE, USER_DATA)
 
         return e.reply((e.adapter === 'QQBot') ? [
             '# 已开始模拟跑图',
@@ -237,7 +253,7 @@ export class SKY extends plugin {
         USER_DATA['SIMULATED_STATE'] = false
         USER_DATA['CURRENCY_1'] += GET_CURRENCY_1
 
-        fs.writeFileSync(USER_FILE, JSON.stringify(USER_DATA, null, 4), 'utf8')
+        saveData(USER_FILE, USER_DATA)
 
         return e.reply((e.adapter === 'QQBot') ? [
             '# 已结束本次跑图',
@@ -297,6 +313,52 @@ export class SKY extends plugin {
             `正在跑图中\n已跑图[${H}]时[${M}]分[${S}]秒\n每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`
         ])
     }
+
+    /** 光遇地图 */
+    async Feature_6(e) {
+        // 先执行一遍这个
+        addarray()
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+
+        if (!isExistenceUser(USER_ID))
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 没有您的用户信息',
+                '> 请先发送[光遇签到]创建',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇签到' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n没有您的用户信息，请先发送[光遇签到]创建'
+            ])
+
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+        const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
+
+        const USER_LOCATION = USER_DATA['LOCATION']
+        const LOCATION_NUMBER = MAP_DATA[USER_LOCATION].length - 1
+        const MAP_LISTS = MAP_LIST.filter(item => item !== USER_DATA['LOCATION'])
+
+        let OTHER_LOCATION_NUMBER = []
+        for (let i = 0; i < MAP_LISTS.length; i++) {
+            OTHER_LOCATION_NUMBER.push(MAP_LISTS[i] + '人数[' + MAP_DATA[MAP_LISTS[i]] + ']')
+            if (e.adapter !== 'QQBot') OTHER_LOCATION_NUMBER.push('\n')
+        }
+
+        return e.reply((e.adapter === 'QQBot') ? [
+            `# 您当前在 [${USER_LOCATION}]`,
+            `> 与您在同一地图的玩家共有[${LOCATION_NUMBER}]位`,
+            '其他位置玩家人数',
+            ...OTHER_LOCATION_NUMBER,
+            segment.at(USER_ID)
+        ] : [
+            segment.at(USER_ID),
+            `\n您当前在 [${USER_LOCATION}]` +
+            `\n与您在同一地图的玩家共有[${LOCATION_NUMBER}]位` +
+            '其他位置玩家人数',
+            ...OTHER_LOCATION_NUMBER
+        ])
+    }
 }
 
 /** 计算用时 */
@@ -328,6 +390,12 @@ function isExistenceUser(USER_ID) {
     return true
 }
 
+/** 存储
+ * @FILE 位置
+ * @DATA 数据
+ */
+function saveData(FILE, DATA) { fs.writeFileSync(FILE, JSON.stringify(DATA, null, 4), 'utf8') }
+
 /** 当前日期(YYYY-MM-DD) */
 function getCurrentDate() {
     const date = new Date();
@@ -335,4 +403,29 @@ function getCurrentDate() {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+}
+
+function addarray() {
+    const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
+    fs.readdir(ALL_USER_FILE_PATH, (err, files) => {
+        if (err) {
+            logger.error('Error reading folder:', err);
+            return;
+        }
+
+        files.forEach(file => {
+            if (path.extname(file) === '.json') {
+                const filePath = path.join(ALL_USER_FILE_PATH, file);
+                const data = fs.readFileSync(filePath, 'utf8');
+                const json = JSON.parse(data);
+
+                const location = json.LOCATION;
+                const id = json.ID;
+
+                MAP_DATA[location].push(id);
+
+            }
+        });
+        saveData(MAP_FILE_PATH, MAP_DATA)
+    });
 }
