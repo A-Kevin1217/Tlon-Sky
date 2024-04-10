@@ -383,7 +383,7 @@ export class SKY extends plugin {
                 '\n没有您的用户信息，请先发送[光遇签到]创建'
             ])
 
-        const LOCATION = e.msg.match(/^(#|\/)?传送(.*)$/)[2]
+        const LOCATION = e.msg.match(/^(#|\/)?传送(.*)$/)[2].replace(/\s/g, '');
         if (!MAP_LIST.includes(LOCATION))
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 没有这个地图',
