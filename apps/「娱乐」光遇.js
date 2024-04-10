@@ -410,15 +410,22 @@ export class SKY extends plugin {
                 '\n您已经在这个地图了\n您可以发送[光遇地图]查看可传送地图'
             ])
 
-        USER_DATA['LOCATION'] = LOCATION
-        MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
-        MAP_DATA[LOCATION].push(USER_DATA['ID'])
-        saveData(USER_FILE, USER_DATA)
-        saveData(MAP_FILE_PATH, MAP_DATA)
-
         const TIME = _.random(2000, 6000)
 
+        e.reply((e.adapter === 'QQBot') ? [
+            '# 开始传送，请稍等',
+            '> ', segment.at(USER_ID),
+        ] : [
+            segment.at(USER_ID),
+            '\n开始传送，请稍等'
+        ])
+
         setTimeout(function () {
+            USER_DATA['LOCATION'] = LOCATION
+            MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
+            MAP_DATA[LOCATION].push(USER_DATA['ID'])
+            saveData(USER_FILE, USER_DATA)
+            saveData(MAP_FILE_PATH, MAP_DATA)
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 传送成功！',
                 `> 您已抵达[${LOCATION}]`,
