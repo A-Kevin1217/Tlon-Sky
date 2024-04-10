@@ -422,8 +422,9 @@ function addarray() {
                 const location = json.LOCATION;
                 const id = json.ID;
 
-                MAP_DATA[location].push(id);
-
+                if (!MAP_DATA[location].includes(id)) {
+                    MAP_DATA[location].push(id);
+                }
             }
         });
         saveData(MAP_FILE_PATH, MAP_DATA)
