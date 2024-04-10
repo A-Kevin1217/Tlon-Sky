@@ -420,12 +420,13 @@ export class SKY extends plugin {
             '\n开始传送，请稍等'
         ])
 
+        USER_DATA['LOCATION'] = LOCATION
+        MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
+        MAP_DATA[LOCATION].push(USER_DATA['ID'])
+        saveData(USER_FILE, USER_DATA)
+        saveData(MAP_FILE_PATH, MAP_DATA)
+
         setTimeout(function () {
-            USER_DATA['LOCATION'] = LOCATION
-            MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
-            MAP_DATA[LOCATION].push(USER_DATA['ID'])
-            saveData(USER_FILE, USER_DATA)
-            saveData(MAP_FILE_PATH, MAP_DATA)
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 传送成功！',
                 `> 您已抵达[${LOCATION}]`,
