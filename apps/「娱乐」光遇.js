@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import _ from 'lodash'
 
 /** 用户文件位置 */
 const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
@@ -56,6 +57,9 @@ export class SKY extends plugin {
             }, {
                 reg: /^(#|\/)?光遇地图$/,
                 fnc: 'Feature_6'
+            }, {
+                reg: /^(#|\/)?传送(.*)$/,
+                fnc: 'Feature_7'
             }]
         })
     }
@@ -350,14 +354,78 @@ export class SKY extends plugin {
             `> 与您在同一地图的玩家共有[${LOCATION_NUMBER}]位`,
             '其他位置玩家人数',
             ...OTHER_LOCATION_NUMBER,
-            segment.at(USER_ID)
+            segment.at(USER_ID),
+            Bot.Button([[{ label: '传送' }]])
         ] : [
             segment.at(USER_ID),
-            `\n您当前在 [${USER_LOCATION}]` +
-            `\n与您在同一地图的玩家共有[${LOCATION_NUMBER}]位` +
-            '其他位置玩家人数',
+            `\n您当前在 [${USER_LOCATION}]\n与您在同一地图的玩家共有[${LOCATION_NUMBER}]位\n其他位置玩家人数\n`,
             ...OTHER_LOCATION_NUMBER
         ])
+    }
+
+    /** 传送 */
+    async Feature_7(e) {
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+
+        if (!isExistenceUser(USER_ID))
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 没有您的用户信息',
+                '> 请先发送[光遇签到]创建',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇签到' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n没有您的用户信息，请先发送[光遇签到]创建'
+            ])
+
+        const LOCATION = e.msg.match(/^(#|\/)?传送(.*)$/)[2]
+        if (!MAP_LIST.includes(LOCATION))
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 没有这个地图',
+                '> 您可以发送[光遇地图]查看可传送地图',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇地图' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n没有这个地图\n您可以发送[光遇地图]查看可传送地图'
+            ])
+
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+        const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
+
+        const USER_LOCATION = USER_DATA['LOCATION']
+        if (LOCATION === USER_LOCATION)
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 您已经在这个地图了',
+                '> 您可以发送[光遇地图]查看可传送地图',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇地图' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n您已经在这个地图了\n您可以发送[光遇地图]查看可传送地图'
+            ])
+
+        USER_DATA['LOCATION'] = LOCATION
+        MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
+        MAP_DATA[LOCATION].push(USER_DATA['ID'])
+        saveData(USER_FILE, USER_DATA)
+        saveData(MAP_FILE_PATH, MAP_DATA)
+
+        const TIME = _.random(2000, 6000)
+
+        setTimeout(function () {
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 传送成功！',
+                `> 您已抵达[${LOCATION}]`,
+                `耗时[${TIME.toFixed(2)}]秒`,
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇地图' }]])
+            ] : [
+                segment.at(USER_ID),
+                `\n传送成功！\n您已抵达[${LOCATION}]\n耗时[${TIME.toFixed(2)}]秒`
+            ])
+        }, TIME);
     }
 }
 

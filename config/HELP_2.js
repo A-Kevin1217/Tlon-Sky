@@ -29,6 +29,14 @@ export const helpList = [{
     "icon": 73,
     "title": "结束跑图",
     "desc": "结束模拟跑图，获得收益"
+  }, {
+    "icon": 83,
+    "title": "光遇地图",
+    "desc": "查看位置信息"
+  }, {
+    "icon": 93,
+    "title": "传送+(地图名)",
+    "desc": "前往指定地图"
   }]
   //     "icon": 83,
   //     "icon": 93,
