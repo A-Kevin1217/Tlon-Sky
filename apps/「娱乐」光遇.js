@@ -567,7 +567,7 @@ export class SKY extends plugin {
             ])
 
         const GROUP_FILE = ALL_GROUP_FILE_PATH + USER_ID + '.json'
-        const GROUP_NUMBER = (fs.readdirSync(GROUP_FILE).length) + 1
+        const GROUP_NUMBER = (fs.readdirSync(ALL_GROUP_FILE_PATH).length) + 1
 
         USER_DATA['CURRENCY_1'] -= 10000
         USER_DATA['CURRENCY_2'] -= 320
