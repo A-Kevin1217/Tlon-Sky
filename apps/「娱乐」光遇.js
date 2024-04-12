@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
-import { callbackify } from 'util'
 
 /** 用户文件位置 */
 const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
@@ -255,6 +254,7 @@ export class SKY extends plugin {
 
         const TIME_TAKEN = getTimeTaken(USER_DATA['TIMESTAMP'])
         const RANDOM_MAP = MAP_LIST[Math.floor(Math.random() * MAP_LIST.length)]
+        const USER_LOCATION = USER_DATA['LOCATION']
         const H = TIME_TAKEN['H']
         const M = TIME_TAKEN['M']
         const S = TIME_TAKEN['S']
