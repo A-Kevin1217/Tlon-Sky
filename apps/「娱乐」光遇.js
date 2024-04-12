@@ -124,7 +124,7 @@ export class SKY extends plugin {
             `已累计签到 [${USER_DATA['ACCUMULATE']}] 天`,
             `获得白蜡: ${CONFIGURATION['a']} | 季蜡：${CONFIGURATION['b']}`,
             segment.at(USER_ID),
-            Bot.Button([[{ label: '设置昵称' }, { label: '光遇信息' }]])
+            Bot.Button([[{ label: '设置昵称:' }, { label: '光遇信息' }]])
         ] : [
             segment.at(USER_ID),
             '\n签到成功！',
