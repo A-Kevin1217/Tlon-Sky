@@ -32,7 +32,7 @@ export class SKY extends plugin {
         let msg = `数据更新时间：${URL_DATA['UPDATE TIME']}\n此表不计入集体复刻\n`
 
         for (const role of URL_DATA[SEASON_NAME]) {
-            msg += `${role.name}已[ ${this.getDayDiff(new Date(role.data))} ]天未复刻\n`
+            msg += `${role.name}已[ ${this.getDayDiff(new Date(role.date))} ]天未复刻\n`
         }
 
         return e.reply((e.adapter === 'QQBot') ? [
