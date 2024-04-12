@@ -33,7 +33,7 @@ if (!fs.existsSync(MAP_FILE_PATH)) saveData(MAP_FILE_PATH, {
 if (!fs.existsSync(CONFIG_FILE_PATH)) saveData(CONFIG_FILE_PATH, { a: 20, b: 5, c: 60, d: 1 })
 
 const REGEX_1 = /^(#|\/)传送(.*)$/
-const REGEX_2 = /^(#|\/)?设置(昵称)(:|：)(.*)/
+const REGEX_2 = /^(#|\/)?设置(昵称)(:|：)(.*)$/
 export class SKY extends plugin {
     constructor() {
         super({
@@ -464,7 +464,7 @@ export class SKY extends plugin {
                 '\n没有您的用户信息，请先发送[光遇签到]创建'
             ])
 
-        const MATCH = e.mag.match(REGEX_2)
+        const MATCH = e.msg.match(REGEX_2)
         // const SETTINGS = MATCH[2]
         const SETTINGS_CONTENT = MATCH[4]
         // if (SETTINGS === '昵称') {}
