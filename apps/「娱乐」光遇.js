@@ -247,6 +247,7 @@ export class SKY extends plugin {
             ])
 
         const TIME_TAKEN = getTimeTaken(USER_DATA['TIMESTAMP'])
+        const RANDOM_MAP = MAP_LIST[Math.floor(Math.random() * MAP_LIST.length)]
         const H = TIME_TAKEN['H']
         const M = TIME_TAKEN['M']
         const S = TIME_TAKEN['S']
@@ -260,19 +261,21 @@ export class SKY extends plugin {
 
         USER_DATA['SIMULATED_STATE'] = false
         USER_DATA['CURRENCY_1'] += GET_CURRENCY_1
+        USER_DATA['LOCATION'] = RANDOM_MAP
 
         saveData(USER_FILE, USER_DATA)
 
         return e.reply((e.adapter === 'QQBot') ? [
             '# 已结束本次跑图',
-            `> 用时[${H}]时[${M}]分[${S}]秒`,
+            `> 本次跑图抵达${RANDOM_MAP}`,
+            `用时[${H}]时[${M}]分[${S}]秒`,
             TIPS,
             `获得白蜡[${GET_CURRENCY_1}]`,
             segment.at(USER_ID),
             Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图' }]])
         ] : [
             segment.at(USER_ID),
-            `\n已结束本次跑图\n用时[${H}]时[${M}]分[${S}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
+            `\n已结束本次跑图\n本次跑图抵达${RANDOM_MAP}\n用时[${H}]时[${M}]分[${S}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
         ])
     }
 
