@@ -241,7 +241,7 @@ export class SKY extends plugin {
             ])
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
-
+        const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
 
         if (!USER_DATA['SIMULATED_STATE'])
             return e.reply((e.adapter === 'QQBot') ? [
@@ -269,7 +269,9 @@ export class SKY extends plugin {
         USER_DATA['SIMULATED_STATE'] = false
         USER_DATA['CURRENCY_1'] += GET_CURRENCY_1
         USER_DATA['LOCATION'] = RANDOM_MAP
-
+        MAP_DATA[USER_LOCATION] = MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
+        MAP_DATA[LOCATION].push(USER_DATA['ID'])
+        saveData(MAP_FILE_PATH, MAP_DATA)
         saveData(USER_FILE, USER_DATA)
 
         return e.reply((e.adapter === 'QQBot') ? [
