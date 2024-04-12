@@ -32,6 +32,8 @@ if (!fs.existsSync(MAP_FILE_PATH)) saveData(MAP_FILE_PATH, {
 })
 if (!fs.existsSync(CONFIG_FILE_PATH)) saveData(CONFIG_FILE_PATH, { a: 20, b: 5, c: 60, d: 1 })
 
+const REGEX_1 = /^(#|\/)传送(.*)$/
+const REGEX_2 = /^(#|\/)?设置(昵称)(:|：)(.*)/
 export class SKY extends plugin {
     constructor() {
         super({
@@ -58,8 +60,11 @@ export class SKY extends plugin {
                 reg: /^(#|\/)?光遇地图$/,
                 fnc: 'Feature_6'
             }, {
-                reg: /^(#|\/)?传送(.*)$/,
+                reg: REGEX_1,
                 fnc: 'Feature_7'
+            }, {
+                reg: REGEX_2,
+                fnc: 'Feature_8'
             }]
         })
     }
@@ -362,7 +367,7 @@ export class SKY extends plugin {
             '其他位置玩家人数',
             ...OTHER_LOCATION_NUMBER,
             segment.at(USER_ID),
-            Bot.Button([[{ label: '传送' }]])
+            Bot.Button([[{ label: '#传送' }]])
         ] : [
             segment.at(USER_ID),
             `\n您当前在 [${USER_LOCATION}]\n与您在同一地图的玩家共有[${LOCATION_NUMBER}]位\n其他位置玩家人数\n`,
@@ -386,7 +391,7 @@ export class SKY extends plugin {
                 '\n没有您的用户信息，请先发送[光遇签到]创建'
             ])
 
-        const LOCATION = e.msg.match(/^(#|\/)?传送(.*)$/)[2].replace(/\s/g, '');
+        const LOCATION = e.msg.match(REGEX_1)[2].replace(/\s/g, '');
         if (!MAP_LIST.includes(LOCATION))
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 没有这个地图',
@@ -441,6 +446,52 @@ export class SKY extends plugin {
                 `\n传送成功！\n您已抵达[${LOCATION}]\n耗时[${(TIME / 1000).toFixed(2)}]秒`
             ])
         }, TIME);
+    }
+
+    /** 设置(昵称) */
+    async Feature_8(e) {
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+
+        if (!isExistenceUser(USER_ID))
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 没有您的用户信息',
+                '> 请先发送[光遇签到]创建',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '光遇签到' }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n没有您的用户信息，请先发送[光遇签到]创建'
+            ])
+
+        const MATCH = e.mag.match(REGEX_2)
+        // const SETTINGS = MATCH[2]
+        const SETTINGS_CONTENT = MATCH[4]
+        // if (SETTINGS === '昵称') {}
+        if (SETTINGS_CONTENT.length < 2 || SETTINGS_CONTENT.length > 12)
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 设置失败！',
+                '> 昵称长度小于2位或大于12位',
+                '请重新设置', segment.at(USER_ID),
+                Bot.Button([[{ label: `设置昵称${SETTINGS_CONTENT}` }]])
+            ] : [
+                segment.at(USER_ID),
+                `\n设置失败！\n昵称长度小于2位或大于12位\n请重新设置`
+            ])
+
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+
+        USER_DATA['GAME_NICKNAME'] = SETTINGS_CONTENT
+        saveData(USER_FILE, USER_DATA)
+
+        return e.reply((e.adapter === 'QQBot') ? [
+            '# 设置成功',
+            `> 您的新昵称[${SETTINGS_CONTENT}]`,
+            segment.at(USER_ID)
+        ] : [
+            segment.at(USER_ID),
+            `\n设置成功！\n您的新昵称[${SETTINGS_CONTENT}]`
+        ])
     }
 }
 
