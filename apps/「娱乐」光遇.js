@@ -270,7 +270,7 @@ export class SKY extends plugin {
         USER_DATA['CURRENCY_1'] += GET_CURRENCY_1
         USER_DATA['LOCATION'] = RANDOM_MAP
         MAP_DATA[USER_LOCATION] = MAP_DATA[USER_LOCATION].filter(item => item !== USER_DATA['ID'])
-        MAP_DATA[LOCATION].push(USER_DATA['ID'])
+        MAP_DATA[RANDOM_MAP].push(USER_DATA['ID'])
         saveData(MAP_FILE_PATH, MAP_DATA)
         saveData(USER_FILE, USER_DATA)
 
