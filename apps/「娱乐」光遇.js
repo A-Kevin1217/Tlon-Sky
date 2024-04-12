@@ -36,7 +36,7 @@ if (!fs.existsSync(CONFIG_FILE_PATH)) saveData(CONFIG_FILE_PATH, { a: 20, b: 5, 
 
 ['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
 
-const folderPath = 'pplugins/Tlon-Sky/data/USER';
+const folderPath = 'plugins/Tlon-Sky/data/USER';
 
 fs.readdir(folderPath, (err, files) => {
     if (err) {
