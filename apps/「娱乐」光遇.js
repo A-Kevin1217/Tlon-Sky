@@ -460,7 +460,7 @@ export class SKY extends plugin {
 
         const MATCH = e.msg.match(REGEX_2)
         const SETTINGS = MATCH[2]
-        const SETTINGS_CONTENT = MATCH[4]
+        const SETTINGS_CONTENT = MATCH[6]
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         if (/^(昵称|名称)/.test(SETTINGS)) {
@@ -501,7 +501,7 @@ export class SKY extends plugin {
                 ])
 
 
-            if (SETTINGS_CONTENT.length < 3 || SETTINGS_CONTENT.length > 8)
+            if (SETTINGS_CONTENT.length < 2 || SETTINGS_CONTENT.length > 8)
                 return e.reply((e.adapter === 'QQBot') ? [
                     '# 设置失败！',
                     '> 长度小于2位或大于8位',
@@ -510,7 +510,7 @@ export class SKY extends plugin {
                     Bot.Button([[{ label: `设置团队昵称:${SETTINGS_CONTENT}` }]])
                 ] : [
                     segment.at(USER_ID),
-                    `\n设置失败！\n长度小于2位或大于12位\n请重新设置`
+                    `\n设置失败！\n长度小于2位或大于8位\n请重新设置`
                 ])
 
             const GROUP_DATA = JSON.parse(fs.readFileSync(GROUP_FILE, 'utf8'))
