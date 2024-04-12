@@ -2,15 +2,6 @@ import fs from 'node:fs'
 import Version from './components/Version.js'
 
 if (!global.segment) { global.segment = (await import("oicq")).segment }
-const directories = [
-  'plugins/Tlon-Sky/data',
-  'plugins/Tlon-Sky/data/USER'
-];
-
-directories.forEach((directory) => {
-  fs.mkdirSync(directory, { recursive: true });
-});
-
 
 const dir1 = './plugins/Tlon-Sky/apps'
 

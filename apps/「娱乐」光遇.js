@@ -1,13 +1,15 @@
-import fs from 'fs'
-import path from 'path'
-import _ from 'lodash'
+import fs from 'fs';
+import _ from 'lodash';
+import path from 'path';
 
 /** 用户文件位置 */
-const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
+const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/';
+/** 团队文件位置 */
+const ALL_GROUP_FILE_PATH = 'plugins/Tlon-Sky/data/GROUP/';
 /** 配置文件位置 */
-const CONFIG_FILE_PATH = 'plugins/Tlon-Sky/config/config.json'
+const CONFIG_FILE_PATH = 'plugins/Tlon-Sky/config/config.json';
 /** 地图文件位置 */
-const MAP_FILE_PATH = 'plugins/Tlon-Sky/data/map.json'
+const MAP_FILE_PATH = 'plugins/Tlon-Sky/data/map.json';
 /** 地图列表 */
 const MAP_LIST = [
     '遇境', '云巢',
@@ -18,7 +20,7 @@ const MAP_LIST = [
     '暮土', '遗忘方舟', '藏宝岛礁',
     '禁阁', '办公室', '星光沙漠', '庇护所', '月牙绿洲',
     '伊甸'
-]
+];
 
 if (!fs.existsSync(MAP_FILE_PATH)) saveData(MAP_FILE_PATH, {
     遇境: [], 云巢: [],
@@ -29,11 +31,49 @@ if (!fs.existsSync(MAP_FILE_PATH)) saveData(MAP_FILE_PATH, {
     暮土: [], 遗忘方舟: [], 藏宝岛礁: [],
     禁阁: [], 办公室: [], 星光沙漠: [], 庇护所: [], 月牙绿洲: [],
     伊甸: []
-})
-if (!fs.existsSync(CONFIG_FILE_PATH)) saveData(CONFIG_FILE_PATH, { a: 20, b: 5, c: 60, d: 1 })
+});
+if (!fs.existsSync(CONFIG_FILE_PATH)) saveData(CONFIG_FILE_PATH, { a: 20, b: 5, c: 60, d: 1 });
 
-const REGEX_1 = /^(#|\/)传送(.*)$/
-const REGEX_2 = /^(#|\/)?设置(昵称)(:|：)(.*)$/
+['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
+
+const folderPath = 'pplugins/Tlon-Sky/data/USER';
+
+fs.readdir(folderPath, (err, files) => {
+    if (err) {
+        logger.error('读取文件夹错误:', err);
+        return;
+    }
+
+    files.forEach(file => {
+        if (path.extname(file) === '.json') {
+            const filePath = path.join(folderPath, file);
+            fs.readFile(filePath, 'utf8', (err, data) => {
+                if (err) {
+                    logger.error('读取文件错误:', err);
+                    return;
+                }
+
+                try {
+                    const jsonData = JSON.parse(data);
+                    if (!jsonData.hasOwnProperty('GROUP')) {
+                        jsonData.GROUP = "";
+                        fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
+                            if (err) {
+                                logger.error('写入文件错误:', err);
+                            } else { }
+                        });
+                    }
+                } catch (error) {
+                    logger.error('解析JSON出错:', error);
+                }
+            });
+        }
+    });
+});
+
+
+const REGEX_1 = /^(#|\/)传送(.*)$/;
+const REGEX_2 = /^(#|\/)?设置((团队)?(昵称|名称))(:|：)(.*)$/;
 export class SKY extends plugin {
     constructor() {
         super({
@@ -65,6 +105,9 @@ export class SKY extends plugin {
             }, {
                 reg: REGEX_2,
                 fnc: 'Feature_8'
+            }, {
+                reg: /^(#|\/)?(建立|创建)团队$/,
+                fnc: 'Feature_9'
             }]
         })
     }
@@ -76,7 +119,7 @@ export class SKY extends plugin {
         const CONFIGURATION = getConfigInfo()
         const USER_NUMBER = fs.readdirSync(ALL_USER_FILE_PATH).length
 
-        if (!isExistenceUser(USER_ID)) {
+        if (!fs.existsSync(USER_FILE)) {
             const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
             MAP_DATA['遇境'].push(USER_ID)
             saveData(MAP_FILE_PATH, MAP_DATA)
@@ -94,7 +137,8 @@ export class SKY extends plugin {
                 CURRENCY_3: 0, // 心
                 CURRENCY_4: 0, // 红蜡
                 SIMULATED_STATE: false, // 模拟跑图状态
-                TIMESTAMP: Date.now() // 模拟跑图时间戳
+                TIMESTAMP: Date.now(), // 模拟跑图时间戳
+                GROUP: '' // 团队编号
             })
         }
 
@@ -139,16 +183,7 @@ export class SKY extends plugin {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
 
-        if (!isExistenceUser(USER_ID))
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息',
-                '> 请先发送[光遇签到]创建',
-                segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇签到' }]])
-            ] : [
-                segment.at(USER_ID),
-                '\n没有您的用户信息，请先发送[光遇签到]创建'
-            ])
+        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         return e.reply((e.adapter === 'QQBot') ? [
@@ -177,16 +212,7 @@ export class SKY extends plugin {
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
         const CONFIGURATION = getConfigInfo()
 
-        if (!isExistenceUser(USER_ID))
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息',
-                '> 请先发送[光遇签到]创建',
-                segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇签到' }]])
-            ] : [
-                segment.at(USER_ID),
-                '\n没有您的用户信息，请先发送[光遇签到]创建'
-            ])
+        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
 
@@ -228,16 +254,7 @@ export class SKY extends plugin {
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
         const CONFIGURATION = getConfigInfo()
 
-        if (!isExistenceUser(USER_ID))
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息',
-                '> 请先发送[光遇签到]创建',
-                segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇签到' }]])
-            ] : [
-                segment.at(USER_ID),
-                '\n没有您的用户信息，请先发送[光遇签到]创建'
-            ])
+        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
@@ -294,16 +311,7 @@ export class SKY extends plugin {
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
         const CONFIGURATION = getConfigInfo()
 
-        if (!isExistenceUser(USER_ID))
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息',
-                '> 请先发送[光遇签到]创建',
-                segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇签到' }]])
-            ] : [
-                segment.at(USER_ID),
-                '\n没有您的用户信息，请先发送[光遇签到]创建'
-            ])
+        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
 
@@ -341,16 +349,7 @@ export class SKY extends plugin {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
 
-        if (!isExistenceUser(USER_ID))
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息',
-                '> 请先发送[光遇签到]创建',
-                segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇签到' }]])
-            ] : [
-                segment.at(USER_ID),
-                '\n没有您的用户信息，请先发送[光遇签到]创建'
-            ])
+        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
@@ -384,16 +383,7 @@ export class SKY extends plugin {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
 
-        if (!isExistenceUser(USER_ID))
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息',
-                '> 请先发送[光遇签到]创建',
-                segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇签到' }]])
-            ] : [
-                segment.at(USER_ID),
-                '\n没有您的用户信息，请先发送[光遇签到]创建'
-            ])
+        if (!isExistenceUser(e)) return
 
         const LOCATION = e.msg.match(REGEX_1)[2].replace(/\s/g, '');
         if (!MAP_LIST.includes(LOCATION))
@@ -461,49 +451,147 @@ export class SKY extends plugin {
         }, TIME);
     }
 
-    /** 设置(昵称) */
+    /** 设置((团队)昵称) */
     async Feature_8(e) {
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
 
-        if (!isExistenceUser(USER_ID))
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有您的用户信息',
-                '> 请先发送[光遇签到]创建',
-                segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇签到' }]])
-            ] : [
-                segment.at(USER_ID),
-                '\n没有您的用户信息，请先发送[光遇签到]创建'
-            ])
+        if (!isExistenceUser(e)) return
 
         const MATCH = e.msg.match(REGEX_2)
-        // const SETTINGS = MATCH[2]
+        const SETTINGS = MATCH[2]
         const SETTINGS_CONTENT = MATCH[4]
-        // if (SETTINGS === '昵称') {}
-        if (SETTINGS_CONTENT.length < 2 || SETTINGS_CONTENT.length > 12)
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 设置失败！',
-                '> 昵称长度小于2位或大于12位',
-                '请重新设置', segment.at(USER_ID),
-                Bot.Button([[{ label: `设置昵称${SETTINGS_CONTENT}` }]])
-            ] : [
-                segment.at(USER_ID),
-                `\n设置失败！\n昵称长度小于2位或大于12位\n请重新设置`
-            ])
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+        if (/^(昵称|名称)/.test(SETTINGS)) {
+            if (SETTINGS_CONTENT.length < 2 || SETTINGS_CONTENT.length > 12)
+                return e.reply((e.adapter === 'QQBot') ? [
+                    '# 设置失败！',
+                    '> 昵称长度小于2位或大于12位',
+                    '请重新设置',
+                    segment.at(USER_ID),
+                    Bot.Button([[{ label: `设置昵称:${SETTINGS_CONTENT}` }]])
+                ] : [
+                    segment.at(USER_ID),
+                    `\n设置失败！\n昵称长度小于2位或大于12位\n请重新设置`
+                ])
 
-        USER_DATA['GAME_NICKNAME'] = SETTINGS_CONTENT
+            USER_DATA['GAME_NICKNAME'] = SETTINGS_CONTENT
+            saveData(USER_FILE, USER_DATA)
+
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 设置成功',
+                `> 您的新昵称[${SETTINGS_CONTENT}]`,
+                segment.at(USER_ID)
+            ] : [
+                segment.at(USER_ID),
+                `\n设置成功！\n您的新昵称[${SETTINGS_CONTENT}]`
+            ])
+        } else if (/^团队(昵称|名称)/.test(SETTINGS)) {
+            const GROUP_FILE = ALL_GROUP_FILE_PATH + USER_DATA['GROUP'] + '.json'
+
+            if (USER_DATA['GROUP'] === '') // 无团队
+                return e.reply((e.adapter === 'QQBot') ? [
+                    '# 您尚未创建团队',
+                    '> ', segment.at(USER_ID),
+                    Bot.Button([[{ lanel: '创建团队' }]])
+                ] : [
+                    segment.at(USER_ID),
+                    '\n您尚未创建团队'
+                ])
+
+
+            if (SETTINGS_CONTENT.length < 3 || SETTINGS_CONTENT.length > 8)
+                return e.reply((e.adapter === 'QQBot') ? [
+                    '# 设置失败！',
+                    '> 长度小于2位或大于8位',
+                    '请重新设置',
+                    segment.at(USER_ID),
+                    Bot.Button([[{ label: `设置团队昵称:${SETTINGS_CONTENT}` }]])
+                ] : [
+                    segment.at(USER_ID),
+                    `\n设置失败！\n长度小于2位或大于12位\n请重新设置`
+                ])
+
+            const GROUP_DATA = JSON.parse(fs.readFileSync(GROUP_FILE, 'utf8'))
+
+            if (GROUP_DATA['LEADER'] !== USER_ID)
+                return e.reply((e.adapter === 'QQBot') ? [
+                    '# 您不是团长！',
+                    '> 无法设置团名',
+                    segment.at(USER_ID),
+                ] : [
+                    segment.at(USER_ID),
+                    '\n您不是团长！\n无法设置团名'
+                ])
+
+            GROUP_DATA['NACKNAME'] = SETTINGS_CONTENT
+            saveData(GROUP_FILE, GROUP_DATA)
+
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 设置成功',
+                `> 团队新昵称[${SETTINGS_CONTENT}]`,
+                segment.at(USER_ID)
+            ] : [
+                segment.at(USER_ID),
+                `\n设置成功！\n团队新昵称[${SETTINGS_CONTENT}]`
+            ])
+        }
+    }
+
+    async Feature_9(e) {
+        if (!isExistenceUser(e)) return
+        const USER_ID = e.user_id
+        const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
+        const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+
+        if (USER_DATA['CURRENCY_1'] < 10000 && USER_DATA['CURRENCY_2'] < 320)
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 资金不足！',
+                '> 需要白蜡[10000] | 季蜡[320]',
+                segment.at(USER_ID)
+            ] : [
+                segment.at(USER_ID),
+                '\n资金不足！\n需要白蜡[10000] | 季蜡[320]'
+            ])
+
+        if (USER_DATA['GROUP'] !== '')
+            return e.reply((e.adapter === 'QQBot') ? [
+                '# 您已经有团队了',
+                '> 请先退出再建立团队',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '退出团队' }]])
+            ] : [
+                segment.at(USER_ID),
+                '您已经有团了\n请先退出再建立团队'
+            ])
+
+        const GROUP_FILE = ALL_GROUP_FILE_PATH + USER_ID + '.json'
+        const GROUP_NUMBER = (fs.readdirSync(GROUP_FILE).length) + 1
+
+        USER_DATA['CURRENCY_1'] -= 10000
+        USER_DATA['CURRENCY_2'] -= 320
+        USER_DATA['GROUP'] = `${USER_ID}`
         saveData(USER_FILE, USER_DATA)
+        saveData(GROUP_FILE, {
+            FOUNDER: USER_ID,
+            LEADER: USER_ID,
+            NACKNAME: `未命名团队${GROUP_NUMBER}`,
+            GROUP_ID: GROUP_NUMBER,
+            MEMBERS: [],
+            CONTRIBUTIONS_POOL: 0,
+            CONTRIBUTIONS_LEVEL: 0
+        })
 
         return e.reply((e.adapter === 'QQBot') ? [
-            '# 设置成功',
-            `> 您的新昵称[${SETTINGS_CONTENT}]`,
-            segment.at(USER_ID)
+            '# 创建成功！',
+            `> 团队编号[${GROUP_NUMBER}]`,
+            `团队昵称[未命名团队${GROUP_NUMBER}]`,
+            segment.at(USER_ID),
+            Bot.Button([[{ label: '设置团队昵称:' }]])
         ] : [
             segment.at(USER_ID),
-            `\n设置成功！\n您的新昵称[${SETTINGS_CONTENT}]`
+            `\n创建成功！\n团队编号[${GROUP_NUMBER}]\n团队昵称[未命名团队${GROUP_NUMBER}]\n可用指令[设置团队昵称:(名称)]来设置名称`
         ])
     }
 }
@@ -532,8 +620,20 @@ function getConfigInfo() {
 }
 
 /** 是否存在用户 */
-function isExistenceUser(USER_ID) {
-    if (!fs.existsSync(ALL_USER_FILE_PATH + USER_ID + '.json')) return false
+function isExistenceUser(e) {
+    const USER_ID = e.user_id
+    if (!fs.existsSync(ALL_USER_FILE_PATH + USER_ID + '.json')) {
+        e.reply((e.adapter === 'QQBot') ? [
+            '# 没有您的用户信息',
+            '> 请先发送[光遇签到]创建',
+            segment.at(USER_ID),
+            Bot.Button([[{ label: '光遇签到' }]])
+        ] : [
+            segment.at(USER_ID),
+            '\n没有您的用户信息，请先发送[光遇签到]创建'
+        ])
+        return false
+    }
     return true
 }
 
