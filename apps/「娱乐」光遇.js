@@ -274,7 +274,7 @@ export class SKY extends plugin {
 
         return e.reply((e.adapter === 'QQBot') ? [
             '# 已结束本次跑图',
-            `> 本次跑图抵达${RANDOM_MAP}`,
+            `> 本次跑图抵达[${RANDOM_MAP}]`,
             `用时[${H}]时[${M}]分[${S}]秒`,
             TIPS,
             `获得白蜡[${GET_CURRENCY_1}]`,
@@ -282,7 +282,7 @@ export class SKY extends plugin {
             Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图', enter: true }]])
         ] : [
             segment.at(USER_ID),
-            `\n已结束本次跑图\n本次跑图抵达${RANDOM_MAP}\n用时[${H}]时[${M}]分[${S}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
+            `\n已结束本次跑图\n本次跑图抵达[${RANDOM_MAP}]\n用时[${H}]时[${M}]分[${S}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
         ])
     }
 
