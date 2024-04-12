@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
+import { callbackify } from 'util'
 
 /** 用户文件位置 */
 const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/'
@@ -123,7 +124,8 @@ export class SKY extends plugin {
             `> Game ID: ${USER_DATA['GAME_ID']}`,
             `已累计签到 [${USER_DATA['ACCUMULATE']}] 天`,
             `获得白蜡: ${CONFIGURATION['a']} | 季蜡：${CONFIGURATION['b']}`,
-            segment.at(USER_ID)
+            segment.at(USER_ID),
+            Bot.Button([[{ label: '设置昵称' }, { label: '光遇信息' }]])
         ] : [
             segment.at(USER_ID),
             '\n签到成功！',
@@ -158,7 +160,7 @@ export class SKY extends plugin {
             `白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
             segment.at(USER_ID),
-            Bot.Button([[{ label: '光遇签到' }, { label: '模拟跑图' }]])
+            Bot.Button([[{ label: '光遇签到' }, { label: '模拟跑图' }, { label: '跑图状态' }, { label: '光遇地图' }]])
         ] : [
             segment.at(USER_ID),
             `\n[${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
@@ -214,7 +216,7 @@ export class SKY extends plugin {
             '# 已开始模拟跑图',
             `> 每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`,
             segment.at(USER_ID),
-            Bot.Button([[{ label: '结束跑图' }]])
+            Bot.Button([[{ label: '结束跑图', enter: true }]])
         ] : [
             segment.at(USER_ID),
             `\n已开始模拟跑图\n每分钟[${CONFIGURATION['d']}]白蜡 | 上限[${CONFIGURATION['c']}]白蜡`
@@ -277,7 +279,7 @@ export class SKY extends plugin {
             TIPS,
             `获得白蜡[${GET_CURRENCY_1}]`,
             segment.at(USER_ID),
-            Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图' }]])
+            Bot.Button([[{ label: '光遇信息' }, { label: '模拟跑图', enter: true }]])
         ] : [
             segment.at(USER_ID),
             `\n已结束本次跑图\n本次跑图抵达${RANDOM_MAP}\n用时[${H}]时[${M}]分[${S}]秒\n${TIPS}获得白蜡[${GET_CURRENCY_1}]`
@@ -406,13 +408,22 @@ export class SKY extends plugin {
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
 
+        if (USER_DATA['SIMULATED_STATE'])
+            return e.reply((e.adapter === 'QQBot') ? [
+                '> 当前正在模拟跑图，无法传送！',
+                segment.at(USER_ID),
+                Bot.Button([[{ label: '结束跑图', enter: true }]])
+            ] : [
+                segment.at(USER_ID),
+                '\n当前正在模拟跑图，无法传送！'
+            ])
         const USER_LOCATION = USER_DATA['LOCATION']
         if (LOCATION === USER_LOCATION)
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 您已经在这个地图了',
                 '> 您可以发送[光遇地图]查看可传送地图',
                 segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇地图' }]])
+                Bot.Button([[{ label: '光遇地图', enter: true }]])
             ] : [
                 segment.at(USER_ID),
                 '\n您已经在这个地图了\n您可以发送[光遇地图]查看可传送地图'
@@ -440,7 +451,7 @@ export class SKY extends plugin {
                 `> 您已抵达[${LOCATION}]`,
                 `耗时[${(TIME / 1000).toFixed(2)}]秒`,
                 segment.at(USER_ID),
-                Bot.Button([[{ label: '光遇地图' }]])
+                Bot.Button([[{ label: '光遇地图', enter: true }]])
             ] : [
                 segment.at(USER_ID),
                 `\n传送成功！\n您已抵达[${LOCATION}]\n耗时[${(TIME / 1000).toFixed(2)}]秒`
