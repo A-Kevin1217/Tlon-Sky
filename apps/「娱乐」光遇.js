@@ -186,6 +186,13 @@ export class SKY extends plugin {
         if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
+
+        let GROUP_DATA = '暂未加入团队'
+        if (USER_DATA['GROUP'] !== '') {
+            GROUP_DATA = JSON.parse(fs.readFileSync(ALL_GROUP_FILE_PATH + USER_DATA['GROUP'] + '.json', 'utf8'))
+            GROUP_DATA = GROUP_DATA['NACKNAME']
+        }
+
         return e.reply((e.adapter === 'QQBot') ? [
             `# [${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
             `> 最近签到日期 [${USER_DATA['LAST_DATE']}]`,
@@ -193,6 +200,7 @@ export class SKY extends plugin {
             `所在位置 [${USER_DATA['LOCATION']}]`,
             `白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
+            `团队 [${GROUP_DATA}]`,
             segment.at(USER_ID),
             Bot.Button([[{ label: '光遇签到' }, { label: '模拟跑图' }, { label: '跑图状态' }, { label: '光遇地图' }]])
         ] : [
@@ -203,6 +211,7 @@ export class SKY extends plugin {
             `\n所在位置 [${USER_DATA['LOCATION']}]`,
             `\n白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `\n模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
+            `\n团队 [${GROUP_DATA}]`
         ])
     }
 
