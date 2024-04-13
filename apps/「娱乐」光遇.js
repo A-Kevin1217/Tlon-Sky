@@ -628,10 +628,10 @@ export class SKY extends plugin {
             segment.at(USER_ID)
         ] : [
             segment.at(USER_ID),
-            `[${GROUP_DATA['GROUP_ID']}]${GROUP_DATA['NACKNAME']}`,
-            `团长 [${LEADER_NICKNAME}]`,
-            `团队成员数量 [${GROUP_DATA['MEMBERS'].length}]位`,
-            `贡献池数量 [${GROUP_DATA['CONTRIBUTIONS_POOL']}] | 等级 [${GROUP_DATA['CONTRIBUTIONS_LEVEL']}]`
+            `\n[${GROUP_DATA['GROUP_ID']}]${GROUP_DATA['NACKNAME']}`,
+            `\n团长 [${LEADER_NICKNAME}]`,
+            `\n团队成员数量 [${GROUP_DATA['MEMBERS'].length}]位`,
+            `\n贡献池数量 [${GROUP_DATA['CONTRIBUTIONS_POOL']}] | 等级 [${GROUP_DATA['CONTRIBUTIONS_LEVEL']}]`
         ])
     }
 }
