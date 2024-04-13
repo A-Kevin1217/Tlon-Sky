@@ -71,7 +71,6 @@ fs.readdir(folderPath, (err, files) => {
     });
 });
 
-
 const REGEX_1 = /^(#|\/)传送(.*)$/;
 const REGEX_2 = /^(#|\/)?设置((团队)?(昵称|名称))(:|：)(.*)$/;
 export class SKY extends plugin {
@@ -108,6 +107,9 @@ export class SKY extends plugin {
             }, {
                 reg: /^(#|\/)?(建立|创建)团队$/,
                 fnc: 'Feature_9'
+            }, {
+                reg: /^(#|\/)?团队信息$/,
+                fnc: 'Feature_10'
             }]
         })
     }
@@ -180,10 +182,9 @@ export class SKY extends plugin {
 
     /** 光遇信息 */
     async Feature_2(e) {
+        if (!isExistenceUser(e)) return
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
-
-        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
 
@@ -217,11 +218,10 @@ export class SKY extends plugin {
 
     /** 模拟跑图 */
     async Feature_3(e) {
+        if (!isExistenceUser(e)) return
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
         const CONFIGURATION = getConfigInfo()
-
-        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
 
@@ -259,11 +259,10 @@ export class SKY extends plugin {
 
     /** 结束跑图 */
     async Feature_4(e) {
+        if (!isExistenceUser(e)) return
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
         const CONFIGURATION = getConfigInfo()
-
-        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
@@ -316,11 +315,10 @@ export class SKY extends plugin {
 
     /** 跑图状态 */
     async Feature_5(e) {
+        if (!isExistenceUser(e)) return
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
         const CONFIGURATION = getConfigInfo()
-
-        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
 
@@ -353,12 +351,11 @@ export class SKY extends plugin {
 
     /** 光遇地图 */
     async Feature_6(e) {
+        if (!isExistenceUser(e)) return
         // 先执行一遍这个
         addarray()
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
-
-        if (!isExistenceUser(e)) return
 
         const USER_DATA = JSON.parse(fs.readFileSync(USER_FILE, 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
@@ -389,10 +386,9 @@ export class SKY extends plugin {
 
     /** 传送 */
     async Feature_7(e) {
+        if (!isExistenceUser(e)) return
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
-
-        if (!isExistenceUser(e)) return
 
         const LOCATION = e.msg.match(REGEX_1)[2].replace(/\s/g, '');
         if (!MAP_LIST.includes(LOCATION))
@@ -462,10 +458,9 @@ export class SKY extends plugin {
 
     /** 设置((团队)昵称) */
     async Feature_8(e) {
+        if (!isExistenceUser(e)) return
         const USER_ID = e.user_id
         const USER_FILE = ALL_USER_FILE_PATH + USER_ID + '.json'
-
-        if (!isExistenceUser(e)) return
 
         const MATCH = e.msg.match(REGEX_2)
         const SETTINGS = MATCH[2]
@@ -583,13 +578,13 @@ export class SKY extends plugin {
         USER_DATA['GROUP'] = `${USER_ID}`
         saveData(USER_FILE, USER_DATA)
         saveData(GROUP_FILE, {
-            FOUNDER: USER_ID,
-            LEADER: USER_ID,
-            NACKNAME: `未命名团队${GROUP_NUMBER}`,
-            GROUP_ID: GROUP_NUMBER,
-            MEMBERS: [],
-            CONTRIBUTIONS_POOL: 0,
-            CONTRIBUTIONS_LEVEL: 0
+            FOUNDER: USER_ID, // 创建者ID
+            LEADER: USER_ID, // 团长ID
+            NACKNAME: `未命名团队${GROUP_NUMBER}`, // 团队名称
+            GROUP_ID: GROUP_NUMBER, // 团队ID
+            MEMBERS: [], // 团队成员
+            CONTRIBUTIONS_POOL: 0, // 贡献池数量
+            CONTRIBUTIONS_LEVEL: 0 // 贡献池等级
         })
 
         return e.reply((e.adapter === 'QQBot') ? [
@@ -601,6 +596,42 @@ export class SKY extends plugin {
         ] : [
             segment.at(USER_ID),
             `\n创建成功！\n团队编号[${GROUP_NUMBER}]\n团队昵称[未命名团队${GROUP_NUMBER}]\n可用指令[设置团队昵称:(名称)]来设置名称`
+        ])
+    }
+
+    async Feature_10(e) {
+        if (!isExistenceUser(e)) return
+        const USER_ID = e.user_id
+        const USER_DATA = JSON.parse(fs.readFileSync(ALL_USER_FILE_PATH + USER_ID + '.json', 'utf8'))
+
+        if (USER_DATA['GROUP'] === '') return e.reply((e.adapter === 'QQBot') ? [
+            '# 您尚未加入(或创建)团队',
+            '> ', segment.at(USER_ID)
+        ] : [
+            segment.at(USER_ID),
+            '\n您尚未加入(或创建)团队'
+        ])
+
+        const GROUP_DATA = JSON.parse(fs.readFileSync(ALL_GROUP_FILE_PATH + USER_DATA['GROUP'] + '.json', 'utf8'))
+
+        let LEADER_NICKNAME = USER_DATA['GAME_NICKNAME']
+        if (GROUP_DATA['LEADER'] !== USER_ID) {
+            const LEADER_DATA = JSON.parse(fs.readFileSync(ALL_USER_FILE_PATH + GROUP_DATA['LEADER'] + '.json', 'utf8'))
+            LEADER_NICKNAME = LEADER_DATA['GAME_NICKNAME']
+        }
+
+        return e.reply((e.adapter === 'QQBot') ? [
+            `# [${GROUP_DATA['GROUP_ID']}]${GROUP_DATA['NACKNAME']}`,
+            `团长 [${LEADER_NICKNAME}]`,
+            `团队成员数量 [${GROUP_DATA['MEMBERS'].length}]位`,
+            `贡献池数量 [${GROUP_DATA['CONTRIBUTIONS_POOL']}] | 等级 [${GROUP_DATA['CONTRIBUTIONS_LEVEL']}]`,
+            segment.at(USER_ID)
+        ] : [
+            segment.at(USER_ID),
+            `[${GROUP_DATA['GROUP_ID']}]${GROUP_DATA['NACKNAME']}`,
+            `团长 [${LEADER_NICKNAME}]`,
+            `团队成员数量 [${GROUP_DATA['MEMBERS'].length}]位`,
+            `贡献池数量 [${GROUP_DATA['CONTRIBUTIONS_POOL']}] | 等级 [${GROUP_DATA['CONTRIBUTIONS_LEVEL']}]`
         ])
     }
 }

@@ -37,12 +37,15 @@ export const helpList = [{
     "icon": 93,
     "title": "传送+(地图名)",
     "desc": "前往指定地图"
+  }, {
+    "icon": 103,
+    "title": "创建团队",
+    "desc": "创建一个团队"
+  }, {
+    "icon": 35,
+    "title": "团队信息",
+    "desc": "查看团队信息"
   }]
-  //     "icon": 83,
-  //     "icon": 93,
-  //     "icon": 103,
-  //     "icon": 113,
-  //     "icon": 35,
   //     "icon": 24,
   //     "icon": 34,
   //     "icon": 44,
