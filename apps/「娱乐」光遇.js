@@ -689,10 +689,10 @@ export class SKY extends plugin {
         const USER_ID = e.user_id
         const USER_DATA = JSON.parse(fs.readFileSync(ALL_USER_FILE_PATH + USER_ID + '.json', 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(MAP_FILE_PATH, 'utf8'))
+        const NEARBY_USER = MAP_DATA[USER_DATA['LOCATION']]
 
         if (/^(#|\/)?查看玩家$/.test(e.msg)) {
             let REPLY_ARRAY = []
-            const NEARBY_USER = MAP_DATA[USER_DATA['LOCATION']]
             let USER_NUMBER = NEARBY_USER.length > 10 ? 10 : NEARBY_USER.length
             for (let i = 0; i < USER_NUMBER; i++) {
                 const USER_DATAS = JSON.parse(fs.readFileSync(ALL_USER_FILE_PATH + NEARBY_USER[i] + '.json', 'utf8'))
@@ -702,11 +702,53 @@ export class SKY extends plugin {
 
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 附近玩家(最高展示十位)',
-                ...REPLY_ARRAY
+                '> ',
+                ...REPLY_ARRAY,
+                segment.at(USER_ID),
+                Bot.Button([[{ lanel: '1', data: '查看玩家1' }]])
             ] : [
                 segment.at(USER_ID),
                 '\n附近玩家(最高展示十位)\n',
                 ...REPLY_ARRAY
+            ])
+        } else {
+            const SERIAL_NUMBER = parseInt(e.msg.replace(/#|\/|查看玩家/, '').replace(/\s/g, ''))
+
+            if (typeof SERIAL_NUMBER !== 'number' && isNaN(SERIAL_NUMBER))
+                return e.reply((e.adapter === 'QQBot') ? [
+                    '# 请输入纯数字！',
+                    '> ', segment.at(USER_ID)
+                ] : [
+                    segment.at(USER_ID),
+                    '请输入纯数字！'
+                ])
+
+            const QUERYING_USER_DATA = JSON.parse(fs.readFileSync(ALL_USER_FILE_PATH + NEARBY_USER[SERIAL_NUMBER] + '.json', 'utf8'))
+
+            return e.reply((e.adapter === 'QQBot') ? [
+                `# [${QUERYING_USER_DATA['GAME_ID']}]${QUERYING_USER_DATA['GAME_NICKNAME']}`,
+                `> 最近签到日期 [${QUERYING_USER_DATA['LAST_DATE']}]`,
+                `累计签到次数 [${QUERYING_USER_DATA['ACCUMULATE']}]`,
+                `所在位置 [${QUERYING_USER_DATA['LOCATION']}]`,
+                `白蜡 [${QUERYING_USER_DATA['CURRENCY_1']}] | 季蜡 [${QUERYING_USER_DATA['CURRENCY_2']}]`,
+                `模拟跑图状态 [${QUERYING_USER_DATA['SIMULATED_STATE']}]`,
+                `团队 [${GROUP_DATA}]`,
+                segment.at(USER_ID),
+                Bot.Button([[
+                    { label: '签到', callback: '/光遇签到' },
+                    { label: '跑图', callback: '/模拟跑图' },
+                    { label: '信息', callback: '/光遇信息' },
+                    { label: '地图', callback: '/光遇地图' }
+                ]])
+            ] : [
+                segment.at(USER_ID),
+                `\n[${QUERYING_USER_DATA['GAME_ID']}]${QUERYING_USER_DATA['GAME_NICKNAME']}`,
+                `\n最近签到日期 [${QUERYING_USER_DATA['LAST_DATE']}]`,
+                `\n累计签到次数 [${QUERYING_USER_DATA['ACCUMULATE']}]`,
+                `\n所在位置 [${QUERYING_USER_DATA['LOCATION']}]`,
+                `\n白蜡 [${QUERYING_USER_DATA['CURRENCY_1']}] | 季蜡 [${QUERYING_USER_DATA['CURRENCY_2']}]`,
+                `\n模拟跑图状态 [${QUERYING_USER_DATA['SIMULATED_STATE']}]`,
+                `\n团队 [${GROUP_DATA}]`
             ])
         }
     }
