@@ -705,7 +705,7 @@ export class SKY extends plugin {
                 '> ',
                 ...REPLY_ARRAY,
                 segment.at(USER_ID),
-                Bot.Button([[{ lanel: '1', data: '查看玩家1' }]])
+                Bot.Button([[{ label: '1', data: '查看玩家1' }]])
             ] : [
                 segment.at(USER_ID),
                 '\n附近玩家(最高展示十位)\n',
@@ -724,6 +724,12 @@ export class SKY extends plugin {
                 ])
 
             const QUERYING_USER_DATA = JSON.parse(fs.readFileSync(ALL_USER_FILE_PATH + NEARBY_USER[SERIAL_NUMBER] + '.json', 'utf8'))
+
+            let GROUP_DATA = '暂未加入团队'
+            if (QUERYING_USER_DATA['GROUP'] !== '') {
+                GROUP_DATA = JSON.parse(fs.readFileSync(ALL_GROUP_FILE_PATH + QUERYING_USER_DATA['GROUP'] + '.json', 'utf8'))
+                GROUP_DATA = GROUP_DATA['NACKNAME']
+            }
 
             return e.reply((e.adapter === 'QQBot') ? [
                 `# [${QUERYING_USER_DATA['GAME_ID']}]${QUERYING_USER_DATA['GAME_NICKNAME']}`,
