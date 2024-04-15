@@ -696,13 +696,13 @@ export class SKY extends plugin {
             let USER_NUMBER = NEARBY_USER.length > 10 ? 10 : NEARBY_USER.length
             for (let i = 0; i < USER_NUMBER; i++) {
                 const USER_DATAS = JSON.parse(fs.readFileSync(ALL_USER_FILE_PATH + NEARBY_USER[i] + '.json', 'utf8'))
-                REPLY_ARRAY.push(`${i + 1}.${USER_DATAS['GAME_NICKNAME']}`)
+                REPLY_ARRAY.push(`${i + 1}、[${USER_DATAS['GAME_NICKNAME']}]`)
                 if (e.adapter !== 'QQBot') REPLY_ARRAY.push('\n')
             }
 
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 附近玩家(最高展示十位)',
-                ...REPLY_ARRAY,
+                '> ', ...REPLY_ARRAY,
                 Bot.Button([[{ label: '查看玩家1', data: '查看玩家1' }]])
             ] : [
                 segment.at(USER_ID),
