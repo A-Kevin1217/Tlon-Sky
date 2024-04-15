@@ -166,12 +166,18 @@ export class SKY extends plugin {
 
         /** 制作转发内容 */
 
-
-        /** 处理描述 */
-        forwardMsg.data = forwardMsg.data
-            .replace(/\n/g, "")
-            .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, "___")
-            .replace(/___+/, `<title color="#777777" size="26">${title}</title>`);
+        let dec = '点击查看'
+        if (typeof (forwardMsg.data) === 'object') {
+            let detail = forwardMsg.data?.meta?.detail
+            if (detail) {
+                detail.news = [{ text: dec }]
+            }
+        } else {
+            forwardMsg.data = forwardMsg.data
+                .replace(/\n/g, '')
+                .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, '___')
+                .replace(/___+/, `<title color="#777777" size="26">${dec}</title>`)
+        }
 
         return forwardMsg;
     }
