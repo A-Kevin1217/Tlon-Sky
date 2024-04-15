@@ -702,7 +702,6 @@ export class SKY extends plugin {
 
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 附近玩家(最高展示十位)',
-                '> ',
                 ...REPLY_ARRAY,
                 segment.at(USER_ID),
                 Bot.Button([[{ label: '1', data: '查看玩家1' }]])
