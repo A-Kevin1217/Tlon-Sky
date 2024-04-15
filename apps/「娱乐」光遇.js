@@ -712,7 +712,7 @@ export class SKY extends plugin {
                 ...REPLY_ARRAY
             ])
         } else {
-            const SERIAL_NUMBER = parseInt(e.msg.replace(/#|\/|查看玩家/, '').replace(/\s/g, ''))
+            const SERIAL_NUMBER = parseInt(e.msg.replace(/#|\/|查看玩家/, '').replace(/\s/g, '')) - 1
 
             if (typeof SERIAL_NUMBER !== 'number' && isNaN(SERIAL_NUMBER))
                 return e.reply((e.adapter === 'QQBot') ? [
