@@ -7,7 +7,7 @@ export const helpCfg = {
   themeExclude: ['default'],
 }
 export const helpList = [{
-  "group": "——————————————开始游戏——————————————",
+  "group": "开始游戏",
   "auth": false,
   "list": [{
     "icon": 33,
@@ -19,7 +19,7 @@ export const helpList = [{
     "desc": "查看个人信息"
   }]
 }, {
-  "group": "——————————————基础玩法——————————————",
+  "group": "基础玩法",
   "auth": false,
   "list": [{
     "icon": 53,
@@ -35,7 +35,7 @@ export const helpList = [{
     "desc": "结束模拟跑图，获得收益"
   }]
 }, {
-  "group": "——————————————地图——————————————",
+  "group": "地图",
   "auth": false,
   "list": [{
     "icon": 83,
@@ -51,7 +51,7 @@ export const helpList = [{
     "desc": "传送至其他地图如：#传送圆梦村"
   }]
 }, {
-  "group": "——————————————团队——————————————",
+  "group": "团队",
   "auth": false,
   "list": [{
     "icon": 103,
@@ -67,7 +67,7 @@ export const helpList = [{
     "desc": "暂未推出"// 向贡献池内贡献蜡烛，1季蜡=4白蜡
   }]
 }, {
-  "group": "——————————————设置项——————————————",
+  "group": "设置项",
   "auth": false,
   "list": [{
     "icon": 24,
