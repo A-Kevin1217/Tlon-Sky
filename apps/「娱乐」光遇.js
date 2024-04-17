@@ -207,14 +207,16 @@ export class SKY extends plugin {
         }
 
         return e.reply((e.adapter === 'QQBot') ? [
-            `# [${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
-            `> 最近签到日期 [${USER_DATA['LAST_DATE']}]`,
-            `累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
-            `所在位置 [${USER_DATA['LOCATION']}]`,
-            `白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
-            `模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
-            `团队 [${GROUP_DATA}]`,
             segment.at(USER_ID),
+            `# 游戏ID: ${USER_DATA['GAME_ID']}`,
+            '***',
+            `# 游戏昵称: ${USER_DATA['GAME_NICKNAME']}`,
+            `> # 最近签到日期 [${USER_DATA['LAST_DATE']}]`,
+            `> 累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
+            `> 白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
+            `# 所在位置 [${USER_DATA['LOCATION']}]`,
+            `> # 模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
+            `团队 [${GROUP_DATA}]`,
             Bot.Button([[
                 { label: '签到', callback: '/光遇签到' },
                 { label: '跑图', callback: '/模拟跑图' },
