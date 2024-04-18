@@ -206,6 +206,11 @@ export class SKY extends plugin {
             GROUP_DATA = JSON.parse(fs.readFileSync(ALL_GROUP_FILE_PATH + USER_DATA['GROUP'] + '.json', 'utf8'))
             GROUP_DATA = GROUP_DATA['NACKNAME']
         }
+
+        let BUTTON = (e.adapter === 'QQBot')
+            ? [[{ label: '签到', callback: '/光遇签到' }, { label: '跑图', callback: '/模拟跑图' }, { label: '信息', callback: '/光遇信息' }, { label: '地图', callback: '/光遇地图' }]]
+            : ''
+
         return await render(`html/skyInfo`, {
             img: await randomPicture(),
             GAME_ID: USER_DATA['GAME_ID'],
@@ -213,12 +218,7 @@ export class SKY extends plugin {
             LAST_DATE: USER_DATA['LAST_DATE'],
             ACCUMULATE: USER_DATA['ACCUMULATE'],
             LOCATION: USER_DATA['LOCATION']
-        }, { e, scale: 2.0 }, '', [[
-            { label: '签到', callback: '/光遇签到' },
-            { label: '跑图', callback: '/模拟跑图' },
-            { label: '信息', callback: '/光遇信息' },
-            { label: '地图', callback: '/光遇地图' }
-        ]]);
+        }, { e, scale: 2.0 }, '', BUTTON);
     }
 
     /** 模拟跑图 */
