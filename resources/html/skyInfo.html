@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            background: url("{{_res_path}}/img/{{img}}");
+            background-size: cover
+        }
+
+        .player-card {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 300px;
+            margin: 0 10px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .player-card+.player-card {
+            margin-left: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .player-info {
+            margin-top: 20px;
+        }
+
+        .player-info p {
+            margin: 10px 0;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="player-card">
+        <h1>Player Information</h1>
+        <div class="player-info">
+            <p><strong>玩家ID:</strong> {{GAME_ID}}</p>
+            <p><strong>玩家昵称:</strong> {{GAME_NICKNAME}}</p>
+            <p><strong>最后签到日期:</strong> [{{LAST_DATE}}]</p>
+            <p><strong>累计签到次数:</strong> [{{ACCUMULATE}}]</p>
+            <p><strong>所在位置:</strong> [{{LOCATION}}]</p>
+            <p><strong>模拟跑图状态:</strong> [{{SIMULATED_STATE}}]</p>
+        </div>
+    </div>
+    <div class="player-card">
+        <h1>Player currency information</h1>
+        <div class="player-info">
+            <p><strong>白蜡:</strong> [CURRENCY_1]</p>
+            <p><strong>季蜡:</strong> [CURRENCY_2]</p>
+            <p><strong>爱心:</strong> [0]</p>
+            <p><strong>红蜡:</strong> [0]</p>
+        </div>
+    </div>
+    <div class="player-card">
+        <h1>Player team information</h1>
+        <div class="player-info">
+            <p><strong>团队ID:</strong> 待更新</p>
+            <p><strong>团队昵称:</strong> 待更新</p>
+            <p><strong>团长:</strong> 待更新</p>
+            <p><strong>团队成员数量:</strong> 待更新</p>
+            <p><strong>贡献池等级:</strong> 待更新</p>
+            <p><strong>贡献池蜡烛数量:</strong> 待更新</p>
+        </div>
+    </div>
+</body>
+
+</html>

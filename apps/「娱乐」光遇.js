@@ -1,6 +1,7 @@
 import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
+import { Version, Common, render, Data } from '../components/index.js';
 
 /** 用户文件位置 */
 const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/';
@@ -205,34 +206,19 @@ export class SKY extends plugin {
             GROUP_DATA = JSON.parse(fs.readFileSync(ALL_GROUP_FILE_PATH + USER_DATA['GROUP'] + '.json', 'utf8'))
             GROUP_DATA = GROUP_DATA['NACKNAME']
         }
-
-        return e.reply((e.adapter === 'QQBot') ? [
-            segment.at(USER_ID),
-            `# 游戏ID: ${USER_DATA['GAME_ID']}`,
-            '***',
-            `# 游戏昵称: ${USER_DATA['GAME_NICKNAME']}`,
-            `> # 最近签到日期 [${USER_DATA['LAST_DATE']}]`,
-            `> 累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
-            `> 白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
-            `# 所在位置 [${USER_DATA['LOCATION']}]`,
-            `> # 模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
-            `团队 [${GROUP_DATA}]`,
-            Bot.Button([[
-                { label: '签到', callback: '/光遇签到' },
-                { label: '跑图', callback: '/模拟跑图' },
-                { label: '信息', callback: '/光遇信息' },
-                { label: '地图', callback: '/光遇地图' }
-            ]])
-        ] : [
-            segment.at(USER_ID),
-            `\n[${USER_DATA['GAME_ID']}]${USER_DATA['GAME_NICKNAME']}`,
-            `\n最近签到日期 [${USER_DATA['LAST_DATE']}]`,
-            `\n累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
-            `\n所在位置 [${USER_DATA['LOCATION']}]`,
-            `\n白蜡 [${USER_DATA['CURRENCY_1']}] | 季蜡 [${USER_DATA['CURRENCY_2']}]`,
-            `\n模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
-            `\n团队 [${GROUP_DATA}]`
-        ])
+        return await render(`html/skyInfo`, {
+            img: await randomPicture(),
+            GAME_ID: USER_DATA['GAME_ID'],
+            GAME_NICKNAME: USER_DATA['GAME_NICKNAME'],
+            LAST_DATE: USER_DATA['LAST_DATE'],
+            ACCUMULATE: USER_DATA['ACCUMULATE'],
+            LOCATION: USER_DATA['LOCATION']
+        }, { e, scale: 2.0 }, '', [[
+            { label: '签到', callback: '/光遇签到' },
+            { label: '跑图', callback: '/模拟跑图' },
+            { label: '信息', callback: '/光遇信息' },
+            { label: '地图', callback: '/光遇地图' }
+        ]]);
     }
 
     /** 模拟跑图 */
@@ -840,4 +826,11 @@ function addarray() {
         });
         saveData(MAP_FILE_PATH, MAP_DATA)
     });
+}
+
+async function randomPicture() {
+    const image = await fs.promises.readdir('./plugins/Tlon-Sky/resources/img/');
+    const list_img = Array.from(image);
+    const theme = list_img.length === 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
+    return theme;
 }
