@@ -14,7 +14,8 @@
             display: flex;
             justify-content: center;
             background: url("{{_res_path}}/img/{{img}}");
-            background-size: cover
+            background-size: cover;
+            width: 2160px;
         }
 
         .player-card {
@@ -62,8 +63,8 @@
     <div class="player-card">
         <h1>Player currency information</h1>
         <div class="player-info">
-            <p><strong>白蜡:</strong> [CURRENCY_1]</p>
-            <p><strong>季蜡:</strong> [CURRENCY_2]</p>
+            <p><strong>白蜡:</strong> [{{CURRENCY_1}}]</p>
+            <p><strong>季蜡:</strong> [{{CURRENCY_2}}]</p>
             <p><strong>爱心:</strong> [0]</p>
             <p><strong>红蜡:</strong> [0]</p>
         </div>
