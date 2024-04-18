@@ -1,0 +1,42 @@
+<style>
+  .break-line {
+    white-space: pre-line;
+  }
+
+  body {
+    font-family: Arial sans-serif;
+    background-color: #4a3333;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #e6e6fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0 0 0 0.2);
+  }
+
+  h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <h1>{{TITLE}}</h1>
+    <div class="content">
+      <p class="break-line">{{ANNOUNCEMENT}}</p>
+    </div>
+  </div>
+</body>
