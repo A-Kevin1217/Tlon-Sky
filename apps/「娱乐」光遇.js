@@ -217,7 +217,9 @@ export class SKY extends plugin {
             GAME_NICKNAME: USER_DATA['GAME_NICKNAME'],
             LAST_DATE: USER_DATA['LAST_DATE'],
             ACCUMULATE: USER_DATA['ACCUMULATE'],
-            LOCATION: USER_DATA['LOCATION']
+            LOCATION: USER_DATA['LOCATION'],
+            CURRENCY_1: USER_DATA['CURRENCY_1'],
+            CURRENCY_2: USER_DATA['CURRENCY_2']
         }, { e, scale: 2.0 }, '', BUTTON);
     }
 
