@@ -831,6 +831,6 @@ function addarray() {
 async function randomPicture() {
     const image = await fs.promises.readdir('./plugins/Tlon-Sky/resources/img/');
     const list_img = Array.from(image);
-    const theme = list_img.length === 1 ? list_img[0] : list_img[lodash.random(0, list_img.length - 1)];
+    const theme = list_img.length === 1 ? list_img[0] : list_img[_.random(0, list_img.length - 1)];
     return theme;
 }
