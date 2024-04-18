@@ -15,7 +15,7 @@
             justify-content: center;
             background: url("{{_res_path}}/img/{{img}}");
             background-size: cover;
-            width: 1000px;
+            width: 600px;
         }
 
         .player-card {
@@ -50,7 +50,7 @@
 
 <body>
     <div class="player-card">
-        <h1>Player Information</h1>
+        <h1>玩家信息</h1>
         <div class="player-info">
             <p><strong>玩家ID:</strong> {{GAME_ID}}</p>
             <p><strong>玩家昵称:</strong> {{GAME_NICKNAME}}</p>
@@ -58,26 +58,22 @@
             <p><strong>累计签到次数:</strong> [{{ACCUMULATE}}]</p>
             <p><strong>所在位置:</strong> [{{LOCATION}}]</p>
             <p><strong>模拟跑图状态:</strong> [{{SIMULATED_STATE}}]</p>
-        </div>
-    </div>
-    <div class="player-card">
-        <h1>Player currency information</h1>
-        <div class="player-info">
-            <p><strong>白蜡:</strong> [{{CURRENCY_1}}]</p>
-            <p><strong>季蜡:</strong> [{{CURRENCY_2}}]</p>
-            <p><strong>爱心:</strong> [0]</p>
-            <p><strong>红蜡:</strong> [0]</p>
-        </div>
-    </div>
-    <div class="player-card">
-        <h1>Player team information</h1>
-        <div class="player-info">
-            <p><strong>团队ID:</strong> 待更新</p>
-            <p><strong>团队昵称:</strong> 待更新</p>
-            <p><strong>团长:</strong> 待更新</p>
-            <p><strong>团队成员数量:</strong> 待更新</p>
-            <p><strong>贡献池等级:</strong> 待更新</p>
-            <p><strong>贡献池蜡烛数量:</strong> 待更新</p>
+            <h1>玩家货币信息</h1>
+            <div class="player-info">
+                <p><strong>白蜡:</strong> [{{CURRENCY_1}}]</p>
+                <p><strong>季蜡:</strong> [{{CURRENCY_2}}]</p>
+                <p><strong>爱心:</strong> [0]</p>
+                <p><strong>红蜡:</strong> [0]</p>
+            </div>
+            <h1>玩家团队信息</h1>
+            <div class="player-info">
+                <p><strong>团队ID:</strong> 待更新</p>
+                <p><strong>团队昵称:</strong> 待更新</p>
+                <p><strong>团长:</strong> 待更新</p>
+                <p><strong>团队成员数量:</strong> 待更新</p>
+                <p><strong>贡献池等级:</strong> 待更新</p>
+                <p><strong>贡献池蜡烛数量:</strong> 待更新</p>
+            </div>
         </div>
     </div>
 </body>
