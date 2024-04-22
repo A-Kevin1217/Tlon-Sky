@@ -1,7 +1,7 @@
 import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
-import { Version, Common, render, Data } from '../components/index.js';
+import { render } from '../components/index.js';
 
 /** 用户文件位置 */
 const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/';
@@ -218,6 +218,7 @@ export class SKY extends plugin {
             LAST_DATE: USER_DATA['LAST_DATE'],
             ACCUMULATE: USER_DATA['ACCUMULATE'],
             LOCATION: USER_DATA['LOCATION'],
+            SIMULATED_STATE: USER_DATA['SIMULATED_STATE'],
             CURRENCY_1: USER_DATA['CURRENCY_1'],
             CURRENCY_2: USER_DATA['CURRENCY_2']
         }, { e, scale: 2.0 }, '', BUTTON);
