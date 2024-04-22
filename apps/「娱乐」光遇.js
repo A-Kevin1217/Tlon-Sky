@@ -1,7 +1,6 @@
 import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
-import { render } from '../components/index.js';
 
 /** 用户文件位置 */
 const ALL_USER_FILE_PATH = 'plugins/Tlon-Sky/data/USER/';
@@ -211,17 +210,31 @@ export class SKY extends plugin {
             ? [[{ label: '签到', callback: '/光遇签到' }, { label: '跑图', callback: '/模拟跑图' }, { label: '信息', callback: '/光遇信息' }, { label: '地图', callback: '/光遇地图' }]]
             : ''
 
-        return await render(`html/skyInfo`, {
-            img: await randomPicture(),
-            GAME_ID: USER_DATA['GAME_ID'],
-            GAME_NICKNAME: USER_DATA['GAME_NICKNAME'],
-            LAST_DATE: USER_DATA['LAST_DATE'],
-            ACCUMULATE: USER_DATA['ACCUMULATE'],
-            LOCATION: USER_DATA['LOCATION'],
-            SIMULATED_STATE: USER_DATA['SIMULATED_STATE'],
-            CURRENCY_1: USER_DATA['CURRENCY_1'],
-            CURRENCY_2: USER_DATA['CURRENCY_2']
-        }, { e, scale: 2.0 }, '', BUTTON);
+        return e.reply((e.adapter === 'QQBot') ? [
+            segment.at(USER_ID),
+            `# 玩家ID: ${USER_DATA['GAME_ID']}`,
+            '***',
+            `# 玩家昵称: ${USER_DATA['GAME_NICKNAME']}`,
+            `> 最近签到日期: ${USER_DATA['LAST_DATE']} 累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
+            `所在位置 [${USER_DATA['LOCATION']}] 模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
+            `# 白蜡 [${USER_DATA['CURRENCY_1']}] 季蜡 [${USER_DATA['CURRENCY_2']}]`,
+            `# 爱心 [0] 红蜡 [0]`,
+            Bot.Button([[
+                { label: '签到', callback: '/光遇签到' },
+                { label: '跑图', callback: '/模拟跑图' },
+                { label: '信息', callback: '/光遇信息' },
+                { label: '地图', callback: '/光遇地图' }
+            ]])
+        ] : [
+            segment.at(USER_ID),
+            `\n玩家ID: ${USER_DATA['GAME_ID']}`,
+            '\n-------------------',
+            `\n玩家昵称: ${USER_DATA['GAME_NICKNAME']}`,
+            `\n最近签到日期: ${USER_DATA['LAST_DATE']} 累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
+            `\n所在位置 [${USER_DATA['LOCATION']}] 模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
+            `\n白蜡 [${USER_DATA['CURRENCY_1']}] 季蜡 [${USER_DATA['CURRENCY_2']}]`,
+            `\n爱心 [0] 红蜡 [0]`
+        ])
     }
 
     /** 模拟跑图 */
