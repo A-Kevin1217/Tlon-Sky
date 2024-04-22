@@ -33,6 +33,10 @@ export const helpList = [{
     "icon": 73,
     "title": "结束跑图",
     "desc": "结束模拟跑图，获得收益"
+  }, {
+    "icon": 64,
+    "title": "白\/季蜡排行榜",
+    "desc": "字面意思"
   }]
 }, {
   "group": "地图",

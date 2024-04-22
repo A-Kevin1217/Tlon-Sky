@@ -113,6 +113,9 @@ export class SKY extends plugin {
             }, {
                 reg: /^(#|\/)?查看玩家(.*)$/,
                 fnc: 'Feature_11'
+            }, {
+                reg: /^(#|\/)?(白蜡|季蜡)排行榜$/,
+                fnc: 'Feature_12'
             }]
         })
     }
@@ -215,7 +218,7 @@ export class SKY extends plugin {
             `# 玩家ID: ${USER_DATA['GAME_ID']}`,
             '***',
             `# 玩家昵称: ${USER_DATA['GAME_NICKNAME']}`,
-            `> 最近签到日期: ${USER_DATA['LAST_DATE']} 累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
+            `> 最近签到日期: ${USER_DATA['LAST_DATE']} 累签次数 [${USER_DATA['ACCUMULATE']}]`,
             `所在位置 [${USER_DATA['LOCATION']}] 模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
             `# 白蜡 [${USER_DATA['CURRENCY_1']}] 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `# 爱心 [0] 红蜡 [0]`,
@@ -230,7 +233,7 @@ export class SKY extends plugin {
             `\n玩家ID: ${USER_DATA['GAME_ID']}`,
             '\n-------------------',
             `\n玩家昵称: ${USER_DATA['GAME_NICKNAME']}`,
-            `\n最近签到日期: ${USER_DATA['LAST_DATE']} 累计签到次数 [${USER_DATA['ACCUMULATE']}]`,
+            `\n最近签到日期: ${USER_DATA['LAST_DATE']} 累签次数 [${USER_DATA['ACCUMULATE']}]`,
             `\n所在位置 [${USER_DATA['LOCATION']}] 模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
             `\n白蜡 [${USER_DATA['CURRENCY_1']}] 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `\n爱心 [0] 红蜡 [0]`
@@ -760,6 +763,40 @@ export class SKY extends plugin {
             ])
         }
     }
+
+    async Feature_12(e) {
+        const FL = fs.readdirSync(ALL_USER_FILE_PATH);
+
+        let C1 = [];
+        let C2 = [];
+
+        FL.forEach(F => {
+            if (path.extname(F) === '.json') {
+                const FP = path.join(ALL_USER_FILE_PATH, F);
+                const UD = JSON.parse(fs.readFileSync(FP, 'utf8'));
+
+                const UD_GID = UD['GAME_ID']
+                const UD_C1 = UD['CURRENCY_1']
+                const UD_C2 = UD['CURRENCY_2']
+
+                C1.push({ UD_GID, UD_C1 });
+                C2.push({ UD_GID, UD_C2 })
+            }
+        });
+
+        C1.sort((a, b) => b.UD_C1 - a.UD_C1);
+        C2.sort((a, b) => b.UD_C2 - a.UD_C2);
+        C1 = C1.slice(0, 12)
+        C2 = C2.slice(0, 12)
+
+        // 返回排名
+        const C1SR = C1.map((item, index) => `># No.${index + 1} ➠➠ID: ${item.UD_GID}\n白蜡[${item.UD_C1}]\n`);
+        const C2SR = C2.map((item, index) => `># No.${index + 1} ➠➠ID: ${item.UD_GID}\n季蜡[${item.UD_C2}]\n`);
+
+        const RT = e.msg.match(/^(#|\/)?(白蜡|季蜡)排行榜$/)[2]
+        if (RT === '白蜡') return FR(e, RT, C1SR)
+        if (RT === '季蜡') return FR(e, RT, C2SR)
+    }
 }
 
 /** 计算用时 */
@@ -844,9 +881,12 @@ function addarray() {
     });
 }
 
-async function randomPicture() {
-    const image = await fs.promises.readdir('./plugins/Tlon-Sky/resources/img/');
-    const list_img = Array.from(image);
-    const theme = list_img.length === 1 ? list_img[0] : list_img[_.random(0, list_img.length - 1)];
-    return theme;
+function FR(e, RT, RD) {
+    return e.reply((e.adapter === 'QQBot') ? [
+        `# ${RT}排行榜`,
+        ...RD
+    ] : [
+        `${RT}排行榜`,
+        ...RD
+    ]);
 }
