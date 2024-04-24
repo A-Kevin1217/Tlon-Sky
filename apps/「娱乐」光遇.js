@@ -236,8 +236,8 @@ export class SKY extends plugin {
             '\n-------------------',
             `\n玩家昵称: ${USER_DATA['GAME_NICKNAME']}`,
             `\n白蜡 [${USER_DATA['CURRENCY_1']}] 季蜡 [${USER_DATA['CURRENCY_2']}]`,
-            `\n爱心 [0] 红蜡 [0]`
-                `\n最近签到日期: ${USER_DATA['LAST_DATE']}\n累签次数 [${USER_DATA['ACCUMULATE']}]`,
+            `\n爱心 [0] 红蜡 [0]`,
+            `\n最近签到日期: ${USER_DATA['LAST_DATE']}\n累签次数 [${USER_DATA['ACCUMULATE']}]`,
             `\n所在位置 [${USER_DATA['LOCATION']}]\n模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
         ])
     }
