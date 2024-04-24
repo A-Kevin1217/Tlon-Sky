@@ -218,10 +218,12 @@ export class SKY extends plugin {
             `# 玩家ID: ${USER_DATA['GAME_ID']}`,
             '***',
             `# 玩家昵称: ${USER_DATA['GAME_NICKNAME']}`,
-            `> 最近签到日期: ${USER_DATA['LAST_DATE']} 累签次数 [${USER_DATA['ACCUMULATE']}]`,
-            `所在位置 [${USER_DATA['LOCATION']}] 模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
             `# 白蜡 [${USER_DATA['CURRENCY_1']}] 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `# 爱心 [0] 红蜡 [0]`,
+            `> 最近签到日期: ${USER_DATA['LAST_DATE']}`,
+            `累签次数 [${USER_DATA['ACCUMULATE']}]`,
+            `所在位置 [${USER_DATA['LOCATION']}]`,
+            `模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
             Bot.Button([[
                 { label: '签到', callback: '/光遇签到' },
                 { label: '跑图', callback: '/模拟跑图' },
@@ -233,10 +235,10 @@ export class SKY extends plugin {
             `\n玩家ID: ${USER_DATA['GAME_ID']}`,
             '\n-------------------',
             `\n玩家昵称: ${USER_DATA['GAME_NICKNAME']}`,
-            `\n最近签到日期: ${USER_DATA['LAST_DATE']} 累签次数 [${USER_DATA['ACCUMULATE']}]`,
-            `\n所在位置 [${USER_DATA['LOCATION']}] 模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
             `\n白蜡 [${USER_DATA['CURRENCY_1']}] 季蜡 [${USER_DATA['CURRENCY_2']}]`,
             `\n爱心 [0] 红蜡 [0]`
+                `\n最近签到日期: ${USER_DATA['LAST_DATE']}\n累签次数 [${USER_DATA['ACCUMULATE']}]`,
+            `\n所在位置 [${USER_DATA['LOCATION']}]\n模拟跑图状态 [${USER_DATA['SIMULATED_STATE']}]`,
         ])
     }
 
