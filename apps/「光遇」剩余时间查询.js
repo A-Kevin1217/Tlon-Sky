@@ -1,10 +1,5 @@
 import fetch from "node-fetch"
 
-/** 季节名称 */
-const SEASON_NAME = '九色鹿季';
-/** 季节毕业所需季蜡数量 */
-const graduationWax = 398;
-
 export class SKY extends plugin {
   constructor() {
     super({
@@ -23,8 +18,11 @@ export class SKY extends plugin {
 
   async SEASONAL_INFO_CALCULATION(e) {
     const URL_DATA = await (await fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节剩余.json')).json()
+
     const START_MS = new Date(URL_DATA['start']).getTime();
     const END_MS = new Date(URL_DATA['end']).getTime();
+    const SEASON_NAME = URL_DATA['name'];
+    const graduationWax = URL_DATA['number'];
 
     const GET_TIME = Date.now();
     const MILLISECOND = END_MS - GET_TIME;
