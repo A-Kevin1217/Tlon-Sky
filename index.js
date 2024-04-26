@@ -20,7 +20,7 @@ ret = await Promise.allSettled(ret)
 
 let apps = {}
 
-const PD = JSON.parse(fs.readFileSync('plugins/Tlon-Sky/package.json', 'utf8'))
+const PD = JSON.parse(fs.readFileSync('plugins/Tlon-Sky/p.json', 'utf8'))
 const UD = await (await fetch('https://gitee.com/Tloml-Starry/Tlon-Sky/raw/master/p.json')).json()
 
 let T = ''
