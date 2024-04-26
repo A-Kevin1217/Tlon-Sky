@@ -105,6 +105,8 @@ export default class Button {
             { label: '拾光', link: `${URL}拾光季.jpg` },
             { label: '归巢', callback: '/归巢季兑换图' },
             { label: '九色鹿', callback: '/九色鹿季兑换图' }
+        ], [
+            { label: '筑巢', callback: '/筑巢季兑换图' }
         ]])
     }
 
@@ -161,6 +163,7 @@ export default class Button {
             { label: '归巢', link: `${URL}归巢季.jpg` },
             { label: '九色鹿', link: `${URL}九色鹿季.jpg` }
         ], [
+            { label: '筑巢', link: `${URL}筑巢季.jpg` },
             { label: '季节兑换图列表', enter: true }
         ]])
     }
