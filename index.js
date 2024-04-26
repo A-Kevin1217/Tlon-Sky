@@ -24,7 +24,7 @@ const PD = JSON.parse(fs.readFileSync('plugins/Tlon-Sky/p.json', 'utf8'))
 const UD = await (await fetch('https://gitee.com/Tloml-Starry/Tlon-Sky/raw/master/p.json')).json()
 
 let T = ''
-if (PD !== UD['version']) T = '，当前不是最新版本，记得及时更新呦~'
+if (PD['version'] !== UD['version']) T = '，当前不是最新版本，记得及时更新呦~'
 
 for (let i in file) {
   let name = file[i].replace('.js', '')
