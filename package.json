@@ -1,0 +1,15 @@
+{
+  "name": "tlonsky",
+  "version": "2.0.1",
+  "description": "为Yunzai V3提供光遇游戏相关功能",
+  "main": "indes.js\u001b[D\u001b[D\u001b[x",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/Tloml-Starry/Tlon-Sky.git"
+  },
+  "author": "Tloml-Starry",
+  "license": "MulanPSL-2.0"
+}
