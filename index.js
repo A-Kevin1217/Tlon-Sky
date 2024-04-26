@@ -21,7 +21,7 @@ ret = await Promise.allSettled(ret)
 let apps = {}
 
 const PD = JSON.parse(fs.readFileSync('plugins/Tlon-Sky/package.json', 'utf8'))
-const UD = await (await fetch('https://gitee.com/Tloml-Starry/Tlon-Sky/raw/master/package.json')).json()
+const UD = await (await fetch('https://gitee.com/Tloml-Starry/Tlon-Sky/raw/master/p.json')).json()
 
 let T = ''
 if (PD !== UD['version']) T = '，当前不是最新版本，记得及时更新呦~'
