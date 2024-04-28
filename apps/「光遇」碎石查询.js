@@ -26,19 +26,19 @@ export class SKY extends plugin {
         if (dayOfMonth >= 1 && dayOfMonth <= 15) {
             if (dayOfWeek === 2) {
                 return e.reply([
-                    '今日是黑石\n降落时间段：\n[09:08-10:00]\n[14:08-15:00]\n[19:08-20:00]',
+                    '今日是黑石\n降落时间段：\n(09:08~10:00)\n(14:08~15:00)\n(19:08~20:00)',
                     segment.image(img1),
                     segment.image(img2)
                 ])
             } else if (dayOfWeek === 6) {
                 return e.reply([
-                    '今日是红石\n降落时间段：\n[10:08-11:00]\n[14:08-15:00]\n[22:08-23:00]',
+                    '今日是红石\n降落时间段：\n(10:08~11:00)\n(14:08~15:00)\n(22:08~23:00)',
                     segment.image(img1),
                     segment.image(img2)
                 ])
             } else if (dayOfWeek === 0) {
                 return e.reply([
-                    '今日是红石\n降落时间段：\n[07:08-08:00]\n[13:08-14:00]\n[19:08-20:00]',
+                    '今日是红石\n降落时间段：\n(07:08~08:00)\n(13:08~14:00)\n(19:08~20:00)',
                     segment.image(img1),
                     segment.image(img2)
                 ])
@@ -48,19 +48,19 @@ export class SKY extends plugin {
         } else {
             if (dayOfWeek === 3) {
                 return e.reply([
-                    '今日是黑石\n降落时间段：\n[09:08-10:00]\n[15:08-16:00]\n[21:08-22:00]',
+                    '今日是黑石\n降落时间段：\n(09:08~10:00)\n(15:08~16:00)\n(21:08~22:00)',
                     segment.image(img1),
                     segment.image(img2)
                 ])
             } else if (dayOfWeek === 5) {
                 return e.reply([
-                    '今日是红石\n降落时间段：\n[11:08-12:00]\n[17:08-18:00]\n[23:08-24:00]',
+                    '今日是红石\n降落时间段：\n(11:08~12:00)\n(17:08~18:00)\n(23:08~24:00)',
                     segment.image(img1),
                     segment.image(img2)
                 ])
             } else if (dayOfWeek === 0) {
                 return e.reply([
-                    '今日是红石\n降落时间段：\n[07:08-08:00]\n[13:08-14:00]\n[19:08-20:00]',
+                    '今日是红石\n降落时间段：\n(07:08~08:00)\n(13:08~14:00)\n(19:08~20:00)',
                     segment.image(img1),
                     segment.image(img2)
                 ])
