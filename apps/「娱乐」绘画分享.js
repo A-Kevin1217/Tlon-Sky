@@ -16,8 +16,8 @@ export class SKY extends plugin {
   }
 
   async paintingSharing(e) {
-    const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/绘画分享/'
-    const TU_N = (await (await fetch(`${URL}HHFX.json`)).json())['n']
+    const URL = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/'
+    const TU_N = (await (await fetch(`${URL}云绘库.json`)).json())['n']
     const IMAGE = segment.image(`${URL}${_.random(0, TU_N)}.jpg`)
     e.reply((e.adapter === 'QQBot') ? [
       IMAGE,
