@@ -22,6 +22,8 @@ const ML = [
     '伊甸'
 ];
 
+['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
+
 if (!fs.existsSync(MFP)) SD(MFP, {
     遇境: [], 云巢: [],
     晨岛: [], 预言山谷: [], 夜行石: [],
@@ -33,8 +35,6 @@ if (!fs.existsSync(MFP)) SD(MFP, {
     伊甸: []
 });
 if (!fs.existsSync(CFP)) SD(CFP, { a: 20, b: 5, c: 60, d: 1 });
-
-['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
 
 fs.readdir(AUFP, (err, files) => {
     if (err) {
