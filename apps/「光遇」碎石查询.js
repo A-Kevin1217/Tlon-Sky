@@ -23,50 +23,45 @@ export class SKY extends plugin {
         const dayOfMonth = today.getDate();
         const dayOfWeek = today.getDay();
 
+        let landingTime = ''
+        let stoneType = ''
         if (dayOfMonth >= 1 && dayOfMonth <= 15) {
             if (dayOfWeek === 2) {
-                return e.reply([
-                    '今日是黑石\n降落时间段：\n(09:08~10:00)\n(14:08~15:00)\n(19:08~20:00)',
-                    segment.image(img1),
-                    segment.image(img2)
-                ])
+                stoneType = '黑石'
+                landingTime = '(09:08—10:00)\n(14:08—15:00)\n(19:08—20:00)'
             } else if (dayOfWeek === 6) {
-                return e.reply([
-                    '今日是红石\n降落时间段：\n(10:08~11:00)\n(14:08~15:00)\n(22:08~23:00)',
-                    segment.image(img1),
-                    segment.image(img2)
-                ])
+                stoneType = '红石'
+                landingTime = '(10:08—11:00)\n(14:08—15:00)\n(22:08—23:00)'
             } else if (dayOfWeek === 0) {
-                return e.reply([
-                    '今日是红石\n降落时间段：\n(07:08~08:00)\n(13:08~14:00)\n(19:08~20:00)',
-                    segment.image(img1),
-                    segment.image(img2)
-                ])
-            } else {
-                return e.reply('今日无(红|黑)石')
-            }
+                stoneType = '红石'
+                landingTime = '(07:08—08:00)\n(13:08—14:00)\n(19:08—20:00)'
+            } else return e.reply('今日无红&黑石')
         } else {
             if (dayOfWeek === 3) {
-                return e.reply([
-                    '今日是黑石\n降落时间段：\n(09:08~10:00)\n(15:08~16:00)\n(21:08~22:00)',
-                    segment.image(img1),
-                    segment.image(img2)
-                ])
+                stoneType = '黑石'
+                landingTime = '(09:08—10:00)\n(15:08—16:00)\n(21:08—22:00)'
             } else if (dayOfWeek === 5) {
-                return e.reply([
-                    '今日是红石\n降落时间段：\n(11:08~12:00)\n(17:08~18:00)\n(23:08~24:00)',
-                    segment.image(img1),
-                    segment.image(img2)
-                ])
+                stoneType = '红石'
+                landingTime = '(11:08—12:00)\n(17:08—18:00)\n(23:08—24:00)'
             } else if (dayOfWeek === 0) {
-                return e.reply([
-                    '今日是红石\n降落时间段：\n(07:08~08:00)\n(13:08~14:00)\n(19:08~20:00)',
-                    segment.image(img1),
-                    segment.image(img2)
-                ])
-            } else {
-                return e.reply('今日无(红|黑)石')
-            }
+                stoneType = '红石'
+                landingTime = '(07:08—08:00)\n(13:08—14:00)\n(19:08—20:00)'
+            } else return e.reply('今日无红&黑石')
         }
+
+        return e.reply((e.adapter === 'QQBot') ? [
+            `今日石头: ${stoneType}`,
+            `降落时间段如下\r${landingTime}`,
+            '点击按钮查看降落位置',
+            Bot.Button([[
+                { label: '降落位置', link: img1 },
+                { label: '前往教程', link: img2 }
+            ]])
+        ] : [
+            `今日石头: ${stoneType}\r` +
+            `降落时间段如下\r${landingTime}`,
+            segment.image(img1),
+            segment.image(img2)
+        ])
     }
 }
