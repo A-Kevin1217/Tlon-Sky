@@ -60,7 +60,7 @@ export class SKY extends plugin {
         if (CDD[UID] === GCD()) return e.reply('今日已获取过盲盒，请与明日再来')
 
         const RFD = await GD1()
-        if (RFD.length === 0) return e.reply((e.adapter === 'QQBot') ? ['盲盒库已无盲盒，请添加一些再来吧~', Bot.Button([[{ label: '添加', data: '存入盲盒[好友代码]*[服务器]' }]])] : ['盲盒库已无盲盒，请添加一些再来吧~'])
+        if (RFD.length === 0) return e.reply((e.adapter === 'QQBot') ? ['盲盒库已无盲盒，请添加一些再来吧~', Bot.Button([[{ label: '添加', data: '存入盲盒[好友代码]*国服' }]])] : ['盲盒库已无盲盒，请添加一些再来吧~'])
         const RANDOM_FRIENDS_DATA = RFD[Math.floor(Math.random() * RFD.length)];
 
         RFD = RFD.filter(item => item !== RANDOM_FRIENDS_DATA)
