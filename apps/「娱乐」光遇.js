@@ -21,6 +21,21 @@ const ML = [
     '禁阁', '办公室', '星光沙漠', '庇护所', '月牙绿洲',
     '伊甸'
 ];
+/** 按钮 */
+const BUTTON_LIST = {
+    A: [[
+        BT_1('光遇信息', '/光遇信息'), BT_1('光遇签到', '/光遇签到'), BT_1('模拟跑图', '/模拟跑图')
+    ], [
+        BT_1('结束跑图', '/结束跑图'), BT_1('跑图状态', '/跑图状态'), BT_1('光遇地图', '/光遇地图')
+    ], [
+        BT_1('创建团队', '/创建团队'), BT_1('团队信息', '/团队信息'), BT_1('排行榜', '/光遇排行榜')
+    ], [
+        BT_2('设置昵称', '/设置昵称')
+    ]],
+    B: [[
+        BT_2('传送+地图名', '/传送')
+    ]]
+}
 
 ['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
 
@@ -35,7 +50,7 @@ if (!fs.existsSync(MFP)) SD(MFP, {
     伊甸: []
 });
 if (!fs.existsSync(CFP)) SD(CFP, { a: 20, b: 5, c: 60, d: 1 });
-
+/** 
 fs.readdir(AUFP, (err, files) => {
     if (err) {
         logger.error('读取文件夹错误:', err);
@@ -68,9 +83,9 @@ fs.readdir(AUFP, (err, files) => {
         }
     });
 });
-
-const R1 = /^(#|\/)传送(.*)$/;
-const R2 = /^(#|\/)?设置((团队)?(昵称|名称))(:|：)(.*)$/;
+/** */
+const REG_1 = /^(#|\/)传送(.*)$/;
+const REG_2 = /^(#|\/)?设置((团队)?(昵称|名称))(:|：)(.*)$/;
 export class SKY extends plugin {
     constructor() {
         super({
@@ -79,24 +94,24 @@ export class SKY extends plugin {
             event: 'message',
             priority: 1,
             rule: [
-                { reg: /^(#|\/)?光遇签到$/, fnc: 'Feature_1' },
-                { reg: /^(#|\/)?光遇信息$/, fnc: 'Feature_2' },
-                { reg: /^(#|\/)?模拟跑图$/, fnc: 'Feature_3' },
-                { reg: /^(#|\/)?结束跑图$/, fnc: 'Feature_4' },
-                { reg: /^(#|\/)?跑图状态$/, fnc: 'Feature_5' },
-                { reg: /^(#|\/)?光遇地图$/, fnc: 'Feature_6' },
-                { reg: R1, fnc: 'Feature_7' },
-                { reg: R2, fnc: 'Feature_8' },
-                { reg: /^(#|\/)?(建立|创建)团队$/, fnc: 'Feature_9' },
-                { reg: /^(#|\/)?团队信息$/, fnc: 'Feature_10' },
-                { reg: /^(#|\/)?查看玩家(.*)$/, fnc: 'Feature_11' },
-                { reg: /^(#|\/)?(白蜡|季蜡)排行榜$/, fnc: 'Feature_12' }
+                { reg: /^(#|\/)?光遇签到$/, fnc: 'F_1' },
+                { reg: /^(#|\/)?光遇信息$/, fnc: 'F_2' },
+                { reg: /^(#|\/)?模拟跑图$/, fnc: 'F_3' },
+                { reg: /^(#|\/)?结束跑图$/, fnc: 'F_4' },
+                { reg: /^(#|\/)?跑图状态$/, fnc: 'F_5' },
+                { reg: /^(#|\/)?光遇地图$/, fnc: 'F_6' },
+                { reg: REG_1, fnc: 'F_7' },
+                { reg: REG_2, fnc: 'F_8' },
+                { reg: /^(#|\/)?(建立|创建)团队$/, fnc: 'F_9' },
+                { reg: /^(#|\/)?团队信息$/, fnc: 'F_10' },
+                { reg: /^(#|\/)?查看玩家(.*)$/, fnc: 'F_11' },
+                { reg: /^(#|\/)?(光遇|白蜡|季蜡)排行榜$/, fnc: 'F_12' }
             ]
         })
     }
 
     /** 光遇签到 */
-    async Feature_1(e) {
+    async F_1(e) {
         const UID = e.user_id
         const UF = `${AUFP}${UID}.json`
         const UN = fs.readdirSync(AUFP).length
@@ -130,11 +145,7 @@ export class SKY extends plugin {
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 今日已签，请明日再来',
                 segment.at(UID),
-                Bot.Button([[
-                    { label: '信息', callback: '/光遇信息' },
-                    { label: '跑图', callback: '/模拟跑图' },
-                    { label: '地图', callback: '/光遇地图' }
-                ]])
+                Bot.Button(BUTTON_LIST['A'])
             ] : [
                 segment.at(UID),
                 '\n今日已签，请明日再来'
@@ -157,12 +168,7 @@ export class SKY extends plugin {
             `> 光遇ID: ${UD['GAME_ID']}`,
             `已累计签到 [${UD['ACCUMULATE']}] 天`,
             `获得白蜡: ${CD['a']} | 季蜡：${CD['b']}`,
-            Bot.Button([[
-                { label: '设置昵称', data: '/设置昵称:' },
-                { label: '信息', callback: '/光遇信息' },
-                { label: '跑图', callback: '/模拟跑图' },
-                { label: '地图', callback: '/光遇地图' }
-            ]])
+            Bot.Button(BUTTON_LIST['A'])
         ] : [
             segment.at(UID),
             '\n签到成功！',
@@ -173,7 +179,7 @@ export class SKY extends plugin {
     }
 
     /** 光遇信息 */
-    async Feature_2(e) {
+    async F_2(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UF = `${AUFP}${UID}.json`
@@ -197,12 +203,7 @@ export class SKY extends plugin {
             `累签次数 [${UD['ACCUMULATE']}]`,
             `所在位置 [${UD['LOCATION']}]`,
             `模拟跑图状态 [${UD['SIMULATED_STATE']}]`,
-            Bot.Button([[
-                { label: '签到', callback: '/光遇签到' },
-                { label: '跑图', callback: '/模拟跑图' },
-                { label: '信息', callback: '/光遇信息' },
-                { label: '地图', callback: '/光遇地图' }
-            ]])
+            Bot.Button(BUTTON_LIST['A'])
         ] : [
             segment.at(UID),
             `\n玩家ID: ${UD['GAME_ID']}`,
@@ -216,7 +217,7 @@ export class SKY extends plugin {
     }
 
     /** 模拟跑图 */
-    async Feature_3(e) {
+    async F_3(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UF = `${AUFP}${UID}.json`
@@ -264,7 +265,7 @@ export class SKY extends plugin {
     }
 
     /** 结束跑图 */
-    async Feature_4(e) {
+    async F_4(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UF = `${AUFP}${UID}.json`
@@ -324,7 +325,7 @@ export class SKY extends plugin {
     }
 
     /** 跑图状态 */
-    async Feature_5(e) {
+    async F_5(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UF = `${AUFP}${UID}.json`
@@ -363,7 +364,7 @@ export class SKY extends plugin {
     }
 
     /** 光遇地图 */
-    async Feature_6(e) {
+    async F_6(e) {
         if (!IEU(e)) return
         // 先执行一遍这个
         addarray()
@@ -389,10 +390,7 @@ export class SKY extends plugin {
             '其他位置玩家人数',
             ...OTHER_LOCATION_NUMBER,
             segment.at(UID),
-            Bot.Button([[
-                { label: '传送', data: '/传送' },
-                { label: '查看玩家', callback: '/查看玩家' }
-            ]])
+            Bot.Button(BUTTON_LIST['B'])
         ] : [
             segment.at(UID),
             `\n您当前在 [${USER_LOCATION}]\n与您在同一地图的玩家共有[${LOCATION_NUMBER}]位\n其他位置玩家人数\n`,
@@ -401,20 +399,18 @@ export class SKY extends plugin {
     }
 
     /** 传送 */
-    async Feature_7(e) {
+    async F_7(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UF = `${AUFP}${UID}.json`
 
-        const LOCATION = e.msg.match(R1)[2].replace(/\s/g, '');
+        const LOCATION = e.msg.match(REG_1)[2].replace(/\s/g, '');
         if (!ML.includes(LOCATION))
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 没有这个地图',
                 '> 您可以发送[光遇地图]查看可传送地图',
                 segment.at(UID),
-                Bot.Button([[
-                    { label: '地图', callback: '/光遇地图' }
-                ]])
+                Bot.Button(BUTTON_LIST['A'])
             ] : [
                 segment.at(UID),
                 '\n没有这个地图\n您可以发送[光遇地图]查看可传送地图'
@@ -427,9 +423,7 @@ export class SKY extends plugin {
             return e.reply((e.adapter === 'QQBot') ? [
                 '> 当前正在模拟跑图，无法传送！',
                 segment.at(UID),
-                Bot.Button([[
-                    { label: '结束', callback: '/结束跑图' }
-                ]])
+                Bot.Button(BUTTON_LIST['A'])
             ] : [
                 segment.at(UID),
                 '\n当前正在模拟跑图，无法传送！'
@@ -440,9 +434,7 @@ export class SKY extends plugin {
                 '# 您已经在这个地图了',
                 '> 您可以发送[光遇地图]查看可传送地图',
                 segment.at(UID),
-                Bot.Button([[
-                    { label: '地图', callback: '/光遇地图' }
-                ]])
+                Bot.Button(BUTTON_LIST['A'])
             ] : [
                 segment.at(UID),
                 '\n您已经在这个地图了\n您可以发送[光遇地图]查看可传送地图'
@@ -471,7 +463,6 @@ export class SKY extends plugin {
                 `耗时[${(TIME / 1000).toFixed(2)}]秒`,
                 segment.at(UID),
                 Bot.Button([[
-                    { label: '地图', callback: '/光遇地图' },
                     { label: '查看玩家', callback: '/查看玩家' }
                 ]])
             ] : [
@@ -482,12 +473,12 @@ export class SKY extends plugin {
     }
 
     /** 设置((团队)昵称) */
-    async Feature_8(e) {
+    async F_8(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UF = `${AUFP}${UID}.json`
 
-        const MATCH = e.msg.match(R2)
+        const MATCH = e.msg.match(REG_2)
         const SETTINGS = MATCH[2]
         const SETTINGS_CONTENT = MATCH[6]
 
@@ -571,7 +562,7 @@ export class SKY extends plugin {
     }
 
     /** 创建团队 */
-    async Feature_9(e) {
+    async F_9(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UF = `${AUFP}${UID}.json`
@@ -628,7 +619,7 @@ export class SKY extends plugin {
     }
 
     /** 团队信息 */
-    async Feature_10(e) {
+    async F_10(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UD = JSON.parse(fs.readFileSync(`${AUFP}${UID}.json`, 'utf8'))
@@ -665,7 +656,7 @@ export class SKY extends plugin {
     }
 
     /** 查看玩家 */
-    async Feature_11(e) {
+    async F_11(e) {
         if (!IEU(e)) return
         const UID = e.user_id
         const UD = JSON.parse(fs.readFileSync(`${AUFP}${UID}.json`, 'utf8'))
@@ -684,7 +675,7 @@ export class SKY extends plugin {
             return e.reply((e.adapter === 'QQBot') ? [
                 '# 附近玩家(最高展示十位)',
                 '> ', ...REPLY_ARRAY,
-                Bot.Button([[{ label: '查看玩家1', data: '查看玩家1' }]])
+                Bot.Button([[{ label: '查看玩家+序号', data: '查看玩家1' }]])
             ] : [
                 segment.at(UID),
                 '\n附近玩家(最高展示十位)\n',
@@ -719,12 +710,7 @@ export class SKY extends plugin {
                 `模拟跑图状态 [${QUERYING_USER_DATA['SIMULATED_STATE']}]`,
                 `团队 [${GROUP_DATA}]`,
                 segment.at(UID),
-                Bot.Button([[
-                    { label: '签到', callback: '/光遇签到' },
-                    { label: '跑图', callback: '/模拟跑图' },
-                    { label: '信息', callback: '/光遇信息' },
-                    { label: '地图', callback: '/光遇地图' }
-                ]])
+                Bot.Button(BUTTON_LIST['A'])
             ] : [
                 segment.at(UID),
                 `\n[${QUERYING_USER_DATA['GAME_ID']}]${QUERYING_USER_DATA['GAME_NICKNAME']}`,
@@ -738,7 +724,7 @@ export class SKY extends plugin {
         }
     }
 
-    async Feature_12(e) {
+    async F_12(e) {
         const FL = fs.readdirSync(AUFP);
 
         let C1 = [];
@@ -768,6 +754,10 @@ export class SKY extends plugin {
         const C2SR = C2.map((item, index) => `># No.${index + 1} ➠➠ID: ${item.UD_GID}\n季蜡[${item.UD_C2}]\n`);
 
         const RT = e.msg.match(/^(#|\/)?(白蜡|季蜡)排行榜$/)[2]
+        if (RT === '光遇') return e.reply([
+            '> 选择排行榜查看',
+            Bot.Button([[{ label: '白蜡', callback: '白蜡排行榜' }, { label: '季蜡', callback: '季蜡排行榜' }]])
+        ])
         if (RT === '白蜡') return FR(e, RT, C1SR)
         if (RT === '季蜡') return FR(e, RT, C2SR)
     }
@@ -863,4 +853,10 @@ function FR(e, RT, RD) {
         `${RT}排行榜\n`,
         ...RD
     ]);
+}
+function BT_1(L, C) {
+    return { label: L, callback: C }
+}
+function BT_2(L, D) {
+    return { label: L, data: D }
 }
