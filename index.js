@@ -3,7 +3,7 @@
  * 由[Tloml-Starry](https://gitee.com/Tloml-Starry)于2023-01-15开始编写
  */
 import fs from 'node:fs'; import fetch from "node-fetch"
-
+['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
 if (!global.segment) global.segment = (await import("oicq")).segment
 
 const file = [

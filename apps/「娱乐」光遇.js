@@ -37,8 +37,6 @@ const BUTTON_LIST = {
     ]]
 }
 
-['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
-
 if (!fs.existsSync(MFP)) SD(MFP, {
     遇境: [], 云巢: [],
     晨岛: [], 预言山谷: [], 夜行石: [],
