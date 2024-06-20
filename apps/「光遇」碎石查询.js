@@ -1,3 +1,5 @@
+import { render } from '../components/index.js'
+
 export class SKY extends plugin {
     constructor() {
         super({
@@ -6,10 +8,8 @@ export class SKY extends plugin {
             event: 'message',
             priority: 1,
             rule: [
-                {
-                    reg: /^(碎石查询|今日(红|黑)石)/,
-                    fnc: 'GRAVEL_QUERY'
-                }
+                { reg: /^(碎石查询|今日(红|黑)石)$/, fnc: 'GRAVEL_QUERY' },
+                { reg: /^本月(碎|红|黑)石$/, fnc: 'MONTH_STONE' }
             ]
         })
     }
@@ -63,5 +63,12 @@ export class SKY extends plugin {
             segment.image(img1),
             segment.image(img2)
         ])
+    }
+
+    async MONTH_STONE(e) {
+        await render('admin/光遇碎石日历', {}, {
+            e,
+            scale: 1.4
+        })
     }
 }

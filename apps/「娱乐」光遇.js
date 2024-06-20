@@ -21,21 +21,6 @@ const ML = [
     '禁阁', '办公室', '星光沙漠', '庇护所', '月牙绿洲',
     '伊甸'
 ];
-/** 按钮 */
-const BUTTON_LIST = {
-    A: [[
-        BT_1('光遇信息', '/光遇信息'), BT_1('光遇签到', '/光遇签到'), BT_1('模拟跑图', '/模拟跑图')
-    ], [
-        BT_1('结束跑图', '/结束跑图'), BT_1('跑图状态', '/跑图状态'), BT_1('光遇地图', '/光遇地图')
-    ], [
-        BT_1('创建团队', '/创建团队'), BT_1('团队信息', '/团队信息'), BT_1('排行榜', '/光遇排行榜')
-    ], [
-        BT_2('设置昵称', '/设置昵称')
-    ]],
-    B: [[
-        BT_2('传送+地图名', '/传送')
-    ]]
-}
 
 if (!fs.existsSync(MFP)) SD(MFP, {
     遇境: [], 云巢: [],
@@ -140,11 +125,7 @@ export class SKY extends plugin {
 
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
         if (UD['LAST_DATE'] === getCurrentDate())
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 今日已签，请明日再来',
-                segment.at(UID),
-                Bot.Button(BUTTON_LIST['A'])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 '\n今日已签，请明日再来'
             ])
@@ -158,16 +139,7 @@ export class SKY extends plugin {
 
         SD(UF, UD)
 
-        return e.reply((e.adapter === 'QQBot') ? [
-            segment.at(UID),
-            '# 签到成功！',
-            '***',
-            `# 昵称: ${UD['GAME_NICKNAME']}`,
-            `> 光遇ID: ${UD['GAME_ID']}`,
-            `已累计签到 [${UD['ACCUMULATE']}] 天`,
-            `获得白蜡: ${CD['a']} | 季蜡：${CD['b']}`,
-            Bot.Button(BUTTON_LIST['A'])
-        ] : [
+        return e.reply([
             segment.at(UID),
             '\n签到成功！',
             `\n光遇ID: ${UD['GAME_ID']}`,
@@ -190,19 +162,7 @@ export class SKY extends plugin {
             GD = GD['NACKNAME']
         }
 
-        return e.reply((e.adapter === 'QQBot') ? [
-            segment.at(UID),
-            `# 玩家ID: ${UD['GAME_ID']}`,
-            '***',
-            `# 玩家昵称: ${UD['GAME_NICKNAME']}`,
-            `># 白蜡 [${UD['CURRENCY_1']}] 季蜡 [${UD['CURRENCY_2']}]`,
-            `># 爱心 [0] 红蜡 [0]`,
-            `最近签到日期: ${UD['LAST_DATE']}`,
-            `累签次数 [${UD['ACCUMULATE']}]`,
-            `所在位置 [${UD['LOCATION']}]`,
-            `模拟跑图状态 [${UD['SIMULATED_STATE']}]`,
-            Bot.Button(BUTTON_LIST['A'])
-        ] : [
+        return e.reply([
             segment.at(UID),
             `\n玩家ID: ${UD['GAME_ID']}`,
             '\n————————————————————',
@@ -229,16 +189,7 @@ export class SKY extends plugin {
         const S = TT['S']
 
         if (UD['SIMULATED_STATE'])
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 您当前已经在跑图了',
-                `> 已跑图[${H}]时[${M}]分[${S}]秒`,
-                segment.at(UID),
-                Bot.Button([[
-                    { label: '结束', callback: '/结束跑图' },
-                    { label: '状态', callback: '/跑图状态' },
-                    { label: '信息', callback: '/光遇信息' }
-                ]])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 `\n您当前已经在跑图了\n已跑图[${H}]时[${M}]分[${S}]秒`
             ])
@@ -248,15 +199,7 @@ export class SKY extends plugin {
 
         SD(UF, UD)
 
-        return e.reply((e.adapter === 'QQBot') ? [
-            '# 已开始模拟跑图',
-            `> 每分钟[${CD['d']}]白蜡 | 上限[${CD['c']}]白蜡`,
-            segment.at(UID),
-            Bot.Button([[
-                { label: '结束', callback: '/结束跑图' },
-                { label: '信息', callback: '/光遇信息' }
-            ]])
-        ] : [
+        return e.reply([
             segment.at(UID),
             `\n已开始模拟跑图\n每分钟[${CD['d']}]白蜡 | 上限[${CD['c']}]白蜡`
         ])
@@ -273,13 +216,7 @@ export class SKY extends plugin {
         const MAP_DATA = JSON.parse(fs.readFileSync(MFP, 'utf8'))
 
         if (!UD['SIMULATED_STATE'])
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 您当前并没有在跑图呢',
-                segment.at(UID),
-                Bot.Button([[
-                    { label: '跑图', callback: '/模拟跑图' }
-                ]])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 `\n您当前并没有在跑图呢`
             ])
@@ -306,17 +243,7 @@ export class SKY extends plugin {
         SD(MFP, MAP_DATA)
         SD(UF, UD)
 
-        return e.reply((e.adapter === 'QQBot') ? [
-            '# 已结束本次跑图',
-            `> 本次跑图抵达[${RM}]`,
-            `用时[${H}]时[${M}]分[${S}]秒`, T,
-            `获得白蜡[${GC1}]`,
-            segment.at(UID),
-            Bot.Button([[
-                { label: '信息', callback: '/光遇信息' },
-                { label: '跑图', callback: '/模拟跑图' }
-            ]])
-        ] : [
+        return e.reply([
             segment.at(UID),
             `\n已结束本次跑图\n本次跑图抵达[${RM}]\n用时[${H}]时[${M}]分[${S}]秒\n${T}获得白蜡[${GC1}]`
         ])
@@ -332,11 +259,7 @@ export class SKY extends plugin {
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
 
         if (!UD['SIMULATED_STATE'])
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 您当前并没有在跑图呢',
-                segment.at(UID),
-                Bot.Button([[{ label: '跑图', callback: '/模拟跑图' }]])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 `\n您当前并没有在跑图呢`
             ])
@@ -346,16 +269,7 @@ export class SKY extends plugin {
         const M = TIME_TAKEN['M']
         const S = TIME_TAKEN['S']
 
-        return e.reply((e.adapter === 'QQBot') ? [
-            '# 正在跑图中',
-            `> 已跑图[${H}]时[${M}]分[${S}]秒`,
-            `每分钟[${CD['d']}]白蜡 | 上限[${CD['c']}]白蜡`,
-            segment.at(UID),
-            Bot.Button([[
-                { label: '信息', callback: '/光遇信息' },
-                { label: '结束', callback: '/结束跑图' }
-            ]])
-        ] : [
+        return e.reply([
             segment.at(UID),
             `正在跑图中\n已跑图[${H}]时[${M}]分[${S}]秒\n每分钟[${CD['d']}]白蜡 | 上限[${CD['c']}]白蜡`
         ])
@@ -367,32 +281,24 @@ export class SKY extends plugin {
         // 先执行一遍这个
         addarray()
         const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
+        const UFP = `${AUFP}${UID}.json`
 
-        const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
+        const UD = JSON.parse(fs.readFileSync(UFP, 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(MFP, 'utf8'))
 
         const USER_LOCATION = UD['LOCATION']
         const LOCATION_NUMBER = MAP_DATA[USER_LOCATION].length - 1
-        const MAP_LISTS = ML.filter(item => item !== UD['LOCATION'])
+        const MAP_LISTS = MAP_LIST.filter(item => item !== UD['LOCATION'])
 
         let OTHER_LOCATION_NUMBER = []
         for (let i = 0; i < MAP_LISTS.length; i++) {
-            OTHER_LOCATION_NUMBER.push(MAP_LISTS[i] + '人数[' + MAP_DATA[MAP_LISTS[i]].length + ']')
-            if (e.adapter !== 'QQBot') OTHER_LOCATION_NUMBER.push('\n')
+            OTHER_LOCATION_NUMBER.push(` ${MAP_LISTS[i]} [${MAP_DATA[MAP_LISTS[i]].length}]人\r`)
         }
+        OTHER_LOCATION_NUMBER = OTHER_LOCATION_NUMBER.join('').slice(0, -1)
 
-        return e.reply((e.adapter === 'QQBot') ? [
-            `# 您当前在 [${USER_LOCATION}]`,
-            `> 与您在同一地图的玩家共有[${LOCATION_NUMBER}]位`,
-            '其他位置玩家人数',
-            ...OTHER_LOCATION_NUMBER,
+        return e.reply([
             segment.at(UID),
-            Bot.Button(BUTTON_LIST['B'])
-        ] : [
-            segment.at(UID),
-            `\n您当前在 [${USER_LOCATION}]\n与您在同一地图的玩家共有[${LOCATION_NUMBER}]位\n其他位置玩家人数\n`,
-            ...OTHER_LOCATION_NUMBER
+            `\n您所处 [${USER_LOCATION}]\n同一地图玩家数: ${LOCATION_NUMBER}\n其他位置玩家人数\n${OTHER_LOCATION_NUMBER}`,
         ])
     }
 
@@ -404,12 +310,7 @@ export class SKY extends plugin {
 
         const LOCATION = e.msg.match(REG_1)[2].replace(/\s/g, '');
         if (!ML.includes(LOCATION))
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 没有这个地图',
-                '> 您可以发送[光遇地图]查看可传送地图',
-                segment.at(UID),
-                Bot.Button(BUTTON_LIST['A'])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 '\n没有这个地图\n您可以发送[光遇地图]查看可传送地图'
             ])
@@ -418,32 +319,20 @@ export class SKY extends plugin {
         const MAP_DATA = JSON.parse(fs.readFileSync(MFP, 'utf8'))
 
         if (UD['SIMULATED_STATE'])
-            return e.reply((e.adapter === 'QQBot') ? [
-                '> 当前正在模拟跑图，无法传送！',
-                segment.at(UID),
-                Bot.Button(BUTTON_LIST['A'])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 '\n当前正在模拟跑图，无法传送！'
             ])
         const USER_LOCATION = UD['LOCATION']
         if (LOCATION === USER_LOCATION)
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 您已经在这个地图了',
-                '> 您可以发送[光遇地图]查看可传送地图',
-                segment.at(UID),
-                Bot.Button(BUTTON_LIST['A'])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 '\n您已经在这个地图了\n您可以发送[光遇地图]查看可传送地图'
             ])
 
         const TIME = _.random(2000, 6000)
 
-        e.reply((e.adapter === 'QQBot') ? [
-            '# 开始传送，请稍等',
-            '> ', segment.at(UID),
-        ] : [
+        e.reply([
             segment.at(UID),
             '\n开始传送，请稍等'
         ])
@@ -455,15 +344,7 @@ export class SKY extends plugin {
         SD(MFP, MAP_DATA)
 
         setTimeout(function () {
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 传送成功！',
-                `> 您已抵达[${LOCATION}]`,
-                `耗时[${(TIME / 1000).toFixed(2)}]秒`,
-                segment.at(UID),
-                Bot.Button([[
-                    { label: '查看玩家', callback: '/查看玩家' }
-                ]])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 `\n传送成功！\n您已抵达[${LOCATION}]\n耗时[${(TIME / 1000).toFixed(2)}]秒`
             ])
@@ -483,15 +364,7 @@ export class SKY extends plugin {
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
         if (/^(昵称|名称)/.test(SETTINGS)) {
             if (SETTINGS_CONTENT.length < 2 || SETTINGS_CONTENT.length > 12)
-                return e.reply((e.adapter === 'QQBot') ? [
-                    '# 设置失败！',
-                    '> 昵称长度小于2位或大于12位',
-                    '请重新设置',
-                    segment.at(UID),
-                    Bot.Button([[
-                        { label: `重新设置`, data: `设置昵称:${SETTINGS_CONTENT}` }
-                    ]])
-                ] : [
+                return e.reply([
                     segment.at(UID),
                     `\n设置失败！\n昵称长度小于2位或大于12位\n请重新设置`
                 ])
@@ -499,11 +372,7 @@ export class SKY extends plugin {
             UD['GAME_NICKNAME'] = SETTINGS_CONTENT
             SD(UF, UD)
 
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 设置成功',
-                `> 您的新昵称[${SETTINGS_CONTENT}]`,
-                segment.at(UID)
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 `\n设置成功！\n您的新昵称[${SETTINGS_CONTENT}]`
             ])
@@ -511,24 +380,14 @@ export class SKY extends plugin {
             const GROUP_FILE = AGFP + UD['GROUP'] + '.json'
 
             if (UD['GROUP'] === '') // 无团队
-                return e.reply((e.adapter === 'QQBot') ? [
-                    '# 您尚未创建团队',
-                    '> ', segment.at(UID),
-                    Bot.Button([[{ lanel: '创建团队' }]])
-                ] : [
+                return e.reply([
                     segment.at(UID),
                     '\n您尚未创建团队'
                 ])
 
 
             if (SETTINGS_CONTENT.length < 2 || SETTINGS_CONTENT.length > 8)
-                return e.reply((e.adapter === 'QQBot') ? [
-                    '# 设置失败！',
-                    '> 长度小于2位或大于8位',
-                    '请重新设置',
-                    segment.at(UID),
-                    Bot.Button([[{ callback: '重新设置', data: `设置团队昵称:${SETTINGS_CONTENT}` }]])
-                ] : [
+                return e.reply([
                     segment.at(UID),
                     `\n设置失败！\n长度小于2位或大于8位\n请重新设置`
                 ])
@@ -536,11 +395,7 @@ export class SKY extends plugin {
             const GROUP_DATA = JSON.parse(fs.readFileSync(GROUP_FILE, 'utf8'))
 
             if (GROUP_DATA['LEADER'] !== UID)
-                return e.reply((e.adapter === 'QQBot') ? [
-                    '# 您不是团长！',
-                    '> 无法设置团名',
-                    segment.at(UID),
-                ] : [
+                return e.reply([
                     segment.at(UID),
                     '\n您不是团长！\n无法设置团名'
                 ])
@@ -548,11 +403,7 @@ export class SKY extends plugin {
             GROUP_DATA['NACKNAME'] = SETTINGS_CONTENT
             SD(GROUP_FILE, GROUP_DATA)
 
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 设置成功',
-                `> 团队新昵称[${SETTINGS_CONTENT}]`,
-                segment.at(UID)
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 `\n设置成功！\n团队新昵称[${SETTINGS_CONTENT}]`
             ])
@@ -567,22 +418,13 @@ export class SKY extends plugin {
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
 
         if (UD['CURRENCY_1'] < 10000 && UD['CURRENCY_2'] < 320)
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 资金不足！',
-                '> 需要白蜡[10000] | 季蜡[320]',
-                segment.at(UID)
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 '\n资金不足！\n需要白蜡[10000] | 季蜡[320]'
             ])
 
         if (UD['GROUP'] !== '')
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 您已经有团队了',
-                '> 请先退出再建立团队',
-                segment.at(UID),
-                Bot.Button([[{ label: '退出团队' }]])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 '您已经有团了\n请先退出再建立团队'
             ])
@@ -604,13 +446,7 @@ export class SKY extends plugin {
             CONTRIBUTIONS_LEVEL: 0 // 贡献池等级
         })
 
-        return e.reply((e.adapter === 'QQBot') ? [
-            '# 创建成功！',
-            `> 团队编号[${GROUP_NUMBER}]`,
-            `团队昵称[未命名团队${GROUP_NUMBER}]`,
-            segment.at(UID),
-            Bot.Button([[{ label: '设置团队昵称', data: '设置团队昵称' }]])
-        ] : [
+        return e.reply([
             segment.at(UID),
             `\n创建成功！\n团队编号[${GROUP_NUMBER}]\n团队昵称[未命名团队${GROUP_NUMBER}]\n可用指令[设置团队昵称:(名称)]来设置名称`
         ])
@@ -622,10 +458,7 @@ export class SKY extends plugin {
         const UID = e.user_id
         const UD = JSON.parse(fs.readFileSync(`${AUFP}${UID}.json`, 'utf8'))
 
-        if (UD['GROUP'] === '') return e.reply((e.adapter === 'QQBot') ? [
-            '# 您尚未加入(或创建)团队',
-            '> ', segment.at(UID)
-        ] : [
+        if (UD['GROUP'] === '') return e.reply([
             segment.at(UID),
             '\n您尚未加入(或创建)团队'
         ])
@@ -638,13 +471,7 @@ export class SKY extends plugin {
             LEADER_NICKNAME = LEADER_DATA['GAME_NICKNAME']
         }
 
-        return e.reply((e.adapter === 'QQBot') ? [
-            `# [${GROUP_DATA['GROUP_ID']}]${GROUP_DATA['NACKNAME']}`,
-            `团长 [${LEADER_NICKNAME}]`,
-            `团队成员数量 [${GROUP_DATA['MEMBERS'].length}]位`,
-            `贡献池数量 [${GROUP_DATA['CONTRIBUTIONS_POOL']}] | 等级 [${GROUP_DATA['CONTRIBUTIONS_LEVEL']}]`,
-            segment.at(UID)
-        ] : [
+        return e.reply([
             segment.at(UID),
             `\n[${GROUP_DATA['GROUP_ID']}]${GROUP_DATA['NACKNAME']}`,
             `\n团长 [${LEADER_NICKNAME}]`,
@@ -670,11 +497,7 @@ export class SKY extends plugin {
                 if (e.adapter !== 'QQBot') REPLY_ARRAY.push('\n')
             }
 
-            return e.reply((e.adapter === 'QQBot') ? [
-                '# 附近玩家(最高展示十位)',
-                '> ', ...REPLY_ARRAY,
-                Bot.Button([[{ label: '查看玩家+序号', data: '查看玩家1' }]])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 '\n附近玩家(最高展示十位)\n',
                 ...REPLY_ARRAY
@@ -683,10 +506,7 @@ export class SKY extends plugin {
             const SERIAL_NUMBER = parseInt(e.msg.replace(/#|\/|查看玩家/, '').replace(/\s/g, '')) - 1
 
             if (typeof SERIAL_NUMBER !== 'number' && isNaN(SERIAL_NUMBER))
-                return e.reply((e.adapter === 'QQBot') ? [
-                    '# 请输入纯数字！',
-                    '> ', segment.at(UID)
-                ] : [
+                return e.reply([
                     segment.at(UID),
                     '请输入纯数字！'
                 ])
@@ -699,17 +519,7 @@ export class SKY extends plugin {
                 GROUP_DATA = GROUP_DATA['NACKNAME']
             }
 
-            return e.reply((e.adapter === 'QQBot') ? [
-                `# [${QUERYING_USER_DATA['GAME_ID']}]${QUERYING_USER_DATA['GAME_NICKNAME']}`,
-                `> 最近签到日期 [${QUERYING_USER_DATA['LAST_DATE']}]`,
-                `累计签到次数 [${QUERYING_USER_DATA['ACCUMULATE']}]`,
-                `所在位置 [${QUERYING_USER_DATA['LOCATION']}]`,
-                `白蜡 [${QUERYING_USER_DATA['CURRENCY_1']}] | 季蜡 [${QUERYING_USER_DATA['CURRENCY_2']}]`,
-                `模拟跑图状态 [${QUERYING_USER_DATA['SIMULATED_STATE']}]`,
-                `团队 [${GROUP_DATA}]`,
-                segment.at(UID),
-                Bot.Button(BUTTON_LIST['A'])
-            ] : [
+            return e.reply([
                 segment.at(UID),
                 `\n[${QUERYING_USER_DATA['GAME_ID']}]${QUERYING_USER_DATA['GAME_NICKNAME']}`,
                 `\n最近签到日期 [${QUERYING_USER_DATA['LAST_DATE']}]`,
@@ -751,7 +561,7 @@ export class SKY extends plugin {
         const C1SR = C1.map((item, index) => `># No.${index + 1} ➠➠ID: ${item.UD_GID}\n白蜡[${item.UD_C1}]\n`);
         const C2SR = C2.map((item, index) => `># No.${index + 1} ➠➠ID: ${item.UD_GID}\n季蜡[${item.UD_C2}]\n`);
 
-        const RT = e.msg.match(/^(#|\/)?(白蜡|季蜡)排行榜$/)[2]
+        const RT = e.msg.match(/^(#|\/)?(白蜡|季蜡|光遇)排行榜$/)[2]
         if (RT === '光遇') return e.reply([
             '> 选择排行榜查看',
             Bot.Button([[{ label: '白蜡', callback: '白蜡排行榜' }, { label: '季蜡', callback: '季蜡排行榜' }]])
@@ -788,12 +598,7 @@ function GCD() {
 function IEU(e) {
     const UID = e.user_id
     if (!fs.existsSync(`${AUFP}${UID}.json`)) {
-        e.reply((e.adapter === 'QQBot') ? [
-            '# 没有您的用户信息',
-            '> 请先发送[光遇签到]创建',
-            segment.at(UID),
-            Bot.Button([[{ label: '光遇签到' }]])
-        ] : [
+        e.reply([
             segment.at(UID),
             '\n没有您的用户信息，请先发送[光遇签到]创建'
         ])
@@ -844,17 +649,8 @@ function addarray() {
 }
 
 function FR(e, RT, RD) {
-    return e.reply((e.adapter === 'QQBot') ? [
-        `# ${RT}排行榜`,
-        ...RD
-    ] : [
+    return e.reply([
         `${RT}排行榜\n`,
         ...RD
     ]);
-}
-function BT_1(L, C) {
-    return { label: L, callback: C }
-}
-function BT_2(L, D) {
-    return { label: L, data: D }
 }
