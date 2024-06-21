@@ -1,3 +1,9 @@
+<!-- 
+ 原作者: [@cooltea](https://blog.csdn.net/apple_54470279?type=blog)
+ 第一次改版：[@Tloml-Starry])(https://gitee.com/Tloml-Starry)
+ 第二次改版：[小i](QQ: 3446914493)
+  -->
+
 <head>
     <meta charset="UTF-8">
     <title>简单日历效果</title>
@@ -19,60 +25,44 @@
         }
 
         body {
-            background-color: rgb(236, 195, 202);
-        }
-
-        .cal-container .year-month>div:first-child>span,
-        .cal-container .year-month .pre,
-        .cal-container .year-month .next,
-        .cal-container .weeks>ul>li,
-        .cal-container .days>ul .style-default {
-            cursor: pointer;
-        }
-
-        .cal-container .year-month .pre:hover,
-        .cal-container .year-month .next:hover,
-        .cal-container .weeks>ul>li:hover {
-            text-shadow: 2px 2px 2px rgb(121, 121, 121);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .cal-container {
             display: flex;
             flex-direction: column;
-            position: absolute;
-            top: 5%;
-            left: 50%;
             width: 600px;
-            margin-left: -300px;
-            box-shadow: 7px 7px 7px rgb(112, 112, 112);
-            background-color: aquamarine;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            background-color: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
         }
 
         .cal-container .year-month {
             position: relative;
             width: 100%;
-            height: 250px;
-            background-color: rgb(107, 215, 168);
-        }
-
-        .cal-container .year-month>div:first-child {
+            height: 200px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            /* 修改为蓝粉色渐变色 */
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
             display: flex;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200px;
-            height: 70px;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            letter-spacing: 3px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .cal-container .year-month>div:first-child>span {
             display: block;
             margin-bottom: 5px;
             font-weight: 700;
-            color: white;
         }
 
         .cal-container .year-month>div:first-child>span:first-child {
@@ -92,10 +82,21 @@
             margin: 0 20px;
             font-size: 40px;
             color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .cal-container .year-month .pre {
+            left: 20px;
         }
 
         .cal-container .year-month .next {
-            right: 0;
+            right: 20px;
+        }
+
+        .cal-container .year-month .pre:hover,
+        .cal-container .year-month .next:hover {
+            transform: translateY(-20px) scale(1.2);
         }
 
         .cal-container .weeks>ul,
@@ -105,19 +106,23 @@
             flex-wrap: wrap;
             width: 100%;
             padding: 0 2.5px;
-            background-color: rgb(202, 202, 202);
+            background-color: #f8f9fa;
         }
 
         .cal-container .days>ul {
             padding: 20px 0;
-            background-color: rgb(225, 225, 225);
+            background-color: #e9ecef;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.5);
         }
 
         .cal-container .weeks>ul>li {
             width: 85px;
             font-size: 20px;
             font-weight: 700;
-            color: rgb(75, 75, 75);
+            color: #343a40;
             text-align: center;
             line-height: 50px;
         }
@@ -128,25 +133,31 @@
             margin: 0 17.5px;
             font-size: 20px;
             font-weight: 700;
-            color: rgb(75, 75, 75);
+            color: #343a40;
             text-align: center;
             line-height: 50px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
         .days>ul .style-default:hover {
-            background-color: rgb(202, 202, 202);
+            background-color: #dee2e6;
+            transform: scale(1.1);
         }
 
         .cal-container .days>ul .bg-style {
-            background-color: rgb(107, 215, 168);
+            background-color: #ff6a00;
+            color: white;
         }
 
         .cal-container .days>ul .bgg-style {
-            background-color: rgb(243, 104, 104);
+            background-color: #ff0000;
+            color: white;
         }
 
         .cal-container .days>ul .bggg-style {
-            background-color: rgb(126, 126, 126);
+            background-color: #6c757d;
+            color: white;
         }
 
         .no-style {
@@ -162,7 +173,10 @@
         <div class="year-month">
             <div>
                 <span id="month"></span>
-                <span id="year"></span>
+                <span id="year" style="position: relative;position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) translateY(120%);"></span>
             </div>
             <div class="pre" id="pre-month">&lt;</div>
             <div class="next" id="next-month">&gt;</div>
@@ -183,27 +197,21 @@
         </div>
     </div>
     <script>
-        // 获取年月日和星期几
         let date = new Date();
         Y = date.getFullYear();
         M = date.getMonth();
         W = date.getDay();
         D = date.getDate();
-        isSelect = true;    //true为选择了月，false为选择了年（添加文本阴影）
+        isSelect = true;
 
-        // 更新当前年
         let yearNow = document.getElementById("year");
         yearNow.innerHTML = Y;
-        // 更新当前月
         let monthNow = document.getElementById("month");
         monthNow.innerHTML = monthAndMaxDay(Y, M)[0];
-        // 判断选中年还是月（添加文本阴影）
         selected(isSelect);
-        //更新当前日
         let days = document.getElementById("day");
         updateAllDays(Y, M);
 
-        // 选择按月切换还是按年切换
         yearNow.addEventListener("click", function () {
             isSelect = false
             selected(isSelect);
@@ -213,36 +221,34 @@
             selected(isSelect);
         });
 
-        // 左右切换日期
         let previous = document.getElementById("pre-month");
         previous.addEventListener("click", function () { changePage(true); });
         let next = document.getElementById("next-month");
         next.addEventListener("click", function () { changePage(false); });
 
-        // 查询一个月对应的英文命名和最大天数
         function monthAndMaxDay(year, month) {
             let month_now = "";
-            let maxDay = 0;     // 一个月的最大天数
+            let maxDay = 0;
             switch (month + 1) {
-                case 1: month_now = "一月碎石"; maxDay = 31; break;
+                case 1: month_now = "一月碎石日历"; maxDay = 31; break;
                 case 2:
-                    month_now = "二月碎石";
+                    month_now = "二月碎石日历";
                     if (year % 4 == 0) {
                         maxDay = 29;
                     } else {
                         maxDay = 28;
                     }
                     break;
-                case 3: month_now = "三月碎石"; maxDay = 31; break;
-                case 4: month_now = "四月碎石"; maxDay = 30; break;
-                case 5: month_now = "五月碎石"; maxDay = 31; break;
-                case 6: month_now = "六月碎石"; maxDay = 30; break;
-                case 7: month_now = "七月碎石"; maxDay = 31; break;
-                case 8: month_now = "八月碎石"; maxDay = 31; break;
-                case 9: month_now = "九月碎石"; maxDay = 30; break;
-                case 10: month_now = "十月碎石"; maxDay = 31; break;
-                case 11: month_now = "十一月碎石"; maxDay = 30; break;
-                case 12: month_now = "十二月碎石"; maxDay = 31; break;
+                case 3: month_now = "三月碎石日历"; maxDay = 31; break;
+                case 4: month_now = "四月碎石日历"; maxDay = 30; break;
+                case 5: month_now = "五月碎石日历"; maxDay = 31; break;
+                case 6: month_now = "六月碎石日历"; maxDay = 30; break;
+                case 7: month_now = "七月碎石日历"; maxDay = 31; break;
+                case 8: month_now = "八月碎石日历"; maxDay = 31; break;
+                case 9: month_now = "九月碎石日历"; maxDay = 30; break;
+                case 10: month_now = "十月碎石日历"; maxDay = 31; break;
+                case 11: month_now = "十一月碎石日历"; maxDay = 30; break;
+                case 12: month_now = "十二月碎石日历"; maxDay = 31; break;
                 default: month = "";
             }
             return [month_now, maxDay];
@@ -279,12 +285,10 @@
             ]]
         }
 
-        // 更新当前月的所有天数
         function updateAllDays(year, month) {
             let offset = new Date(year, month, 0).getDay();
             let maxDay = monthAndMaxDay(year, month)[1];
 
-            // 实现日期和星期对应
             for (let i = 0; i < offset; i++) {
                 let day = document.createElement("li");
                 day.className = "no-style";
@@ -296,7 +300,6 @@
                 let dateNow = new Date();
                 const RED = getStoneDate(year, month + 1)[0]
                 const BLACK = getStoneDate(year, month + 1)[1]
-                // 当前日期有绿色背景
                 if (year == dateNow.getFullYear() && month == dateNow.getMonth() && i == dateNow.getDate()) {
                     day.className = "style-default bg-style"
                 } else {
@@ -314,22 +317,18 @@
             }
         }
 
-        // 选择按月切换还是按年切换
         function selected(boolean) {
             if (boolean) {
-                monthNow.style.textShadow = "2px 2px 2px rgb(121, 121, 121)";
+                monthNow.style.textShadow = "2px 2px 2px rgba(0, 0, 0, 0.2)";
                 yearNow.style.textShadow = "none";
             } else {
                 monthNow.style.textShadow = "none";
-                yearNow.style.textShadow = "2px 2px 2px rgb(121, 121, 121)";
+                yearNow.style.textShadow = "2px 2px 2px rgba(0, 0, 0, 0.2)";
             }
         }
 
-        // 点击切换事件
         function changePage(boolean) {
-            // 按年切换还是按月切换
             if (isSelect) {
-                // 向前切换还是向后切换
                 if (boolean) {
                     M = M - 1;
                     if (M == -1) {
@@ -338,7 +337,7 @@
                     }
                 } else {
                     M = M + 1;
-                    if (M == 11) {
+                    if (M == 12) {
                         Y++;
                         M = 0;
                     }
@@ -352,9 +351,7 @@
             }
             yearNow.innerHTML = Y;
             monthNow.innerHTML = monthAndMaxDay(Y, M)[0];
-            // 清空一个月所有天数
             days.innerHTML = "";
-            // 重新添加一个月所有天数
             updateAllDays(Y, M);
         }
     </script>
