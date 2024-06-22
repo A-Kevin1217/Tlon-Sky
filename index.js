@@ -2,9 +2,8 @@
  * 插件名[Tlon-Sky](https://gitee.com/Tloml-Starry/Tlon-Sky)
  * 由[Tloml-Starry](https://gitee.com/Tloml-Starry)于2023-01-15开始编写
  */
-import fs from 'node:fs'; import fetch from "node-fetch"
+import fs from 'node:fs';
 ['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
-if (!global.segment) global.segment = (await import("oicq")).segment
 
 const file = [
   ...fs.readdirSync('./plugins/Tlon-Sky/apps')
@@ -12,7 +11,7 @@ const file = [
 
 let ret = []
 
-logger.info(`「Sky登录中...」`)
+logger.info('Sky载入中...')
 
 file.forEach((file) => { ret.push(import(`./apps/${file}`)) })
 
@@ -31,11 +30,4 @@ for (let i in file) {
   apps[name] = ret[i].value[Object.keys(ret[i].value)[0]]
 }
 export { apps }
-
-const PD = JSON.parse(fs.readFileSync('plugins/Tlon-Sky/p.json', 'utf8'))
-const UD = await (await fetch('https://gitee.com/Tloml-Starry/Tlon-Sky/raw/master/p.json')).json()
-
-let T = ''
-if (PD['version'] !== UD['version']) T = '，当前不是最新版本，记得及时更新呦~'
-
-logger.mark(`Tlon-Sky插件载入成功！当前版本：${PD['version']}${T}`)
+logger.mark('Sky插件载入成功')
