@@ -5,6 +5,11 @@
 import fs from 'node:fs';
 ['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
 
+global.SKY_IMAGE_URL = {
+  A: "https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/",
+  B: "https://api.t1qq.com/api/sky/gy/sc/"
+};
+
 const file = [
   ...fs.readdirSync('./plugins/Tlon-Sky/apps')
 ].filter(file => file.endsWith('.js'));

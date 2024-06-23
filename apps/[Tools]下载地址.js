@@ -28,12 +28,12 @@ export class SKY extends plugin {
             rule: [
                 {
                     reg: /^(#|\/)?(光遇下载(链接)?|下载光遇)$/,
-                    fnc: 'DOWNLOAD_LINK'
+                    fnc: 'F1'
                 }
             ]
         })
     }
-    async DOWNLOAD_LINK(e) {
+    async F1(e) {
         let REPLY = []
         if (e.adapter === 'QQBot') {
             REPLY = [
