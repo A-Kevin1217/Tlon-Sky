@@ -38,7 +38,7 @@ export class SKY extends plugin {
       if (U_MSG === '重组') U_MSG = '集结'
       if (U_MSG === '凌冬') U_MSG = '音韵'
       U_MSG = U_MSG + '季'
-    } else if (/复刻|国服复刻/.text(U_MSG) || U_MSG === '节') {
+    } else if (/^(复刻|国服复刻)$/.text(U_MSG) || U_MSG === '节') {
       TYPE = '当前'
       U_MSG = '当前复刻'
       if (U_MSG === '季节') U_MSG = '当前季节兑换图'
