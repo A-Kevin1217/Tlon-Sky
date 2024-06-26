@@ -11,14 +11,20 @@ global.SKY_IMAGE_URL = {
 };
 
 const file = [
-  ...fs.readdirSync('./plugins/Tlon-Sky/apps')
+  ...fs.readdirSync('./plugins/Tlon-Sky/apps'),
+  ...fs.readdirSync('./plugins/Tlon-Sky/apps/Game')
 ].filter(file => file.endsWith('.js'));
 
 let ret = []
 
 logger.info('Sky载入中...')
 
-file.forEach((file) => { ret.push(import(`./apps/${file}`)) })
+file.forEach((file) => {
+  ret.push(import(`./apps/${file}`))
+  ret.push(import('./apps/Game/SkyGame.js'))
+  ret.push(import('./apps/Game/Info.js'))
+  ret.push(import('./apps/Game/SignUp.js'))
+})
 
 ret = await Promise.allSettled(ret)
 

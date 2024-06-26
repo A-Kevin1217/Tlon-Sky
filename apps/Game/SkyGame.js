@@ -2,16 +2,15 @@ import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
 
-/** 用户文件位置 */
-const AUFP = 'plugins/Tlon-Sky/data/USER/';
-/** 团队文件位置 */
-const AGFP = 'plugins/Tlon-Sky/data/GROUP/';
-/** 配置文件位置 */
-const CFP = 'plugins/Tlon-Sky/config/config.json';
-/** 地图文件位置 */
-const MFP = 'plugins/Tlon-Sky/data/map.json';
+const __dirname = path.resolve() + path.sep + "plugins" + path.sep + "Tlon-Sky";
+export const SKY_PATH = {
+    user: `${__dirname}/data/USER/`,
+    group: `${__dirname}/data/GROUP`,
+    config: `${__dirname}/config/config.json`,
+    map: `${__dirname}/data/map.json`
+}
 /** 地图列表 */
-const ML = [
+const mapList = [
     '遇境', '云巢',
     '晨岛', '预言山谷', '夜行石',
     '云野', '圣岛', '云峰',
@@ -22,7 +21,7 @@ const ML = [
     '伊甸'
 ];
 
-if (!fs.existsSync(MFP)) SD(MFP, {
+if (!fs.existsSync(SKY_PATH['map'])) SD(SKY_PATH['map'], {
     遇境: [], 云巢: [],
     晨岛: [], 预言山谷: [], 夜行石: [],
     云野: [], 圣岛: [], 云峰: [],
@@ -32,9 +31,9 @@ if (!fs.existsSync(MFP)) SD(MFP, {
     禁阁: [], 办公室: [], 星光沙漠: [], 庇护所: [], 月牙绿洲: [],
     伊甸: []
 });
-if (!fs.existsSync(CFP)) SD(CFP, { a: 20, b: 5, c: 60, d: 1 });
+if (!fs.existsSync(SKY_PATH['config'])) SD(SKY_PATH['config'], { a: 20, b: 5, c: 60, d: 1 });
 /** 
-fs.readdir(AUFP, (err, files) => {
+fs.readdir(SKY_PATH['user'], (err, files) => {
     if (err) {
         logger.error('读取文件夹错误:', err);
         return;
@@ -42,7 +41,7 @@ fs.readdir(AUFP, (err, files) => {
 
     files.forEach(file => {
         if (path.extname(file) === '.json') {
-            const filePath = path.join(AUFP, file);
+            const filePath = path.join(SKY_PATH['user'], file);
             fs.readFile(filePath, 'utf8', (err, data) => {
                 if (err) {
                     logger.error('读取文件错误:', err);
@@ -77,8 +76,6 @@ export class SKY extends plugin {
             event: 'message',
             priority: 1,
             rule: [
-                { reg: /^(#|\/)?光遇签到$/, fnc: 'F_1' },
-                { reg: /^(#|\/)?光遇信息$/, fnc: 'F_2' },
                 { reg: /^(#|\/)?模拟跑图$/, fnc: 'F_3' },
                 { reg: /^(#|\/)?结束跑图$/, fnc: 'F_4' },
                 { reg: /^(#|\/)?跑图状态$/, fnc: 'F_5' },
@@ -92,93 +89,11 @@ export class SKY extends plugin {
             ]
         })
     }
-
-    /** 光遇签到 */
-    async F_1(e) {
-        const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
-        const UN = fs.readdirSync(AUFP).length
-
-        if (!fs.existsSync(UF)) {
-            const MD = JSON.parse(fs.readFileSync(MFP, 'utf8'))
-            MD['遇境'].push(UID)
-            SD(MFP, MD)
-            SD(UF, {
-                ID: UID, // 用户ID
-                GAME_ID: UN, // 游戏ID
-                GAME_NICKNAME: `光崽${UN}号`, // 游戏昵称
-                LAST_DATE: '2024-01-01', // 最近签到日期
-                LOCATION: '遇境', // 所在地图
-                ACCUMULATE: 0, // 累计签到次数
-                SACRIFICE: 0, // 献祭次数
-                LEVEL: 0, // 光翼
-                CURRENCY_1: 0, // 白蜡
-                CURRENCY_2: 0, // 季蜡
-                CURRENCY_3: 0, // 心
-                CURRENCY_4: 0, // 红蜡
-                SIMULATED_STATE: false, // 模拟跑图状态
-                TIMESTAMP: Date.now(), // 模拟跑图时间戳
-                GROUP: '' // 团队编号
-            })
-        }
-
-
-        const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
-        if (UD['LAST_DATE'] === getCurrentDate())
-            return e.reply([
-                segment.at(UID),
-                '\n今日已签，请明日再来'
-            ])
-
-
-        const CD = GCD()
-        UD['CURRENCY_1'] += CD['a']
-        UD['CURRENCY_2'] += CD['b']
-        UD['LAST_DATE'] = getCurrentDate()
-        UD['ACCUMULATE'] += 1
-
-        SD(UF, UD)
-
-        return e.reply([
-            segment.at(UID),
-            '\n签到成功！',
-            `\n光遇ID: ${UD['GAME_ID']}`,
-            `\n已累计签到 [${UD['ACCUMULATE']}] 天`,
-            `\n获得白蜡: ${CD['a']} | 季蜡：${CD['b']}`
-        ])
-    }
-
-    /** 光遇信息 */
-    async F_2(e) {
-        if (!IEU(e)) return
-        const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
-
-        const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
-
-        let GD = '暂未加入团队'
-        if (UD['GROUP'] !== '') {
-            GD = JSON.parse(fs.readFileSync(`${AGFP}${UD['GROUP']}.json`, 'utf8'))
-            GD = GD['NACKNAME']
-        }
-
-        return e.reply([
-            segment.at(UID),
-            `\n玩家ID: ${UD['GAME_ID']}`,
-            '\n————————————————————',
-            `\n玩家昵称: ${UD['GAME_NICKNAME']}`,
-            `\n白蜡 [${UD['CURRENCY_1']}] 季蜡 [${UD['CURRENCY_2']}]`,
-            `\n爱心 [0] 红蜡 [0]`,
-            `\n最近签到日期: ${UD['LAST_DATE']}\n累签次数 [${UD['ACCUMULATE']}]`,
-            `\n所在位置 [${UD['LOCATION']}]\n模拟跑图状态 [${UD['SIMULATED_STATE']}]`,
-        ])
-    }
-
     /** 模拟跑图 */
     async F_3(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
+        const UF = `${SKY_PATH['user']}${UID}.json`
         const CD = GCD()
 
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
@@ -209,11 +124,11 @@ export class SKY extends plugin {
     async F_4(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
+        const UF = `${SKY_PATH['user']}${UID}.json`
         const CD = GCD()
 
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
-        const MAP_DATA = JSON.parse(fs.readFileSync(MFP, 'utf8'))
+        const MAP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['map'], 'utf8'))
 
         if (!UD['SIMULATED_STATE'])
             return e.reply([
@@ -222,7 +137,7 @@ export class SKY extends plugin {
             ])
 
         const TT = GTT(UD['TIMESTAMP'])
-        const RM = ML[Math.floor(Math.random() * ML.length)]
+        const RM = mapList[Math.floor(Math.random() * mapList.length)]
         const UL = UD['LOCATION']
         const H = TT['H']
         const M = TT['M']
@@ -240,7 +155,7 @@ export class SKY extends plugin {
         UD['LOCATION'] = RM
         MAP_DATA[UL] = MAP_DATA[UL].filter(item => item !== UD['ID'])
         MAP_DATA[RM].push(UD['ID'])
-        SD(MFP, MAP_DATA)
+        SD(SKY_PATH['map'], MAP_DATA)
         SD(UF, UD)
 
         return e.reply([
@@ -253,7 +168,7 @@ export class SKY extends plugin {
     async F_5(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
+        const UF = `${SKY_PATH['user']}${UID}.json`
         const CD = GCD()
 
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
@@ -281,10 +196,10 @@ export class SKY extends plugin {
         // 先执行一遍这个
         addarray()
         const UID = e.user_id
-        const UFP = `${AUFP}${UID}.json`
+        const UFP = `${SKY_PATH['user']}${UID}.json`
 
         const UD = JSON.parse(fs.readFileSync(UFP, 'utf8'))
-        const MAP_DATA = JSON.parse(fs.readFileSync(MFP, 'utf8'))
+        const MAP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['map'], 'utf8'))
 
         const USER_LOCATION = UD['LOCATION']
         const LOCATION_NUMBER = MAP_DATA[USER_LOCATION].length - 1
@@ -306,17 +221,17 @@ export class SKY extends plugin {
     async F_7(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
+        const UF = `${SKY_PATH['user']}${UID}.json`
 
         const LOCATION = e.msg.match(REG_1)[2].replace(/\s/g, '');
-        if (!ML.includes(LOCATION))
+        if (!mapList.includes(LOCATION))
             return e.reply([
                 segment.at(UID),
                 '\n没有这个地图\n您可以发送[光遇地图]查看可传送地图'
             ])
 
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
-        const MAP_DATA = JSON.parse(fs.readFileSync(MFP, 'utf8'))
+        const MAP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['map'], 'utf8'))
 
         if (UD['SIMULATED_STATE'])
             return e.reply([
@@ -341,7 +256,7 @@ export class SKY extends plugin {
         MAP_DATA[USER_LOCATION] = MAP_DATA[USER_LOCATION].filter(item => item !== UD['ID'])
         MAP_DATA[LOCATION].push(UD['ID'])
         SD(UF, UD)
-        SD(MFP, MAP_DATA)
+        SD(SKY_PATH['map'], MAP_DATA)
 
         setTimeout(function () {
             return e.reply([
@@ -355,7 +270,7 @@ export class SKY extends plugin {
     async F_8(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
+        const UF = `${SKY_PATH['user']}${UID}.json`
 
         const MATCH = e.msg.match(REG_2)
         const SETTINGS = MATCH[2]
@@ -377,7 +292,7 @@ export class SKY extends plugin {
                 `\n设置成功！\n您的新昵称[${SETTINGS_CONTENT}]`
             ])
         } else if (/^团队(昵称|名称)/.test(SETTINGS)) {
-            const GROUP_FILE = AGFP + UD['GROUP'] + '.json'
+            const GROUP_FILE = SKY_PATH['group'] + UD['GROUP'] + '.json'
 
             if (UD['GROUP'] === '') // 无团队
                 return e.reply([
@@ -414,7 +329,7 @@ export class SKY extends plugin {
     async F_9(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${AUFP}${UID}.json`
+        const UF = `${SKY_PATH['user']}${UID}.json`
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
 
         if (UD['CURRENCY_1'] < 10000 && UD['CURRENCY_2'] < 320)
@@ -429,8 +344,8 @@ export class SKY extends plugin {
                 '您已经有团了\n请先退出再建立团队'
             ])
 
-        const GROUP_FILE = AGFP + UID + '.json'
-        const GROUP_NUMBER = (fs.readdirSync(AGFP).length) + 1
+        const GROUP_FILE = SKY_PATH['group'] + UID + '.json'
+        const GROUP_NUMBER = (fs.readdirSync(SKY_PATH['group']).length) + 1
 
         UD['CURRENCY_1'] -= 10000
         UD['CURRENCY_2'] -= 320
@@ -456,18 +371,18 @@ export class SKY extends plugin {
     async F_10(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UD = JSON.parse(fs.readFileSync(`${AUFP}${UID}.json`, 'utf8'))
+        const UD = JSON.parse(fs.readFileSync(`${SKY_PATH['user']}${UID}.json`, 'utf8'))
 
         if (UD['GROUP'] === '') return e.reply([
             segment.at(UID),
             '\n您尚未加入(或创建)团队'
         ])
 
-        const GROUP_DATA = JSON.parse(fs.readFileSync(AGFP + UD['GROUP'] + '.json', 'utf8'))
+        const GROUP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['group'] + UD['GROUP'] + '.json', 'utf8'))
 
         let LEADER_NICKNAME = UD['GAME_NICKNAME']
         if (GROUP_DATA['LEADER'] !== UID) {
-            const LEADER_DATA = JSON.parse(fs.readFileSync(AUFP + GROUP_DATA['LEADER'] + '.json', 'utf8'))
+            const LEADER_DATA = JSON.parse(fs.readFileSync(SKY_PATH['user'] + GROUP_DATA['LEADER'] + '.json', 'utf8'))
             LEADER_NICKNAME = LEADER_DATA['GAME_NICKNAME']
         }
 
@@ -484,15 +399,15 @@ export class SKY extends plugin {
     async F_11(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UD = JSON.parse(fs.readFileSync(`${AUFP}${UID}.json`, 'utf8'))
-        const MAP_DATA = JSON.parse(fs.readFileSync(MFP, 'utf8'))
+        const UD = JSON.parse(fs.readFileSync(`${SKY_PATH['user']}${UID}.json`, 'utf8'))
+        const MAP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['map'], 'utf8'))
         const NEARBY_USER = MAP_DATA[UD['LOCATION']]
 
         if (/^(#|\/)?查看玩家$/.test(e.msg)) {
             let REPLY_ARRAY = []
             let USER_NUMBER = NEARBY_USER.length > 10 ? 10 : NEARBY_USER.length
             for (let i = 0; i < USER_NUMBER; i++) {
-                const USER_DATAS = JSON.parse(fs.readFileSync(AUFP + NEARBY_USER[i] + '.json', 'utf8'))
+                const USER_DATAS = JSON.parse(fs.readFileSync(SKY_PATH['user'] + NEARBY_USER[i] + '.json', 'utf8'))
                 REPLY_ARRAY.push(`${i + 1}、[${USER_DATAS['GAME_NICKNAME'].replace(/_/, '')}]`)
                 if (e.adapter !== 'QQBot') REPLY_ARRAY.push('\n')
             }
@@ -511,11 +426,11 @@ export class SKY extends plugin {
                     '请输入纯数字！'
                 ])
 
-            const QUERYING_USER_DATA = JSON.parse(fs.readFileSync(AUFP + NEARBY_USER[SERIAL_NUMBER] + '.json', 'utf8'))
+            const QUERYING_USER_DATA = JSON.parse(fs.readFileSync(SKY_PATH['user'] + NEARBY_USER[SERIAL_NUMBER] + '.json', 'utf8'))
 
             let GROUP_DATA = '暂未加入团队'
             if (QUERYING_USER_DATA['GROUP'] !== '') {
-                GROUP_DATA = JSON.parse(fs.readFileSync(AGFP + QUERYING_USER_DATA['GROUP'] + '.json', 'utf8'))
+                GROUP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['group'] + QUERYING_USER_DATA['GROUP'] + '.json', 'utf8'))
                 GROUP_DATA = GROUP_DATA['NACKNAME']
             }
 
@@ -533,14 +448,14 @@ export class SKY extends plugin {
     }
 
     async F_12(e) {
-        const FL = fs.readdirSync(AUFP);
+        const FL = fs.readdirSync(SKY_PATH['user']);
 
         let C1 = [];
         let C2 = [];
 
         FL.forEach(F => {
             if (path.extname(F) === '.json') {
-                const FP = path.join(AUFP, F);
+                const FP = path.join(SKY_PATH['user'], F);
                 const UD = JSON.parse(fs.readFileSync(FP, 'utf8'));
 
                 const UD_GID = UD['GAME_ID']
@@ -582,7 +497,7 @@ function GTT(ST) {
 
 /** 读取配置 */
 function GCD() {
-    const DATA = JSON.parse(fs.readFileSync(CFP, 'utf8'))
+    const DATA = JSON.parse(fs.readFileSync(SKY_PATH['config'], 'utf8'))
     /** 签到获得白蜡 */
     const a = DATA['a']
     /** 签到获得季蜡 */
@@ -597,7 +512,7 @@ function GCD() {
 /** 是否存在用户 */
 function IEU(e) {
     const UID = e.user_id
-    if (!fs.existsSync(`${AUFP}${UID}.json`)) {
+    if (!fs.existsSync(`${SKY_PATH['user']}${UID}.json`)) {
         e.reply([
             segment.at(UID),
             '\n没有您的用户信息，请先发送[光遇签到]创建'
@@ -613,18 +528,9 @@ function IEU(e) {
  */
 function SD(FILE, DATA) { fs.writeFileSync(FILE, JSON.stringify(DATA, null, 4), 'utf8') }
 
-/** 当前日期(YYYY-MM-DD) */
-function getCurrentDate() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-}
-
 function addarray() {
-    const MAP_DATA = JSON.parse(fs.readFileSync(MFP, 'utf8'))
-    fs.readdir(AUFP, (err, files) => {
+    const MAP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['map'], 'utf8'))
+    fs.readdir(SKY_PATH['user'], (err, files) => {
         if (err) {
             logger.error('Error reading folder:', err);
             return;
@@ -632,7 +538,7 @@ function addarray() {
 
         files.forEach(file => {
             if (path.extname(file) === '.json') {
-                const filePath = path.join(AUFP, file);
+                const filePath = path.join(SKY_PATH['user'], file);
                 const data = fs.readFileSync(filePath, 'utf8');
                 const json = JSON.parse(data);
 
@@ -644,7 +550,7 @@ function addarray() {
                 }
             }
         });
-        SD(MFP, MAP_DATA)
+        SD(SKY_PATH['map'], MAP_DATA)
     });
 }
 
