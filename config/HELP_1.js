@@ -52,6 +52,10 @@ export const helpList = [{
     "icon": 25,
     "title": "光翼统计",
     "desc": "光翼数量统计"
+  }, {
+    "icon": 14,
+    "title": "碎石查询",
+    "desc": "光遇碎石信息查询"
   }]
 }, {
   "group": "兑换图功能",
