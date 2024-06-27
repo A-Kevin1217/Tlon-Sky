@@ -42,7 +42,7 @@ export class SKY_GAME extends plugin {
             }
         }
 
-        const RANDOM_USER_FILE = path.join(SKY_PATH['user'], USER_LIST[Math.floor(Math.random() * USER_LIST.length)])
+        const RANDOM_USER_FILE = USER_LIST[Math.floor(Math.random() * USER_LIST.length)]
         const RANDOM_USER_DATA = await GET_JSON_DATA(RANDOM_USER_FILE)
 
         const RANDOM_INT = lodash.random(1, 15);
