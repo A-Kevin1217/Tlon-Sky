@@ -1,5 +1,6 @@
 import { SKY_PATH } from '../Game/SkyGame.js';
 import { GET_FILE_DIRECTORY, GET_JSON_DATA, IS_EXIST, STORAGE_JSON_DATA } from './../../model/Tools.js';
+import path from 'path';
 
 export class SKY_GAME extends plugin {
     constructor() {
@@ -13,7 +14,7 @@ export class SKY_GAME extends plugin {
     }
     async F(e) {
         const UID = e.user_id
-        const USER_FILE = `${SKY_PATH['user']}${UID}.json`
+        const USER_FILE = path.join(SKY_PATH['user'], `${UID}.json`)
         const USER_NUMBER = GET_FILE_DIRECTORY(SKY_PATH['user']).length
 
         if (!IS_EXIST(USER_FILE)) {

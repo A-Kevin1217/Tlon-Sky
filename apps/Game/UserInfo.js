@@ -1,6 +1,7 @@
 import { SKY_PATH } from '../Game/SkyGame.js';
 import { GET_JSON_DATA, IS_EXIST } from './../../model/Tools.js';
 import { render } from './../../components/index.js'
+import path from 'path';
 
 export class SKY_GAME extends plugin {
     constructor() {
@@ -14,12 +15,17 @@ export class SKY_GAME extends plugin {
     }
     async F(e) {
         const UID = e.user_id
-        const USER_FILE = `${SKY_PATH['user']}${UID}.json`
+        const USER_FILE = path.join(SKY_PATH['user'], `${UID}.json`)
         if (!IS_EXIST(USER_FILE)) return e.reply(['请先发送[光遇签到]'])
 
         const USER_DATA = await GET_JSON_DATA(USER_FILE)
 
-        return await render('admin/info', {
+        let AVATAR = `https://q1.qlogo.cn/g?b=qq&nk=${UID}&s=160`
+        // if (typeof UID === 'string') {
+        //     AVATAR = `https://q.qlogo.cn/qqapp/102076896/${UID.replace(/102076896-/g, '')}/640`
+        // }
+
+        return await render('admin/UserInfo', {
             A: USER_DATA['GAME_ID'],
             B: USER_DATA['GAME_NICKNAME'],
             C: USER_DATA['LOCATION'],
@@ -27,7 +33,8 @@ export class SKY_GAME extends plugin {
             E: USER_DATA['CURRENCY_1'],
             F: USER_DATA['CURRENCY_2'],
             G: USER_DATA['ACCUMULATE'],
-            H: USER_DATA['LAST_DATE']
+            H: USER_DATA['LAST_DATE'],
+            AVATAR
         }, { e, scale: 1.4 })
     }
 }

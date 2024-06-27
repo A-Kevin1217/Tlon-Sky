@@ -2,13 +2,16 @@ import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
 
-const __dirname = path.resolve() + path.sep + "plugins" + path.sep + "Tlon-Sky";
+const __dirname = path.resolve();
+const PLUGIN_PATH = path.join(__dirname, 'plugins', 'Tlon-Sky');
+
 export const SKY_PATH = {
-    user: `${__dirname}/data/USER/`,
-    group: `${__dirname}/data/GROUP`,
-    config: `${__dirname}/config/config.json`,
-    map: `${__dirname}/data/map.json`
-}
+    user: path.join(PLUGIN_PATH, 'data', 'USER'),
+    group: path.join(PLUGIN_PATH, 'data', 'GROUP'),
+    config: path.join(PLUGIN_PATH, 'config', 'config.json'),
+    map: path.join(PLUGIN_PATH, 'data', 'map.json')
+};
+
 /** 地图列表 */
 const mapList = [
     '遇境', '云巢',
