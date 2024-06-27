@@ -1,6 +1,6 @@
-import { SKY_PATH } from '../Game/SkyGame.js';
-import { GET_JSON_DATA, IS_EXIST } from './../../model/Tools.js';
-import { render } from './../../components/index.js'
+import { SKY_PATH } from '../SkyGame.js';
+import { GET_JSON_DATA, IS_EXIST } from './../model/Tools.js';
+import { render } from './../components/index.js'
 import path from 'path';
 
 export class SKY_GAME extends plugin {

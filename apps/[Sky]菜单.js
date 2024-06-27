@@ -2,10 +2,6 @@ import { Version, Common, render, Data } from '../components/index.js';
 import lodash from 'lodash';
 import fs from 'fs'
 
-const REGEX = [
-  /^(#|\/)?(sky|光遇)(娱乐)?(帮助|菜单)$/i,
-  /^(#|\/)?(季节|常驻)兑换图列表$/
-];
 export class SKY extends plugin {
   constructor() {
     super({
@@ -13,8 +9,8 @@ export class SKY extends plugin {
       event: 'message',
       priority: 1,
       rule: [
-        { reg: REGEX[0], fnc: 'SKY_HELP', },
-        { reg: REGEX[1], fnc: 'SKY_HELP' },
+        { reg: /^(#|\/)?(sky|光遇)(娱乐)?(帮助|菜单)$/i, fnc: 'SKY_HELP', },
+        { reg: /^(#|\/)?(季节|常驻)兑换图列表$/, fnc: 'SKY_HELP' },
         { reg: /^(sky|光遇)版本$/i, fnc: 'SKY_VERSION' }
       ]
     });
