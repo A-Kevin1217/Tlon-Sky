@@ -25,7 +25,8 @@ export class SKY extends plugin {
         '欧若拉', '追忆', '夜行', '拾光', '归巢', '九色鹿', '筑巢'
       ],
       ['好友树', '全图鉴参考', '身高图', '身高透明图', '身高进阶知识', '蜡烛合成机制', '身高测量规则', '测量规则'],
-      ['20', '21', '22', '23', '24']
+      ['20', '21', '22', '23', '24'],
+      ['复刻', '国服复刻', '节']
     ]
     let U_MSG = e.msg.replace(/#|\/|兑换图|季/g, '')
 
@@ -38,7 +39,7 @@ export class SKY extends plugin {
       if (U_MSG === '重组') U_MSG = '集结'
       if (U_MSG === '凌冬') U_MSG = '音韵'
       U_MSG = U_MSG + '季'
-    } else if (/^(复刻|国服复刻)$/.text(U_MSG) || U_MSG === '节') {
+    } else if (ARRAY[4].includes(U_MSG)) {
       TYPE = '当前'
       U_MSG = '当前复刻'
       if (U_MSG === '季节') U_MSG = '当前季节兑换图'
