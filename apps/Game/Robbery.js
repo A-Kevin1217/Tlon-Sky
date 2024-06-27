@@ -73,7 +73,8 @@ export class SKY_GAME extends plugin {
             E_1: USER_DATA['CURRENCY_1'], E_2: RANDOM_USER_DATA['CURRENCY_1'],
             F_1: USER_DATA['CURRENCY_2'], F_2: RANDOM_USER_DATA['CURRENCY_2'],
             G_1: USER_DATA['ACCUMULATE'], G_2: RANDOM_USER_DATA['ACCUMULATE'],
-            H_1: USER_DATA['LAST_DATE'], H_2: RANDOM_USER_DATA['LAST_DATE']
+            H_1: USER_DATA['LAST_DATE'], H_2: RANDOM_USER_DATA['LAST_DATE'],
+            I: RANDOM_INT
         }, { e, scale: 1.4 })
     }
 }
