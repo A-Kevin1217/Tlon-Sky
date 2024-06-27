@@ -1,6 +1,6 @@
 import lodash from 'lodash';
 import path from 'path';
-import { SKY_PATH } from '../SkyGame.js';
+import { SKY_PATH } from '../[Game]SkyGame.js';
 import { render } from './../components/index.js';
 import { GET_FILE_DIRECTORY, GET_JSON_DATA, IS_EXIST, STORAGE_JSON_DATA } from './../model/Tools.js';
 export class SKY_GAME extends plugin {
