@@ -21,9 +21,10 @@ logger.info('Sky载入中...')
 
 file.forEach((file) => {
   ret.push(import(`./apps/${file}`))
-  ret.push(import('./apps/Game/SkyGame.js'))
-  ret.push(import('./apps/Game/Info.js'))
+  ret.push(import('./apps/Game/Robbery.js'))
   ret.push(import('./apps/Game/SignUp.js'))
+  ret.push(import('./apps/Game/SkyGame.js'))
+  ret.push(import('./apps/Game/UserInfo.js'))
 })
 
 ret = await Promise.allSettled(ret)
