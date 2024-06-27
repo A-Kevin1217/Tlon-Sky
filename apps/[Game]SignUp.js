@@ -1,4 +1,4 @@
-import { SKY_PATH } from '../[Game]SkyGame.js';
+import { SKY_PATH } from './[Game]SkyGame.js';
 import { GET_FILE_DIRECTORY, GET_JSON_DATA, IS_EXIST, STORAGE_JSON_DATA } from './../model/Tools.js';
 import path from 'path';
 
