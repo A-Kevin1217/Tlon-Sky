@@ -42,7 +42,7 @@ export class SKY extends plugin {
     } else if (ARRAY[4].includes(U_MSG)) {
       TYPE = '当前'
       U_MSG = '当前复刻'
-      if (U_MSG === '季节') U_MSG = '当前季节兑换图'
+      if (U_MSG === '节') U_MSG = '当前季节兑换图'
     } else if (ARRAY[2].includes(U_MSG)) {
       TYPE = '其他'
       if (U_MSG === '全图鉴') U_MSG = '全图鉴参考'
