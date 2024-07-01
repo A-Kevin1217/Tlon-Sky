@@ -1,6 +1,6 @@
 const REGEX = [
   /^(#|\/)?(季节|好友树|复刻|晨岛|云野|雨林|峡谷|霞谷|暮土|禁阁|AURORA|表演|风行|感恩|归(巢|属)|九色鹿|梦想|魔法|破晓|潜海|圣岛|拾光|小王子|夜行|音韵|预言|重组|追(光|忆)|欧若拉|集结|凌冬|筑巢)(季)?兑换图$/i,
-  /^(#|\/)?(国服复刻|全图鉴参考|身高((透明)?图|进阶知识)|蜡烛合成机制|(身高)?测量规则|(20|21|22|23|24)年复刻记录)$/
+  /^(#|\/)?(国服复刻|全图鉴参考|身高((透明)?图|进阶知识)|蜡烛合成机制|(身高)?测量规则|(20|21|22|23|24)年光遇复刻记录)$/
 ]
 export class SKY extends plugin {
   constructor() {
@@ -35,7 +35,7 @@ export class SKY extends plugin {
       TYPE = '常驻兑换图'
     } else if (ARRAY[1].includes(U_MSG) || /aurora|重组|凌冬/i.test(U_MSG)) {
       TYPE = '季节兑换图'
-      if (/aurora/i.text(U_MSG)) U_MSG = '欧若拉'
+      if (/aurora/i.test(U_MSG)) U_MSG = '欧若拉'
       if (U_MSG === '重组') U_MSG = '集结'
       if (U_MSG === '凌冬') U_MSG = '音韵'
       U_MSG = U_MSG + '季'
@@ -46,7 +46,7 @@ export class SKY extends plugin {
       TYPE = '其他'
       if (U_MSG === '全图鉴') U_MSG = '全图鉴参考'
       if (U_MSG === '好友树') U_MSG = '好友树兑换图'
-    } else if (ARRAY[3].includes(U_MSG.replace(/年复刻记录/g, ''))) {
+    } else if (ARRAY[3].includes(U_MSG.replace(/年光遇复刻记录/g, ''))) {
       TYPE = '复刻记录'
     }
 
