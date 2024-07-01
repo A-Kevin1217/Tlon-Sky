@@ -96,7 +96,7 @@ export class SKY extends plugin {
     async F_3(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${SKY_PATH['user']}${UID}.json`
+        const UF = `${SKY_PATH['user']}/${UID}.json`
         const CD = GCD()
 
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
@@ -127,7 +127,7 @@ export class SKY extends plugin {
     async F_4(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${SKY_PATH['user']}${UID}.json`
+        const UF = `${SKY_PATH['user']}/${UID}.json`
         const CD = GCD()
 
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
@@ -171,7 +171,7 @@ export class SKY extends plugin {
     async F_5(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${SKY_PATH['user']}${UID}.json`
+        const UF = `${SKY_PATH['user']}/${UID}.json`
         const CD = GCD()
 
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
@@ -199,7 +199,7 @@ export class SKY extends plugin {
         // 先执行一遍这个
         addarray()
         const UID = e.user_id
-        const UFP = `${SKY_PATH['user']}${UID}.json`
+        const UFP = `${SKY_PATH['user']}/${UID}.json`
 
         const UD = JSON.parse(fs.readFileSync(UFP, 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['map'], 'utf8'))
@@ -224,7 +224,7 @@ export class SKY extends plugin {
     async F_7(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${SKY_PATH['user']}${UID}.json`
+        const UF = `${SKY_PATH['user']}/${UID}.json`
 
         const LOCATION = e.msg.match(REG_1)[2].replace(/\s/g, '');
         if (!mapList.includes(LOCATION))
@@ -273,7 +273,7 @@ export class SKY extends plugin {
     async F_8(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${SKY_PATH['user']}${UID}.json`
+        const UF = `${SKY_PATH['user']}/${UID}.json`
 
         const MATCH = e.msg.match(REG_2)
         const SETTINGS = MATCH[2]
@@ -295,7 +295,7 @@ export class SKY extends plugin {
                 `\n设置成功！\n您的新昵称[${SETTINGS_CONTENT}]`
             ])
         } else if (/^团队(昵称|名称)/.test(SETTINGS)) {
-            const GROUP_FILE = SKY_PATH['group'] + UD['GROUP'] + '.json'
+            const GROUP_FILE = SKY_PATH['group'] + '/' + UD['GROUP'] + '.json'
 
             if (UD['GROUP'] === '') // 无团队
                 return e.reply([
@@ -332,7 +332,7 @@ export class SKY extends plugin {
     async F_9(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UF = `${SKY_PATH['user']}${UID}.json`
+        const UF = `${SKY_PATH['user']}/${UID}.json`
         const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
 
         if (UD['CURRENCY_1'] < 10000 && UD['CURRENCY_2'] < 320)
@@ -347,7 +347,7 @@ export class SKY extends plugin {
                 '您已经有团了\n请先退出再建立团队'
             ])
 
-        const GROUP_FILE = SKY_PATH['group'] + UID + '.json'
+        const GROUP_FILE = SKY_PATH['group'] + '/' + UID + '.json'
         const GROUP_NUMBER = (fs.readdirSync(SKY_PATH['group']).length) + 1
 
         UD['CURRENCY_1'] -= 10000
@@ -374,14 +374,14 @@ export class SKY extends plugin {
     async F_10(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UD = JSON.parse(fs.readFileSync(`${SKY_PATH['user']}${UID}.json`, 'utf8'))
+        const UD = JSON.parse(fs.readFileSync(`${SKY_PATH['user']}/${UID}.json`, 'utf8'))
 
         if (UD['GROUP'] === '') return e.reply([
             segment.at(UID),
             '\n您尚未加入(或创建)团队'
         ])
 
-        const GROUP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['group'] + UD['GROUP'] + '.json', 'utf8'))
+        const GROUP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['group'] + '/' + UD['GROUP'] + '.json', 'utf8'))
 
         let LEADER_NICKNAME = UD['GAME_NICKNAME']
         if (GROUP_DATA['LEADER'] !== UID) {
@@ -402,7 +402,7 @@ export class SKY extends plugin {
     async F_11(e) {
         if (!IEU(e)) return
         const UID = e.user_id
-        const UD = JSON.parse(fs.readFileSync(`${SKY_PATH['user']}${UID}.json`, 'utf8'))
+        const UD = JSON.parse(fs.readFileSync(`${SKY_PATH['user']}/${UID}.json`, 'utf8'))
         const MAP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['map'], 'utf8'))
         const NEARBY_USER = MAP_DATA[UD['LOCATION']]
 
@@ -433,7 +433,7 @@ export class SKY extends plugin {
 
             let GROUP_DATA = '暂未加入团队'
             if (QUERYING_USER_DATA['GROUP'] !== '') {
-                GROUP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['group'] + QUERYING_USER_DATA['GROUP'] + '.json', 'utf8'))
+                GROUP_DATA = JSON.parse(fs.readFileSync(SKY_PATH['group'] + '/' + QUERYING_USER_DATA['GROUP'] + '.json', 'utf8'))
                 GROUP_DATA = GROUP_DATA['NACKNAME']
             }
 
@@ -515,7 +515,7 @@ function GCD() {
 /** 是否存在用户 */
 function IEU(e) {
     const UID = e.user_id
-    if (!fs.existsSync(`${SKY_PATH['user']}${UID}.json`)) {
+    if (!fs.existsSync(`${SKY_PATH['user']}/${UID}.json`)) {
         e.reply([
             segment.at(UID),
             '\n没有您的用户信息，请先发送[光遇签到]创建'
