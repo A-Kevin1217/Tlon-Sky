@@ -48,6 +48,7 @@ export class SKY extends plugin {
       if (U_MSG === '好友树') U_MSG = '好友树兑换图'
     } else if (ARRAY[3].includes(U_MSG.replace(/年光遇复刻记录/g, ''))) {
       TYPE = '复刻记录'
+      U_MSG = U_MSG + '年光遇复刻记录'
     }
 
     return e.reply([segment.image(`${SKY_IMAGE_URL['A']}${TYPE}/${U_MSG}.${U_MSG === '身高透明图' ? 'png' : 'jpg'}`)])
