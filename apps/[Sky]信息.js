@@ -94,15 +94,15 @@ export class SKY extends plugin {
       const END_TIME = new Date(URL_DATA['活动'][i]['endDate']).getTime();
       const MILLISECOND = END_TIME - GET_TIME;
       const DAILY_GET_NUMBER = URL_DATA['活动'][i]['DailyGetNumber']
-      const TOTAL_AVAILABLE = (DAYS + 1) * DAILY_GET_NUMBER
       const GRADUATION = URL_DATA['活动'][i]['number']
-
       const { DAYS, HOURS, MINUTES, SECONDS } = {
         DAYS: Math.floor(MILLISECOND / (24 * 60 * 60 * 1000)),
         HOURS: Math.floor((MILLISECOND % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
         MINUTES: Math.floor((MILLISECOND % (60 * 60 * 1000)) / (60 * 1000)),
         SECONDS: Math.floor((MILLISECOND % (60 * 1000)) / 1000)
       };
+      const TOTAL_AVAILABLE = (DAYS + 1) * DAILY_GET_NUMBER
+
       ACTIVITY_DATA.push(`距离${URL_DATA['活动'][i]['name']}结束还剩\n`)
       ACTIVITY_DATA.push(`${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒\n`)
       ACTIVITY_DATA.push(`截至至${URL_DATA['活动'][i]['endDate']}\n`)
