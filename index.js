@@ -34,7 +34,6 @@ for (let i in file) {
     logger.error(ret[i].reason)
     continue
   }
-  logger.mark(logger.green(`${name} 已载入`))
   apps[name] = ret[i].value[Object.keys(ret[i].value)[0]]
 }
 export { apps }
