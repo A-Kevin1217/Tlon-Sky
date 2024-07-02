@@ -136,7 +136,7 @@ export class SKY extends plugin {
       '\n(无季卡包括非必要的魔法节点)' +
       '\n▔▔▔' +
       `\n当前活动: ${ACTIVITY_NAME.join(',')}` +
-      `\n${ACTIVITY_DATA}`
+      `\n${ACTIVITY_DATA.join('')}`
     ])
   }
 
