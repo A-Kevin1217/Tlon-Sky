@@ -153,7 +153,12 @@ export class SKY extends plugin {
     let msg = `数据更新时间：${URL_DATA['UPDATE TIME']}\n此表不计入集体复刻\n`
 
     for (const role of URL_DATA[SEASON_NAME]) {
-      msg += `${role.name}已[ ${this.getDayDiff(new Date(role.date))} ]天未复刻\n`
+      const daysNumber = this.getDayDiff(new Date(role.date))
+      if (daysNumber.charAt(1) === '-') {
+        msg += `${role.name}当前正在复刻\n`
+      } else {
+        msg += `${role.name}已[ ${daysNumber} ]天未复刻\n`
+      }
     }
 
     return e.reply([msg.trim()])
