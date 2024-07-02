@@ -107,8 +107,9 @@ export class SKY extends plugin {
       ACTIVITY_DATA.push(`${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒\n`)
       ACTIVITY_DATA.push(`截至至${URL_DATA['活动'][i]['endDate']}\n`)
       ACTIVITY_DATA.push(`本活动一共${Math.floor((END_TIME - START_TIME) / (24 * 60 * 60 * 1000)) + 1}天\n`)
+      ACTIVITY_DATA.push(`本活动代币物品总计需要: ${GRADUATION}代币\n`)
       ACTIVITY_DATA.push(`代币还可获得: ${TOTAL_AVAILABLE}\n从今日开始兑换，${TOTAL_AVAILABLE < GRADUATION ? '已经来不及了' : '还可以兑换完'}\n`)
-      ACTIVITY_DATA.push(`全部兑换需: ${Math.ceil(GRADUATION / TOTAL_AVAILABLE)}天\n`)
+      ACTIVITY_DATA.push(`全部兑换需: ${Math.ceil(GRADUATION / DAILY_GET_NUMBER)}天\n`)
     }
 
 
