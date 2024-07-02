@@ -12,7 +12,7 @@ export class SKY extends plugin {
         { reg: /^(#|\/)?(光遇|sky)(服务器)?状态$/i, fnc: 'F1' },
         { reg: /^(#|\/)?(光遇|sky)公告$/i, fnc: 'F2' },
         { reg: /^(#|\/)?光翼统计$/, fnc: 'F3' },
-        { reg: /^(#|\/)?季节剩余$/, fnc: 'F4' },
+        { reg: /^(#|\/)?(季节|活动)剩余$/, fnc: 'F4' },
         { reg: /^(#|\/)?(.*)季多久未复刻$/, fnc: 'F5' }
       ]
     })
@@ -77,15 +77,40 @@ export class SKY extends plugin {
   }
 
   async F4(e) {
-    const URL_DATA = await GET_URL_DATA('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节剩余.json')
+    const URL_DATA = await GET_URL_DATA('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json')
 
-    const START_TIME = new Date(URL_DATA['start']).getTime();
-    const END_TIME = new Date(URL_DATA['end']).getTime();
-    const SEASON_NAME = URL_DATA['name'];
-    const GRADUATION_WAX = URL_DATA['number'];
+    let ACTIVITY_DATA = [], ACTIVITY_NAME = []
+    const START_TIME = new Date(URL_DATA['季节']['startDate']).getTime();
+    const END_TIME = new Date(URL_DATA['季节']['endDate']).getTime();
+    const SEASON_NAME = URL_DATA['季节']['name'];
+    const GRADUATION_WAX = URL_DATA['季节']['number'];
 
     const GET_TIME = Date.now();
     const MILLISECOND = END_TIME - GET_TIME;
+
+    for (let i = 0; i < URL_DATA['活动'].length; i++) {
+      ACTIVITY_NAME.push(URL_DATA['活动'][i]['name'])
+      const START_TIME = new Date(URL_DATA['活动'][i]['startDate']).getTime();
+      const END_TIME = new Date(URL_DATA['活动'][i]['endDate']).getTime();
+      const MILLISECOND = END_TIME - GET_TIME;
+      const DAILY_GET_NUMBER = URL_DATA['活动'][i]['DailyGetNumber']
+      const TOTAL_AVAILABLE = (DAYS + 1) * DAILY_GET_NUMBER
+      const GRADUATION = URL_DATA['活动'][i]['number']
+
+      const { DAYS, HOURS, MINUTES, SECONDS } = {
+        DAYS: Math.floor(MILLISECOND / (24 * 60 * 60 * 1000)),
+        HOURS: Math.floor((MILLISECOND % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
+        MINUTES: Math.floor((MILLISECOND % (60 * 60 * 1000)) / (60 * 1000)),
+        SECONDS: Math.floor((MILLISECOND % (60 * 1000)) / 1000)
+      };
+      ACTIVITY_DATA.push(`距离${URL_DATA['活动'][i]['name']}结束还剩\n`)
+      ACTIVITY_DATA.push(`${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒\n`)
+      ACTIVITY_DATA.push(`截至至${URL_DATA['活动'][i]['endDate']}\n`)
+      ACTIVITY_DATA.push(`本活动一共${Math.floor((END_TIME - START_TIME) / (24 * 60 * 60 * 1000)) + 1}天\n`)
+      ACTIVITY_DATA.push(`代币还可获得: ${TOTAL_AVAILABLE}\n从今日开始兑换，${TOTAL_AVAILABLE < GRADUATION ? '已经来不及了' : '还可以兑换完'}\n`)
+      ACTIVITY_DATA.push(`全部兑换需: ${Math.ceil(GRADUATION / TOTAL_AVAILABLE)}天\n`)
+    }
+
 
     if (MILLISECOND <= 0) { return e.reply([segment.at(e.user_id), SEASON_NAME + '已结束！请等待下个季节到来.']) };
 
@@ -98,17 +123,20 @@ export class SKY extends plugin {
 
     return e.reply([
       segment.at(e.user_id),
-      `\n距离${SEASON_NAME}结束还剩`,
-      `\n${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒`,
-      `\n截至至${URL_DATA['end']}`,
-      `\n本季节一共${Math.floor((END_TIME - START_TIME) / (24 * 60 * 60 * 1000)) + 1}天`,
-      '\n季蜡还可获得：',
-      `\n[有季卡]：${(DAYS + 1) * 6}季蜡`,
-      `\n[无季卡]：${(DAYS + 1) * 5}季蜡`,
-      `\n本季节毕业需：${GRADUATION_WAX}季蜡`,
-      `\n[有季卡]毕业需：${Math.ceil((GRADUATION_WAX - 30) / 6)}天`,
-      `\n[无季卡]毕业需：${Math.ceil((GRADUATION_WAX - 12) / 5)}天`,
-      '\n(无季卡包括非必要的魔法节点)'
+      `\n距离${SEASON_NAME}结束还剩` +
+      `\n${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒` +
+      `\n截至至${URL_DATA['季节']['endDate']}` +
+      `\n本季节一共${Math.floor((END_TIME - START_TIME) / (24 * 60 * 60 * 1000)) + 1}天` +
+      '\n季蜡还可获得：' +
+      `\n[有季卡]：${(DAYS + 1) * 6}季蜡` +
+      `\n[无季卡]：${(DAYS + 1) * 5}季蜡` +
+      `\n本季节毕业需：${GRADUATION_WAX}季蜡` +
+      `\n[有季卡]毕业需：${Math.ceil((GRADUATION_WAX - 30) / 6)}天` +
+      `\n[无季卡]毕业需：${Math.ceil((GRADUATION_WAX - 12) / 5)}天` +
+      '\n(无季卡包括非必要的魔法节点)' +
+      '\n▔▔▔' +
+      `\n当前活动: ${ACTIVITY_NAME.join(',')}` +
+      `\n${ACTIVITY_DATA}`
     ])
   }
 
