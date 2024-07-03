@@ -40,15 +40,7 @@ export class SKY extends plugin {
         const RANDOM_NUMBER_2 = Math.ceil(Math.random() * name.length - 1)
         const name_2 = name[RANDOM_NUMBER_2]
 
-        if (e.adapter === 'QQBot') return e.reply([
-            '# 预测下一次复刻',
-            '> 我猜可能复刻这两其中一个',
-            `[**${name_1}**] ———— [**${name_2}**]`,
-            'BOT娱乐功能，仅供参考'
-        ])
-        e.reply(`我猜可能复刻这两其中一个\n[${name_1}] || [${name_2}]`)
-        return Bot.Button([[
-            { label: '再测一次', callback: '/复刻预测' }
-        ]])
+        e.reply([`[${name_1}] || [${name_2}]`])
+
     }
 }
