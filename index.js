@@ -1,6 +1,9 @@
 /** 
- * 插件名[Tlon-Sky](https://gitee.com/Tloml-Starry/Tlon-Sky)
- * 由[Tloml-Starry](https://gitee.com/Tloml-Starry)于2023-01-15开始编写
+ * 插件名: Tlon-Sky
+ * 作者: Tloml-Starry
+ * 于2023-01-15开始编写
+ * 项目主页Gitee: https://gitee.com/Tloml-Starry/Tlon-Sky
+ * 作者主页Gitee: https://gitee.com/Tloml-Starry
  */
 import fs from 'node:fs';
 ['USER', 'GROUP'].forEach(dir => fs.mkdirSync(`plugins/Tlon-Sky/data/${dir}`, { recursive: true }));
