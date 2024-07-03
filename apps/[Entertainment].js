@@ -1,11 +1,12 @@
-import fs from 'fs';
 import lodash from 'lodash';
 import { IS_EXIST, STORAGE_JSON_DATA, GET_JSON_DATA } from '../model/Tools.js'
-const RFF = 'plugins/Tlon-Sky/data/Random friends.json'
-const CDF = 'plugins/Tlon-Sky/data/Random friends CD.json'
-if (!IS_EXIST(RFF)) { STORAGE_JSON_DATA([RFF, CDF], [[], {}]) }
+const FILE = [
+    'plugins/Tlon-Sky/data/Random friends.json',
+    'plugins/Tlon-Sky/data/Random friends CD.json'
+]
+if (!IS_EXIST(FILE[0])) { STORAGE_JSON_DATA([FILE[0], FILE[1]], [[], {}]) }
 
-const R = /^(#|\/)?存入盲盒(.*)\*(国|国际|测试)服$/i
+const REGEX = /^(#|\/)?存入盲盒(.*)\*(国|国际|测试)服$/i
 
 export class SKY extends plugin {
     constructor() {
@@ -17,7 +18,7 @@ export class SKY extends plugin {
             rule: [
                 { reg: /^(#|\/)?复刻预测$/, fnc: 'F1' },
                 { reg: /^(#|\/)?(绘画|绘画分享|绘图分享)$/, fnc: 'F2' },
-                { reg: R, fnc: 'F3' },
+                { reg: REGEX, fnc: 'F3' },
                 { reg: /^(#|\/)?随机好友$/, fnc: 'F4' }
             ]
         })
@@ -59,7 +60,7 @@ export class SKY extends plugin {
 
     async F3(e) {
         const UID = e.user_id
-        const GET_CONTENT = e.msg.match(R)
+        const GET_CONTENT = e.msg.match(REGEX)
         const CODE = GET_CONTENT[2]
         const SERVER = GET_CONTENT[3]
 
@@ -71,9 +72,9 @@ export class SKY extends plugin {
             ])
         }
 
-        const RFD = await await GET_JSON_DATA(RFF)
+        const RFD = await await GET_JSON_DATA(FILE[0])
         RFD.push({ UID: UID, C: CODE, S: SERVER })
-        STORAGE_JSON_DATA(RFF, RFD)
+        STORAGE_JSON_DATA(FILE[0], RFD)
 
         return e.reply([
             segment.at(UID),
@@ -85,7 +86,7 @@ export class SKY extends plugin {
 
     async F4(e) {
         const UID = e.user_id
-        const CDD = await GET_JSON_DATA(CDF)
+        const CDD = await GET_JSON_DATA(FILE[1])
         const date = new Date();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
@@ -93,14 +94,14 @@ export class SKY extends plugin {
 
         if (CDD[UID] === Today) return e.reply('今日已获取过盲盒，请与明日再来')
 
-        let RFD = await GET_JSON_DATA(RFF)
+        let RFD = await GET_JSON_DATA(FILE[0])
         if (RFD.length === 0) return e.reply(['盲盒库已无盲盒，请添加一些再来吧~'])
         const RANDOM_FRIENDS_DATA = RFD[Math.floor(Math.random() * RFD.length)];
 
         RFD = RFD.filter(item => item !== RANDOM_FRIENDS_DATA)
         CDD[UID] = Today
 
-        STORAGE_JSON_DATA([RFF, CDF], [RFD, CDD])
+        STORAGE_JSON_DATA([FILE[0], FILE[1]], [RFD, CDD])
 
         e.reply([
             '您的盲盒~' +
