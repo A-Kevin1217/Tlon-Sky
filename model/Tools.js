@@ -58,3 +58,13 @@ export function IS_EXIST(FILE_PATH) {
 export function GET_FILE_DIRECTORY(FILE_PATH) {
     return fs.readdirSync(FILE_PATH)
 }
+
+/** 将时间戳转换为DD:HH:MM:SS */
+export function GET_DATE(TIMESTAMP) {
+    const DIFFERENCE_VALUE = Date.now() - TIMESTAMP;
+    const DD = String(Math.floor(DIFFERENCE_VALUE / (1000 * 60 * 60 * 24))).padStart(2, '0');
+    const HH = String(Math.floor((DIFFERENCE_VALUE % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+    const MM = String(Math.floor((DIFFERENCE_VALUE % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+    const SS = String(Math.floor((DIFFERENCE_VALUE % (1000 * 60)) / 1000)).padStart(2, '0');
+    return { DD, HH, MM, SS };
+}

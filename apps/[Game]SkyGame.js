@@ -11,6 +11,16 @@ export const SKY_PATH = {
     config: path.join(PLUGIN_PATH, 'config', 'config.json'),
     map: path.join(PLUGIN_PATH, 'data', 'map.json')
 };
+export const MAP_LIST = [
+    '遇境', '云巢',
+    '晨岛', '预言山谷', '夜行石',
+    '云野', '圣岛', '云峰',
+    '雨林', '大树屋', '风行网道',
+    '霞谷', '圆梦村', '雪隐峰', '圆梦村剧场', '音乐商店',
+    '暮土', '遗忘方舟', '藏宝岛礁',
+    '禁阁', '办公室', '星光沙漠', '庇护所', '月牙绿洲',
+    '伊甸'
+]
 
 /** 地图列表 */
 const mapList = [
@@ -79,7 +89,6 @@ export class SKY extends plugin {
             event: 'message',
             priority: 1,
             rule: [
-                { reg: /^(#|\/)?模拟跑图$/, fnc: 'F_3' },
                 { reg: /^(#|\/)?结束跑图$/, fnc: 'F_4' },
                 { reg: /^(#|\/)?跑图状态$/, fnc: 'F_5' },
                 { reg: /^(#|\/)?光遇地图$/, fnc: 'F_6' },
@@ -91,36 +100,6 @@ export class SKY extends plugin {
                 { reg: /^(#|\/)?(光遇|白蜡|季蜡)排行榜$/, fnc: 'F_12' }
             ]
         })
-    }
-    /** 模拟跑图 */
-    async F_3(e) {
-        if (!IEU(e)) return
-        const UID = e.user_id
-        const UF = `${SKY_PATH['user']}/${UID}.json`
-        const CD = GCD()
-
-        const UD = JSON.parse(fs.readFileSync(UF, 'utf8'))
-
-        const TT = GTT(UD['TIMESTAMP'])
-        const H = TT['H']
-        const M = TT['M']
-        const S = TT['S']
-
-        if (UD['SIMULATED_STATE'])
-            return e.reply([
-                segment.at(UID),
-                `\n您当前已经在跑图了\n已跑图[${H}]时[${M}]分[${S}]秒`
-            ])
-
-        UD['SIMULATED_STATE'] = true
-        UD['TIMESTAMP'] = Date.now()
-
-        SD(UF, UD)
-
-        return e.reply([
-            segment.at(UID),
-            `\n已开始模拟跑图\n每分钟[${CD['d']}]白蜡 | 上限[${CD['c']}]白蜡`
-        ])
     }
 
     /** 结束跑图 */
