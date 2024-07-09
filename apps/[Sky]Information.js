@@ -90,6 +90,9 @@ export class SKY extends plugin {
         const GRADUATION_WAX = URL_DATA['季节']['number'];
         const NUMBER_OF_ACTIVITIES = URL_DATA['活动'].length
 
+        const GET_TIME = Date.now();
+        const MILLISECOND = END_TIME - GET_TIME;
+
         if (NUMBER_OF_ACTIVITIES) {
             for (let i = 0; i < NUMBER_OF_ACTIVITIES; i++) {
                 const START_TIME = new Date(URL_DATA['活动'][i]['startDate']).getTime();
@@ -116,9 +119,6 @@ export class SKY extends plugin {
                 ACTIVITY_NAME.push(URL_DATA['活动'][i]['name'])
             }
         }
-
-        const GET_TIME = Date.now();
-        const MILLISECOND = END_TIME - GET_TIME;
 
         if (MILLISECOND <= 0) {
             return e.reply([
