@@ -83,7 +83,7 @@ export class SKY extends plugin {
     async F4(e) {
         const URL_DATA = await GET_URL_DATA(LINK[3])
 
-        const { endDate: SEASON_END_DATE, name: SEASON_NAME, number: SGRSW } = URL_DATA['季节']['endDate']
+        const { endDate: SEASON_END_DATE, name: SEASON_NAME, number: SGRSW } = URL_DATA['季节']
         const SEASON_START_TIMESTAMP = new Date(URL_DATA['季节']['startDate']).getTime();
         const SEASON_END_TIMESTAMP = new Date(SEASON_END_DATE).getTime();
 
@@ -95,7 +95,7 @@ export class SKY extends plugin {
             Tips.push(`\r${SEASON_NAME}已结束！请等待下个季节到来.`)
         } else {
             const { DAYS, HOURS, MINUTES, SECONDS } = GET_TIME_CONVERSION(SEASONAL_REMAINING_TIMESTAMP)
-            Tips.push(...[
+            Tips.push([
                 `\r距离[${SEASON_NAME}]结束还剩` +
                 `\r${DAYS}天${HOURS}时${MINUTES}分${SECONDS}秒` +
                 `\r截至至${SEASON_END_DATE}` +
@@ -124,19 +124,19 @@ export class SKY extends plugin {
                 const TOTAL_AVAILABLE = (DAYS + 1) * ACTIVITIES_REQUIRE_CURRENCY
 
                 ACTIVITY_DATA.push(...[
-                    `距离${EVENT_NAME}结束还剩\r` +
-                    `${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒\r` +
-                    `截至至${EVENT_END_DATE}\r` +
-                    `本活动一共${Math.floor((EVENT_END_TIMESTAMP - EVENT_START_TIMESTAMP) / (24 * 60 * 60 * 1000)) + 1}天\r` +
-                    `本活动代币物品总计需要: ${DAC}代币\r` +
-                    `代币还可获得: ${TOTAL_AVAILABLE}\r从今日开始兑换，${TOTAL_AVAILABLE < DAC ? '已经来不及了' : '还可以兑换完'}\r` +
-                    `全部兑换需: ${Math.ceil(DAC / ACTIVITIES_REQUIRE_CURRENCY)}天\r` +
-                    '▔▔▔▔▔▔\r'
+                    `\r距离${EVENT_NAME}结束还剩` +
+                    `\r${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒` +
+                    `\r截至至${EVENT_END_DATE}` +
+                    `\r本活动一共${Math.floor((EVENT_END_TIMESTAMP - EVENT_START_TIMESTAMP) / (24 * 60 * 60 * 1000)) + 1}天` +
+                    `\r本活动代币物品总计需要: ${DAC}代币` +
+                    `\r代币还可获得: ${TOTAL_AVAILABLE}\r从今日开始兑换，${TOTAL_AVAILABLE < DAC ? '已经来不及了' : '还可以兑换完'}` +
+                    `\r全部兑换需: ${Math.ceil(DAC / ACTIVITIES_REQUIRE_CURRENCY)}天` +
+                    '\r▔▔▔▔▔▔\r'
                 ])
                 ACTIVITY_NAME.push(EVENT_NAME)
             }
         }
-        Tips.push(...[
+        Tips.push([
             `\r当前活动: ${!NUMBER_OF_ACTIVITIES ? '无' : ACTIVITY_NAME.join(',')}` +
             ACTIVITY_DATA.join('')
         ])
@@ -144,8 +144,8 @@ export class SKY extends plugin {
         return e.reply([
             segment.at(e.user_id),
             Tips[0].join(''),
-            '\r▔▔▔▔▔▔' +
-            Tips[1].join(''),
+            '\r▔▔▔▔▔▔\r' +
+            Tips[1].join('').trim(),
         ])
     }
 
