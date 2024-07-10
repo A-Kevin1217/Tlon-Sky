@@ -83,74 +83,69 @@ export class SKY extends plugin {
     async F4(e) {
         const URL_DATA = await GET_URL_DATA(LINK[3])
 
-        let ACTIVITY_DATA = [], ACTIVITY_NAME = []
+        const { endDate: SEASON_END_DATE, name: SEASON_NAME, number: SGRSW } = URL_DATA['季节']['endDate']
         const SEASON_START_TIMESTAMP = new Date(URL_DATA['季节']['startDate']).getTime();
-        const SEASON_END_TIMESTAMP = new Date(URL_DATA['季节']['endDate']).getTime();
-        const SEASON_NAME = URL_DATA['季节']['name'];
-        const SEASONAL_GRADUATION_REQUIRES_SEASONAL_WAX = URL_DATA['季节']['number'];
-        const NUMBER_OF_ACTIVITIES = URL_DATA['活动'].length
+        const SEASON_END_TIMESTAMP = new Date(SEASON_END_DATE).getTime();
 
         const CURRENT_TIMESTAMP = Date.now();
         const SEASONAL_REMAINING_TIMESTAMP = SEASON_END_TIMESTAMP - CURRENT_TIMESTAMP;
 
-        if (NUMBER_OF_ACTIVITIES) {
-            for (let i = 0; i < NUMBER_OF_ACTIVITIES; i++) {
-                const EVENT_START_TIMESTAMP = new Date(URL_DATA['活动'][i]['startDate']).getTime();
-                const EVENT_END_TIMESTAMP = new Date(URL_DATA['活动'][i]['endDate']).getTime();
-                const ACTIVITY_REMAINING_TIMESTAMP = EVENT_END_TIMESTAMP - CURRENT_TIMESTAMP;
-                if (ACTIVITY_REMAINING_TIMESTAMP <= 0) continue
-                const ACTIVITIES_REQUIRE_CURRENCY = URL_DATA['活动'][i]['DailyGetNumber']
-                const DAILY_AVAILABLE_CURRENCY = URL_DATA['活动'][i]['number']
-                const { DAYS, HOURS, MINUTES, SECONDS } = {
-                    DAYS: Math.floor(ACTIVITY_REMAINING_TIMESTAMP / (24 * 60 * 60 * 1000)),
-                    HOURS: Math.floor((ACTIVITY_REMAINING_TIMESTAMP % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
-                    MINUTES: Math.floor((ACTIVITY_REMAINING_TIMESTAMP % (60 * 60 * 1000)) / (60 * 1000)),
-                    SECONDS: Math.floor((ACTIVITY_REMAINING_TIMESTAMP % (60 * 1000)) / 1000)
-                };
-                const TOTAL_AVAILABLE = (DAYS + 1) * ACTIVITIES_REQUIRE_CURRENCY
-
-                ACTIVITY_DATA.push(`距离${URL_DATA['活动'][i]['name']}结束还剩\r`)
-                ACTIVITY_DATA.push(`${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒\r`)
-                ACTIVITY_DATA.push(`截至至${URL_DATA['活动'][i]['endDate']}\r`)
-                ACTIVITY_DATA.push(`本活动一共${Math.floor((EVENT_END_TIMESTAMP - EVENT_START_TIMESTAMP) / (24 * 60 * 60 * 1000)) + 1}天\r`)
-                ACTIVITY_DATA.push(`本活动代币物品总计需要: ${DAILY_AVAILABLE_CURRENCY}代币\r`)
-                ACTIVITY_DATA.push(`代币还可获得: ${TOTAL_AVAILABLE}\r从今日开始兑换，${TOTAL_AVAILABLE < DAILY_AVAILABLE_CURRENCY ? '已经来不及了' : '还可以兑换完'}\r`)
-                ACTIVITY_DATA.push(`全部兑换需: ${Math.ceil(DAILY_AVAILABLE_CURRENCY / ACTIVITIES_REQUIRE_CURRENCY)}天\r`)
-                ACTIVITY_NAME.push(URL_DATA['活动'][i]['name'])
-            }
-        }
-
+        let Tips = []
         if (SEASONAL_REMAINING_TIMESTAMP <= 0) {
-            return e.reply([
-                segment.at(e.user_id),
-                `${SEASON_NAME}已结束！请等待下个季节到来.` +
-                `${!ACTIVITY_NAME.length ? `\r当前活动: ${!NUMBER_OF_ACTIVITIES ? '无' : ACTIVITY_NAME.join(',')}` + `\r${ACTIVITY_DATA.join('')}` : ''}`
+            Tips.push(`\r${SEASON_NAME}已结束！请等待下个季节到来.`)
+        } else {
+            const { DAYS, HOURS, MINUTES, SECONDS } = GET_TIME_CONVERSION(SEASONAL_REMAINING_TIMESTAMP)
+            Tips.push(...[
+                `\r距离[${SEASON_NAME}]结束还剩` +
+                `\r${DAYS}天${HOURS}时${MINUTES}分${SECONDS}秒` +
+                `\r截至至${SEASON_END_DATE}` +
+                `\r本季节一共${Math.floor((SEASON_END_TIMESTAMP - SEASON_START_TIMESTAMP) / (24 * 60 * 60 * 1000)) + 1}天` +
+                '\r季蜡还可获得: ' +
+                `\r[有季卡]：${(DAYS + 1) * 6}季蜡` +
+                `\r[无季卡]：${(DAYS + 1) * 5}季蜡` +
+                `\r本季节毕业需：${SGRSW}季蜡` +
+                `\r[有季卡]毕业需：${Math.ceil((SGRSW - 30) / 6)}天` +
+                `\r[无季卡]毕业需：${Math.ceil((SGRSW - 12) / 5)}天` +
+                '\r(无季卡包括非必要的魔法节点)'
             ])
         };
 
-        const { DAYS, HOURS, MINUTES, SECONDS } = {
-            DAYS: Math.floor(SEASONAL_REMAINING_TIMESTAMP / (24 * 60 * 60 * 1000)),
-            HOURS: Math.floor((SEASONAL_REMAINING_TIMESTAMP % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
-            MINUTES: Math.floor((SEASONAL_REMAINING_TIMESTAMP % (60 * 60 * 1000)) / (60 * 1000)),
-            SECONDS: Math.floor((SEASONAL_REMAINING_TIMESTAMP % (60 * 1000)) / 1000)
-        };
+        const NUMBER_OF_ACTIVITIES = URL_DATA['活动'].length
+        let ACTIVITY_DATA = [], ACTIVITY_NAME = []
+        if (NUMBER_OF_ACTIVITIES) {
+            for (let i = 0; i < NUMBER_OF_ACTIVITIES; i++) {
+                const { endDate: EVENT_END_DATE, name: EVENT_NAME, number: DAC } = URL_DATA['活动'][i]
+                const EVENT_START_TIMESTAMP = new Date(URL_DATA['活动'][i]['startDate']).getTime();
+                const EVENT_END_TIMESTAMP = new Date(EVENT_END_DATE).getTime();
+                const ACTIVITY_REMAINING_TIMESTAMP = EVENT_END_TIMESTAMP - CURRENT_TIMESTAMP;
+                if (ACTIVITY_REMAINING_TIMESTAMP <= 0) continue
+                const ACTIVITIES_REQUIRE_CURRENCY = URL_DATA['活动'][i]['DailyGetNumber']
+                const { DAYS, HOURS, MINUTES, SECONDS } = GET_TIME_CONVERSION(ACTIVITY_REMAINING_TIMESTAMP)
+                const TOTAL_AVAILABLE = (DAYS + 1) * ACTIVITIES_REQUIRE_CURRENCY
+
+                ACTIVITY_DATA.push(...[
+                    `距离${EVENT_NAME}结束还剩\r` +
+                    `${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒\r` +
+                    `截至至${EVENT_END_DATE}\r` +
+                    `本活动一共${Math.floor((EVENT_END_TIMESTAMP - EVENT_START_TIMESTAMP) / (24 * 60 * 60 * 1000)) + 1}天\r` +
+                    `本活动代币物品总计需要: ${DAC}代币\r` +
+                    `代币还可获得: ${TOTAL_AVAILABLE}\r从今日开始兑换，${TOTAL_AVAILABLE < DAC ? '已经来不及了' : '还可以兑换完'}\r` +
+                    `全部兑换需: ${Math.ceil(DAC / ACTIVITIES_REQUIRE_CURRENCY)}天\r` +
+                    '▔▔▔▔▔▔\r'
+                ])
+                ACTIVITY_NAME.push(EVENT_NAME)
+            }
+        }
+        Tips.push(...[
+            `\r当前活动: ${!NUMBER_OF_ACTIVITIES ? '无' : ACTIVITY_NAME.join(',')}` +
+            ACTIVITY_DATA.join('')
+        ])
 
         return e.reply([
             segment.at(e.user_id),
-            `\r距离${SEASON_NAME}结束还剩` +
-            `\r${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒` +
-            `\r截至至${URL_DATA['季节']['endDate']}` +
-            `\r本季节一共${Math.floor((SEASON_END_TIMESTAMP - SEASON_START_TIMESTAMP) / (24 * 60 * 60 * 1000)) + 1}天` +
-            '\r季蜡还可获得：' +
-            `\r[有季卡]：${(DAYS + 1) * 6}季蜡` +
-            `\r[无季卡]：${(DAYS + 1) * 5}季蜡` +
-            `\r本季节毕业需：${SEASONAL_GRADUATION_REQUIRES_SEASONAL_WAX}季蜡` +
-            `\r[有季卡]毕业需：${Math.ceil((SEASONAL_GRADUATION_REQUIRES_SEASONAL_WAX - 30) / 6)}天` +
-            `\r[无季卡]毕业需：${Math.ceil((SEASONAL_GRADUATION_REQUIRES_SEASONAL_WAX - 12) / 5)}天` +
-            '\r(无季卡包括非必要的魔法节点)' +
-            '\r▔▔▔' +
-            `\r当前活动: ${!NUMBER_OF_ACTIVITIES ? '无' : ACTIVITY_NAME.join(',')}` +
-            `\r${ACTIVITY_DATA.join('')}`
+            Tips[0].join(''),
+            '\r▔▔▔▔▔▔' +
+            Tips[1].join(''),
         ])
     }
 
@@ -184,3 +179,12 @@ export class SKY extends plugin {
  * @returns {JSON}
  */
 async function GET_URL_DATA(URL) { return await (await fetch(URL)).json() }
+
+function GET_TIME_CONVERSION(TIMESTAMP) {
+    return {
+        DAYS: Math.floor(TIMESTAMP / (24 * 60 * 60 * 1000)),
+        HOURS: Math.floor((TIMESTAMP % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
+        MINUTES: Math.floor((TIMESTAMP % (60 * 60 * 1000)) / (60 * 1000)),
+        SECONDS: Math.floor((TIMESTAMP % (60 * 1000)) / 1000)
+    }
+}
