@@ -137,7 +137,7 @@ export class SKY extends plugin {
             }
         }
         Tips.push([
-            `\r当前活动: ${NUMBER_OF_ACTIVITIES.length === 0 ? '无' : ACTIVITY_NAME.join(',')}` +
+            `\r当前活动: ${ACTIVITY_DATA.length === 0 ? '无' : ACTIVITY_NAME.join(',')}` +
             ACTIVITY_DATA.join('')
         ])
 
