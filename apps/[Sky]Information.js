@@ -131,6 +131,7 @@ export class SKY extends plugin {
                     `\r本活动代币物品总计需要: ${DAC}代币` +
                     `\r代币还可获得: ${TOTAL_AVAILABLE}\r从今日开始兑换，${TOTAL_AVAILABLE < DAC ? '已经来不及了' : '还可以兑换完'}` +
                     `\r全部兑换需: ${Math.ceil(DAC / ACTIVITIES_REQUIRE_CURRENCY)}天` +
+                    `\r备注: ${URL_DATA['活动'][i]['other']}` +
                     '\r▔▔▔▔▔▔\r'
                 ])
                 ACTIVITY_NAME.push(EVENT_NAME)
