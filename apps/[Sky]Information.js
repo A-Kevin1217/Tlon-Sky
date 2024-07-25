@@ -163,7 +163,7 @@ export class SKY extends plugin {
         for (const role of URL_DATA[SEASON_NAME]) {
             const daysNumber = this.getDayDiff(new Date(role.date))
             if (daysNumber.charAt(1) === '-') {
-                msg += `${role.name}当前正在或即将复刻\r`
+                msg += `${role.name} 当前正在复刻或即将复刻\r`
             } else {
                 msg += `${role.name}已[ ${daysNumber} ]天未复刻\r`
             }
