@@ -5,7 +5,9 @@ const LINK = [
     'https://live-queue-sky-merge.game.163.com/queue?type=json',
     'https://ma75.update.netease.com/game_notice/announcement_live.json',
     'https://s.166.net/config/ds_yy_02/ma75_wing_wings.json',
-    'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json'
+    'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json',
+    'https://ma75.update.netease.com/game_notice/announcement_qa.json',
+    'https://ma75.update.netease.com/game_notice/announcement_review.json',
 ]
 export class SKY extends plugin {
     constructor() {
@@ -39,12 +41,14 @@ export class SKY extends plugin {
     }
 
     async F2(e) {
-        const URL_DATA = await GET_URL_DATA(LINK[1])
-
-        const TITLE = URL_DATA['Title']
-        const ANNOUNCEMENT = URL_DATA['OtherChannelMessage'].replace(/<1>|<\/1>/g, '')
-
-        await render('admin/公告', { TITLE, ANNOUNCEMENT, }, { e, scale: 1.4 })
+        for (let i = 0; i < 2; i++) {
+            const LINK_DATA = await GET_URL_DATA(LINK[i === 1 ? 1 : 4])
+            const { Title, OtherChannelMessage } = LINK_DATA
+            await render('admin/公告', {
+                TITLE: Title,
+                ANNOUNCEMENT: OtherChannelMessage.replace(/<1>|<\/1>/g, '')
+            }, { e, scale: 1.4 })
+        }
     }
 
     async F3(e) {
