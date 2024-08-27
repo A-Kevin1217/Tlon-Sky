@@ -2,8 +2,8 @@ import fs from 'fs'; import path from 'path'; import Yaml from 'yaml';
 
 export const pluginPath = path.join(path.resolve(), 'plugins', 'Tlon-Sky');
 const otherFilePath = {
-    push: path.join(pluginPath, 'config', 'push.yaml'),
-    text: path.join(pluginPath, 'config', 'text.json')
+    push: path.join(pluginPath, 'config', 'config', 'push.yaml'),
+    text: path.join(pluginPath, 'config', 'config', 'text.json')
 };
 
 /** 读取推送配置数据 */
