@@ -25,7 +25,7 @@ export class SKY extends plugin {
     }
 
     async F1(e) {
-        let name = [
+        const ancestralNamePool = [
             '火先知', '水先知', '土先知', '风先知',
             '刁蛮浪者', '挑衅艺伎', '敬礼护卫', '舒展大师', '跳跃舞者', '拳礼武僧',
             '蟹语者', '击掌光农', '随性拓荒者', '肩背追光', '静光学者', '螺旋舞冠',
@@ -37,7 +37,7 @@ export class SKY extends plugin {
             '正步冒险家', '傻笑童子军', '白日梦森林人', '管事小队长', '茫然植物学生', '胆小鬼学员',
             '呼风唤雨的统治者', '沾沾自喜的自恋狂', '萎靡不振的士兵', '星光收藏家', '被逼无奈的掌灯人', '打喷嚏的地理学家',
             '风行领航员', '风铃修补匠', '光之低语者', '天才建筑师',
-            //'退休将领','嬉笑炮手','焦虑渔夫','笨拙水手',
+            '退休将领', '嬉笑炮手', '焦虑渔夫', '笨拙水手',
             //'老练音乐家','健忘叙事者','谦虚舞者','忙碌舞台管理员',
             //'远古光辉上','远古光辉下','远古冥暗上','远古冥暗下',
             //'希望之种','爱之战士','细心矿工','奔离旅行者',
@@ -45,10 +45,10 @@ export class SKY extends plugin {
             //'活跃优等生','忧郁自艾者','古怪边缘人','翻滚捣蛋鬼',
         ]
 
-        const RANDOM_NUMBER_1 = Math.ceil(Math.random() * name.length - 1)
-        name.splice(RANDOM_NUMBER_1, 1)
+        const randomValue1 = lodash.sample(ancestralNamePool)
+        const randomValue2 = lodash.sample(ancestralNamePool.filter(a => a !== randomValue1))
 
-        e.reply([`[${name[RANDOM_NUMBER_1]}] || [${name[Math.ceil(Math.random() * name.length - 1)]}]`])
+        e.reply([`以下是我猜的复刻\r[${randomValue1}] | [${randomValue2}]\r功能仅供娱乐`])
     }
 
     async F2(e) {
