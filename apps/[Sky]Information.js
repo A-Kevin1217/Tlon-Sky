@@ -183,6 +183,10 @@ export class Ts extends plugin {
             }
         }
 
+        if (e.adapter === 'QQBot') {
+            return e.reply(msg.join('\r\r'))
+        }
+
         return e.reply(await common.makeForwardMsg(e, msg, '点击查看'))
     }
 
