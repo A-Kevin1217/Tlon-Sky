@@ -2,8 +2,11 @@ import common from "../../../lib/common/common.js";
 import {
     getPushData,
     getPushTextData,
-    storagePushData
+    storagePushData,
+    getCronData
 } from '../function/function.js';
+
+const cronData = getCronData()
 
 const regex = /^[#\/]?(开启|关闭)老奶奶干饭提醒$/
 export class Ts extends plugin {
@@ -20,7 +23,7 @@ export class Ts extends plugin {
         this.task = {
             name: '[定时推送]老奶奶干饭提醒',
             fnc: () => this.Push(),
-            cron: '0 55 7,9,11,15,17,19,21 * * *'
+            cron: cronData['老奶奶干饭']
         }
     }
 
