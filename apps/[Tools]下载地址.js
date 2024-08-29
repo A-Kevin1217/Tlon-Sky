@@ -1,16 +1,3 @@
-/**
- * 光遇各渠道下载链接  
- * [0] 官服  
- * [1] 4399  
- * [2] OPPO  
- * [3] BiliBili  
- * [4] VIVO  
- * [5] 九游  
- * [6] 华为  
- * [7] 小米  
- * [8] 应用宝  
- * [9] 国际服
- */
 const link = [
     'https://sky.163.com',
     'http://a.4399.cn/mobile/112700.html',
@@ -23,14 +10,15 @@ const link = [
     'https://sj.qq.com/appdetail/com.tencent.tmgp.eyou.eygy',
     'https://www.thatskygame.com'
 ]
-export class SKY extends plugin {
+
+export class Ts extends plugin {
     constructor() {
         super({
-            name: '[Tlon-Sky]光遇:下载地址',
-            dsc: 'Tlon-Sky',
+            name: '[Ts]光遇下载地址',
+            dsc: '光遇下载地址',
             event: 'message',
             priority: 1,
-            rule: [{ reg: /^(#|\/)?(光遇下载(链接)?|下载光遇)$/, fnc: 'gameDownloadLink' }]
+            rule: [{ reg: /^[#\/]?(光遇下载(链接)?|下载光遇)$/, fnc: 'gameDownloadLink' }]
         })
     }
 

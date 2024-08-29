@@ -1,4 +1,4 @@
-import fs from 'fs'; import path from 'path'; import Yaml from 'yaml';
+import fs from 'fs'; import path from 'path'; import Yaml from 'yaml'; import fetch from 'node-fetch';
 
 export const pluginPath = path.join(path.resolve(), 'plugins', 'Tlon-Sky');
 const configPath = path.join(pluginPath, 'config', 'config')
@@ -31,4 +31,15 @@ export function getCronData() {
         每日任务: cronData['每日任务'],
         献祭刷新: cronData['献祭刷新']
     }
+}
+
+/** 得到链接数据 */
+export async function getLinkData(link, type) {
+    let linkData = await fetch(link)
+    if (type === 'json') {
+        linkData = await linkData.json()
+    } else if (type === 'text') {
+        linkData = await linkData.text()
+    }
+    return linkData
 }

@@ -1,91 +1,102 @@
-import fetch from 'node-fetch'
-import { render } from '../components/index.js'
+import common from "../../../lib/common/common.js";
+import {
+    getLinkData
+} from '../function/function.js';
 
-const LINK = [
-    'https://live-queue-sky-merge.game.163.com/queue?type=json',
-    'https://ma75.update.netease.com/game_notice/announcement_live.json',
-    'https://s.166.net/config/ds_yy_02/ma75_wing_wings.json',
-    'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json',
-    'https://ma75.update.netease.com/game_notice/announcement_qa.json',
-    'https://ma75.update.netease.com/game_notice/announcement_review.json',
-]
-export class SKY extends plugin {
+export class Ts extends plugin {
     constructor() {
         super({
-            name: '[Tlon-Sky]光遇:信息',
+            name: '[Ts]光遇信息查询',
             dsc: '光遇信息查询',
             event: 'message',
             priority: 1,
             rule: [
-                { reg: /^(#|\/)?(光遇|sky)(服务器)?状态$/i, fnc: 'F1' },
-                { reg: /^(#|\/)?(光遇|sky)公告$/i, fnc: 'F2' },
-                { reg: /^(#|\/)?光翼统计$/, fnc: 'F3' },
-                { reg: /^(#|\/)?(季节|活动)剩余$/, fnc: 'F4' },
-                { reg: /^(#|\/)?(.*)季多久未复刻$/, fnc: 'F5' }
+                { reg: /^[#\/]?(光遇|sky)(服务器)?状态$/i, fnc: 'F1' },
+                { reg: /^[#\/]?(光遇|sky)公告$/i, fnc: 'F2' },
+                { reg: /^[#\/]?光翼统计$/, fnc: 'F3' },
+                { reg: /^[#\/]?(季节|活动)剩余$/, fnc: 'F4' },
+                { reg: /^[#\/]?(.*)季多久未复刻$/, fnc: 'F5' }
             ]
         })
     }
-    getDayDiff(date) {
-        const today = new Date()
-        const timeDiff = today.getTime() - date.getTime()
-        return Math.floor(timeDiff / (1000 * 60 * 60 * 24)).toString().padStart(3, '0')
-    }
+
     async F1(e) {
         try {
-            const URL_DATA = await GET_URL_DATA(LINK[0])
-            if (URL_DATA['ret'] !== 1) return e.reply(['当前SKY服务器畅通，无需排队'])
-            return e.reply([segment.at(e.user_id), `当前排队中\r排队人数：${URL_DATA['pos']} 位\r预计等待时间：${URL_DATA['wait_time']} 秒`])
+            const linkData = await getLinkData('https://live-queue-sky-merge.game.163.com/queue?type=json', 'json')
+
+            if (linkData['ret'] !== 1) {
+                return e.reply(['当前光遇服务器畅通，无需排队'])
+            }
+
+            return e.reply([
+                segment.at(e.user_id),
+                '当前派对中\r',
+                `排队人数：${linkData['pos']} 位\r`,
+                `预计等待时间：${linkData['wait_time']} 秒`
+            ])
         } catch (err) {
-            return e.reply(['光遇服务器异常\r可能正在维护更新'])
+            return e.reply(['光遇服务器异常，可能正在维护更新'])
         }
     }
 
     async F2(e) {
-        for (let i = 0; i < 2; i++) {
-            const LINK_DATA = await GET_URL_DATA(LINK[i === 1 ? 1 : 4])
-            const { Title, OtherChannelMessage } = LINK_DATA
-            await render('admin/公告', {
-                TITLE: Title,
-                ANNOUNCEMENT: OtherChannelMessage.replace(/<1>|<\/1>/g, '')
-            }, { e, scale: 1.4 })
-        }
+        const linkData1 = await getLinkData('https://ma75.update.netease.com/game_notice/announcement_live.json', 'json')
+        const linkData2 = await getLinkData('https://ma75.update.netease.com/game_notice/announcement_qa.json', 'json')
+
+        const { Title, OtherChannelMessage } = linkData1
+        const { Title: Title2, OtherChannelMessage: OtherChannelMessage2 } = linkData2
+
+        const msg = [
+            await common.makeForwardMsg(e, [OtherChannelMessage], Title),
+            await common.makeForwardMsg(e, [OtherChannelMessage2], Title2),
+        ]
+
+        return e.reply(await common.makeForwardMsg(e, msg, '点击查看'))
     }
 
     async F3(e) {
-        const URL_DATA = await GET_URL_DATA(LINK[2])
-        let TAG_COUNTS = {
-            "复刻永久": 0, "普通永久": 0,
-            "晨": 0, "云": 0, "雨": 0, "霞": 0, "暮": 0, "禁": 0, "暴": 0
+        const linkData = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json')
+        let tagCounts = {
+            "复刻永久": 0,
+            "普通永久": 0,
+            "晨": 0,
+            "云": 0,
+            "雨": 0,
+            "霞": 0,
+            "暮": 0,
+            "禁": 0,
+            "暴": 0
         };
-        URL_DATA.forEach(item => {
-            if (item["一级标签"] === "复刻永久") TAG_COUNTS["复刻永久"]++
-            if (item["一级标签"] === "普通永久") TAG_COUNTS["普通永久"]++
-            if (item["一级标签"] === "晨岛") TAG_COUNTS["晨"]++
-            if (item["一级标签"] === "云野") TAG_COUNTS["云"]++
-            if (item["一级标签"] === "雨林") TAG_COUNTS["雨"]++
-            if (item["一级标签"] === "霞谷") TAG_COUNTS["霞"]++
-            if (item["一级标签"] === "暮土") TAG_COUNTS["暮"]++
-            if (item["一级标签"] === "禁阁") TAG_COUNTS["禁"]++
-            if (item["一级标签"] === "暴风眼") TAG_COUNTS["暴"]++
+        linkData.forEach(item => {
+            if (item["一级标签"] === "复刻永久") tagCounts["复刻永久"]++
+            if (item["一级标签"] === "普通永久") tagCounts["普通永久"]++
+            if (item["一级标签"] === "晨岛") tagCounts["晨"]++
+            if (item["一级标签"] === "云野") tagCounts["云"]++
+            if (item["一级标签"] === "雨林") tagCounts["雨"]++
+            if (item["一级标签"] === "霞谷") tagCounts["霞"]++
+            if (item["一级标签"] === "暮土") tagCounts["暮"]++
+            if (item["一级标签"] === "禁阁") tagCounts["禁"]++
+            if (item["一级标签"] === "暴风眼") tagCounts["暴"]++
         });
 
-        return e.reply([
-            `总光翼数量：${URL_DATA.length}`,
-            `\r永久翼：${TAG_COUNTS["复刻永久"] + TAG_COUNTS["普通永久"]}`,
-            `\r复刻先祖永久翼：${TAG_COUNTS["复刻永久"]}`,
-            `\r常驻先祖永久翼：${TAG_COUNTS["普通永久"]}`,
-            `\r晨岛光翼：${TAG_COUNTS["晨"]}`,
-            `\r云野光翼：${TAG_COUNTS["云"]}`,
-            `\r雨林光翼：${TAG_COUNTS["雨"]}`,
-            `\r霞谷光翼：${TAG_COUNTS["霞"]}`,
-            `\r暮土光翼：${TAG_COUNTS["暮"]}`,
-            `\r禁阁光翼：${TAG_COUNTS["禁"]}`,
-            `\r伊甸光翼：${TAG_COUNTS["暴"]}`
-        ])
+        const msg = [
+            `永久翼: ${tagCounts["复刻永久"] + tagCounts["普通永久"]}个`,
+            `复刻先祖永久翼: ${tagCounts["复刻永久"]}`,
+            `常驻先祖永久翼：${tagCounts["普通永久"]}`,
+            `晨岛光翼：${tagCounts["晨"]}`,
+            `云野光翼：${tagCounts["云"]}`,
+            `雨林光翼：${tagCounts["雨"]}`,
+            `霞谷光翼：${tagCounts["霞"]}`,
+            `暮土光翼：${tagCounts["暮"]}`,
+            `禁阁光翼：${tagCounts["禁"]}`,
+            `伊甸光翼：${tagCounts["暴"]}`
+        ]
+
+        return e.reply(await common.makeForwardMsg(e, [msg.join('\r'), '数据来源: 网易大神'], `总光翼数量: ${linkData.length} | 点击查看更多`))
     }
 
     async F4(e) {
-        const URL_DATA = await GET_URL_DATA(LINK[3])
+        const URL_DATA = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json', 'json')
 
         const { endDate: SEASON_END_DATE, name: SEASON_NAME, number: SGRSW } = URL_DATA['季节']
         const SEASON_START_TIMESTAMP = new Date(URL_DATA['季节']['startDate']).getTime();
@@ -156,7 +167,7 @@ export class SKY extends plugin {
 
     async F5(e) {
         const SEASON_NAME = e.msg.replace(/#|\/|季多久未复刻/g, '')
-        const URL_DATA = await GET_URL_DATA(LINK[3].replace(/季节&活动剩余/g, '先祖多久未复刻'))
+        const URL_DATA = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/先祖多久未复刻.json', 'json')
 
         if (!URL_DATA[SEASON_NAME]) return e.reply([
             segment.at(e.user_id),
@@ -165,8 +176,14 @@ export class SKY extends plugin {
 
         let msg = `数据更新时间：${URL_DATA['UPDATE TIME']}\r此表不计入集体复刻\r`
 
+        function getDayDiff(date) {
+            const today = new Date()
+            const timeDiff = today.getTime() - date.getTime()
+            return Math.floor(timeDiff / (1000 * 60 * 60 * 24)).toString().padStart(3, '0')
+        }
+
         for (const role of URL_DATA[SEASON_NAME]) {
-            const daysNumber = this.getDayDiff(new Date(role.date))
+            const daysNumber = getDayDiff(new Date(role.date))
             if (daysNumber.charAt(1) === '-') {
                 msg += `${role.name} 当前正在复刻或即将复刻\r`
             } else {
@@ -177,13 +194,6 @@ export class SKY extends plugin {
         return e.reply([msg.trim()])
     }
 }
-
-/**
- * 请求网络接口并解析为JSON
- * @param {string} URL 网络接口
- * @returns {JSON}
- */
-async function GET_URL_DATA(URL) { return await (await fetch(URL)).json() }
 
 function GET_TIME_CONVERSION(TIMESTAMP) {
     return {
