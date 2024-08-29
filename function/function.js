@@ -15,7 +15,7 @@ export async function getPushData() {
 
 /** 读取推送文案配置数据 */
 export async function getPushTextData() {
-    return await JSON.parse(fs.readFileSync(FILE_PATH['text'], 'utf8'))
+    return await JSON.parse(fs.readFileSync(otherFilePath['text'], 'utf8'))
 }
 
 /** 存储推送配置数据 */
