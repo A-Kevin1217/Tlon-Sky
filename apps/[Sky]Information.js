@@ -96,85 +96,108 @@ export class Ts extends plugin {
     }
 
     async F4(e) {
-        const URL_DATA = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json', 'json')
+        const currentTimestamp = Date.now()
+        const linkData = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json', 'json')
+        const { 季节: season, 活动: activity } = linkData
 
-        const { endDate: SEASON_END_DATE, name: SEASON_NAME, number: SGRSW } = URL_DATA['季节']
-        const SEASON_START_TIMESTAMP = new Date(URL_DATA['季节']['startDate']).getTime();
-        const SEASON_END_TIMESTAMP = new Date(SEASON_END_DATE).getTime();
+        let msg = []
 
-        const CURRENT_TIMESTAMP = Date.now();
-        const SEASONAL_REMAINING_TIMESTAMP = SEASON_END_TIMESTAMP - CURRENT_TIMESTAMP;
+        const {
+            name: seasonName,
+            number: seasonNumber,
+            startDate: seasonStartDate,
+            endDate: seasonEndDate,
+            ancestorsNumber
+        } = season
 
-        let Tips = []
-        if (SEASONAL_REMAINING_TIMESTAMP <= 0) {
-            Tips.push(`\r${SEASON_NAME}已结束！请等待下个季节到来.`)
+        const seasonStartTimestamp = new Date(seasonStartDate).getTime()
+        const seasonEndTimestamp = new Date(seasonEndDate).getTime()
+        const seasonRemainingTimestamp = seasonEndTimestamp - currentTimestamp
+
+        if (seasonRemainingTimestamp <= 0) {
+            msg.push(`${seasonName}已结束 请等待下个季节到来`)
         } else {
-            const { DAYS, HOURS, MINUTES, SECONDS } = GET_TIME_CONVERSION(SEASONAL_REMAINING_TIMESTAMP)
-            Tips.push([
-                `\r距离[${SEASON_NAME}]结束还剩` +
-                `\r${DAYS}天${HOURS}时${MINUTES}分${SECONDS}秒` +
-                `\r截至至${SEASON_END_DATE}` +
-                `\r本季节一共${Math.floor((SEASON_END_TIMESTAMP - SEASON_START_TIMESTAMP) / (24 * 60 * 60 * 1000)) + 1}天` +
-                '\r季蜡还可获得: ' +
-                `\r[有季卡]：${(DAYS + 1) * 6}季蜡` +
-                `\r[无季卡]：${(DAYS + 1) * 5}季蜡` +
-                `\r本季节毕业需：${SGRSW}季蜡` +
-                `\r[有季卡]毕业需：${Math.ceil((SGRSW - 30) / 6)}天` +
-                `\r[无季卡]毕业需：${Math.ceil((SGRSW - 12) / 5)}天` +
-                '\r(无季卡包括非必要的魔法节点)'
-            ])
-        };
+            const { days, hours, minutes, seconds } = Cttrt(seasonRemainingTimestamp);
+            const totalNumberOfDays = Math.floor((seasonEndTimestamp - seasonStartTimestamp) / 86400000) + 1
+            const { YesJKGetNumber, NoJKGetNumber } = {
+                YesJKGetNumber: (days + 1) * 6,
+                NoJKGetNumber: (days + 1) * 5
+            }
 
-        const NUMBER_OF_ACTIVITIES = URL_DATA['活动'].length
-        let ACTIVITY_DATA = [], ACTIVITY_NAME = []
-        if (NUMBER_OF_ACTIVITIES) {
-            for (let i = 0; i < NUMBER_OF_ACTIVITIES; i++) {
-                const { endDate: EVENT_END_DATE, name: EVENT_NAME, number: DAC } = URL_DATA['活动'][i]
-                const EVENT_START_TIMESTAMP = new Date(URL_DATA['活动'][i]['startDate']).getTime();
-                const EVENT_END_TIMESTAMP = new Date(EVENT_END_DATE).getTime();
-                const ACTIVITY_REMAINING_TIMESTAMP = EVENT_END_TIMESTAMP - CURRENT_TIMESTAMP;
-                if (ACTIVITY_REMAINING_TIMESTAMP <= 0) continue
-                const ACTIVITIES_REQUIRE_CURRENCY = URL_DATA['活动'][i]['DailyGetNumber']
-                const { DAYS, HOURS, MINUTES, SECONDS } = GET_TIME_CONVERSION(ACTIVITY_REMAINING_TIMESTAMP)
-                const TOTAL_AVAILABLE = (DAYS + 1) * ACTIVITIES_REQUIRE_CURRENCY
+            const { YesJKGraduationDays, NoJKGraduationDays } = {
+                YesJKGraduationDays: parseInt((seasonNumber - 30) / 6),
+                NoJKGraduationDays: parseInt((seasonNumber - ancestorsNumber * 3) / 5)
+            }
 
-                ACTIVITY_DATA.push(...[
-                    `\r距离${EVENT_NAME}结束还剩` +
-                    `\r${DAYS}天${HOURS}小时${MINUTES}分钟${SECONDS}秒` +
-                    `\r截至至${EVENT_END_DATE}` +
-                    `\r本活动一共${Math.floor((EVENT_END_TIMESTAMP - EVENT_START_TIMESTAMP) / (24 * 60 * 60 * 1000)) + 1}天` +
-                    `\r本活动代币物品总计需要: ${DAC}代币` +
-                    `\r代币还可获得: ${TOTAL_AVAILABLE}\r从今日开始兑换，${TOTAL_AVAILABLE < DAC ? '已经来不及了' : '还可以兑换完'}` +
-                    `\r全部兑换需: ${Math.ceil(DAC / ACTIVITIES_REQUIRE_CURRENCY)}天` +
-                    `\r备注: ${URL_DATA['活动'][i]['other']}` +
-                    '\r▔▔▔▔▔▔\r'
-                ])
-                ACTIVITY_NAME.push(EVENT_NAME)
+            const data = [
+                `距离[${seasonName}]结束还剩`,
+                `${days}天${hours}时${minutes}分${seconds}秒`,
+                `截至至${seasonEndDate}`,
+                `本季节一共${totalNumberOfDays}天`,
+                '季蜡还可获得: ',
+                `[有季卡]: ${YesJKGetNumber}季蜡`,
+                `[无季卡]: ${NoJKGetNumber}季蜡`,
+                `本季节毕业需: ${seasonNumber}季蜡`,
+                `[有季卡]毕业需: ${YesJKGraduationDays}天`,
+                `[无季卡]毕业需: ${NoJKGraduationDays}天`,
+                '(无季卡包括非必要的魔法节点)'
+            ]
+
+            msg.push(data.join('\r'))
+        }
+
+        for (const activityData of activity) {
+            const {
+                name: activityName,
+                number: activityNumber,
+                DailyGetNumber: activityDailyGetNumber,
+                startDate: activityStartDate,
+                endDate: activityEndDate,
+                other: activityOther
+            } = activityData
+
+            const activityStartTimestamp = new Date(activityStartDate).getTime()
+            const activityEndTimestamp = new Date(activityEndDate).getTime()
+            const activityRemainingTimestamp = activityEndDate - currentTimestamp
+
+            if (activityRemainingTimestamp <= 0) {
+                continue
+            } else {
+                const { days, hours, minutes, seconds } = Cttrt(activityRemainingTimestamp);
+                const totalNumberOfDays = Math.floor((activityEndTimestamp - activityStartTimestamp) / 86400000) + 1
+                const remainingObtainableQuantity = (days + 1) * activityDailyGetNumber
+                const graduationDays = parseInt(activityNumber / activityDailyGetNumber)
+
+                const data = [
+                    `距离[${activityName}]结束还剩`,
+                    `${days}天${hours}时${minutes}分${seconds}秒`,
+                    `截至至${activityEndDate}`,
+                    `本活动一共${totalNumberOfDays}天`,
+                    `代币物品总计需要: ${activityNumber}代币`,
+                    `从今天至结束可获得代币: ${remainingObtainableQuantity}枚`,
+                    `全部兑换需: ${graduationDays}天`,
+                    `[备注] ${activityOther}`,
+                ]
+
+                msg.push(data.join('\r'))
             }
         }
-        Tips.push([
-            `\r当前活动: ${ACTIVITY_DATA.length === 0 ? '无' : ACTIVITY_NAME.join(',')}` +
-            ACTIVITY_DATA.join('')
-        ])
 
-        return e.reply([
-            segment.at(e.user_id),
-            Tips[0].join(''),
-            '\r▔▔▔▔▔▔\r' +
-            Tips[1].join('').trim(),
-        ])
+        return e.reply(await common.makeForwardMsg(e, msg, '点击查看'))
     }
 
     async F5(e) {
-        const SEASON_NAME = e.msg.replace(/#|\/|季多久未复刻/g, '')
-        const URL_DATA = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/先祖多久未复刻.json', 'json')
+        const seasonName = e.msg.replace(/#|\/|季多久未复刻/g, '')
+        const linkData = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/先祖多久未复刻.json', 'json')
 
-        if (!URL_DATA[SEASON_NAME]) return e.reply([
-            segment.at(e.user_id),
-            '\r不存在该季节，或该季节尚未开始复刻'
-        ])
+        if (!linkData[seasonName]) {
+            return e.reply([
+                segment.at(e.user_id),
+                '\r不存在该季节，或该季节尚未开始复刻'
+            ])
+        }
 
-        let msg = `数据更新时间：${URL_DATA['UPDATE TIME']}\r此表不计入集体复刻\r`
+        let msg = `数据更新时间：${linkData['UPDATE TIME']}\r此表不计入集体复刻\r`
 
         function getDayDiff(date) {
             const today = new Date()
@@ -182,12 +205,12 @@ export class Ts extends plugin {
             return Math.floor(timeDiff / (1000 * 60 * 60 * 24)).toString().padStart(3, '0')
         }
 
-        for (const role of URL_DATA[SEASON_NAME]) {
+        for (const role of linkData[seasonName]) {
             const daysNumber = getDayDiff(new Date(role.date))
             if (daysNumber.charAt(1) === '-') {
                 msg += `${role.name} 当前正在复刻或即将复刻\r`
             } else {
-                msg += `${role.name}已[ ${daysNumber} ]天未复刻\r`
+                msg += `${role.name}已[${daysNumber}]天未复刻\r`
             }
         }
 
@@ -195,11 +218,11 @@ export class Ts extends plugin {
     }
 }
 
-function GET_TIME_CONVERSION(TIMESTAMP) {
+function Cttrt(timestamp) {
     return {
-        DAYS: Math.floor(TIMESTAMP / (24 * 60 * 60 * 1000)),
-        HOURS: Math.floor((TIMESTAMP % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
-        MINUTES: Math.floor((TIMESTAMP % (60 * 60 * 1000)) / (60 * 1000)),
-        SECONDS: Math.floor((TIMESTAMP % (60 * 1000)) / 1000)
+        days: Math.floor(timestamp / (24 * 60 * 60 * 1000)),
+        hours: Math.floor((timestamp % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
+        minutes: Math.floor((timestamp % (60 * 60 * 1000)) / (60 * 1000)),
+        seconds: Math.floor((timestamp % (60 * 1000)) / 1000)
     }
 }
