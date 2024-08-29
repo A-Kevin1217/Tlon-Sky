@@ -50,16 +50,16 @@ export class SKY extends plugin {
             ]
         } else {
             msg = [
-                `官服: ${link[1]}`,
-                `\r4399渠道服: ${link[2]}`,
-                `\rOPPO渠道服: ${link[3]}`,
-                `\rBiliBili渠道服: ${link[4]}`,
-                `\rVIVO渠道服: ${link[5]}`,
-                `\r九游渠道服: ${link[6]}`,
-                `\r华为渠道服: ${link[7]}`,
-                `\r小米渠道服: ${link[8]}`,
-                `\r应用宝渠道服: ${link[9]}`,
-                `\r国际服: ${link[10]}`
+                `官服: ${link[0]}`,
+                `\r4399渠道服: ${link[1]}`,
+                `\rOPPO渠道服: ${link[2]}`,
+                `\rBiliBili渠道服: ${link[3]}`,
+                `\rVIVO渠道服: ${link[4]}`,
+                `\r九游渠道服: ${link[5]}`,
+                `\r华为渠道服: ${link[6]}`,
+                `\r小米渠道服: ${link[7]}`,
+                `\r应用宝渠道服: ${link[8]}`,
+                `\r国际服: ${link[9]}`
             ]
         }
         return e.reply(msg)
