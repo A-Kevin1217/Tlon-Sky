@@ -158,7 +158,7 @@ export class Ts extends plugin {
 
             const activityStartTimestamp = new Date(activityStartDate).getTime()
             const activityEndTimestamp = new Date(activityEndDate).getTime()
-            const activityRemainingTimestamp = activityEndDate - currentTimestamp
+            const activityRemainingTimestamp = activityEndTimestamp - currentTimestamp
 
             if (activityRemainingTimestamp <= 0) {
                 continue
