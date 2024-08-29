@@ -43,8 +43,8 @@ export class SKY extends plugin {
             msg = [
                 '# 请点击下方按钮跳转下载',
                 Bot.Button([
-                    [bd('官服', link[0]), bd('4399', link[1])]
-                    [bd('OPPO', link[2]), bd('BiliBili', link[3]), bd('VIVO', link[4]), bd('九游', link[5])]
+                    [bd('官服', link[0]), bd('4399', link[1])],
+                    [bd('OPPO', link[2]), bd('BiliBili', link[3]), bd('VIVO', link[4]), bd('九游', link[5])],
                     [bd('华为', link[6]), bd('小米', link[7]), bd('应用宝', link[8]), bd('国际服', link[9])]
                 ])
             ]
