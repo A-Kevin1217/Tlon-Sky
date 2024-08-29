@@ -27,7 +27,7 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 
 如何更新？
  - 使用Yunzai自带指令`#全部更新`或指令`#光遇更新`
- - 运行`UPDATE.bat`文件，位置在"Yunzai/plugins/Tlon-Sky"内
+ - 运行`UPDATE.bat`文件，位置在`插件目录`内
 
 ## 功能
 发送`光遇菜单`或`光遇娱乐菜单`查看
