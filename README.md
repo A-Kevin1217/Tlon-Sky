@@ -31,3 +31,9 @@ git clone https://gitee.com/Tloml-Starry/Tlon-Sky.git ./plugins/Tlon-Sky/
 
 ## 功能
 发送`光遇菜单`或`光遇娱乐菜单`查看
+
+## 推送文案修改
+在`config/config/text.json`内修改  
+是否at全体`all`  
+文本`text`  
+图片`image`
