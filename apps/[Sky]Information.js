@@ -125,8 +125,8 @@ export class Ts extends plugin {
             }
 
             const { YesJKGraduationDays, NoJKGraduationDays } = {
-                YesJKGraduationDays: parseInt((seasonNumber - 30) / 6),
-                NoJKGraduationDays: parseInt((seasonNumber - ancestorsNumber * 3) / 5)
+                YesJKGraduationDays: Math.ceil((seasonNumber - 30) / 6),
+                NoJKGraduationDays: Math.ceil((seasonNumber - ancestorsNumber * 3) / 5)
             }
 
             const data = [
@@ -166,7 +166,7 @@ export class Ts extends plugin {
                 const { days, hours, minutes, seconds } = Cttrt(activityRemainingTimestamp);
                 const totalNumberOfDays = Math.floor((activityEndTimestamp - activityStartTimestamp) / 86400000) + 1
                 const remainingObtainableQuantity = (days + 1) * activityDailyGetNumber
-                const graduationDays = parseInt(activityNumber / activityDailyGetNumber)
+                const graduationDays = Math.ceil(activityNumber / activityDailyGetNumber)
 
                 const data = [
                     `距离[${activityName}]结束还剩`,
