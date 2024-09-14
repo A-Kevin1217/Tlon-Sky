@@ -30,7 +30,7 @@ export class Ts extends plugin {
 
             return e.reply([
                 segment.at(e.user_id),
-                '当前派对中\r',
+                '当前排队中\r',
                 `排队人数：${linkData['pos']} 位\r`,
                 `预计等待时间：${linkData['wait_time']} 秒`
             ])
