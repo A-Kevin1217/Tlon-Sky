@@ -51,7 +51,6 @@ export class SKY extends plugin {
       TYPE = '复刻记录'
     }
 
-    if (U_MSG === '透明身高图') U_MSG = '身高透明图'
-    return e.reply([segment.image(`${SKY_IMAGE_URL['A']}${TYPE}/${U_MSG}.${U_MSG === '身高透明图' ? 'png' : 'jpg'}`)])
+    return e.reply([segment.image(`${SKY_IMAGE_URL['A']}${TYPE}/${U_MSG}.${U_MSG === '透明身高图' ? 'png' : 'jpg'}`)])
   }
 }
