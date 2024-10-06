@@ -1,4 +1,5 @@
 import common from "../../../lib/common/common.js";
+import { render } from './../components/index.js'
 import {
     getLinkData
 } from '../function/function.js';
@@ -12,7 +13,7 @@ export class Ts extends plugin {
             priority: 1,
             rule: [
                 { reg: /^[#\/]?(光遇|sky)(服务器)?状态$/i, fnc: 'F1' },
-                { reg: /^[#\/]?(光遇|sky)公告$/i, fnc: 'F2' },
+                { reg: /^[#\/]?(光遇|sky)公告$/i, fnc: 'skyAnnouncement' },
                 { reg: /^[#\/]?光翼统计$/, fnc: 'F3' },
                 { reg: /^[#\/]?(季节|活动)剩余$/, fnc: 'F4' },
                 { reg: /^[#\/]?(.*)季多久未复刻$/, fnc: 'F5' }
@@ -39,19 +40,8 @@ export class Ts extends plugin {
         }
     }
 
-    async F2(e) {
-        const linkData1 = await getLinkData('https://ma75.update.netease.com/game_notice/announcement_live.json', 'json')
-        const linkData2 = await getLinkData('https://ma75.update.netease.com/game_notice/announcement_qa.json', 'json')
-
-        const { Title, OtherChannelMessage } = linkData1
-        const { Title: Title2, OtherChannelMessage: OtherChannelMessage2 } = linkData2
-
-        const msg = [
-            await common.makeForwardMsg(e, [OtherChannelMessage], Title),
-            await common.makeForwardMsg(e, [OtherChannelMessage2], Title2),
-        ]
-
-        return e.reply(await common.makeForwardMsg(e, msg, '点击查看'))
+    async skyAnnouncement(e) {
+        return render('admin/skyAnnouncement', {}, { e, scale: 1.4 })
     }
 
     async F3(e) {

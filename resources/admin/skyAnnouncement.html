@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公告</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #525252;
+            color: white;
+        }
+
+        .announcement {
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            width: 80%;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            background-color: #000;
+        }
+
+        .highlight {
+            background-color: #808080;
+            color: #000;
+        }
+
+        .announcements-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .divider {
+            width: 2px;
+            background-color: black;
+            margin: 0 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>光遇公告</h1>
+    <p>(右边为抢跑公告，光遇临近时显示内容与左边不一样)</p>
+    <div class="announcements-container">
+        <div id="announcements-left"></div>
+        <div class="divider"></div>
+        <div id="announcements-right"></div>
+    </div>
+
+    <script>
+        async function fetchAnnouncements() {
+            try {
+                const response1 = await fetch('https://ma75.update.netease.com/game_notice/announcement_live.json');
+                const data1 = await response1.json();
+
+                const response2 = await fetch('https://ma75.update.netease.com/game_notice/announcement_qa.json');
+                const data2 = await response2.json();
+
+                const announcementsLeft = document.getElementById('announcements-left');
+                const announcementsRight = document.getElementById('announcements-right');
+
+                announcementsLeft.innerHTML = createAnnouncementHTML(data1);
+                announcementsRight.innerHTML = createAnnouncementHTML(data2);
+
+            } catch (error) {
+                console.error('获取公告失败:', error);
+            }
+        }
+
+        function createAnnouncementHTML(data) {
+            const announcementDiv = document.createElement('div');
+            announcementDiv.className = 'announcement';
+
+            if (data.Title && data.OtherChannelMessage) {
+                announcementDiv.innerHTML = `
+                    <h2>${data.Title}</h2>
+                    <div>${formatMessage(data.OtherChannelMessage)}</div>
+                `;
+            } else {
+                announcementDiv.innerHTML = `<p>公告内容未定义</p>`;
+            }
+
+            return announcementDiv.outerHTML;
+        }
+
+        function formatMessage(message) {
+            return message
+                .replace(/【(.*?)】/g, '<h3>$1</h3>')
+                .replace(/\n/g, '<br>')
+                .replace(/^(.*)$/gm, '· $1');
+        }
+
+        window.onload = fetchAnnouncements;
+    </script>
+</body>
+
+</html>
