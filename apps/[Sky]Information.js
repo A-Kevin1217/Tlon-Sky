@@ -87,7 +87,7 @@ export class Ts extends plugin {
 
     async F4(e) {
         const data = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json', 'json')
-        return render('admin/季节&活动剩余', { data }, { e, scale: 1.4 })
+        return render('admin/季节&活动剩余', { data: JSON.stringify(data) }, { e, scale: 1.4 })
     }
 
     async F5(e) {
