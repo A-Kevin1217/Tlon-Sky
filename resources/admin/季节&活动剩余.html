@@ -131,7 +131,7 @@
 
                 data.forEach(item => {
                     const p = document.createElement('p');
-                    p.textContent = item;
+                    p.innerHTML = item;
                     seasonInfoDiv.appendChild(p);
                 });
             }
@@ -171,7 +171,7 @@
 
                     data.forEach(item => {
                         const p = document.createElement('p');
-                        p.textContent = item;
+                        p.innerHTML = item;
                         activityInfoDiv.appendChild(p);
                     });
                 }
