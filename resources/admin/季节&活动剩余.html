@@ -12,7 +12,8 @@
             color: #e0e0e0;
             margin: 0;
             padding: 20px;
-            width: 1200px;
+            width: 800px;
+            font-size: 24px;
         }
 
         .container {
@@ -27,19 +28,21 @@
         h1 {
             text-align: center;
             color: #4CAF50;
+            font-size: 30px;
+            margin: 10px 0;
         }
 
         p {
             line-height: 1.6;
+            font-size: 22px;
+            margin: 5px 0;
         }
 
         a {
             color: #4CAF50;
             text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
+            font-size: 22px;
+            margin: 5px 0;
         }
 
         .flex-container {
@@ -116,8 +119,8 @@
                 };
 
                 const data = [
-                    `距离[${seasonName}]结束还剩`,
-                    `<span style="color: green;">${days}</span>天<span style="color: green;">${hours}</span>时<span style="color: green;">${minutes}</span>分<span style="color: green;">${seconds}</span>秒`,
+                    `距离<strong style="color: #FFD700;">[${seasonName}]</strong>结束还剩`,
+                    `<span style="color: #4CAF50;">${days}</span>天<span style="color: #4CAF50;">${hours}</span>时<span style="color: #4CAF50;">${minutes}</span>分<span style="color: #4CAF50;">${seconds}</span>秒`,
                     `截至至${seasonEndDate}`,
                     `本季节一共${totalNumberOfDays}天`,
                     '季蜡还可获得: ',
@@ -159,13 +162,13 @@
                     const graduationDays = Math.ceil(activityNumber / activityDailyGetNumber);
 
                     const data = [
-                        `距离[${activityName}]结束还剩`,
-                        `<span style="color: green;">${days}</span>天<span style="color: green;">${hours}</span>时<span style="color: green;">${minutes}</span>分<span style="color: green;">${seconds}</span>秒`,
+                        `距离<strong style="color: #FFD700;">[${activityName}]</strong>结束还剩`,
+                        `<span style="color: #4CAF50;">${days}</span>天<span style="color: #4CAF50;">${hours}</span>时<span style="color: #4CAF50;">${minutes}</span>分<span style="color: #4CAF50;">${seconds}</span>秒`,
                         `截至至${activityEndDate}`,
                         `本活动一共${totalNumberOfDays}天`,
                         `代币物品总计需要: ${activityNumber}代币`,
-                        `从今天至结束可获得代币: <span style="color: green;">${remainingObtainableQuantity}</span>枚`,
-                        `全部兑换需: <span style="color: green;">${graduationDays}</span>天`,
+                        `从今天至结束可获得代币: ${remainingObtainableQuantity}枚`,
+                        `全部兑换需: ${graduationDays}天`,
                         `[备注] ${activityOther}`,
                     ];
 
