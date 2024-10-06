@@ -26,7 +26,7 @@ export default async function (path, params, cfg, text, button) {
       scale: `style=transform:scale(${cfg.scale || 1})`,
       copyright: `Tlon-Sky<span class="version">${Version.version}</span>`
     },
-    quality: 100
+    quality: 200
   }
   if (process.argv.includes('web-debug')) {
     let saveDir = _path + '/data/ViewData/'
