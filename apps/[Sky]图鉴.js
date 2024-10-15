@@ -1,3 +1,5 @@
+import { render } from './../components/index.js'
+import fetch from 'node-fetch'
 const SEARCH_PATTERNS = [
   /^(#|\/)?((?:季节|好友树|复刻|晨岛|云野|雨林|峡谷|霞谷|暮土|禁阁|AURORA|表演|风行|感恩|归(?:巢|属)|九色鹿|梦想|魔法|破晓|潜海|圣岛|拾光|小王子|夜行|音韵|预言|重组|追(?:光|忆)|欧若拉|集结|凌冬|筑巢|二重奏|姆明)(?:季)?兑换图)$/i,
   /^(#|\/)?(国服复刻|全图鉴参考|身高(?:(?:透明)?图|进阶知识)|蜡烛合成机制|(?:身高)?测量规则)$/
@@ -31,9 +33,34 @@ export class SKY extends plugin {
   }
 
   async handleDuplicateRecording(e) {
-    const years = ['20', '21', '22', '23', '24']
-    const images = years.map(year => segment.image(`${SKY_IMAGE_URL['A']}复刻记录/${year}年复刻记录.jpg`))
-    return e.reply(images)
+    const data = await (await fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/Sky%20Children%20of%20the%20Light/%E5%A4%8D%E5%88%BB%E8%AE%B0%E5%BD%95.json')).json()
+
+    let html = '';
+    data.forEach(yearData => {
+      yearData.yearRecord.forEach((monthData, j) => {
+        monthData.monthRecord.forEach((dayData, k) => {
+          html += `<tr>`;
+          if (j === 0 && k === 0) html += `<td rowspan="${yearData.count}">${yearData.year}</td>`;
+          if (k === 0) html += `<td rowspan="${monthData.monthRecord.length}">${monthData.month}</td>`;
+          html += `<td>${dayData.day}</td>`;
+
+          const platformName = dayData.platform === 'IOS' ? dayData.name : '——';
+          html += `<td>${platformName}</td>`;
+          html += `${dayData.platform === 'IOS' && dayData.day === 19 ? '<td rowspan="9" class="count-0">未开服</td>' : dayData.platform === 'android' ? `<td>${dayData.name}</td>` : dayData.platform === 'All' ? `<td rowspan="2">${dayData.name}</td>` : ''}`;
+
+          html += `<td class="count-${dayData.count.i}">${dayData.count.i || '——'}</td>`;
+          html += `<td class="count-${dayData.count.a}">${dayData.count.a || '——'}</td>`;
+          html += `<td>${dayData.price['🕯']}</td>`;
+          html += `<td>${dayData.price['❤️']}</td>`;
+          html += `<td>${dayData.season}</td>`;
+          html += `</tr>`;
+        });
+      });
+    });
+
+    return render('admin/复刻记录', {
+      html
+    }, { e, scale: 1.4 })
   }
 
   async handleImageQuery(e) {
