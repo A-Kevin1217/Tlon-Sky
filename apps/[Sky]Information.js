@@ -25,16 +25,32 @@ export class Ts extends plugin {
         try {
             const linkData = await getLinkData('https://live-queue-sky-merge.game.163.com/queue?type=json', 'json')
 
+            let msg = []
             if (linkData['ret'] !== 1) {
-                return e.reply(['当前光遇服务器畅通，无需排队'])
+                msg = ['当前光遇服务器畅通，无需排队']
+            } else {
+                msg = [
+                    segment.at(e.user_id),
+                    '当前排队中\r',
+                    `排队人数：${linkData['pos']} 位\r`,
+                    `预计等待时间：${linkData['wait_time']} 秒`
+                ]
+            }
+            let platform = e.bot?.adapter?.name || e.platform || '未知'
+            if (platform === 'QQBot') {
+                if (typeof Bot.Button === 'function') {
+                    function bd(label, callback) {
+                        return { label, callback }
+                    }
+                    msg.push(Bot.Button([[bd('再次查询', '光遇服务器状态')]]))
+                } else if (typeof segment?.button === 'function') {
+                    msg.push(segment.button([
+                        { text: '再次查询', callback: '光遇服务器状态' }
+                    ]))
+                }
             }
 
-            return e.reply([
-                segment.at(e.user_id),
-                '当前排队中\r',
-                `排队人数：${linkData['pos']} 位\r`,
-                `预计等待时间：${linkData['wait_time']} 秒`
-            ])
+            return e.reply(msg)
         } catch (err) {
             return e.reply(['光遇服务器异常，可能正在维护更新'])
         }
