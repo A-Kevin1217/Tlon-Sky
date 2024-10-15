@@ -23,19 +23,33 @@ export class Ts extends plugin {
     }
 
     async gameDownloadLink(e) {
+        let platform = e.bot?.adapter?.name || e.platform || '未知'
         let msg = []
-        if (e.adapter === 'QQBot') {
-            function bd(label, link) {
-                return { label, link }
+        
+        if (platform === 'QQBot') {
+            if (typeof Bot.Button === 'function') {
+                function bd(label, link) {
+                    return { label, link }
+                }
+                msg = [
+                    '# 请点击下方按钮跳转下载',
+                    Bot.Button([
+                        [bd('官服', link[0]), bd('4399', link[1])],
+                        [bd('OPPO', link[2]), bd('BiliBili', link[3]), bd('VIVO', link[4]), bd('九游', link[5])],
+                        [bd('华为', link[6]), bd('小米', link[7]), bd('应用宝', link[8]), bd('国际服', link[9])]
+                    ])
+                ]
+            } else if (typeof segment?.button === 'function') {
+                msg = [
+                    '请点击下方按钮跳转下载',
+                    segment.button([
+                        { text: '官服', link: link[0] }, { text: '4399', link: link[1] }
+                    ],[
+                        { text: 'OPPO', link: link[2] }, { text: 'BiliBili', link: link[3] }, { text: 'VIVO', link: link[4] }, { text: '九游', link: link[5] }
+                    ],[{ text: '华为', link: link[6] }, { text: '小米', link: link[7] }, { text: '应用宝', link: link[8] }, { text: '国际服', link: link[9] }
+                    ]
+                )]
             }
-            msg = [
-                '# 请点击下方按钮跳转下载',
-                Bot.Button([
-                    [bd('官服', link[0]), bd('4399', link[1])],
-                    [bd('OPPO', link[2]), bd('BiliBili', link[3]), bd('VIVO', link[4]), bd('九游', link[5])],
-                    [bd('华为', link[6]), bd('小米', link[7]), bd('应用宝', link[8]), bd('国际服', link[9])]
-                ])
-            ]
         } else {
             msg = [
                 `官服: ${link[0]}`,
