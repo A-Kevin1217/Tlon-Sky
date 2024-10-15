@@ -33,7 +33,7 @@ export class SKY extends plugin {
   }
 
   async handleDuplicateRecording(e) {
-    const data = await (await fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/Sky%20Children%20of%20the%20Light/%E5%A4%8D%E5%88%BB%E8%AE%B0%E5%BD%95.json')).json()
+    const data = await (await fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json')).json()
 
     let html = '';
     data.forEach(yearData => {
