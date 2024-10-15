@@ -49,6 +49,8 @@ export class SKY extends plugin {
             html += `<td colspan="2">${dayData.name}</td>`
           } else if (platform === 'IOS' && dayData.day === 19) {
             html += `<td>${dayData.name}</td><td rowspan="9" class="count-0">未开服</td>`
+          } else if (platform === 'IOS') {
+            html += `<td>${dayData.name}</td>`
           } else {
             html += `<td class="count-0">——</td><td>${dayData.name}</td>`
           }
