@@ -46,7 +46,7 @@ export class SKY extends plugin {
 
           const platformName = dayData.platform === 'IOS' ? dayData.name : '——';
           html += `<td>${platformName}</td>`;
-          html += `${dayData.platform === 'IOS' && dayData.day === 19 ? '<td rowspan="9" class="count-0">未开服</td>' : dayData.platform === 'android' ? `<td>${dayData.name}</td>` : dayData.platform === 'All' ? `<td rowspan="2">${dayData.name}</td>` : ''}`;
+          html += `${dayData.platform === 'IOS' && dayData.day === 19 ? '<td rowspan="9" class="count-0">未开服</td>' : dayData.platform === 'Android' ? `<td>${dayData.name}</td>` : dayData.platform === 'All' ? `<td rowspan="2">${dayData.name}</td>` : ''}`;
 
           html += `<td class="count-${dayData.count.i}">${dayData.count.i || '——'}</td>`;
           html += `<td class="count-${dayData.count.a}">${dayData.count.a || '——'}</td>`;
