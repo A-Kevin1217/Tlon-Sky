@@ -66,7 +66,7 @@ export class SKY extends plugin {
           for (let i = 0; i < seasonalSpiritsData.length; i++) {
             if (seasonalSpiritsData[i].spirits.includes(dayData.name)) {
               season = seasonalSpiritsData[i].name
-              continue
+              break
             }
             season = '未匹配'
           }
