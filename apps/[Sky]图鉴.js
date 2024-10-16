@@ -15,7 +15,7 @@ export class SKY extends plugin {
       rule: [
         { reg: SEARCH_PATTERNS[0], fnc: 'handleImageQuery' },
         { reg: SEARCH_PATTERNS[1], fnc: 'handleImageQuery' },
-        { reg: /^(#|\/)?(20|21|22|23|24)年复刻记录$/, fnc: 'handleDuplicateRecording' }
+        { reg: /^(#|\/)?(20|21|22|23|24)年复刻记录$/, fnc: 'regressionRecords' }
       ]
     })
 
@@ -32,11 +32,13 @@ export class SKY extends plugin {
     }
   }
 
-  async handleDuplicateRecording(e) {
-    const data = await (await fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json')).json()
+  async RegressionRecords(e) {
+    const link = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/'
+    const regressionRecordsData = await (await fetch(link + 'RegressionRecords.json')).json()
+    const seasonalSpiritsData = await (await fetch(link + 'SeasonalSpirits.json')).json()
 
     let html = '';
-    data.forEach(yearData => {
+    regressionRecordsData.forEach(yearData => {
       yearData.yearRecord.forEach((monthData, j) => {
         monthData.monthRecord.forEach((dayData, k) => {
           html += `<tr>`;
@@ -59,7 +61,16 @@ export class SKY extends plugin {
           html += `<td class="count-${dayData.count.a}">${dayData.count.a || '——'}</td>`;
           html += `<td>${dayData.price['🕯']}</td>`;
           html += `<td>${dayData.price['❤️']}</td>`;
-          html += `<td>${dayData.season}</td>`;
+
+          let season = ''
+          for (let i = 0; i < seasonalSpiritsData.length; i++) {
+            if (seasonalSpiritsData[i].spirits.includes(dayData.name)) {
+              season = seasonalSpiritsData[i].name
+              continue
+            }
+            season = '未匹配'
+          }
+          html += `<td>${season}</td>`;
           html += `</tr>`;
         });
       });
