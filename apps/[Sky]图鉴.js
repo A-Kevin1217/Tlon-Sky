@@ -32,7 +32,7 @@ export class SKY extends plugin {
     }
   }
 
-  async RegressionRecords(e) {
+  async regressionRecords(e) {
     const link = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/'
     const regressionRecordsData = await (await fetch(link + 'RegressionRecords.json')).json()
     const seasonalSpiritsData = await (await fetch(link + 'SeasonalSpirits.json')).json()
