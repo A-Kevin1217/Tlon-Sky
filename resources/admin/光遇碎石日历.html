@@ -4,355 +4,309 @@
  第二次改版：[小i](QQ: 3446914493)
   -->
 
-<head>
+  <head>
     <meta charset="UTF-8">
-    <title>简单日历效果</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光遇碎石日历</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f0f4f8;
+            --text-color: #333;
+            --accent-red: #ff6b6b;
+            --accent-black: #2d3436;
         }
-
-        ul {
-            display: flex;
-            flex-direction: row;
-        }
-
-        li {
-            display: block;
-            list-style: none;
-        }
-
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #e0e5ec;
+            padding: 20px;
         }
-
-        .cal-container {
-            display: flex;
-            flex-direction: column;
-            width: 600px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            background-color: #ffffff;
+        .calendar {
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
             border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-
-        .cal-container .year-month {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            /* 修改为蓝粉色渐变色 */
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #74b9ff);
             color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            position: relative;
         }
-
-        .cal-container .year-month>div:first-child>span {
-            display: block;
-            margin-bottom: 5px;
+        .month-year {
+            font-size: 36px;
             font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
-
-        .cal-container .year-month>div:first-child>span:first-child {
-            font-size: 40px;
-        }
-
-        .cal-container .year-month>div:first-child>span:last-child {
-            font-size: 25px;
-        }
-
-        .cal-container .year-month .pre,
-        .cal-container .year-month .next {
+        .nav-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
             position: absolute;
             top: 50%;
-            height: 40px;
-            transform: translateY(-20px);
-            margin: 0 20px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
+            transform: translateY(-50%);
+            padding: 10px;
+            transition: all 0.3s ease;
         }
-
-        .cal-container .year-month .pre {
+        .nav-button:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        .prev-month {
             left: 20px;
         }
-
-        .cal-container .year-month .next {
+        .next-month {
             right: 20px;
         }
-
-        .cal-container .year-month .pre:hover,
-        .cal-container .year-month .next:hover {
-            transform: translateY(-20px) scale(1.2);
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: 600;
+            background-color: var(--secondary-color);
+            padding: 15px 0;
+            font-size: 18px;
+            color: var(--text-color);
         }
-
-        .cal-container .weeks>ul,
-        .cal-container .days>ul {
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+        .day {
+            aspect-ratio: 1;
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            width: 100%;
-            padding: 0 2.5px;
-            background-color: #f8f9fa;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 15px;
+            position: relative;
+            padding: 10px;
+            min-height: 100px;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+            overflow: hidden;
+            font-size: 14px;
         }
-
-        .cal-container .days>ul {
-            padding: 20px 0;
-            background-color: #e9ecef;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.5);
+        .day:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        .cal-container .weeks>ul>li {
-            width: 85px;
-            font-size: 20px;
+        .day.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .day-number {
             font-weight: 700;
-            color: #343a40;
-            text-align: center;
-            line-height: 50px;
-        }
-
-        .style-default {
-            width: 50px;
-            height: 50px;
-            margin: 0 17.5px;
             font-size: 20px;
-            font-weight: 700;
-            color: #343a40;
+            margin-bottom: 2px;
+        }
+        .special-info {
+            font-size: 10px;
             text-align: center;
-            line-height: 50px;
-            border-radius: 50%;
-            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            line-height: 1.2;
         }
-
-        .days>ul .style-default:hover {
-            background-color: #dee2e6;
-            transform: scale(1.1);
+        .red-stone {
+            color: var(--accent-red);
         }
-
-        .cal-container .days>ul .bg-style {
-            background-color: #ff6a00;
-            color: white;
+        .black-stone {
+            color: var(--accent-black);
         }
-
-        .cal-container .days>ul .bgg-style {
-            background-color: #ff0000;
-            color: white;
+        .selected-date {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            border-top: 1px solid #e0e0e0;
         }
-
-        .cal-container .days>ul .bggg-style {
-            background-color: #6c757d;
-            color: white;
+        .selected-date .special-info {
+            font-size: 16px;
+            margin-top: 10px;
         }
-
-        .no-style {
-            width: 50px;
-            height: 50px;
-            margin: 0 17.5px;
+        .time-slots {
+            font-size: 9px;
+            text-align: center;
+            margin-top: 2px;
+            color: #555;
+        }
+        @media (max-width: 600px) {
+            .calendar {
+                max-width: 100%;
+            }
+            .day {
+                min-height: 80px;
+                font-size: 14px;
+            }
+            .day-number {
+                font-size: 18px;
+            }
+            .special-info, .time-slots {
+                font-size: 10px;
+            }
+        }
+        @media (max-width: 400px) {
+            .day {
+                font-size: 12px;
+            }
+            .day-number {
+                font-size: 16px;
+            }
+            .special-info, .time-slots {
+                font-size: 8px;
+            }
         }
     </style>
 </head>
-
 <body>
-    <div class="cal-container">
-        <div class="year-month">
-            <div>
-                <span id="month"></span>
-                <span id="year" style="position: relative;position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) translateY(120%);"></span>
-            </div>
-            <div class="pre" id="pre-month">&lt;</div>
-            <div class="next" id="next-month">&gt;</div>
+    <div class="calendar">
+        <div class="header">
+            <button class="nav-button prev-month" aria-label="上个月">&lt;</button>
+            <div class="month-year"></div>
+            <button class="nav-button next-month" aria-label="下个月">&gt;</button>
         </div>
-        <div class="weeks">
-            <ul>
-                <li>一</li>
-                <li>二</li>
-                <li>三</li>
-                <li>四</li>
-                <li>五</li>
-                <li>六</li>
-                <li>七</li>
-            </ul>
-        </div>
-        <div class="days">
-            <ul id="day"></ul>
-        </div>
+        <div class="weekdays"></div>
+        <div class="days"></div>
+        <div class="selected-date"></div>
     </div>
+
     <script>
-        let date = new Date();
-        Y = date.getFullYear();
-        M = date.getMonth();
-        W = date.getDay();
-        D = date.getDate();
-        isSelect = true;
+        const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+        const weekDays = ["一", "二", "三", "四", "五", "六", "日"];
+        let currentDate = new Date();
+        let selectedDate = null;
 
-        let yearNow = document.getElementById("year");
-        yearNow.innerHTML = Y;
-        let monthNow = document.getElementById("month");
-        monthNow.innerHTML = monthAndMaxDay(Y, M)[0];
-        selected(isSelect);
-        let days = document.getElementById("day");
-        updateAllDays(Y, M);
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
 
-        yearNow.addEventListener("click", function () {
-            isSelect = false
-            selected(isSelect);
-        });
-        monthNow.addEventListener("click", function () {
-            isSelect = true;
-            selected(isSelect);
-        });
+            document.querySelector('.month-year').textContent = `${year}年 ${monthNames[month]}`;
 
-        let previous = document.getElementById("pre-month");
-        previous.addEventListener("click", function () { changePage(true); });
-        let next = document.getElementById("next-month");
-        next.addEventListener("click", function () { changePage(false); });
+            const weekdaysContainer = document.querySelector('.weekdays');
+            weekdaysContainer.innerHTML = weekDays.map(day => `<div>${day}</div>`).join('');
 
-        function monthAndMaxDay(year, month) {
-            let month_now = "";
-            let maxDay = 0;
-            switch (month + 1) {
-                case 1: month_now = "一月碎石日历"; maxDay = 31; break;
-                case 2:
-                    month_now = "二月碎石日历";
-                    if (year % 4 == 0) {
-                        maxDay = 29;
+            const daysContainer = document.querySelector('.days');
+            daysContainer.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay() || 7;
+
+            for (let i = 1; i < startingDay; i++) {
+                daysContainer.innerHTML += '<div></div>';
+            }
+
+            const today = new Date();
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const specialDay = getSpecialDay(date);
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('day');
+                
+                const dayNumber = document.createElement('div');
+                dayNumber.classList.add('day-number');
+                dayNumber.textContent = day;
+                dayElement.appendChild(dayNumber);
+
+                if (specialDay) {
+                    const specialInfo = document.createElement('div');
+                    specialInfo.classList.add('special-info', specialDay === '红色碎石日' ? 'red-stone' : 'black-stone');
+                    specialInfo.innerHTML = `${specialDay}<br>云野三塔图`;
+                    dayElement.appendChild(specialInfo);
+
+                    const timeSlots = document.createElement('div');
+                    timeSlots.classList.add('time-slots');
+                    timeSlots.innerHTML = '09:08-10:00<br>15:08-16:00<br>21:08-22:00';
+                    dayElement.appendChild(timeSlots);
+                }
+
+                dayElement.addEventListener('click', () => selectDate(date));
+
+                if (date.toDateString() === today.toDateString()) {
+                    dayElement.classList.add('selected');
+                    selectDate(date);
+                }
+
+                daysContainer.appendChild(dayElement);
+            }
+
+            updateSelectedDate();
+        }
+
+        function getSpecialDay(date) {
+            const day = date.getDate();
+            const dayOfWeek = date.getDay();
+            if (day <= 15) {
+                return dayOfWeek === 0 || dayOfWeek === 6 ? '红色碎石日' : dayOfWeek === 2 ? '黑色碎石日' : null;
+            } else {
+                return dayOfWeek === 5 || dayOfWeek === 0 ? '红色碎石日' : dayOfWeek === 3 ? '黑色碎石日' : null;
+            }
+        }
+
+        function selectDate(date) {
+            selectedDate = date;
+            updateSelectedDate();
+        }
+
+        function updateSelectedDate() {
+            const selectedDateContainer = document.querySelector('.selected-date');
+            if (selectedDate) {
+                const specialDay = getSpecialDay(selectedDate);
+                selectedDateContainer.innerHTML = `
+                    <div style="font-size: 24px; font-weight: 700; margin-bottom: 10px;">
+                        ${selectedDate.getFullYear()}年${selectedDate.getMonth() + 1}月${selectedDate.getDate()}日
+                    </div>
+                    ${specialDay ? `
+                        <div class="special-info ${specialDay === '红色碎石日' ? 'red-stone' : 'black-stone'}">
+                            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">
+                                今日石头: ${specialDay === '红色碎石日' ? '红石' : '黑石'}
+                            </div>
+                            <div style="margin-bottom: 5px;">降落地图：云野三塔图</div>
+                            <div>
+                                降落时间段：<br>
+                                09:08 - 10:00<br>
+                                15:08 - 16:00<br>
+                                21:08 - 22:00
+                            </div>
+                        </div>
+                    ` : '<div>今日非碎石日</div>'}
+                `;
+                document.querySelectorAll('.day').forEach(day => {
+                    if (parseInt(day.querySelector('.day-number').textContent) === selectedDate.getDate()) {
+                        day.classList.add('selected');
                     } else {
-                        maxDay = 28;
+                        day.classList.remove('selected');
                     }
-                    break;
-                case 3: month_now = "三月碎石日历"; maxDay = 31; break;
-                case 4: month_now = "四月碎石日历"; maxDay = 30; break;
-                case 5: month_now = "五月碎石日历"; maxDay = 31; break;
-                case 6: month_now = "六月碎石日历"; maxDay = 30; break;
-                case 7: month_now = "七月碎石日历"; maxDay = 31; break;
-                case 8: month_now = "八月碎石日历"; maxDay = 31; break;
-                case 9: month_now = "九月碎石日历"; maxDay = 30; break;
-                case 10: month_now = "十月碎石日历"; maxDay = 31; break;
-                case 11: month_now = "十一月碎石日历"; maxDay = 30; break;
-                case 12: month_now = "十二月碎石日历"; maxDay = 31; break;
-                default: month = "";
-            }
-            return [month_now, maxDay];
-        }
-
-        function getStoneDate(YEAR, MONTH) {
-            const START_1 = new Date(YEAR, MONTH - 1, 1);
-            const END_1 = new Date(YEAR, MONTH - 1, 15);
-
-            const START_2 = new Date(YEAR, MONTH - 1, 16);
-            const END_2 = new Date(YEAR, MONTH, 0);
-
-            function COUNT_WEEK_DAYS(START_DATE, EMD_DATE, DAY_OF_WEEK_1, DAY_OF_WEEK_2 = null) {
-                let WEEK_DAYS = [];
-                let CURRENT_DATE = new Date(START_DATE);
-
-                while (CURRENT_DATE <= EMD_DATE) {
-                    const DAY_OF_WEEK = CURRENT_DATE.getDay();
-                    if (DAY_OF_WEEK === DAY_OF_WEEK_1 || DAY_OF_WEEK === DAY_OF_WEEK_2) {
-                        WEEK_DAYS.push(CURRENT_DATE.getDate());
-                    }
-                    CURRENT_DATE.setDate(CURRENT_DATE.getDate() + 1);
-                }
-
-                return WEEK_DAYS;
-            }
-
-            return [[
-                ...COUNT_WEEK_DAYS(START_1, END_1, 0, 6),
-                ...COUNT_WEEK_DAYS(START_2, END_2, 5, 0)
-            ], [
-                ...COUNT_WEEK_DAYS(START_1, END_1, 2),
-                ...COUNT_WEEK_DAYS(START_2, END_2, 3)
-            ]]
-        }
-
-        function updateAllDays(year, month) {
-            let offset = new Date(year, month, 0).getDay();
-            let maxDay = monthAndMaxDay(year, month)[1];
-
-            for (let i = 0; i < offset; i++) {
-                let day = document.createElement("li");
-                day.className = "no-style";
-                days.appendChild(day);
-            }
-
-            for (let i = 1; i <= maxDay; i++) {
-                let day = document.createElement("li");
-                let dateNow = new Date();
-                const RED = getStoneDate(year, month + 1)[0]
-                const BLACK = getStoneDate(year, month + 1)[1]
-                if (year == dateNow.getFullYear() && month == dateNow.getMonth() && i == dateNow.getDate()) {
-                    day.className = "style-default bg-style"
-                } else {
-                    day.className = "style-default";
-                }
-                day.id = i;
-                day.innerText = i
-                if (RED.includes(i)) {
-                    day.classList.add("bgg-style");
-                }
-                if (BLACK.includes(i)) {
-                    day.classList.add("bggg-style")
-                }
-                days.appendChild(day);
-            }
-        }
-
-        function selected(boolean) {
-            if (boolean) {
-                monthNow.style.textShadow = "2px 2px 2px rgba(0, 0, 0, 0.2)";
-                yearNow.style.textShadow = "none";
+                });
             } else {
-                monthNow.style.textShadow = "none";
-                yearNow.style.textShadow = "2px 2px 2px rgba(0, 0, 0, 0.2)";
+                selectedDateContainer.innerHTML = '';
             }
         }
 
-        function changePage(boolean) {
-            if (isSelect) {
-                if (boolean) {
-                    M = M - 1;
-                    if (M == -1) {
-                        Y--;
-                        M = 11;
-                    }
-                } else {
-                    M = M + 1;
-                    if (M == 12) {
-                        Y++;
-                        M = 0;
-                    }
-                }
-            } else {
-                if (boolean) {
-                    Y--;
-                } else {
-                    Y++;
-                }
-            }
-            yearNow.innerHTML = Y;
-            monthNow.innerHTML = monthAndMaxDay(Y, M)[0];
-            days.innerHTML = "";
-            updateAllDays(Y, M);
-        }
+        document.querySelector('.prev-month').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        });
+
+        document.querySelector('.next-month').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        });
+
+        renderCalendar();
     </script>
+</body>
 </body>
