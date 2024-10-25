@@ -3,7 +3,7 @@ const link = [
     'http://a.4399.cn/mobile/112700.html',
     'https://game.oppomobile.com',
     'https://www.biligame.com/detail/?id=101661',
-    'http://h5.appstore.vivo.com.cn/#/details?appId=2902164',
+    'https://h5.appstore.vivo.com.cn/#/details?appId=2902164&frompage=searchResultApp',
     'https://a.9game.cn/skygy',
     'https://appgallery.huawei.com/app/C100685413',
     'https://m.app.mi.com/#page=detail&id=819119',
