@@ -187,6 +187,24 @@
         let currentDate = new Date();
         let selectedDate = null;
 
+        // 使用对象来存储每个日期的地图信息
+        const dateMapInfo = {
+            1: '暮土图一',
+            5: '霞谷圆梦村',
+            6: '暮土方舟',
+            8: '云野图一',
+            12: '禁阁星漠搁浅船',
+            13: '云野圣岛',
+            15: '霞谷滑冰场',
+            16: '暮土终点图',
+            18: '云野石隐藏图',
+            20: '霞谷雪隐峰',
+            23: '云野三塔图',
+            25: '霞谷圆梦村',
+            27: '禁阁星漠搁浅船',
+            30: '霞谷滑冰场'
+        };
+
         function renderCalendar() {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
@@ -212,7 +230,7 @@
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(year, month, day);
-                const specialDay = getSpecialDay(date);
+                const { specialDay, map } = getSpecialDay(date);
                 const dayElement = document.createElement('div');
                 dayElement.classList.add('day');
                 
@@ -224,7 +242,7 @@
                 if (specialDay) {
                     const specialInfo = document.createElement('div');
                     specialInfo.classList.add('special-info', specialDay === '红色碎石日' ? 'red-stone' : 'black-stone');
-                    specialInfo.innerHTML = `${specialDay}<br>云野三塔图`;
+                    specialInfo.innerHTML = `${specialDay}<br>${map}`;
                     dayElement.appendChild(specialInfo);
 
                     const timeSlots = document.createElement('div');
@@ -249,11 +267,24 @@
         function getSpecialDay(date) {
             const day = date.getDate();
             const dayOfWeek = date.getDay();
+            let specialDay = null;
+            let map = dateMapInfo[day] || '暂定'; // 使用指定地图或默认地图
+
             if (day <= 15) {
-                return dayOfWeek === 0 || dayOfWeek === 6 ? '红色碎石日' : dayOfWeek === 2 ? '黑色碎石日' : null;
+                if (dayOfWeek === 2) {
+                    specialDay = '黑色碎石日';
+                } else if (dayOfWeek === 6 || dayOfWeek === 0) {
+                    specialDay = '红色碎石日';
+                }
             } else {
-                return dayOfWeek === 5 || dayOfWeek === 0 ? '红色碎石日' : dayOfWeek === 3 ? '黑色碎石日' : null;
+                if (dayOfWeek === 3) {
+                    specialDay = '黑色碎石日';
+                } else if (dayOfWeek === 5 || dayOfWeek === 0) {
+                    specialDay = '红色碎石日';
+                }
             }
+
+            return { specialDay, map };
         }
 
         function selectDate(date) {
@@ -264,7 +295,7 @@
         function updateSelectedDate() {
             const selectedDateContainer = document.querySelector('.selected-date');
             if (selectedDate) {
-                const specialDay = getSpecialDay(selectedDate);
+                const { specialDay, map } = getSpecialDay(selectedDate);
                 selectedDateContainer.innerHTML = `
                     <div style="font-size: 24px; font-weight: 700; margin-bottom: 10px;">
                         ${selectedDate.getFullYear()}年${selectedDate.getMonth() + 1}月${selectedDate.getDate()}日
@@ -274,7 +305,7 @@
                             <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">
                                 今日石头: ${specialDay === '红色碎石日' ? '红石' : '黑石'}
                             </div>
-                            <div style="margin-bottom: 5px;">降落地图：云野三塔图</div>
+                            <div style="margin-bottom: 5px;">降落地图：${map}</div>
                             <div>
                                 降落时间段：<br>
                                 09:08 - 10:00<br>
@@ -282,7 +313,7 @@
                                 21:08 - 22:00
                             </div>
                         </div>
-                    ` : '<div>今日非碎石日</div>'}
+                    ` : `<div>今日非碎石日，地图：${map}</div>`}
                 `;
                 document.querySelectorAll('.day').forEach(day => {
                     if (parseInt(day.querySelector('.day-number').textContent) === selectedDate.getDate()) {
