@@ -95,20 +95,22 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     .day.selected {
-        background-color: var(--primary-color);
+        background-color: #4a90e2;
         color: white;
-        border: 2px solid #ff6b6b; /* 标注日期颜色 */
+        border: 2px solid #e57373;
     }
     .day-number {
         font-weight: 700;
         font-size: 20px;
         margin-bottom: 2px;
     }
+    .day-number.red {
+        color: #d32f2f;
+    }
     .special-info {
-        font-size: 14px; /* 增大字体 */
+        font-size: 14px;
         text-align: center;
         line-height: 1.2;
-        /* 移除颜色 */
     }
     .selected-date {
         background-color: var(--secondary-color);
@@ -199,32 +201,32 @@
 
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(year, month, day);
-            const { specialDay, map } = getSpecialDay(date);
-            const dayElement = createDayElement(day, specialDay, map, date, today);
+            const { specialDay, map, landingTime } = getSpecialDay(date);
+            const dayElement = createDayElement(day, specialDay, map, date, today, landingTime);
             daysContainer.appendChild(dayElement);
         }
 
         updateSelectedDate();
     }
 
-    function createDayElement(day, specialDay, map, date, today) {
+    function createDayElement(day, specialDay, map, date, today, landingTime) {
         const dayElement = document.createElement('div');
         dayElement.classList.add('day');
-        let dayNumberColor = '#aaa'; // 默认灰色
+        let dayNumberClass = '';
 
         if (specialDay === '红色碎石日') {
-            dayNumberColor = 'red';
+            dayNumberClass = 'red';
         } else if (specialDay === '黑色碎石日') {
-            dayNumberColor = 'black';
+            dayNumberClass = 'black';
         }
 
         dayElement.innerHTML = `
-            <div class="day-number" style="color: ${dayNumberColor};">${day}</div>
+            <div class="day-number ${dayNumberClass}">${day}</div>
             ${specialDay ? `
                 <div class="special-info">
                     ${specialDay}<br>${map}
                 </div>
-                <div class="time-slots">${timeSlots}</div>
+                <div class="time-slots">${landingTime}</div>
             ` : ''}
         `;
         dayElement.addEventListener('click', () => selectDate(date));
@@ -240,75 +242,89 @@
         const dayOfWeek = date.getDay();
         let specialDay = null;
         let map = getMapForDay(day);
+        let landingTime = '';
 
         if (map === '云野') {
-            map = getCloudMap(dayOfWeek);
+            if (dayOfWeek === 2) {
+                map = '云野图一';
+            } else if (dayOfWeek === 3) {
+                map = '云野三塔图';
+            } else if (dayOfWeek === 5) {
+                map = '云野右边隐藏图';
+            } else if (dayOfWeek === 6) {
+                map = '云野左边隐藏图';
+            } else if (dayOfWeek === 0) {
+                map = '云野圣岛';
+            }
+        }
+
+        if (map === '雨林') {
+            if (dayOfWeek === 2) {
+                map = '雨林蘑菇图';
+            } else if (dayOfWeek === 3) {
+                map = '雨林水母图';
+            } else if (dayOfWeek === 5) {
+                map = '雨林大树屋';
+            } else if (dayOfWeek === 6) {
+                map = '雨林神庙后';
+            } else if (dayOfWeek === 0) {
+                map = '雨林8/8隐藏图';
+            }
         }
 
         if (map === '禁阁') {
             if (dayOfWeek === 2 || dayOfWeek === 3) {
-                map = '星漠';
+                map = '禁阁星漠';
             } else if (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0) {
-                map = '星漠搁浅船';
+                map = '禁阁星漠搁浅船';
             }
         }
 
-        // 更新霞谷地图的特殊降落位置
         if (map === '霞谷') {
-            switch (dayOfWeek) {
-                case 2:
-                case 3:
-                    map = '滑冰场';
-                    break;
-                case 5:
-                case 6:
-                    map = '圆梦村';
-                    break;
-                case 0:
-                    map = '雪隐峰';
-                    break;
+            if (dayOfWeek === 2 || dayOfWeek === 3) {
+                map = '霞谷滑冰场';
+            } else if (dayOfWeek === 5 || dayOfWeek === 6) {
+                map = '霞谷圆梦村';
+            } else if (dayOfWeek === 0) {
+                map = '霞谷雪隐峰';
             }
         }
 
-        // 更新暮土地图的特殊降落位置
         if (map === '暮土') {
-            switch (dayOfWeek) {
-                case 2:
-                    map = '图一';
-                    break;
-                case 3:
-                    map = '终点图';
-                    break;
-                case 5:
-                    map = '沉船';
-                    break;
-                case 6:
-                    map = '四龙图';
-                    break;
-                case 0:
-                    map = '方舟图';
-                    break;
+            if (dayOfWeek === 2) {
+                map = '暮土图一';
+            } else if (dayOfWeek === 3) {
+                map = '暮土终点图';
+            } else if (dayOfWeek === 5) {
+                map = '暮土沉船';
+            } else if (dayOfWeek === 6) {
+                map = '暮土四龙图';
+            } else if (dayOfWeek === 0) {
+                map = '暮土方舟图';
             }
         }
 
         if (day <= 15) {
             specialDay = getSpecialDayType(dayOfWeek, [2], [6, 0]);
+            if (dayOfWeek === 2) {
+                landingTime = '(09:08—10:00)<br>(14:08—15:00)<br>(19:08—20:00)';
+            } else if (dayOfWeek === 6) {
+                landingTime = '(10:08—11:00)<br>(14:08—15:00)<br>(22:08—23:00)';
+            } else if (dayOfWeek === 0) {
+                landingTime = '(07:08—08:00)<br>(13:08—14:00)<br>(19:08—20:00)';
+            }
         } else {
             specialDay = getSpecialDayType(dayOfWeek, [3], [5, 0]);
+            if (dayOfWeek === 3) {
+                landingTime = '(09:08—10:00)<br>(15:08—16:00)<br>(21:08—22:00)';
+            } else if (dayOfWeek === 5) {
+                landingTime = '(11:08—12:00)<br>(17:08—18:00)<br>(23:08—24:00)';
+            } else if (dayOfWeek === 0) {
+                landingTime = '(07:08—08:00)<br>(13:08—14:00)<br>(19:08—20:00)';
+            }
         }
 
-        return { specialDay, map };
-    }
-
-    function getCloudMap(dayOfWeek) {
-        switch (dayOfWeek) {
-            case 2: return '图一';
-            case 3: return '三塔图';
-            case 5: return '右边隐藏图';
-            case 6: return '左边隐藏图';
-            case 0: return '圣岛';
-            default: return '云野';
-        }
+        return { specialDay, map, landingTime };
     }
 
     function getSpecialDayType(dayOfWeek, blackDays, redDays) {
@@ -325,7 +341,7 @@
     function updateSelectedDate() {
         const selectedDateContainer = document.querySelector('.selected-date');
         if (selectedDate) {
-            const { specialDay, map } = getSpecialDay(selectedDate);
+            const { specialDay, map, landingTime } = getSpecialDay(selectedDate);
             selectedDateContainer.innerHTML = `
                 <div style="font-size: 24px; font-weight: 700; margin-bottom: 10px;">
                     ${selectedDate.getFullYear()}年${selectedDate.getMonth() + 1}月${selectedDate.getDate()}日
@@ -336,7 +352,7 @@
                             今日石头: ${specialDay === '红色碎石日' ? '红石' : '黑石'}
                         </div>
                         <div style="margin-bottom: 5px;">降落地图：${map}</div>
-                        <div>降落时间段<br>${timeSlots}</div>
+                        <div>降落时间段<br>${landingTime}</div>
                     </div>
                 ` : `<div>今日非碎石日，地图：${map}</div>`}
             `;
