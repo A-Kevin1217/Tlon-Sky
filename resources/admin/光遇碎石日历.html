@@ -1,343 +1,363 @@
-<!-- 
- 原作者: [@cooltea](https://blog.csdn.net/apple_54470279?type=blog)
- 第一次改版：[@Tloml-Starry])(https://gitee.com/Tloml-Starry)
- 第二次改版：[小i](QQ: 3446914493)
-  -->
-
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>光遇碎石日历</title>
-    <style>
-        :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #f0f4f8;
-            --text-color: #333;
-            --accent-red: #ff6b6b;
-            --accent-black: #2d3436;
-        }
-        body {
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #e0e5ec;
-            padding: 20px;
-        }
+<style>
+    :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #f0f4f8;
+        --text-color: #333;
+        --accent-red: #ff6b6b;
+        --accent-black: #2d3436;
+    }
+    body {
+        font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #e0e5ec;
+        padding: 20px;
+    }
+    .calendar {
+        width: 100%;
+        max-width: 800px;
+        background-color: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .header {
+        background: linear-gradient(135deg, var(--primary-color), #74b9ff);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        position: relative;
+    }
+    .month-year {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .nav-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 10px;
+        transition: all 0.3s ease;
+    }
+    .nav-button:hover {
+        transform: translateY(-50%) scale(1.1);
+    }
+    .prev-month {
+        left: 20px;
+    }
+    .next-month {
+        right: 20px;
+    }
+    .weekdays, .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+    }
+    .weekdays {
+        font-weight: 600;
+        background-color: var(--secondary-color);
+        padding: 15px 0;
+        font-size: 18px;
+        color: var(--text-color);
+    }
+    .days {
+        gap: 10px;
+        padding: 20px;
+    }
+    .day {
+        aspect-ratio: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 15px;
+        position: relative;
+        padding: 10px;
+        min-height: 100px;
+        transition: all 0.3s ease;
+        background-color: #f9f9f9;
+        overflow: hidden;
+        font-size: 14px;
+    }
+    .day:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .day.selected {
+        background-color: var(--primary-color);
+        color: white;
+        border: 2px solid #ff6b6b; /* 标注日期颜色 */
+    }
+    .day-number {
+        font-weight: 700;
+        font-size: 20px;
+        margin-bottom: 2px;
+    }
+    .special-info {
+        font-size: 14px; /* 增大字体 */
+        text-align: center;
+        line-height: 1.2;
+        /* 移除颜色 */
+    }
+    .selected-date {
+        background-color: var(--secondary-color);
+        padding: 20px;
+        text-align: center;
+        font-size: 18px;
+        border-top: 1px solid #e0e0e0;
+    }
+    .selected-date .special-info {
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    .time-slots {
+        font-size: 9px;
+        text-align: center;
+        margin-top: 2px;
+        color: #555;
+    }
+    @media (max-width: 600px) {
         .calendar {
-            width: 100%;
-            max-width: 800px;
-            background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, var(--primary-color), #74b9ff);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
-        .month-year {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .nav-button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 10px;
-            transition: all 0.3s ease;
-        }
-        .nav-button:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
-        .prev-month {
-            left: 20px;
-        }
-        .next-month {
-            right: 20px;
-        }
-        .weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-weight: 600;
-            background-color: var(--secondary-color);
-            padding: 15px 0;
-            font-size: 18px;
-            color: var(--text-color);
-        }
-        .days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            padding: 20px;
+            max-width: 100%;
         }
         .day {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            cursor: pointer;
-            border-radius: 15px;
-            position: relative;
-            padding: 10px;
-            min-height: 100px;
-            transition: all 0.3s ease;
-            background-color: #f9f9f9;
-            overflow: hidden;
+            min-height: 80px;
             font-size: 14px;
         }
-        .day:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .day-number {
+            font-size: 18px;
         }
-        .day.selected {
-            background-color: var(--primary-color);
-            color: white;
+        .special-info, .time-slots {
+            font-size: 10px;
+        }
+    }
+    @media (max-width: 400px) {
+        .day {
+            font-size: 12px;
         }
         .day-number {
-            font-weight: 700;
-            font-size: 20px;
-            margin-bottom: 2px;
-        }
-        .special-info {
-            font-size: 10px;
-            text-align: center;
-            line-height: 1.2;
-        }
-        .red-stone {
-            color: var(--accent-red);
-        }
-        .black-stone {
-            color: var(--accent-black);
-        }
-        .selected-date {
-            background-color: var(--secondary-color);
-            padding: 20px;
-            text-align: center;
-            font-size: 18px;
-            border-top: 1px solid #e0e0e0;
-        }
-        .selected-date .special-info {
             font-size: 16px;
-            margin-top: 10px;
         }
-        .time-slots {
-            font-size: 9px;
-            text-align: center;
-            margin-top: 2px;
-            color: #555;
+        .special-info, .time-slots {
+            font-size: 8px;
         }
-        @media (max-width: 600px) {
-            .calendar {
-                max-width: 100%;
-            }
-            .day {
-                min-height: 80px;
-                font-size: 14px;
-            }
-            .day-number {
-                font-size: 18px;
-            }
-            .special-info, .time-slots {
-                font-size: 10px;
-            }
-        }
-        @media (max-width: 400px) {
-            .day {
-                font-size: 12px;
-            }
-            .day-number {
-                font-size: 16px;
-            }
-            .special-info, .time-slots {
-                font-size: 8px;
-            }
-        }
-    </style>
-</head>
+    }
+</style>
 <body>
-    <div class="calendar">
-        <div class="header">
-            <button class="nav-button prev-month" aria-label="上个月">&lt;</button>
-            <div class="month-year"></div>
-            <button class="nav-button next-month" aria-label="下个月">&gt;</button>
-        </div>
-        <div class="weekdays"></div>
-        <div class="days"></div>
-        <div class="selected-date"></div>
+<div class="calendar">
+    <div class="header">
+        <button class="nav-button prev-month" aria-label="上个月">&lt;</button>
+        <div class="month-year"></div>
+        <button class="nav-button next-month" aria-label="下个月">&gt;</button>
     </div>
+    <div class="weekdays"></div>
+    <div class="days"></div>
+    <div class="selected-date"></div>
+</div>
 
-    <script>
-        const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
-        const weekDays = ["一", "二", "三", "四", "五", "六", "日"];
-        let currentDate = new Date();
-        let selectedDate = null;
+<script>
+    const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+    const weekDays = ["一", "二", "三", "四", "五", "六", "日"];
+    const mapSequence = ['暮土', '禁阁', '云野', '雨林', '霞谷'];
+    const timeSlots = '09:08-10:00<br>15:08-16:00<br>21:08-22:00';
+    let currentDate = new Date();
+    let selectedDate = null;
 
-        // 使用对象来存储每个日期的地图信息
-        const dateMapInfo = {
-            1: '暮土图一',
-            5: '霞谷圆梦村',
-            6: '暮土方舟',
-            8: '云野图一',
-            12: '禁阁星漠搁浅船',
-            13: '云野圣岛',
-            15: '霞谷滑冰场',
-            16: '暮土终点图',
-            18: '云野石隐藏图',
-            20: '霞谷雪隐峰',
-            23: '云野三塔图',
-            25: '霞谷圆梦村',
-            27: '禁阁星漠搁浅船',
-            30: '霞谷滑冰场'
-        };
+    function getMapForDay(day) {
+        return mapSequence[(day - 1) % mapSequence.length];
+    }
 
-        function renderCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
+    function renderCalendar() {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        document.querySelector('.month-year').textContent = `${year}年 ${monthNames[month]}`;
+        document.querySelector('.weekdays').innerHTML = weekDays.map(day => `<div>${day}</div>`).join('');
+        const daysContainer = document.querySelector('.days');
+        daysContainer.innerHTML = '';
 
-            document.querySelector('.month-year').textContent = `${year}年 ${monthNames[month]}`;
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay() || 7;
 
-            const weekdaysContainer = document.querySelector('.weekdays');
-            weekdaysContainer.innerHTML = weekDays.map(day => `<div>${day}</div>`).join('');
-
-            const daysContainer = document.querySelector('.days');
-            daysContainer.innerHTML = '';
-
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startingDay = firstDay.getDay() || 7;
-
-            for (let i = 1; i < startingDay; i++) {
-                daysContainer.innerHTML += '<div></div>';
-            }
-
-            const today = new Date();
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const date = new Date(year, month, day);
-                const { specialDay, map } = getSpecialDay(date);
-                const dayElement = document.createElement('div');
-                dayElement.classList.add('day');
-                
-                const dayNumber = document.createElement('div');
-                dayNumber.classList.add('day-number');
-                dayNumber.textContent = day;
-                dayElement.appendChild(dayNumber);
-
-                if (specialDay) {
-                    const specialInfo = document.createElement('div');
-                    specialInfo.classList.add('special-info', specialDay === '红色碎石日' ? 'red-stone' : 'black-stone');
-                    specialInfo.innerHTML = `${specialDay}<br>${map}`;
-                    dayElement.appendChild(specialInfo);
-
-                    const timeSlots = document.createElement('div');
-                    timeSlots.classList.add('time-slots');
-                    timeSlots.innerHTML = '09:08-10:00<br>15:08-16:00<br>21:08-22:00';
-                    dayElement.appendChild(timeSlots);
-                }
-
-                dayElement.addEventListener('click', () => selectDate(date));
-
-                if (date.toDateString() === today.toDateString()) {
-                    dayElement.classList.add('selected');
-                    selectDate(date);
-                }
-
-                daysContainer.appendChild(dayElement);
-            }
-
-            updateSelectedDate();
+        for (let i = 1; i < startingDay; i++) {
+            daysContainer.innerHTML += '<div></div>';
         }
 
-        function getSpecialDay(date) {
-            const day = date.getDate();
-            const dayOfWeek = date.getDay();
-            let specialDay = null;
-            let map = dateMapInfo[day] || '暂定'; // 使用指定地图或默认地图
+        const today = new Date();
 
-            if (day <= 15) {
-                if (dayOfWeek === 2) {
-                    specialDay = '黑色碎石日';
-                } else if (dayOfWeek === 6 || dayOfWeek === 0) {
-                    specialDay = '红色碎石日';
-                }
-            } else {
-                if (dayOfWeek === 3) {
-                    specialDay = '黑色碎石日';
-                } else if (dayOfWeek === 5 || dayOfWeek === 0) {
-                    specialDay = '红色碎石日';
-                }
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month, day);
+            const { specialDay, map } = getSpecialDay(date);
+            const dayElement = createDayElement(day, specialDay, map, date, today);
+            daysContainer.appendChild(dayElement);
+        }
+
+        updateSelectedDate();
+    }
+
+    function createDayElement(day, specialDay, map, date, today) {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('day');
+        let dayNumberColor = '#aaa'; // 默认灰色
+
+        if (specialDay === '红色碎石日') {
+            dayNumberColor = 'red';
+        } else if (specialDay === '黑色碎石日') {
+            dayNumberColor = 'black';
+        }
+
+        dayElement.innerHTML = `
+            <div class="day-number" style="color: ${dayNumberColor};">${day}</div>
+            ${specialDay ? `
+                <div class="special-info">
+                    ${specialDay}<br>${map}
+                </div>
+                <div class="time-slots">${timeSlots}</div>
+            ` : ''}
+        `;
+        dayElement.addEventListener('click', () => selectDate(date));
+        if (date.toDateString() === today.toDateString()) {
+            dayElement.classList.add('selected');
+            selectDate(date);
+        }
+        return dayElement;
+    }
+
+    function getSpecialDay(date) {
+        const day = date.getDate();
+        const dayOfWeek = date.getDay();
+        let specialDay = null;
+        let map = getMapForDay(day);
+
+        if (map === '云野') {
+            map = getCloudMap(dayOfWeek);
+        }
+
+        if (map === '禁阁') {
+            if (dayOfWeek === 2 || dayOfWeek === 3) {
+                map = '星漠';
+            } else if (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0) {
+                map = '星漠搁浅船';
             }
-
-            return { specialDay, map };
         }
 
-        function selectDate(date) {
-            selectedDate = date;
-            updateSelectedDate();
+        // 更新霞谷地图的特殊降落位置
+        if (map === '霞谷') {
+            switch (dayOfWeek) {
+                case 2:
+                case 3:
+                    map = '滑冰场';
+                    break;
+                case 5:
+                case 6:
+                    map = '圆梦村';
+                    break;
+                case 0:
+                    map = '雪隐峰';
+                    break;
+            }
         }
 
-        function updateSelectedDate() {
-            const selectedDateContainer = document.querySelector('.selected-date');
-            if (selectedDate) {
-                const { specialDay, map } = getSpecialDay(selectedDate);
-                selectedDateContainer.innerHTML = `
-                    <div style="font-size: 24px; font-weight: 700; margin-bottom: 10px;">
-                        ${selectedDate.getFullYear()}年${selectedDate.getMonth() + 1}月${selectedDate.getDate()}日
-                    </div>
-                    ${specialDay ? `
-                        <div class="special-info ${specialDay === '红色碎石日' ? 'red-stone' : 'black-stone'}">
-                            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">
-                                今日石头: ${specialDay === '红色碎石日' ? '红石' : '黑石'}
-                            </div>
-                            <div style="margin-bottom: 5px;">降落地图：${map}</div>
-                            <div>
-                                降落时间段：<br>
-                                09:08 - 10:00<br>
-                                15:08 - 16:00<br>
-                                21:08 - 22:00
-                            </div>
+        // 更新暮土地图的特殊降落位置
+        if (map === '暮土') {
+            switch (dayOfWeek) {
+                case 2:
+                    map = '图一';
+                    break;
+                case 3:
+                    map = '终点图';
+                    break;
+                case 5:
+                    map = '沉船';
+                    break;
+                case 6:
+                    map = '四龙图';
+                    break;
+                case 0:
+                    map = '方舟图';
+                    break;
+            }
+        }
+
+        if (day <= 15) {
+            specialDay = getSpecialDayType(dayOfWeek, [2], [6, 0]);
+        } else {
+            specialDay = getSpecialDayType(dayOfWeek, [3], [5, 0]);
+        }
+
+        return { specialDay, map };
+    }
+
+    function getCloudMap(dayOfWeek) {
+        switch (dayOfWeek) {
+            case 2: return '图一';
+            case 3: return '三塔图';
+            case 5: return '右边隐藏图';
+            case 6: return '左边隐藏图';
+            case 0: return '圣岛';
+            default: return '云野';
+        }
+    }
+
+    function getSpecialDayType(dayOfWeek, blackDays, redDays) {
+        if (blackDays.includes(dayOfWeek)) return '黑色碎石日';
+        if (redDays.includes(dayOfWeek)) return '红色碎石日';
+        return null;
+    }
+
+    function selectDate(date) {
+        selectedDate = date;
+        updateSelectedDate();
+    }
+
+    function updateSelectedDate() {
+        const selectedDateContainer = document.querySelector('.selected-date');
+        if (selectedDate) {
+            const { specialDay, map } = getSpecialDay(selectedDate);
+            selectedDateContainer.innerHTML = `
+                <div style="font-size: 24px; font-weight: 700; margin-bottom: 10px;">
+                    ${selectedDate.getFullYear()}年${selectedDate.getMonth() + 1}月${selectedDate.getDate()}日
+                </div>
+                ${specialDay ? `
+                    <div class="special-info">
+                        <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">
+                            今日石头: ${specialDay === '红色碎石日' ? '红石' : '黑石'}
                         </div>
-                    ` : `<div>今日非碎石日，地图：${map}</div>`}
-                `;
-                document.querySelectorAll('.day').forEach(day => {
-                    if (parseInt(day.querySelector('.day-number').textContent) === selectedDate.getDate()) {
-                        day.classList.add('selected');
-                    } else {
-                        day.classList.remove('selected');
-                    }
-                });
-            } else {
-                selectedDateContainer.innerHTML = '';
-            }
+                        <div style="margin-bottom: 5px;">降落地图：${map}</div>
+                        <div>降落时间段<br>${timeSlots}</div>
+                    </div>
+                ` : `<div>今日非碎石日，地图：${map}</div>`}
+            `;
+            document.querySelectorAll('.day').forEach(day => {
+                day.classList.toggle('selected', parseInt(day.querySelector('.day-number').textContent) === selectedDate.getDate());
+            });
+        } else {
+            selectedDateContainer.innerHTML = '';
         }
+    }
 
-        document.querySelector('.prev-month').addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar();
-        });
-
-        document.querySelector('.next-month').addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-        });
-
+    document.querySelector('.prev-month').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
         renderCalendar();
-    </script>
-</body>
+    });
+
+    document.querySelector('.next-month').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+    });
+
+    renderCalendar();
+</script>
 </body>
