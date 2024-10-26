@@ -1,379 +1,480 @@
-<style>
-    :root {
-        --primary-color: #4a90e2;
-        --secondary-color: #f0f4f8;
-        --text-color: #333;
-        --accent-red: #ff6b6b;
-        --accent-black: #2d3436;
-    }
-    body {
-        font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        background-color: #e0e5ec;
-        padding: 20px;
-    }
-    .calendar {
-        width: 100%;
-        max-width: 800px;
-        background-color: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-    .header {
-        background: linear-gradient(135deg, var(--primary-color), #74b9ff);
-        color: white;
-        padding: 30px;
-        text-align: center;
-        position: relative;
-    }
-    .month-year {
-        font-size: 36px;
-        font-weight: 700;
-        margin-bottom: 10px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    .nav-button {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 28px;
-        cursor: pointer;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        padding: 10px;
-        transition: all 0.3s ease;
-    }
-    .nav-button:hover {
-        transform: translateY(-50%) scale(1.1);
-    }
-    .prev-month {
-        left: 20px;
-    }
-    .next-month {
-        right: 20px;
-    }
-    .weekdays, .days {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        text-align: center;
-    }
-    .weekdays {
-        font-weight: 600;
-        background-color: var(--secondary-color);
-        padding: 15px 0;
-        font-size: 18px;
-        color: var(--text-color);
-    }
-    .days {
-        gap: 10px;
-        padding: 20px;
-    }
-    .day {
-        aspect-ratio: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        cursor: pointer;
-        border-radius: 15px;
-        position: relative;
-        padding: 10px;
-        min-height: 100px;
-        transition: all 0.3s ease;
-        background-color: #f9f9f9;
-        overflow: hidden;
-        font-size: 14px;
-    }
-    .day:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    .day.selected {
-        background-color: #4a90e2;
-        color: white;
-        border: 2px solid #e57373;
-    }
-    .day-number {
-        font-weight: 700;
-        font-size: 20px;
-        margin-bottom: 2px;
-    }
-    .day-number.red {
-        color: #d32f2f;
-    }
-    .special-info {
-        font-size: 14px;
-        text-align: center;
-        line-height: 1.2;
-    }
-    .selected-date {
-        background-color: var(--secondary-color);
-        padding: 20px;
-        text-align: center;
-        font-size: 18px;
-        border-top: 1px solid #e0e0e0;
-    }
-    .selected-date .special-info {
-        font-size: 16px;
-        margin-top: 10px;
-    }
-    .time-slots {
-        font-size: 9px;
-        text-align: center;
-        margin-top: 2px;
-        color: #555;
-    }
-    @media (max-width: 600px) {
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光遇碎石日历</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --calendar-bg: #2f3542;
+            --black-stone: #4a4a4a;
+            --red-stone: #ff4757;
+            --highlight: #3498db;
+            --button-bg: #3498db;
+            --button-hover: #2980b9;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--highlight);
+        }
+
+        .calendar-container {
+            background-color: var(--calendar-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            flex-grow: 1;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .month-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .month-nav button {
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .month-nav button:hover {
+            background-color: var(--button-hover);
+        }
+
+        .current-month {
+            font-size: 1.5em;
+        }
+
+        .weekdays,
         .calendar {
-            max-width: 100%;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
         }
+
+        .weekdays {
+            margin-bottom: 10px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-weight: bold;
+        }
+
         .day {
-            min-height: 80px;
-            font-size: 14px;
+            background-color: var(--calendar-bg);
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .day-number {
-            font-size: 18px;
+
+        .day:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
-        .special-info, .time-slots {
-            font-size: 10px;
+
+        .day::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, transparent 20%, var(--calendar-bg) 80%);
+            transform: scale(2);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
         }
-    }
-    @media (max-width: 400px) {
-        .day {
-            font-size: 12px;
+
+        .day:active::before {
+            transform: scale(0);
+            opacity: 1;
+            transition: 0s;
         }
-        .day-number {
-            font-size: 16px;
+
+        .black-stone {
+            background-color: var(--black-stone);
         }
-        .special-info, .time-slots {
-            font-size: 8px;
+
+        .red-stone {
+            background-color: var(--red-stone);
         }
-    }
-</style>
+
+        .other-month {
+            opacity: 0.5;
+        }
+
+        .today {
+            border: 2px solid var(--highlight);
+        }
+
+        .selected {
+            background-color: var(--highlight);
+        }
+
+        .date {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .map,
+        .location {
+            font-size: 0.8em;
+        }
+
+        .detail-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--calendar-bg);
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .detail-box:hover {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        footer {
+            background-color: var(--calendar-bg);
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .contact-info a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-info a:hover {
+            color: var(--highlight);
+        }
+
+        .ri-github-fill,
+        .ri-mail-fill,
+        .ri-qq-fill {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
 <body>
-<div class="calendar">
-    <div class="header">
-        <button class="nav-button prev-month" aria-label="上个月">&lt;</button>
-        <div class="month-year"></div>
-        <button class="nav-button next-month" aria-label="下个月">&gt;</button>
+    <div class="container">
+        <h1 class="title">光遇碎石日历</h1>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="month-nav">
+                    <button id="prevMonth">上个月</button>
+                    <button id="nextMonth">下个月</button>
+                </div>
+                <div class="current-month" id="currentMonth"></div>
+            </div>
+            <div class="weekdays" id="weekdays"></div>
+            <div class="calendar" id="calendar"></div>
+            <div class="detail-box" id="detailBox"></div>
+        </div>
     </div>
-    <div class="weekdays"></div>
-    <div class="days"></div>
-    <div class="selected-date"></div>
-</div>
+    <footer>
+        <div class="contact-info">
+            <a href="https://github.com/Tloml-Starry" target="_blank"><i class="ri-github-fill"></i> GitHub</a>
+            <a href="mailto:1947425850@qq.com"><i class="ri-mail-fill"></i> 联系我们</a>
+            <a href="https://qm.qq.com/q/FtEkvOjEYM"><i class="ri-qq-fill"></i> QQ群: 392665563</a>
+        </div>
+    </footer>
 
-<script>
-    const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
-    const weekDays = ["一", "二", "三", "四", "五", "六", "日"];
-    const mapSequence = ['暮土', '禁阁', '云野', '雨林', '霞谷'];
-    const timeSlots = '09:08-10:00<br>15:08-16:00<br>21:08-22:00';
-    let currentDate = new Date();
-    let selectedDate = null;
+    <script>
+        const maps = ['暮土', '禁阁', '云野', '雨林', '霞谷'];
+        const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+        const fallTimes = ['09:08', '11:08', '17:08'];
+        let currentDate = new Date();
+        let selectedDate = new Date();
 
-    function getMapForDay(day) {
-        return mapSequence[(day - 1) % mapSequence.length];
-    }
-
-    function renderCalendar() {
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-        document.querySelector('.month-year').textContent = `${year}年 ${monthNames[month]}`;
-        document.querySelector('.weekdays').innerHTML = weekDays.map(day => `<div>${day}</div>`).join('');
-        const daysContainer = document.querySelector('.days');
-        daysContainer.innerHTML = '';
-
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
-        const daysInMonth = lastDay.getDate();
-        const startingDay = firstDay.getDay() || 7;
-
-        for (let i = 1; i < startingDay; i++) {
-            daysContainer.innerHTML += '<div></div>';
+        function getMapLocation(map, dayOfWeek) {
+            const locations = {
+                '云野': {
+                    2: '云野图一',
+                    3: '三塔图',
+                    5: '右边隐藏图',
+                    6: '左边隐藏图',
+                    0: '圣岛'
+                },
+                '雨林': {
+                    2: '雨林蘑菇图',
+                    3: '雨林水母图',
+                    5: '雨林大树屋',
+                    6: '雨林神庙后',
+                    0: '雨林8/8隐藏图'
+                },
+                '禁阁': {
+                    2: '禁阁星漠',
+                    3: '禁阁星漠',
+                    5: '禁阁星漠搁浅船',
+                    6: '禁阁星漠搁浅船',
+                    0: '禁阁星漠搁浅船'
+                },
+                '霞谷': {
+                    2: '霞谷滑冰场',
+                    3: '霞谷滑冰场',
+                    5: '霞谷圆梦村',
+                    6: '霞谷圆梦村',
+                    0: '霞谷雪隐峰'
+                },
+                '暮土': {
+                    2: '暮土图一',
+                    3: '暮土终点图',
+                    5: '暮土沉船',
+                    6: '暮土四龙图',
+                    0: '暮土方舟图'
+                }
+            };
+            return locations[map] ? locations[map][dayOfWeek] || '' : '';
         }
 
-        const today = new Date();
-
-        for (let day = 1; day <= daysInMonth; day++) {
-            const date = new Date(year, month, day);
-            const { specialDay, map, landingTime } = getSpecialDay(date);
-            const dayElement = createDayElement(day, specialDay, map, date, today, landingTime);
-            daysContainer.appendChild(dayElement);
-        }
-
-        updateSelectedDate();
-    }
-
-    function createDayElement(day, specialDay, map, date, today, landingTime) {
-        const dayElement = document.createElement('div');
-        dayElement.classList.add('day');
-        let dayNumberClass = '';
-
-        if (specialDay === '红色碎石日') {
-            dayNumberClass = 'red';
-        } else if (specialDay === '黑色碎石日') {
-            dayNumberClass = 'black';
-        }
-
-        dayElement.innerHTML = `
-            <div class="day-number ${dayNumberClass}">${day}</div>
-            ${specialDay ? `
-                <div class="special-info">
-                    ${specialDay}<br>${map}
-                </div>
-                <div class="time-slots">${landingTime}</div>
-            ` : ''}
-        `;
-        dayElement.addEventListener('click', () => selectDate(date));
-        if (date.toDateString() === today.toDateString()) {
-            dayElement.classList.add('selected');
-            selectDate(date);
-        }
-        return dayElement;
-    }
-
-    function getSpecialDay(date) {
-        const day = date.getDate();
-        const dayOfWeek = date.getDay();
-        let specialDay = null;
-        let map = getMapForDay(day);
-        let landingTime = '';
-
-        if (map === '云野') {
-            if (dayOfWeek === 2) {
-                map = '云野图一';
-            } else if (dayOfWeek === 3) {
-                map = '云野三塔图';
-            } else if (dayOfWeek === 5) {
-                map = '云野右边隐藏图';
-            } else if (dayOfWeek === 6) {
-                map = '云野左边隐藏图';
-            } else if (dayOfWeek === 0) {
-                map = '云野圣岛';
+        function isSpecialDate(date) {
+            const day = date.getDate();
+            const dayOfWeek = date.getDay();
+            if (day <= 15) {
+                return dayOfWeek === 2 || dayOfWeek === 6 || dayOfWeek === 0;
+            } else {
+                return dayOfWeek === 3 || dayOfWeek === 5 || dayOfWeek === 0;
             }
         }
 
-        if (map === '雨林') {
-            if (dayOfWeek === 2) {
-                map = '雨林蘑菇图';
-            } else if (dayOfWeek === 3) {
-                map = '雨林水母图';
-            } else if (dayOfWeek === 5) {
-                map = '雨林大树屋';
-            } else if (dayOfWeek === 6) {
-                map = '雨林神庙后';
-            } else if (dayOfWeek === 0) {
-                map = '雨林8/8隐藏图';
+        function getStoneType(date) {
+            const day = date.getDate();
+            const dayOfWeek = date.getDay();
+            if (day <= 15) {
+                if (dayOfWeek === 2) return '黑石';
+                if (dayOfWeek === 6 || dayOfWeek === 0) return '红石';
+            } else {
+                if (dayOfWeek === 3) return '黑石';
+                if (dayOfWeek === 5 || dayOfWeek === 0) return '红石';
+            }
+            return '';
+        }
+
+        function createCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+
+            const currentMonthElement = document.getElementById('currentMonth');
+            currentMonthElement.textContent = `${year}年${month + 1}月`;
+
+            const weekdaysContainer = document.getElementById('weekdays');
+            weekdaysContainer.innerHTML = weekdays.map(day => `<div class="weekday">${day}</div>`).join('');
+
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+
+            // 填充日历前的空白天数
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                calendar.appendChild(document.createElement('div'));
+            }
+
+            for (let i = 1; i <= lastDay.getDate(); i++) {
+                const date = new Date(year, month, i);
+                const dayOfWeek = date.getDay();
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+                dayElement.dataset.date = date.toISOString();
+
+                const isSpecial = isSpecialDate(date);
+                const stoneType = getStoneType(date);
+                if (isSpecial) {
+                    dayElement.classList.add(stoneType === '黑石' ? 'black-stone' : 'red-stone');
+                }
+
+                if (date.toDateString() === new Date().toDateString()) {
+                    dayElement.classList.add('today');
+                }
+
+                if (date.toDateString() === selectedDate.toDateString()) {
+                    dayElement.classList.add('selected');
+                }
+
+                const dateElement = document.createElement('div');
+                dateElement.className = 'date';
+                dateElement.textContent = i;
+                dayElement.appendChild(dateElement);
+
+                if (isSpecial) {
+                    const mapIndex = (i - 1) % 5;
+                    const mapElement = document.createElement('div');
+                    mapElement.className = 'map';
+                    mapElement.textContent = maps[mapIndex];
+                    dayElement.appendChild(mapElement);
+
+                    const locationElement = document.createElement('div');
+                    locationElement.className = 'location';
+                    locationElement.textContent = getMapLocation(maps[mapIndex], dayOfWeek);
+                    dayElement.appendChild(locationElement);
+                }
+
+                dayElement.addEventListener('click', handleDateClick);
+                calendar.appendChild(dayElement);
             }
         }
 
-        if (map === '禁阁') {
-            if (dayOfWeek === 2 || dayOfWeek === 3) {
-                map = '禁阁星漠';
-            } else if (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0) {
-                map = '禁阁星漠搁浅船';
-            }
+        function handleDateClick(event) {
+            const clickedDate = new Date(event.currentTarget.dataset.date);
+            document.querySelectorAll('.day').forEach(day => day.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            selectedDate = clickedDate;
+            updateDetailBox();
         }
 
-        if (map === '霞谷') {
-            if (dayOfWeek === 2 || dayOfWeek === 3) {
-                map = '霞谷滑冰场';
-            } else if (dayOfWeek === 5 || dayOfWeek === 6) {
-                map = '霞谷圆梦村';
-            } else if (dayOfWeek === 0) {
-                map = '霞谷雪隐峰';
+        function updateDetailBox() {
+            const detailBox = document.getElementById('detailBox');
+            const isSpecial = isSpecialDate(selectedDate);
+            const stoneType = getStoneType(selectedDate);
+            const dayOfWeek = selectedDate.getDay();
+            const mapIndex = (selectedDate.getDate() - 1) % 5;
+            const map = maps[mapIndex];
+            const location = getMapLocation(map, dayOfWeek);
+
+            if (!isSpecial) {
+                detailBox.innerHTML = '<p>今日无碎石</p>';
+                return;
             }
-        }
 
-        if (map === '暮土') {
-            if (dayOfWeek === 2) {
-                map = '暮土图一';
-            } else if (dayOfWeek === 3) {
-                map = '暮土终点图';
-            } else if (dayOfWeek === 5) {
-                map = '暮土沉船';
-            } else if (dayOfWeek === 6) {
-                map = '暮土四龙图';
-            } else if (dayOfWeek === 0) {
-                map = '暮土方舟图';
-            }
-        }
+            const now = new Date();
+            const isPastDate = selectedDate < now && selectedDate.toDateString() !== now.toDateString();
 
-        if (day <= 15) {
-            specialDay = getSpecialDayType(dayOfWeek, [2], [6, 0]);
-            if (dayOfWeek === 2) {
-                landingTime = '(09:08—10:00)<br>(14:08—15:00)<br>(19:08—20:00)';
-            } else if (dayOfWeek === 6) {
-                landingTime = '(10:08—11:00)<br>(14:08—15:00)<br>(22:08—23:00)';
-            } else if (dayOfWeek === 0) {
-                landingTime = '(07:08—08:00)<br>(13:08—14:00)<br>(19:08—20:00)';
-            }
-        } else {
-            specialDay = getSpecialDayType(dayOfWeek, [3], [5, 0]);
-            if (dayOfWeek === 3) {
-                landingTime = '(09:08—10:00)<br>(15:08—16:00)<br>(21:08—22:00)';
-            } else if (dayOfWeek === 5) {
-                landingTime = '(11:08—12:00)<br>(17:08—18:00)<br>(23:08—24:00)';
-            } else if (dayOfWeek === 0) {
-                landingTime = '(07:08—08:00)<br>(13:08—14:00)<br>(19:08—20:00)';
-            }
-        }
-
-        return { specialDay, map, landingTime };
-    }
-
-    function getSpecialDayType(dayOfWeek, blackDays, redDays) {
-        if (blackDays.includes(dayOfWeek)) return '黑色碎石日';
-        if (redDays.includes(dayOfWeek)) return '红色碎石日';
-        return null;
-    }
-
-    function selectDate(date) {
-        selectedDate = date;
-        updateSelectedDate();
-    }
-
-    function updateSelectedDate() {
-        const selectedDateContainer = document.querySelector('.selected-date');
-        if (selectedDate) {
-            const { specialDay, map, landingTime } = getSpecialDay(selectedDate);
-            selectedDateContainer.innerHTML = `
-                <div style="font-size: 24px; font-weight: 700; margin-bottom: 10px;">
-                    ${selectedDate.getFullYear()}年${selectedDate.getMonth() + 1}月${selectedDate.getDate()}日
-                </div>
-                ${specialDay ? `
-                    <div class="special-info">
-                        <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">
-                            今日石头: ${specialDay === '红色碎石日' ? '红石' : '黑石'}
-                        </div>
-                        <div style="margin-bottom: 5px;">降落地图：${map}</div>
-                        <div>降落时间段<br>${landingTime}</div>
-                    </div>
-                ` : `<div>今日非碎石日，地图：${map}</div>`}
+            detailBox.innerHTML = `
+                <h3>${selectedDate.getFullYear()}年${selectedDate.getMonth() + 1}月${selectedDate.getDate()}日</h3>
+                <p>碎石类型：${stoneType}</p>
+                <p>地图：${map}</p>
+                ${location ? `<p>坠落位置：${location}</p>` : ''}
+                <p>坠落时间：${fallTimes.join(', ')}</p>
+                ${isPastDate ? '<p>坠落已结束</p>' : '<p id="countdown"></p>'}
             `;
-            document.querySelectorAll('.day').forEach(day => {
-                day.classList.toggle('selected', parseInt(day.querySelector('.day-number').textContent) === selectedDate.getDate());
-            });
-        } else {
-            selectedDateContainer.innerHTML = '';
+
+            if (!isPastDate) {
+                updateCountdown();
+            }
         }
-    }
 
-    document.querySelector('.prev-month').addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        renderCalendar();
-    });
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            if (!countdownElement) return;
 
-    document.querySelector('.next-month').addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        renderCalendar();
-    });
+            const now = new Date();
+            const todayFallTimes = fallTimes.map(time => {
+                const [hours, minutes] = time.split(':').map(Number);
+                return new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), hours, minutes);
+            });
 
-    renderCalendar();
-</script>
+            let nextFallTime = todayFallTimes.find(time => time > now);
+
+            if (!nextFallTime) {
+                // 如果今天的所有时间都过了，计算到明天的第一个坠落时间
+                const tomorrow = new Date(selectedDate);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const [hours, minutes] = fallTimes[0].split(':').map(Number);
+                nextFallTime = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), hours, minutes);
+            }
+
+            function calculate() {
+                const now = new Date();
+                let diff = nextFallTime - now;
+
+                if (diff < 0) {
+                    countdownElement.textContent =
+
+                        '坠落已结束';
+                    return;
+                }
+
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                countdownElement.textContent = `距离下次坠落：${hours}小时${minutes}分钟${seconds}秒`;
+            }
+
+            calculate();
+            setInterval(calculate, 1000);
+        }
+
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            createCalendar();
+            updateDetailBox();
+        }
+
+        document.getElementById('prevMonth').addEventListener('click', () => changeMonth(-1));
+        document.getElementById('nextMonth').addEventListener('click', () => changeMonth(1));
+
+        createCalendar();
+        updateDetailBox();
+
+        // 每天午夜更新日历
+        setInterval(() => {
+            const now = new Date();
+            if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+                createCalendar();
+                updateDetailBox();
+            }
+        }, 1000);
+    </script>
 </body>
+
+</html>
