@@ -34,7 +34,7 @@ export class SKY extends plugin {
 
   async regressionRecords(e) {
     const baseUrl = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/';
-    const regressionRecordsData = await (await fetch(`${baseUrl}RegressionRecords.json`)).json();
+    let regressionRecordsData = await (await fetch(`${baseUrl}RegressionRecords.json`)).json();
     const seasonalSpiritsData = await (await fetch(`${baseUrl}SeasonalSpirits.json`)).json();
 
     let [, , showAll, year] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
