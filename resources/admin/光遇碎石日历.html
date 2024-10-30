@@ -268,63 +268,62 @@
         let selectedDate = new Date();
 
         function getMapLocation(map, dayOfWeek) {
+            const imageUrl = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/%E5%85%89%E9%81%87/ShardRouteMap/'
             const locations = {
                 '云野': {
-                    2: '云野图一',
-                    3: '三塔图',
-                    5: '右边隐藏图',
-                    6: '左边隐藏图',
-                    0: '圣岛'
+                    2: { mapName: '云野图一', mapImage: '' },
+                    3: { mapName: '三塔图', mapImage: '' },
+                    5: { mapName: '右边隐藏图', mapImage: '' },
+                    6: { mapName: '左边隐藏图', mapImage: '' },
+                    0: { mapName: '圣岛', mapImage: '' }
                 },
                 '雨林': {
-                    2: '雨林蘑菇图',
-                    3: '雨林水母图',
-                    5: '雨林大树屋',
-                    6: '雨林神庙后',
-                    0: '雨林8/8隐藏图'
+                    2: { mapName: '雨林蘑菇图', mapImage: '' },
+                    3: { mapName: '雨林水母图', mapImage: '' },
+                    5: { mapName: '雨林大树屋', mapImage: '' },
+                    6: { mapName: '雨林神庙后', mapImage: '' },
+                    0: { mapName: '雨林8/8隐藏图', mapImage: '' }
                 },
                 '霞谷': {
-                    2: '滑冰场',
-                    3: '滑冰场',
-                    5: '圆梦村',
-                    6: '圆梦村',
-                    0: '霞谷雪隐峰'
+                    2: { mapName: '滑冰场', mapImage: `${imageUrl}滑冰场.jpg` },
+                    3: { mapName: '滑冰场', mapImage: `${imageUrl}滑冰场.jpg` },
+                    5: {
+                        mapName: '圆梦村',
+                        mapImage: `${imageUrl}圆梦村.jpg`
+                    },
+                    6: {
+                        mapName: '圆梦村',
+                        mapImage: `${imageUrl}圆梦村.jpg`
+                    },
+                    0: { mapName: '霞谷雪隐峰', mapImage: '' }
                 },
                 '暮土': {
-                    2: '暮土图一',
-                    3: '暮土终点图',
-                    5: '暮土沉船',
-                    6: '暮土四龙图',
-                    0: '暮土方舟图'
+                    2: { mapName: '暮土图一', mapImage: '' },
+                    3: { mapName: '暮土终点图', mapImage: '' },
+                    5: { mapName: '暮土沉船', mapImage: '' },
+                    6: { mapName: '暮土四龙图', mapImage: '' },
+                    0: { mapName: '暮土方舟图', mapImage: '' }
                 },
                 '禁阁': {
-                    2: '星光沙漠',
-                    3: '星光沙漠',
-                    5: '星光沙漠·一隅',
-                    6: '星光沙漠·一隅',
-                    0: '星光沙漠·一隅'
+                    2: { mapName: '星光沙漠', mapImage: '' },
+                    3: { mapName: '星光沙漠', mapImage: '' },
+                    5: {
+                        mapName: '星光沙漠·一隅',
+                        mapImage: `${imageUrl}星光沙漠·一隅.jpg`
+                    },
+                    6: {
+                        mapName: '星光沙漠·一隅',
+                        mapImage: `${imageUrl}星光沙漠·一隅.jpg`
+                    },
+                    0: {
+                        mapName: '星光沙漠·一隅',
+                        mapImage: `${imageUrl}星光沙漠·一隅.jpg`
+                    }
                 },
             };
 
-            const imageUrl = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/%E5%85%89%E9%81%87/ShardRouteMap/'
-            const images = {
-                '霞谷': {
-                    2: `${imageUrl}%E6%BB%91%E5%86%B0%E5%9C%BA.jpg`,
-                    3: `${imageUrl}%E6%BB%91%E5%86%B0%E5%9C%BA.jpg`,
-                    5: `${imageUrl}%E5%9C%86%E6%A2%A6%E6%9D%91.jpg`,
-                    6: `${imageUrl}%E5%9C%86%E6%A2%A6%E6%9D%91.jpg`
-                },
-                '禁阁': {
-                    5: `${imageUrl}%E6%98%9F%E5%85%89%E6%B2%99%E6%BC%A0%C2%B7%E4%B8%80%E9%9A%85.jpg`,
-                    6: `${imageUrl}%E6%98%9F%E5%85%89%E6%B2%99%E6%BC%A0%C2%B7%E4%B8%80%E9%9A%85.jpg`,
-                    0: `${imageUrl}%E6%98%9F%E5%85%89%E6%B2%99%E6%BC%A0%C2%B7%E4%B8%80%E9%9A%85.jpg`
-                }
-            };
-
-            const location = locations[map] ? locations[map][dayOfWeek] || '' : '';
-            const image = images[map] ? images[map][dayOfWeek] || '空' : '空';
-
-            return { location, image };
+            const locationData = locations[map] ? locations[map][dayOfWeek] || { mapName: '', mapImage: '空' } : { mapName: '', mapImage: '空' };
+            return { location: locationData.mapName, image: locationData.mapImage };
         }
 
         function isSpecialDate(date) {
