@@ -33,61 +33,48 @@ export class SKY extends plugin {
   }
 
   async regressionRecords(e) {
-    const link = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/'
-    let regressionRecordsData = await (await fetch(link + 'RegressionRecords.json')).json()
-    const seasonalSpiritsData = await (await fetch(link + 'SeasonalSpirits.json')).json()
+    const baseUrl = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/';
+    const regressionRecordsData = await (await fetch(`${baseUrl}RegressionRecords.json`)).json();
+    const seasonalSpiritsData = await (await fetch(`${baseUrl}SeasonalSpirits.json`)).json();
 
-    let [, , showAll, year] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/)
-
+    let [, , showAll, year] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
     if (showAll !== '全部') {
-      year = parseInt(year)
-      if (year >= 20) {
-        year -= 20
-        regressionRecordsData = [regressionRecordsData[year]]
-      }
+      year = parseInt(year) - 20;
+      regressionRecordsData = [regressionRecordsData[year]];
     }
-    let html = '';
-    regressionRecordsData.forEach(yearData => {
-      yearData.yearRecord.forEach((monthData, j) => {
-        monthData.monthRecord.forEach((dayData, k) => {
-          html += `<tr>`;
-          if (j === 0 && k === 0) html += `<td rowspan="${yearData.count}">${yearData.year}</td>`;
-          if (k === 0) html += `<td rowspan="${monthData.monthRecord.length}">${monthData.month}</td>`;
-          html += `<td>${dayData.day}</td>`;
 
-          const { platform } = dayData
-          if (platform === 'All') {
-            html += `<td colspan="2">${dayData.name}</td>`
-          } else if (platform === 'IOS' && dayData.day === 19) {
-            html += `<td>${dayData.name}</td><td rowspan="9" class="count-0">未开服</td>`
-          } else if (platform === 'IOS') {
-            html += `<td>${dayData.name}</td>`
-          } else {
-            html += `<td class="count-0">——</td><td>${dayData.name}</td>`
-          }
+    const yearCounts = regressionRecordsData.reduce((acc, { year, yearRecord }) => {
+      acc[year] = yearRecord.reduce((sum, { monthRecord }) => sum + monthRecord.length, 0);
+      return acc;
+    }, {});
 
-          html += `<td class="count-${dayData.count.i}">${dayData.count.i || '——'}</td>`;
-          html += `<td class="count-${dayData.count.a}">${dayData.count.a || '——'}</td>`;
-          html += `<td>${dayData.price['🕯']}</td>`;
-          html += `<td>${dayData.price['❤️']}</td>`;
+    const html = regressionRecordsData.map(({ year, yearRecord }) => {
+      return yearRecord.map(({ month, monthRecord }, j) => {
+        return monthRecord.map((dayData, k) => {
+          const { day, platform, name, count, price } = dayData;
+          const season = seasonalSpiritsData.find(({ spirits }) => spirits.includes(name))?.name || '未匹配';
 
-          let season = ''
-          for (let i = 0; i < seasonalSpiritsData.length; i++) {
-            if (seasonalSpiritsData[i].spirits.includes(dayData.name)) {
-              season = seasonalSpiritsData[i].name
-              break
-            }
-            season = '未匹配'
-          }
-          html += `<td>${season}</td>`;
-          html += `</tr>`;
-        });
-      });
-    });
+          return `
+            <tr>
+              ${j === 0 && k === 0 ? `<td rowspan="${yearCounts[year]}">${year}</td>` : ''}
+              ${k === 0 ? `<td rowspan="${monthRecord.length}">${month}</td>` : ''}
+              <td>${day}</td>
+              ${platform === 'All' ? `<td colspan="2">${name}</td>` : ''}
+              ${platform === 'IOS' && day === 19 ? `<td>${name}</td><td rowspan="9" class="count-0">未开服</td>` : ''}
+              ${platform === 'IOS' && day !== 19 ? `<td>${name}</td>` : ''}
+              ${platform !== 'All' && platform !== 'IOS' ? `<td class="count-0">——</td><td>${name}</td>` : ''}
+              <td class="count-${count.i}">${count.i || '——'}</td>
+              <td class="count-${count.a}">${count.a || '——'}</td>
+              <td>${price['🕯']}</td>
+              <td>${price['❤️']}</td>
+              <td>${season}</td>
+            </tr>
+          `;
+        }).join('');
+      }).join('');
+    }).join('');
 
-    return render('admin/复刻记录', {
-      html
-    }, { e, scale: 1.4 })
+    return render('admin/复刻记录', { html }, { e, scale: 1.4 });
   }
 
   async handleImageQuery(e) {
