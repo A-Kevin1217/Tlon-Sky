@@ -15,7 +15,8 @@ export class SKY extends plugin {
       rule: [
         { reg: SEARCH_PATTERNS[0], fnc: 'handleImageQuery' },
         { reg: SEARCH_PATTERNS[1], fnc: 'handleImageQuery' },
-        { reg: /^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/, fnc: 'regressionRecords' }
+        { reg: /^(#|\/)?(20|21|22|23|24)年复刻记录$/, fnc: 'regressionRecords' },
+        { reg: /^(#|\/)?全部复刻记录$/, fnc: 'regressionRecords' }
       ]
     })
 
@@ -33,62 +34,57 @@ export class SKY extends plugin {
   }
 
   async regressionRecords(e) {
-    const yearMatch = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
-    const yearFilter = yearMatch[3] && yearMatch[3][0] === '2' ? `20${yearMatch[2]}` : null;
+    const link = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/'
+    const regressionRecordsData = await (await fetch(link + 'RegressionRecords.json')).json()
+    const seasonalSpiritsData = await (await fetch(link + 'SeasonalSpirits.json')).json()
 
-    const baseUrl = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/';
-    const [regressionRecordsData, seasonalSpiritsData] = await Promise.all([
-      fetch(baseUrl + 'RegressionRecords.json').then(res => res.json()),
-      fetch(baseUrl + 'SeasonalSpirits.json').then(res => res.json())
-    ]);
+    const queryYear = e.msg.match(/(\d{4})年复刻记录/);
+    const showAll = /#全部复刻记录/.test(e.msg);
 
-    const html = regressionRecordsData.reduce((acc, yearData) => {
-      if (yearFilter && yearData.year !== yearFilter) return acc;
+    let html = '';
+    regressionRecordsData.forEach(yearData => {
+      if (showAll || (queryYear && yearData.year === parseInt(queryYear[1]))) {
+        yearData.yearRecord.forEach((monthData, j) => {
+          monthData.monthRecord.forEach((dayData, k) => {
+            html += `<tr>`;
+            if (j === 0 && k === 0) html += `<td rowspan="${yearData.count}">${yearData.year}</td>`;
+            if (k === 0) html += `<td rowspan="${monthData.monthRecord.length}">${monthData.month}</td>`;
+            html += `<td>${dayData.day}</td>`;
 
-      yearData.yearRecord.forEach((monthData, j) => {
-        monthData.monthRecord.forEach((dayData, k) => {
-          acc += `<tr>`;
-          if (j === 0 && k === 0) acc += `<td rowspan="${yearData.count}">${yearData.year}</td>`;
-          if (k === 0) acc += `<td rowspan="${monthData.monthRecord.length}">${monthData.month}</td>`;
-          acc += `<td>${dayData.day}</td>`;
+            const { platform } = dayData
+            if (platform === 'All') {
+              html += `<td colspan="2">${dayData.name}</td>`
+            } else if (platform === 'IOS' && dayData.day === 19) {
+              html += `<td>${dayData.name}</td><td rowspan="9" class="count-0">未开服</td>`
+            } else if (platform === 'IOS') {
+              html += `<td>${dayData.name}</td>`
+            } else {
+              html += `<td class="count-0">——</td><td>${dayData.name}</td>`
+            }
 
-          const platformHtml = this.getPlatformHtml(dayData);
-          acc += platformHtml;
+            html += `<td class="count-${dayData.count.i}">${dayData.count.i || '——'}</td>`;
+            html += `<td class="count-${dayData.count.a}">${dayData.count.a || '——'}</td>`;
+            html += `<td>${dayData.price['🕯']}</td>`;
+            html += `<td>${dayData.price['❤️']}</td>`;
 
-          acc += `<td class="count-${dayData.count.i}">${dayData.count.i || '——'}</td>`;
-          acc += `<td class="count-${dayData.count.a}">${dayData.count.a || '——'}</td>`;
-          acc += `<td>${dayData.price['🕯']}</td>`;
-          acc += `<td>${dayData.price['❤️']}</td>`;
-
-          const season = this.getSeason(dayData.name, seasonalSpiritsData);
-          acc += `<td>${season}</td>`;
-          acc += `</tr>`;
+            let season = ''
+            for (let i = 0; i < seasonalSpiritsData.length; i++) {
+              if (seasonalSpiritsData[i].spirits.includes(dayData.name)) {
+                season = seasonalSpiritsData[i].name
+                break
+              }
+              season = '未匹配'
+            }
+            html += `<td>${season}</td>`;
+            html += `</tr>`;
+          });
         });
-      });
-
-      return acc;
-    }, '');
-
-    return render('admin/复刻记录', { html }, { e, scale: 1.4 });
-  }
-
-  getPlatformHtml(dayData) {
-    if (dayData.platform === 'All') {
-      return `<td colspan="2">${dayData.name}</td>`;
-    }
-    if (dayData.platform === 'IOS') {
-      return dayData.day === 19 ? `<td>${dayData.name}</td><td rowspan="9" class="count-0">未开服</td>` : `<td>${dayData.name}</td>`;
-    }
-    return `<td class="count-0">——</td><td>${dayData.name}</td>`;
-  }
-
-  getSeason(name, seasonalSpiritsData) {
-    for (const season of seasonalSpiritsData) {
-      if (season.spirits.includes(name)) {
-        return season.name;
       }
-    }
-    return '未匹配';
+    });
+
+    return render('admin/复刻记录', {
+      html
+    }, { e, scale: 1.4 })
   }
 
   async handleImageQuery(e) {
