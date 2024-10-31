@@ -18,7 +18,12 @@
             --button-hover: #2980b9;
         }
 
+        html {
+            width: 900px;
+        }
+
         body {
+            width: 900px;
             font-family: 'Arial', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -28,6 +33,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background: var(--random-gradient);
         }
 
         .container {
@@ -217,25 +223,34 @@
             bottom: 10px;
             left: 10px;
             width: 100px;
-            /* 调整宽度 */
             height: auto;
-            /* 保持宽高比 */
             z-index: 1000;
-            /* 确保在其他元素之上 */
         }
+
+        /* 定义十种渐变色 */
+        .gradient-1 { --random-gradient: linear-gradient(45deg, #ff9a9e, #fad0c4); }
+        .gradient-2 { --random-gradient: linear-gradient(45deg, #a18cd1, #fbc2eb); }
+        .gradient-3 { --random-gradient: linear-gradient(45deg, #fad0c4, #ffd1ff); }
+        .gradient-4 { --random-gradient: linear-gradient(45deg, #ffecd2, #fcb69f); }
+        .gradient-5 { --random-gradient: linear-gradient(45deg, #ff9a9e, #fecfef); }
+        .gradient-6 { --random-gradient: linear-gradient(45deg, #f6d365, #fda085); }
+        .gradient-7 { --random-gradient: linear-gradient(45deg, #fbc2eb, #a6c1ee); }
+        .gradient-8 { --random-gradient: linear-gradient(45deg, #fdcbf1, #e6dee9); }
+        .gradient-9 { --random-gradient: linear-gradient(45deg, #a1c4fd, #c2e9fb); }
+        .gradient-10 { --random-gradient: linear-gradient(45deg, #d4fc79, #96e6a1); }
     </style>
-    <script>
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?a6604428a5c563d802a0240f431bb3d2";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
 </head>
 
 <body>
+    <script>
+        // 随机选择一个渐变色类
+        const gradients = [
+            'gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5',
+            'gradient-6', 'gradient-7', 'gradient-8', 'gradient-9', 'gradient-10'
+        ];
+        const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+        document.body.classList.add(randomGradient);
+    </script>
     <div class="container">
         <h1 class="title">光遇碎石日历</h1>
         <div class="calendar-container">
