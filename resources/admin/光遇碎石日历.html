@@ -278,7 +278,6 @@
     <script>
         const maps = ['暮土', '禁阁', '云野', '雨林', '霞谷'];
         const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
-        const fallTimes = ['09:08', '11:08', '17:08'];
         let currentDate = new Date();
         let selectedDate = new Date();
 
@@ -362,6 +361,29 @@
                 if (dayOfWeek === 5 || dayOfWeek === 0) return '红石';
             }
             return '';
+        }
+
+        function getFallTimes(date) {
+            const day = date.getDate();
+            const dayOfWeek = date.getDay();
+
+            if (dayOfWeek === 0) { // 星期天
+                return ['07:08', '13:08', '19:08'];
+            }
+
+            if (day <= 15) {
+                if (getStoneType(date) === '红石') {
+                    return ['10:08', '14:08', '22:08'];
+                } else { // 黑石
+                    return ['09:08', '14:08', '19:08'];
+                }
+            } else {
+                if (getStoneType(date) === '红石') {
+                    return ['11:08', '17:08', '23:08'];
+                } else { // 黑石
+                    return ['09:08', '15:08', '21:08'];
+                }
+            }
         }
 
         function createCalendar() {
@@ -460,7 +482,7 @@
                 <p>碎石类型：${stoneType}</p>
                 <p>地图：${map}</p>
                 ${location ? `<p>坠落位置：${location}</p>` : ''}
-                <p>坠落时间：${fallTimes.join(', ')}</p>
+                <p>坠落时间：${getFallTimes(selectedDate).join(', ')}</p>
                 ${isPastDate ? '<p>坠落已结束</p>' : '<p id="countdown"></p>'}
             `;
 
@@ -483,7 +505,7 @@
             if (!countdownElement) return;
 
             const now = new Date();
-            const todayFallTimes = fallTimes.map(time => {
+            const todayFallTimes = getFallTimes(selectedDate).map(time => {
                 const [hours, minutes] = time.split(':').map(Number);
                 return new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), hours, minutes);
             });
@@ -494,7 +516,7 @@
                 // 如今的所有时间都过了，计算到明天的第一个坠落时间
                 const tomorrow = new Date(selectedDate);
                 tomorrow.setDate(tomorrow.getDate() + 1);
-                const [hours, minutes] = fallTimes[0].split(':').map(Number);
+                const [hours, minutes] = getFallTimes(selectedDate)[0].split(':').map(Number);
                 nextFallTime = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), hours, minutes);
             }
 
@@ -503,9 +525,7 @@
                 let diff = nextFallTime - now;
 
                 if (diff < 0) {
-                    countdownElement.textContent =
-
-                        '坠落已结束';
+                    countdownElement.textContent = '坠落已结束';
                     return;
                 }
 
@@ -513,7 +533,21 @@
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-                countdownElement.textContent = `距离下次坠落：${hours}小时${minutes}分钟${seconds}秒`;
+                const currentHour = now.getHours();
+                const currentMinute = now.getMinutes();
+
+                // 检查当前时间是否在降落时间之后但未到下一个整点
+                const isFallen = todayFallTimes.some(fallTime => {
+                    const fallHour = fallTime.getHours();
+                    const fallMinute = fallTime.getMinutes();
+                    return currentHour === fallHour && currentMinute >= fallMinute && currentMinute < 60;
+                });
+
+                if (isFallen) {
+                    countdownElement.textContent = '碎石已降落';
+                } else {
+                    countdownElement.textContent = `距离下次坠落：${hours}小时${minutes}分钟${seconds}秒`;
+                }
             }
 
             calculate();
