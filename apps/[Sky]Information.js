@@ -113,7 +113,10 @@ export class Ts extends plugin {
             if (!seasonData) {
                 return e.reply(['不存在该季节']);
             }
-            return render('admin/ancestor-last-reappearance-duration', { data: JSON.stringify(seasonData) }, { e, scale: 1.4 })
+            return render('admin/ancestor-last-reappearance-duration', {
+                seasonName,
+                data: JSON.stringify(seasonData)
+            }, { e, scale: 1.4 })
         });
     }
 }
