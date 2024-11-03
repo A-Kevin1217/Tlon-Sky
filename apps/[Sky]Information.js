@@ -108,41 +108,66 @@ export class Ts extends plugin {
 
     async F5(e) {
         const seasonName = e.msg.replace(/#|\/|季多久未复刻/g, '')
-        const linkData = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/先祖多久未复刻.json', 'json')
-
-        if (!linkData[seasonName]) {
-            return e.reply([
-                segment.at(e.user_id),
-                '\r不存在该季节，或该季节尚未开始复刻'
-            ])
-        }
-
-        let msg = `数据更新时间：${linkData['UPDATE TIME']}\r此表不计入集体复刻\r`
-
-        function getDayDiff(date) {
-            const today = new Date()
-            const timeDiff = today.getTime() - date.getTime()
-            return Math.floor(timeDiff / (1000 * 60 * 60 * 24)).toString().padStart(3, '0')
-        }
-
-        for (const role of linkData[seasonName]) {
-            const daysNumber = getDayDiff(new Date(role.date))
-            if (daysNumber.charAt(1) === '-') {
-                msg += `${role.name} 当前正在复刻或即将复刻\r`
-            } else {
-                msg += `${role.name}已[${daysNumber}]天未复刻\r`
+        fetchSeasonalLastAppearance().then(data => {
+            const seasonData = data.find(season => season.name === seasonName)
+            if (!seasonData) {
+                return e.reply(['不存在该季节']);
             }
-        }
-
-        return e.reply([msg.trim()])
+            return render('admin/ancestor-last-reappearance-duration', { data: JSON.stringify(seasonData) }, { e, scale: 1.4 })
+        });
     }
 }
 
-function Cttrt(timestamp) {
-    return {
-        days: Math.floor(timestamp / (24 * 60 * 60 * 1000)),
-        hours: Math.floor((timestamp % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
-        minutes: Math.floor((timestamp % (60 * 60 * 1000)) / (60 * 1000)),
-        seconds: Math.floor((timestamp % (60 * 1000)) / 1000)
-    }
+function fetchSeasonalLastAppearance() {
+    return fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json')
+        .then(res => res.json())
+        .then(seasonalData => {
+            return fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json')
+                .then(res => res.json())
+                .then(regressionData => {
+                    const lastAppearance = {};
+
+                    regressionData.forEach(yearData => {
+                        yearData.yearRecord.forEach(monthData => {
+                            monthData.monthRecord.forEach(record => {
+                                const name = record.name;
+                                const date = new Date(yearData.year, monthData.month - 1, record.day);
+
+                                if (!lastAppearance[name] || lastAppearance[name] < date) {
+                                    lastAppearance[name] = date;
+                                }
+                            });
+                        });
+                    });
+
+                    const currentDate = new Date();
+
+                    const seasonalLastAppearance = seasonalData.map(season => {
+                        return {
+                            name: season.name,
+                            spirits: season.spirits
+                                .map(spirit => {
+                                    const lastDate = lastAppearance[spirit];
+                                    if (lastDate) {
+                                        const adjustedDate = new Date(lastDate);
+                                        adjustedDate.setDate(adjustedDate.getDate() + 5);
+
+                                        const diffTime = currentDate - adjustedDate;
+                                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                                        return {
+                                            name: spirit,
+                                            status: diffDays > 0 ? `已 ${diffDays} 天未复刻` : '当前正在复刻',
+                                            icons: []
+                                        };
+                                    }
+                                    return null;
+                                })
+                                .filter(spirit => spirit !== null)
+                        };
+                    });
+
+                    return seasonalLastAppearance;
+                });
+        });
 }

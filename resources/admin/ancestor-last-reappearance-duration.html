@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .spirit-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .spirit-item {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 4px;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .spirit-item:hover {
+            transform: translateX(5px);
+        }
+        .spirit-info {
+            flex-grow: 1;
+        }
+        .spirit-name {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .spirit-status {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        .spirit-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            max-width: 100px;
+        }
+        .spirit-icon {
+            width: 30px;
+            height: 30px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>感恩季先祖多久未复刻</h1>
+        <ul id="spiritList" class="spirit-list">
+        </ul>
+    </div>
+
+    <script>
+        const spiritsData = JSON.parse('[{{@data}}]')
+
+        function createSpiritList(data) {
+            const spiritList = document.getElementById('spiritList');
+            data[0].spirits.forEach(spirit => {
+                const listItem = document.createElement('li');
+                listItem.className = 'spirit-item';
+                
+                const iconsHtml = spirit.icons.map(icon => 
+                    `<img src="${icon}" alt="" class="spirit-icon">`
+                ).join('');
+
+                listItem.innerHTML = `
+                    <div class="spirit-info">
+                        <div class="spirit-name">${spirit.name}</div>
+                        <div class="spirit-status">${spirit.status}</div>
+                    </div>
+                    <div class="spirit-icons">${iconsHtml}</div>
+                `;
+                spiritList.appendChild(listItem);
+            });
+        }
+
+        createSpiritList(spiritsData);
+    </script>
+</body>
+</html>
