@@ -115,6 +115,7 @@ export class Ts extends plugin {
             }
             return render('admin/ancestor-last-reappearance-duration', {
                 seasonName,
+                seasonIcon: seasonData.icon,
                 data: JSON.stringify(seasonData)
             }, { e, scale: 1.4 })
         });
@@ -148,9 +149,13 @@ function fetchSeasonalLastAppearance() {
                     const seasonalLastAppearance = seasonalData.map(season => {
                         return {
                             name: season.name,
+                            icon: season.seasonIcon,
                             spirits: season.spirits
                                 .map(spirit => {
-                                    const lastDate = lastAppearance[spirit];
+                                    const spiritName = typeof spirit === 'string' ? spirit : spirit.name;
+                                    const lastDate = lastAppearance[spiritName];
+                                    const icons = typeof spirit === 'object' ? spirit.icon : [];
+                                    
                                     if (lastDate) {
                                         const adjustedDate = new Date(lastDate);
                                         adjustedDate.setDate(adjustedDate.getDate() + 5);
@@ -159,9 +164,9 @@ function fetchSeasonalLastAppearance() {
                                         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
                                         return {
-                                            name: spirit,
+                                            name: spiritName,
                                             status: diffDays > 0 ? `已 ${diffDays} 天未复刻` : '当前正在复刻',
-                                            icons: []
+                                            icons: icons
                                         };
                                     }
                                     return null;
