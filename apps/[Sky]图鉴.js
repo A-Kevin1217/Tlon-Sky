@@ -52,7 +52,11 @@ export class SKY extends plugin {
       return yearRecord.map(({ month, monthRecord }, j) => {
         return monthRecord.map((dayData, k) => {
           const { day, platform, name, count, price } = dayData;
-          const season = seasonalSpiritsData.find(({ spirits }) => spirits.includes(name))?.name || '未匹配';
+          const season = seasonalSpiritsData.find(({ spirits }) => 
+            spirits.some(spirit => 
+                typeof spirit === 'string' ? spirit === name : spirit.name === name
+            )
+        )?.name || '未匹配';
 
           return `
             <tr>
