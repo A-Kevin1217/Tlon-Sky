@@ -7,7 +7,7 @@ import {
 } from '../function/function.js';
 
 const cronData = getCronData()
-
+//1
 const regex = /^[#\/]?(开启|关闭)老奶奶干饭提醒$/
 export class Ts extends plugin {
     constructor() {
