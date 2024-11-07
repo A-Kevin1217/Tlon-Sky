@@ -12,57 +12,52 @@ export class Ts extends plugin {
             event: 'message',
             priority: 1,
             rule: [
-                { reg: /^[#\/]?(光遇|sky)(服务器)?状态$/i, fnc: 'F1' },
-                { reg: /^[#\/]?(光遇|sky)公告$/i, fnc: 'skyAnnouncement' },
-                { reg: /^[#\/]?光翼统计$/, fnc: 'F3' },
-                { reg: /^[#\/]?(季节|活动)剩余$/, fnc: 'F4' },
-                { reg: /^[#\/]?(.*)季多久未复刻$/, fnc: 'F5' }
+                { reg: /^[#\/]?(光遇|sky)(服务器)?状态$/i, fnc: 'checkServerStatus' },
+                { reg: /^[#\/]?(光遇|sky)公告$/i, fnc: 'showAnnouncement' },
+                { reg: /^[#\/]?光翼统计$/, fnc: 'countWings' },
+                { reg: /^[#\/]?(季节|活动)剩余$/, fnc: 'showSeasonalRemaining' },
+                { reg: /^[#\/]?(.*)季多久未复刻$/, fnc: 'checkSeasonReappearance' }
             ]
         })
     }
 
-    async F1(e) {
+    async checkServerStatus(e) {
         try {
-            const linkData = await getLinkData('https://live-queue-sky-merge.game.163.com/queue?type=json', 'json')
-
-            let msg = []
-            if (linkData['ret'] !== 1) {
-                msg = ['当前光遇服务器畅通，无需排队']
-            } else {
-                msg = [
+            const serverData = await getLinkData('https://live-queue-sky-merge.game.163.com/queue?type=json', 'json');
+            const message = serverData['ret'] !== 1 
+                ? ['当前光遇服务器畅通，无需排队'] 
+                : [
                     segment.at(e.user_id),
                     '当前排队中\r',
-                    `排队人数：${linkData['pos']} 位\r`,
-                    `预计等待时间：${linkData['wait_time']} 秒`
-                ]
-            }
-            let platform = e.bot?.adapter?.name || e.platform || '未知'
+                    `排队人数：${serverData['pos']} 位\r`,
+                    `预计等待时间：${serverData['wait_time']} 秒`
+                ];
+
+            const platform = e.bot?.adapter?.name || e.platform || '未知';
             if (platform === 'QQBot') {
-                if (typeof Bot.Button === 'function') {
-                    function bd(label, callback) {
-                        return { label, callback }
-                    }
-                    msg.push(Bot.Button([[bd('再次查询', '光遇服务器状态')]]))
-                } else if (typeof segment?.button === 'function') {
-                    msg.push(segment.button([
-                        { text: '再次查询', callback: '光遇服务器状态' }
-                    ]))
+                const buttonFunction = typeof Bot.Button === 'function' ? Bot.Button : segment?.button;
+                if (buttonFunction) {
+                    message.push(buttonFunction([{ text: '再次查询', callback: '光遇服务器状态' }]));
                 }
             }
 
-            return e.reply(msg)
-        } catch (err) {
-            return e.reply(['光遇服务器异常，可能正在维护更新'])
+            return e.reply(message);
+        } catch (error) {
+            return e.reply(['光遇服务器异常，可能正在维护更新']);
         }
     }
 
-    async skyAnnouncement(e) {
-        return render('admin/skyAnnouncement', {}, { e, scale: 1.4 })
+    async showAnnouncement(e) {
+        return render('admin/skyAnnouncement', {}, { e, scale: 1.4 });
     }
 
-    async F3(e) {
-        const linkData = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json')
-        let tagCounts = {
+    async countWings(e) {
+        const wingData = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json');
+        const wingCounts = wingData.reduce((counts, item) => {
+            const tag = item["一级标签"];
+            if (tag in counts) counts[tag]++;
+            return counts;
+        }, {
             "复刻永久": 0,
             "普通永久": 0,
             "晨": 0,
@@ -72,53 +67,43 @@ export class Ts extends plugin {
             "暮": 0,
             "禁": 0,
             "暴": 0
-        };
-        linkData.forEach(item => {
-            if (item["一级标签"] === "复刻永久") tagCounts["复刻永久"]++
-            if (item["一级标签"] === "普通永久") tagCounts["普通永久"]++
-            if (item["一级标签"] === "晨岛") tagCounts["晨"]++
-            if (item["一级标签"] === "云野") tagCounts["云"]++
-            if (item["一级标签"] === "雨林") tagCounts["雨"]++
-            if (item["一级标签"] === "霞谷") tagCounts["霞"]++
-            if (item["一级标签"] === "暮土") tagCounts["暮"]++
-            if (item["一级标签"] === "禁阁") tagCounts["禁"]++
-            if (item["一级标签"] === "暴风眼") tagCounts["暴"]++
         });
 
-        const msg = [
-            `永久翼: ${tagCounts["复刻永久"] + tagCounts["普通永久"]}个`,
-            `复刻先祖永久翼: ${tagCounts["复刻永久"]}`,
-            `常驻先祖永久翼：${tagCounts["普通永久"]}`,
-            `晨岛光翼：${tagCounts["晨"]}`,
-            `云野光翼：${tagCounts["云"]}`,
-            `雨林光翼：${tagCounts["雨"]}`,
-            `霞谷光翼：${tagCounts["霞"]}`,
-            `暮土光翼：${tagCounts["暮"]}`,
-            `禁阁光翼：${tagCounts["禁"]}`,
-            `伊甸光翼：${tagCounts["暴"]}`
-        ]
+        const message = [
+            `永久翼: ${wingCounts["复刻永久"] + wingCounts["普通永久"]}个`,
+            `复刻先祖永久翼: ${wingCounts["复刻永久"]}`,
+            `常驻先祖永久翼：${wingCounts["普通永久"]}`,
+            `晨岛光翼：${wingCounts["晨"]}`,
+            `云野光翼：${wingCounts["云"]}`,
+            `雨林光翼：${wingCounts["雨"]}`,
+            `霞谷光翼：${wingCounts["霞"]}`,
+            `暮土光翼：${wingCounts["暮"]}`,
+            `禁阁光翼：${wingCounts["禁"]}`,
+            `伊甸光翼：${wingCounts["暴"]}`
+        ];
 
-        return e.reply(await common.makeForwardMsg(e, [msg.join('\r'), '数据来源: 网易大神'], `总光翼数量: ${linkData.length} | 点击查看更多`))
+        return e.reply(await common.makeForwardMsg(e, [message.join('\r'), '数据来源: 网易大神'], `总光翼数量: ${wingData.length} | 点击查看更多`));
     }
 
-    async F4(e) {
-        const data = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json', 'json')
-        return render('admin/季节&活动剩余', { data: JSON.stringify(data) }, { e, scale: 1.4 })
+    async showSeasonalRemaining(e) {
+        const seasonalData = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json', 'json');
+        return render('admin/季节&活动剩余', { data: JSON.stringify(seasonalData) }, { e, scale: 1.4 });
     }
 
-    async F5(e) {
-        const seasonName = e.msg.replace(/#|\/|季多久未复刻/g, '')
-        fetchSeasonalLastAppearance().then(data => {
-            const seasonData = data.find(season => season.name === seasonName)
-            if (!seasonData) {
-                return e.reply(['不存在该季节']);
-            }
-            return render('admin/ancestor-last-reappearance-duration', {
-                seasonName,
-                seasonIcon: seasonData.icon,
-                data: JSON.stringify(seasonData)
-            }, { e, scale: 1.4 })
-        });
+    async checkSeasonReappearance(e) {
+        const seasonName = e.msg.replace(/#|\/|季多久未复刻/g, '').trim();
+        const seasonalData = await fetchSeasonalLastAppearance();
+        const seasonInfo = seasonalData.find(season => season.name === seasonName);
+
+        if (!seasonInfo) {
+            return e.reply(['不存在该季节']);
+        }
+
+        return render('admin/ancestor-last-reappearance-duration', {
+            seasonName,
+            seasonIcon: seasonInfo.icon,
+            data: JSON.stringify(seasonInfo)
+        }, { e, scale: 1.4 });
     }
 }
 
