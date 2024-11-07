@@ -3,7 +3,7 @@ import { render } from './../components/index.js'
 import {
     getLinkData
 } from '../function/function.js';
-、、 
+
 export class Ts extends plugin {
     constructor() {
         super({
