@@ -48,6 +48,7 @@ export class SKY extends plugin {
         const randomValue1 = lodash.sample(ancestralNamePool)
         const randomValue2 = lodash.sample(ancestralNamePool.filter(a => a !== randomValue1))
 
+        //
         e.reply([`以下是我猜的复刻\r[${randomValue1}] | [${randomValue2}]\r功能仅供娱乐`])
     }
 
