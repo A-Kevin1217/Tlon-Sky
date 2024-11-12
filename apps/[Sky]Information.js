@@ -154,7 +154,11 @@ function fetchSeasonalLastAppearance() {
                                             icons: icons
                                         };
                                     }
-                                    return null;
+                                    return {
+                                        name: spiritName,
+                                        status: '此先祖还未开始复刻',
+                                        icons: icons
+                                    };
                                 })
                                 .filter(spirit => spirit !== null)
                         };
