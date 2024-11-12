@@ -228,16 +228,45 @@
         }
 
         /* 定义十种渐变色 */
-        .gradient-1 { --random-gradient: linear-gradient(45deg, #ff9a9e, #fad0c4); }
-        .gradient-2 { --random-gradient: linear-gradient(45deg, #a18cd1, #fbc2eb); }
-        .gradient-3 { --random-gradient: linear-gradient(45deg, #fad0c4, #ffd1ff); }
-        .gradient-4 { --random-gradient: linear-gradient(45deg, #ffecd2, #fcb69f); }
-        .gradient-5 { --random-gradient: linear-gradient(45deg, #ff9a9e, #fecfef); }
-        .gradient-6 { --random-gradient: linear-gradient(45deg, #f6d365, #fda085); }
-        .gradient-7 { --random-gradient: linear-gradient(45deg, #fbc2eb, #a6c1ee); }
-        .gradient-8 { --random-gradient: linear-gradient(45deg, #fdcbf1, #e6dee9); }
-        .gradient-9 { --random-gradient: linear-gradient(45deg, #a1c4fd, #c2e9fb); }
-        .gradient-10 { --random-gradient: linear-gradient(45deg, #d4fc79, #96e6a1); }
+        .gradient-1 {
+            --random-gradient: linear-gradient(45deg, #ff9a9e, #fad0c4);
+        }
+
+        .gradient-2 {
+            --random-gradient: linear-gradient(45deg, #a18cd1, #fbc2eb);
+        }
+
+        .gradient-3 {
+            --random-gradient: linear-gradient(45deg, #fad0c4, #ffd1ff);
+        }
+
+        .gradient-4 {
+            --random-gradient: linear-gradient(45deg, #ffecd2, #fcb69f);
+        }
+
+        .gradient-5 {
+            --random-gradient: linear-gradient(45deg, #ff9a9e, #fecfef);
+        }
+
+        .gradient-6 {
+            --random-gradient: linear-gradient(45deg, #f6d365, #fda085);
+        }
+
+        .gradient-7 {
+            --random-gradient: linear-gradient(45deg, #fbc2eb, #a6c1ee);
+        }
+
+        .gradient-8 {
+            --random-gradient: linear-gradient(45deg, #fdcbf1, #e6dee9);
+        }
+
+        .gradient-9 {
+            --random-gradient: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+        }
+
+        .gradient-10 {
+            --random-gradient: linear-gradient(45deg, #d4fc79, #96e6a1);
+        }
     </style>
 </head>
 
@@ -325,8 +354,14 @@
                     0: { mapName: '暮土方舟图', mapImage: '' }
                 },
                 '禁阁': {
-                    2: { mapName: '星光沙漠', mapImage: '' },
-                    3: { mapName: '星光沙漠', mapImage: '' },
+                    2: {
+                        mapName: '星光沙漠',
+                        mapImage: `${imageUrl}星光沙漠.jpg`
+                    },
+                    3: {
+                        mapName: '星光沙漠',
+                        mapImage: `${imageUrl}星光沙漠.jpg`
+                    },
                     5: {
                         mapName: '星光沙漠·一隅',
                         mapImage: `${imageUrl}星光沙漠·一隅.jpg`
