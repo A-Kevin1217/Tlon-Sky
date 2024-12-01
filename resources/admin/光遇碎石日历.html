@@ -272,7 +272,6 @@
 
 <body>
     <script>
-        // 随机选择一个渐变色类
         const gradients = [
             'gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5',
             'gradient-6', 'gradient-7', 'gradient-8', 'gradient-9', 'gradient-10'
@@ -311,86 +310,46 @@
         let selectedDate = new Date();
 
         function getMapLocation(map, dayOfWeek) {
-            const imageUrl = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/%E5%85%89%E9%81%87/ShardRouteMap/'
+            console.log(map, dayOfWeek);
             const locations = {
                 '云野': {
-                    2: { mapName: '云野图一', mapImage: '' },
-                    3: { mapName: '三塔图', mapImage: '' },
-                    5: { mapName: '右边隐藏图', mapImage: '' },
-                    6: { mapName: '左边隐藏图', mapImage: '' },
-                    0: { mapName: '圣岛', mapImage: '' }
+                    2: '云野图一',
+                    3: '三塔图',
+                    5: '右边隐藏图',
+                    6: '左边隐藏图',
+                    0: '圣岛'
                 },
                 '雨林': {
-                    2: { mapName: '雨林蘑菇图', mapImage: '' },
-                    3: { mapName: '雨林水母图', mapImage: '' },
-                    5: {
-                        mapName: '大树屋',
-                        mapImage: `${imageUrl}大树屋.jpg`
-                    },
-                    6: {
-                        mapName: '雨林神殿',
-                        mapImage: `${imageUrl}雨林神殿.jpg`
-                    },
-                    0: {
-                        mapName: '秘密花园',
-                        mapImage: `${imageUrl}秘密花园.jpg`
-                    }
+                    2: '雨林蘑菇图',
+                    3: '雨林水母图',
+                    5: '大树屋',
+                    6: '雨林神殿',
+                    0: '秘密花园'
                 },
                 '霞谷': {
-                    2: {
-                        mapName: '滑冰场',
-                        mapImage: `${imageUrl}滑冰场.jpg`
-                    },
-                    3: {
-                        mapName: '滑冰场',
-                        mapImage: `${imageUrl}滑冰场.jpg`
-                    },
-                    5: {
-                        mapName: '圆梦村',
-                        mapImage: `${imageUrl}圆梦村.jpg`
-                    },
-                    6: {
-                        mapName: '圆梦村',
-                        mapImage: `${imageUrl}圆梦村.jpg`
-                    },
-                    0: {
-                        mapName: '雪隐峰',
-                        mapImage: `${imageUrl}雪隐峰.jpg`
-                    }
+                    2: '滑冰场',
+                    3: '滑冰场',
+                    5: '圆梦村',
+                    6: '圆梦村',
+                    0: '雪隐峰'
                 },
                 '暮土': {
-                    2: { mapName: '暮土图一', mapImage: '' },
-                    3: { mapName: '暮土终点图', mapImage: '' },
-                    5: { mapName: '暮土沉船', mapImage: '' },
-                    6: { mapName: '暮土四龙图', mapImage: '' },
-                    0: { mapName: '暮土方舟图', mapImage: '' }
+                    2: '暮土图一',
+                    3: '暮土终点图',
+                    5: '暮土沉船',
+                    6: '暮土四龙图',
+                    0: '失落方舟'
                 },
                 '禁阁': {
-                    2: {
-                        mapName: '星光沙漠',
-                        mapImage: `${imageUrl}星光沙漠.jpg`
-                    },
-                    3: {
-                        mapName: '星光沙漠',
-                        mapImage: `${imageUrl}星光沙漠.jpg`
-                    },
-                    5: {
-                        mapName: '星光沙漠·一隅',
-                        mapImage: `${imageUrl}星光沙漠·一隅.jpg`
-                    },
-                    6: {
-                        mapName: '星光沙漠·一隅',
-                        mapImage: `${imageUrl}星光沙漠·一隅.jpg`
-                    },
-                    0: {
-                        mapName: '星光沙漠·一隅',
-                        mapImage: `${imageUrl}星光沙漠·一隅.jpg`
-                    }
+                    2: '星光沙漠',
+                    3: '星光沙漠',
+                    5: '星光沙漠·一隅',
+                    6: '星光沙漠·一隅',
+                    0: '星光沙漠·一隅'
                 },
             };
 
-            const locationData = locations[map] ? locations[map][dayOfWeek] || { mapName: '', mapImage: '空' } : { mapName: '', mapImage: '空' };
-            return { location: locationData.mapName, image: locationData.mapImage };
+            return locations[map] ? locations[map][dayOfWeek] || '' : '';
         }
 
         function isSpecialDate(date) {
@@ -420,20 +379,20 @@
             const day = date.getDate();
             const dayOfWeek = date.getDay();
 
-            if (dayOfWeek === 0) { // 星期天
+            if (dayOfWeek === 0) {
                 return ['07:08', '13:08', '19:08'];
             }
 
             if (day <= 15) {
                 if (getStoneType(date) === '红石') {
                     return ['10:08', '14:08', '22:08'];
-                } else { // 黑石
+                } else {
                     return ['09:08', '14:08', '19:08'];
                 }
             } else {
                 if (getStoneType(date) === '红石') {
                     return ['11:08', '17:08', '23:08'];
-                } else { // 黑石
+                } else {
                     return ['09:08', '15:08', '21:08'];
                 }
             }
@@ -454,7 +413,6 @@
             const calendar = document.getElementById('calendar');
             calendar.innerHTML = '';
 
-            // 填充日历前的空白天数
             for (let i = 0; i < firstDay.getDay(); i++) {
                 calendar.appendChild(document.createElement('div'));
             }
@@ -494,7 +452,7 @@
 
                     const locationElement = document.createElement('div');
                     locationElement.className = 'location';
-                    locationElement.textContent = getMapLocation(maps[mapIndex], dayOfWeek).location;
+                    locationElement.textContent = getMapLocation(maps[mapIndex], dayOfWeek);
                     dayElement.appendChild(locationElement);
                 }
 
@@ -519,7 +477,7 @@
             const dayOfWeek = selectedDate.getDay();
             const mapIndex = (selectedDate.getDate() - 1) % 5;
             const map = maps[mapIndex];
-            const { location, image } = getMapLocation(map, dayOfWeek);
+            const location = getMapLocation(map, dayOfWeek);
 
             if (!isSpecial) {
                 detailBox.innerHTML = '<p>今日无碎石</p>';
@@ -539,10 +497,10 @@
                 ${isPastDate ? '<p>坠落已结束</p>' : '<p id="countdown"></p>'}
             `;
 
-            if (image !== '空') {
+            if (location !== '') {
                 routeMap.innerHTML = `
                     <h4 style="font-size: 1.5em;">路线图</h4>
-                    <img src="${image}" alt="路线图" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;" />
+                    <img src="https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/%E5%85%89%E9%81%87/ShardRouteMap/${location}.jpg" alt="路线图" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;" />
                 `;
             } else {
                 routeMap.innerHTML = '';
@@ -566,7 +524,6 @@
             let nextFallTime = todayFallTimes.find(time => time > now);
 
             if (!nextFallTime) {
-                // 如今的所有时间都过了，计算到明天的第一个坠落时间
                 const tomorrow = new Date(selectedDate);
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 const [hours, minutes] = getFallTimes(selectedDate)[0].split(':').map(Number);
@@ -589,7 +546,6 @@
                 const currentHour = now.getHours();
                 const currentMinute = now.getMinutes();
 
-                // 检查当前时间是否在降落时间之后但未到下一个整点
                 const isFallen = todayFallTimes.some(fallTime => {
                     const fallHour = fallTime.getHours();
                     const fallMinute = fallTime.getMinutes();
@@ -619,7 +575,6 @@
         createCalendar();
         updateDetailBox();
 
-        // 每天午夜更新日历
         setInterval(() => {
             const now = new Date();
             if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
