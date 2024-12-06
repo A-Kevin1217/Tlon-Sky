@@ -7,68 +7,117 @@
     <title>公告</title>
     <style>
         body {
-            width: 1200px;
-            font-family: Arial, sans-serif;
             margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #525252;
-            color: white;
+            width: 1600px;
+            padding: 0;
+            min-height: 100;
+            background: url('https://sky.res.netease.com/pc/gw/20221215171426/img/bg_0040d9d.jpg');
+            background-size: 1700px;
+            background-repeat: no-repeat;
+            color: black;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
 
         .announcement {
-            margin: 20px auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            margin: 10px 5px;
             padding: 20px;
-            width: 80%;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-            background-color: #000;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            color: black;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* 添加针对左边框的特殊样式 */
+        #announcements-left .announcement {
+            margin-left: 0;
         }
 
         .highlight {
             background-color: #808080;
-            color: #000;
+            color: black;
         }
 
         .announcements-container {
             display: flex;
             justify-content: space-between;
+            width: 100%;
+            max-width: 2400px;
+            gap: 15px;
+            margin: 0 auto;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .divider {
-            width: 2px;
-            background-color: black;
-            margin: 0 20px;
+        #announcements-left,
+        #announcements-center,
+        #announcements-right {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        @media (max-width: 768px) {
+            .announcements-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        h1, p {
+            text-align: center;
+            width: 100%;
+        }
+
+        /* 添加针对链接和文本的样式 */
+        .announcement a, 
+        .announcement div,
+        .announcement p,
+        .announcement h2,
+        .announcement h3 {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            max-width: 100%;
         }
     </style>
 </head>
 
 <body>
     <h1>光遇公告</h1>
-    <p>(右边为抢跑公告，光遇临近更新时显示内容与左边不一样)</p>
+    <p>(左边为PC端公告，右边为抢跑公告，光遇临近更新时显示内容与左边不一样)</p>
     <div class="announcements-container">
         <div id="announcements-left"></div>
-        <div class="divider"></div>
+        <div id="announcements-center"></div>
         <div id="announcements-right"></div>
     </div>
 
     <script>
         async function fetchAnnouncements() {
             try {
-                const response1 = await fetch('https://ma75.update.netease.com/game_notice/announcement_live.json');
+                const response1 = await fetch('https://ma75.update.netease.com/game_notice/announcement_pc.json');
                 const data1 = await response1.json();
 
-                const response2 = await fetch('https://ma75.update.netease.com/game_notice/announcement_qa.json');
+                const response2 = await fetch('https://ma75.update.netease.com/game_notice/announcement_live.json');
                 const data2 = await response2.json();
 
+                const response3 = await fetch('https://ma75.update.netease.com/game_notice/announcement_qa.json');
+                const data3 = await response3.json();
+
+                
                 const announcementsLeft = document.getElementById('announcements-left');
+                const announcementsCenter = document.getElementById('announcements-center');
                 const announcementsRight = document.getElementById('announcements-right');
 
                 announcementsLeft.innerHTML = createAnnouncementHTML(data1);
-                announcementsRight.innerHTML = createAnnouncementHTML(data2);
+                announcementsCenter.innerHTML = createAnnouncementHTML(data2);
+                announcementsRight.innerHTML = createAnnouncementHTML(data3);
 
             } catch (error) {
                 console.error('获取公告失败:', error);
@@ -79,10 +128,10 @@
             const announcementDiv = document.createElement('div');
             announcementDiv.className = 'announcement';
 
-            if (data.Title && data.OtherChannelMessage) {
+            if (data.Title && data.OtherChannelMessage || data.NeteaseMessage) {
                 announcementDiv.innerHTML = `
                     <h2>${data.Title}</h2>
-                    <div>${formatMessage(data.OtherChannelMessage)}</div>
+                    <div>${formatMessage(data.OtherChannelMessage || data.NeteaseMessage)}</div>
                 `;
             } else {
                 announcementDiv.innerHTML = `<p>公告内容未定义</p>`;
