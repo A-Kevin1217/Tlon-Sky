@@ -71,402 +71,255 @@ export class SKY extends plugin {
       return acc;
     }, {});
 
+    // ... 前面的代码保持不变 ...
+
     const html = filteredData.map(({ year, yearRecord }) => {
       const stats = statistics[year];
       const sortedYearRecord = [...yearRecord].sort((a, b) => a.month - b.month);
 
-      const recordsHtml = `
-        <div class="records-table">
-          <h2>${year}年复刻记录</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>年份</th>
-                <th>月份</th>
-                <th>日期</th>
-                <th colspan="2">先祖</th>
-                <th>iOS</th>
-                <th>安卓</th>
-                <th>蜡烛</th>
-                <th>爱心</th>
-                <th>季节</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${sortedYearRecord.map(({ month, monthRecord }, monthIndex) => {
-                return monthRecord.map(({ day, platform, name, count, price }, recordIndex) => {
-                  const season = seasonalSpiritsData.find(({ spirits }) =>
-                    spirits.some(spirit =>
-                      typeof spirit === 'string' ? spirit === name : spirit.name === name
-                    )
-                  )?.name || '未匹配';
+      // 生成表格HTML
+      const recordsHtml = sortedYearRecord.map(({ month, monthRecord }, monthIndex) => {
+        return monthRecord.map(({ day, platform, name, count, price }, recordIndex) => {
+          const season = seasonalSpiritsData.find(({ spirits }) =>
+            spirits.some(spirit =>
+              typeof spirit === 'string' ? spirit === name : spirit.name === name
+            )
+          )?.name || '未匹配';
 
-                  return `
-                    <tr>
-                      ${monthIndex === 0 && recordIndex === 0 ? `<td rowspan="${yearCounts[year]}">${year}</td>` : ''}
-                      ${recordIndex === 0 ? `<td rowspan="${monthRecord.length}">${month}</td>` : ''}
-                      <td>${day}</td>
-                      ${platform === 'All' ? `<td colspan="2">${name}</td>` : ''}
-                      ${platform === 'IOS' && day === 19 ? `<td>${name}</td><td rowspan="9" class="count-0">未开服</td>` : ''}
-                      ${platform === 'IOS' && day !== 19 ? `<td>${name}</td>` : ''}
-                      ${platform !== 'All' && platform !== 'IOS' ? `<td class="count-0">——</td><td>${name}</td>` : ''}
-                      <td class="count-${count.i}">${count.i || '——'}</td>
-                      <td class="count-${count.a}">${count.a || '——'}</td>
-                      <td>${price['🕯']}</td>
-                      <td>${price['❤️']}</td>
-                      <td>${season}</td>
-                    </tr>
-                  `;
-                }).join('');
-              }).join('')}
-            </tbody>
-          </table>
-        </div>
+          return `
+        <tr>
+          ${monthIndex === 0 && recordIndex === 0 ? `<td rowspan="${yearCounts[year]}">${year}</td>` : ''}
+          ${recordIndex === 0 ? `<td rowspan="${monthRecord.length}">${month}</td>` : ''}
+          <td>${day}</td>
+          ${platform === 'All' ? `<td colspan="2">${name}</td>` : ''}
+          ${platform === 'IOS' && day === 19 ? `<td>${name}</td><td rowspan="9" class="count-0">未开服</td>` : ''}
+          ${platform === 'IOS' && day !== 19 ? `<td>${name}</td>` : ''}
+          ${platform !== 'All' && platform !== 'IOS' ? `<td class="count-0">——</td><td>${name}</td>` : ''}
+          <td class="count-${count.i}">${count.i || '——'}</td>
+          <td class="count-${count.a}">${count.a || '——'}</td>
+          <td>${price['🕯']}</td>
+          <td>${price['❤️']}</td>
+          <td>${season}</td>
+        </tr>
       `;
+        }).join('');
+      }).join('');
 
+      // 生成统计信息HTML
       const statsHtml = `
-        <div class="year-stats">
-          <div class="stats-header">
-            <h2>${year}年复刻统计</h2>
-            <div class="total-spirits">
-              <span class="number">${stats.summary.total}</span>
-              <span class="label">总复刻先祖</span>
-            </div>
+    <div class="stats-header">
+      <h2>${year}年复刻统计</h2>
+      <div class="total-spirits">
+        <span class="number">${stats.summary.total}</span>
+        <span class="label">总复刻先祖</span>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stats-card platform-stats">
+        <h3>平台分布</h3>
+        <div class="platform-list">
+          <div class="platform-item">
+            <span class="platform-icon all">📱</span>
+            <span class="platform-name">全平台</span>
+            <span class="platform-count">${stats.summary.platforms.all}</span>
           </div>
-          
-          <div class="stats-grid">
-            <div class="stats-card platform-stats">
-              <h3>平台分布</h3>
-              <div class="platform-list">
-                <div class="platform-item">
-                  <span class="platform-icon all">📱</span>
-                  <span class="platform-name">全平台</span>
-                  <span class="platform-count">${stats.summary.platforms.all}</span>
-                </div>
-                <div class="platform-item">
-                  <span class="platform-icon ios">🍎</span>
-                  <span class="platform-name">仅iOS</span>
-                  <span class="platform-count">${stats.summary.platforms.ios}</span>
-                </div>
-                <div class="platform-item">
-                  <span class="platform-icon android">🤖</span>
-                  <span class="platform-name">仅安卓</span>
-                  <span class="platform-count">${stats.summary.platforms.android}</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="stats-card platform-details">
-              <div class="platform-detail ios">
-                <h3>iOS复刻详情 <span class="total">(${stats.platforms.ios.total})</span></h3>
-                <div class="count-list">
-                  ${Object.entries(stats.platforms.ios.counts)
-                    .sort(([a,], [b,]) => parseInt(a) - parseInt(b))
-                    .map(([count, num]) => `
-                      <div class="count-item">
-                        <span class="count">${count}次</span>
-                        <span class="number">${num}位</span>
-                      </div>
-                    `).join('')}
-                </div>
-              </div>
-              <div class="platform-detail android">
-                <h3>安卓复刻详情 <span class="total">(${stats.platforms.android.total})</span></h3>
-                <div class="count-list">
-                  ${Object.entries(stats.platforms.android.counts)
-                    .sort(([a,], [b,]) => parseInt(a) - parseInt(b))
-                    .map(([count, num]) => `
-                      <div class="count-item">
-                        <span class="count">${count}次</span>
-                        <span class="number">${num}位</span>
-                      </div>
-                    `).join('')}
-                </div>
-              </div>
-            </div>
-
-            <div class="stats-card season-stats">
-              <h3>热门季节 Top 3</h3>
-              <div class="season-list">
-                ${stats.seasons.mostFrequent.slice(0, 3)
-                  .map(({ season, count }, index) => `
-                    <div class="season-item rank-${index + 1}">
-                      <span class="rank">${index + 1}</span>
-                      <span class="season-name">${season}</span>
-                      <span class="season-count">${count}位</span>
-                    </div>
-                  `).join('')}
-              </div>
-            </div>
+          <div class="platform-item">
+            <span class="platform-icon ios">🍎</span>
+            <span class="platform-name">仅iOS</span>
+            <span class="platform-count">${stats.summary.platforms.ios}</span>
           </div>
-        </div>
-      `;
-
-      return recordsHtml + statsHtml;
-    }).join('');
-
-    const finalHtml = `
-      <style>
-        .container {
-          display: flex;
-          gap: 20px;
-          align-items: flex-start;
-        }
-
-        .records-table {
-          flex: 2;
-          background: rgba(255, 255, 255, 0.95);
-          border-radius: 16px;
-          padding: 20px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .year-stats {
-          flex: 1;
-          position: sticky;
-          top: 20px;
-          background: rgba(255, 255, 255, 0.95);
-          border-radius: 16px;
-          padding: 20px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .stats-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 16px;
-        }
-
-        .stats-header h2 {
-          font-size: 20px;
-        }
-
-        .total-spirits .number {
-          font-size: 28px;
-        }
-
-        .stats-card {
-          padding: 12px;
-        }
-
-        .stats-card h3 {
-          font-size: 16px;
-          margin-bottom: 12px;
-        }
-
-        .platform-item {
-          padding: 6px;
-        }
-
-        .platform-icon {
-          font-size: 16px;
-        }
-
-        .count-list {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        .count-item {
-          padding: 6px;
-        }
-
-        .records-table h2 {
-          font-size: 24px;
-          color: #333;
-          margin: 0 0 20px 0;
-        }
-
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          background: white;
-          border-radius: 8px;
-          overflow: hidden;
-        }
-
-        th, td {
-          padding: 12px;
-          text-align: center;
-          border-bottom: 1px solid #eee;
-          vertical-align: middle;
-        }
-
-        th {
-          background: #f5f7fa;
-          font-weight: bold;
-          color: #444;
-        }
-
-        tr:hover {
-          background: #f8f9fa;
-        }
-
-        .year-stats {
-          background: rgba(255, 255, 255, 0.95);
-          border-radius: 16px;
-          padding: 20px;
-          margin-bottom: 20px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .stats-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 24px;
-        }
-
-        .stats-header h2 {
-          font-size: 24px;
-          color: #333;
-          margin: 0;
-        }
-
-        .total-spirits {
-          text-align: center;
-        }
-
-        .total-spirits .number {
-          font-size: 32px;
-          font-weight: bold;
-          color: #4a90e2;
-          display: block;
-        }
-
-        .total-spirits .label {
-          font-size: 14px;
-          color: #666;
-        }
-
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 20px;
-        }
-
-        .stats-card {
-          background: #fff;
-          border-radius: 12px;
-          padding: 16px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .stats-card h3 {
-          font-size: 18px;
-          color: #333;
-          margin: 0 0 16px 0;
-        }
-
-        .platform-list {
-          display: grid;
-          gap: 12px;
-        }
-
-        .platform-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 8px;
-          border-radius: 8px;
-          background: #f5f7fa;
-        }
-
-        .platform-icon {
-          font-size: 20px;
-        }
-
-        .platform-name {
-          flex: 1;
-          color: #444;
-        }
-
-        .platform-count {
-          font-weight: bold;
-          color: #4a90e2;
-        }
-
-        .count-list {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-          gap: 8px;
-        }
-
-        .count-item {
-          background: #f5f7fa;
-          padding: 8px;
-          border-radius: 6px;
-          text-align: center;
-        }
-
-        .count-item .count {
-          display: block;
-          font-size: 14px;
-          color: #666;
-        }
-
-        .count-item .number {
-          display: block;
-          font-weight: bold;
-          color: #4a90e2;
-        }
-
-        .season-list {
-          display: grid;
-          gap: 12px;
-        }
-
-        .season-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 10px;
-          border-radius: 8px;
-          background: #f5f7fa;
-        }
-
-        .season-item .rank {
-          width: 24px;
-          height: 24px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 50%;
-          background: #4a90e2;
-          color: white;
-          font-weight: bold;
-        }
-
-        .season-item .season-name {
-          flex: 1;
-          color: #444;
-        }
-
-        .season-item .season-count {
-          font-weight: bold;
-          color: #4a90e2;
-        }
-
-        .rank-1 { background: #fff4e5; }
-        .rank-1 .rank { background: #ff9800; }
-        
-        .rank-2 { background: #f5f5f5; }
-        .rank-2 .rank { background: #9e9e9e; }
-        
-        .rank-3 { background: #fff0e9; }
-        .rank-3 .rank { background: #ff5722; }
-      </style>
-      <div class="container">
-        <div class="records-table">
-          <h2>${year}年复刻记录</h2>
-          ${recordsHtml}
-        </div>
-        <div class="year-stats">
-          ${statsHtml}
+          <div class="platform-item">
+            <span class="platform-icon android">🤖</span>
+            <span class="platform-name">仅安卓</span>
+            <span class="platform-count">${stats.summary.platforms.android}</span>
+          </div>
         </div>
       </div>
-    `;
 
-    return render('admin/复刻记录', { html: finalHtml }, { e, scale: 1.4 });
+      <div class="stats-card platform-details">
+        <div class="platform-detail ios">
+          <h3>iOS复刻详情 <span class="total">(${stats.platforms.ios.total})</span></h3>
+          <div class="count-list">
+            ${Object.entries(stats.platforms.ios.counts)
+          .sort(([a,], [b,]) => parseInt(a) - parseInt(b))
+          .map(([count, num]) => `
+                <div class="count-item">
+                  <span class="count">${count}次</span>
+                  <span class="number">${num}位</span>
+                </div>
+              `).join('')}
+          </div>
+        </div>
+        <div class="platform-detail android">
+          <h3>安卓复刻详情 <span class="total">(${stats.platforms.android.total})</span></h3>
+          <div class="count-list">
+            ${Object.entries(stats.platforms.android.counts)
+          .sort(([a,], [b,]) => parseInt(a) - parseInt(b))
+          .map(([count, num]) => `
+                <div class="count-item">
+                  <span class="count">${count}次</span>
+                  <span class="number">${num}位</span>
+                </div>
+              `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-card season-stats">
+        <h3>热门季节 Top 3</h3>
+        <div class="season-list">
+          ${stats.seasons.mostFrequent.slice(0, 3)
+          .map(({ season, count }, index) => `
+              <div class="season-item rank-${index + 1}">
+                <span class="rank">${index + 1}</span>
+                <span class="season-name">${season}</span>
+                <span class="season-count">${count}位</span>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+      return `
+    <div class="container">
+      <div class="records-table">
+        <h2>${year}年复刻记录</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>年份</th>
+              <th>月份</th>
+              <th>日期</th>
+              <th colspan="2">先祖</th>
+              <th>iOS</th>
+              <th>安卓</th>
+              <th>蜡烛</th>
+              <th>爱心</th>
+              <th>季节</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${recordsHtml}
+          </tbody>
+        </table>
+      </div>
+      <div class="year-stats">
+        ${statsHtml}
+      </div>
+    </div>
+  `;
+    }).join('');
+
+    // 添加样式并返回最终HTML
+    const finalHtml = `
+  <style>
+    .container {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .records-table {
+      flex: 2;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .year-stats {
+      flex: 1;
+      position: sticky;
+      top: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f5f7fa;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .stats-header h2 {
+      font-size: 20px;
+      margin: 0 0 16px 0;
+    }
+
+    .total-spirits .number {
+      font-size: 28px;
+      color: #4a90e2;
+      font-weight: bold;
+    }
+
+    .stats-card {
+      padding: 12px;
+      background: #f5f7fa;
+      border-radius: 8px;
+    }
+
+    .platform-item {
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .count-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .count-item {
+      padding: 6px;
+      background: white;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .season-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: white;
+      border-radius: 4px;
+    }
+
+    /* 保持原有的count相关样式 */
+    .count-0 { background-color: #00ffa6; }
+    .count-1 { background-color: #e6f3ff; }
+    .count-2 { background-color: #b3d9ff; }
+    .count-3 { background-color: #80bfff; }
+    .count-4 { background-color: #4da6ff; }
+  </style>
+  ${html}
+`;
+
+    return render('admin/复刻记录', { html: finalHtml }, { e, scale: 1.4 })
   }
 
   async handleImageQuery(e) {
