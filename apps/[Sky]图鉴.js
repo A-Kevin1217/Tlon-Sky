@@ -38,44 +38,85 @@ export class SKY extends plugin {
     const seasonalSpiritsData = await (await fetch(`${baseUrl}SeasonalSpirits.json`)).json();
 
     let [, , showAll, year] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
+    
+    // 统计数据对象
+    let statistics = {};
+    
     if (showAll !== '全部') {
-      year = parseInt(year) - 20;
-      regressionRecordsData = [regressionRecordsData[year]];
+        year = parseInt(year);
+        statistics[year] = calculateYearStatistics(regressionRecordsData[year - 20], seasonalSpiritsData);
+        regressionRecordsData = [regressionRecordsData[year - 20]];
+    } else {
+        // 计算所有年份的统计数据
+        regressionRecordsData.forEach((yearData, index) => {
+            statistics[yearData.year] = calculateYearStatistics(yearData, seasonalSpiritsData);
+        });
     }
 
     const yearCounts = regressionRecordsData.reduce((acc, { year, yearRecord }) => {
-      acc[year] = yearRecord.reduce((sum, { monthRecord }) => sum + monthRecord.length, 0);
-      return acc;
+        acc[year] = yearRecord.reduce((sum, { monthRecord }) => sum + monthRecord.length, 0);
+        return acc;
     }, {});
 
+    // 生成HTML内容
     const html = regressionRecordsData.map(({ year, yearRecord }) => {
-      return yearRecord.map(({ month, monthRecord }, j) => {
-        return monthRecord.map((dayData, k) => {
-          const { day, platform, name, count, price } = dayData;
-          const season = seasonalSpiritsData.find(({ spirits }) => 
-            spirits.some(spirit => 
-                typeof spirit === 'string' ? spirit === name : spirit.name === name
-            )
-        )?.name || '未匹配';
+        const stats = statistics[year];
+        const statsHtml = `
+            <div class="year-stats">
+                <h3>${year}年统计</h3>
+                <p>总复刻先祖: ${stats.totalSpirits}位</p>
+                <p>平台分布：</p>
+                <ul>
+                    <li>全平台: ${stats.platformStats.All || 0}位</li>
+                    <li>国服: ${stats.platformStats.IOS || 0}位</li>
+                    <li>国际服: ${stats.platformStats.Android || 0}位</li>
+                </ul>
+                <p>复刻次数：</p>
+                <ul>
+                    <li>首次复刻: ${stats.repeatStats['1'] || 0}位</li>
+                    <li>二次复刻: ${stats.repeatStats['2'] || 0}位</li>
+                    <li>三次及以上: ${stats.repeatStats['3+'] || 0}位</li>
+                </ul>
+                <p>季节分布(Top 3)：</p>
+                <ul>
+                    ${Object.entries(stats.seasonStats)
+                        .sort(([,a], [,b]) => b - a)
+                        .slice(0, 3)
+                        .map(([season, count]) => `<li>${season}: ${count}位</li>`)
+                        .join('')}
+                </ul>
+            </div>
+        `;
 
-          return `
-            <tr>
-              ${j === 0 && k === 0 ? `<td rowspan="${yearCounts[year]}">${year}</td>` : ''}
-              ${k === 0 ? `<td rowspan="${monthRecord.length}">${month}</td>` : ''}
-              <td>${day}</td>
-              ${platform === 'All' ? `<td colspan="2">${name}</td>` : ''}
-              ${platform === 'IOS' && day === 19 ? `<td>${name}</td><td rowspan="9" class="count-0">未开服</td>` : ''}
-              ${platform === 'IOS' && day !== 19 ? `<td>${name}</td>` : ''}
-              ${platform !== 'All' && platform !== 'IOS' ? `<td class="count-0">——</td><td>${name}</td>` : ''}
-              <td class="count-${count.i}">${count.i || '——'}</td>
-              <td class="count-${count.a}">${count.a || '——'}</td>
-              <td>${price['🕯']}</td>
-              <td>${price['❤️']}</td>
-              <td>${season}</td>
-            </tr>
-          `;
+        const recordsHtml = yearRecord.map(({ month, monthRecord }, j) => {
+            return monthRecord.map((dayData, k) => {
+                const { day, platform, name, count, price } = dayData;
+                const season = seasonalSpiritsData.find(({ spirits }) => 
+                    spirits.some(spirit => 
+                        typeof spirit === 'string' ? spirit === name : spirit.name === name
+                    )
+                )?.name || '未匹配';
+
+                return `
+                    <tr>
+                        ${j === 0 && k === 0 ? `<td rowspan="${yearCounts[year]}">${year}</td>` : ''}
+                        ${k === 0 ? `<td rowspan="${monthRecord.length}">${month}</td>` : ''}
+                        <td>${day}</td>
+                        ${platform === 'All' ? `<td colspan="2">${name}</td>` : ''}
+                        ${platform === 'IOS' && day === 19 ? `<td>${name}</td><td rowspan="9" class="count-0">未开服</td>` : ''}
+                        ${platform === 'IOS' && day !== 19 ? `<td>${name}</td>` : ''}
+                        ${platform !== 'All' && platform !== 'IOS' ? `<td class="count-0">——</td><td>${name}</td>` : ''}
+                        <td class="count-${count.i}">${count.i || '——'}</td>
+                        <td class="count-${count.a}">${count.a || '——'}</td>
+                        <td>${price['🕯']}</td>
+                        <td>${price['❤️']}</td>
+                        <td>${season}</td>
+                    </tr>
+                `;
+            }).join('');
         }).join('');
-      }).join('');
+
+        return statsHtml + recordsHtml;
     }).join('');
 
     return render('admin/复刻记录', { html }, { e, scale: 1.4 });
@@ -128,4 +169,44 @@ export class SKY extends plugin {
     if (query === '好友树') return '好友树兑换图'
     return query
   }
+}
+
+// 新增辅助函数用于计算年度统计数据
+function calculateYearStatistics(yearData, seasonalSpiritsData) {
+    const stats = {
+        totalSpirits: 0,
+        platformStats: {},
+        repeatStats: {},
+        seasonStats: {},
+        spiritCount: {}
+    };
+
+    // 遍历每个月的记录
+    yearData.yearRecord.forEach(({ monthRecord }) => {
+        monthRecord.forEach(({ platform, name }) => {
+            // 统计总数和平台分布
+            stats.totalSpirits++;
+            stats.platformStats[platform] = (stats.platformStats[platform] || 0) + 1;
+
+            // 统计复刻次数
+            stats.spiritCount[name] = (stats.spiritCount[name] || 0) + 1;
+
+            // 查找先祖所属季节并统计
+            const season = seasonalSpiritsData.find(({ spirits }) => 
+                spirits.some(spirit => 
+                    typeof spirit === 'string' ? spirit === name : spirit.name === name
+                )
+            )?.name || '未知季节';
+            stats.seasonStats[season] = (stats.seasonStats[season] || 0) + 1;
+        });
+    });
+
+    // 计算复刻次数统计
+    Object.values(stats.spiritCount).forEach(count => {
+        if (count === 1) stats.repeatStats['1'] = (stats.repeatStats['1'] || 0) + 1;
+        else if (count === 2) stats.repeatStats['2'] = (stats.repeatStats['2'] || 0) + 1;
+        else stats.repeatStats['3+'] = (stats.repeatStats['3+'] || 0) + 1;
+    });
+
+    return stats;
 }
