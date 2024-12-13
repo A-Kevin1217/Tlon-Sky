@@ -39,13 +39,11 @@ export class SKY extends plugin {
 
     let [, , showAll, yearStr] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
     
-    // 统计数据对象
     let statistics = {};
     let filteredData;
     
     if (showAll !== '全部') {
-        const year = parseInt(yearStr);
-        // 在数组中查找对应年份的数据
+        const year = yearStr.length === 2 ? 2000 + parseInt(yearStr) : parseInt(yearStr);
         const yearData = regressionRecordsData.find(data => data.year === year);
         
         if (!yearData) {
@@ -55,10 +53,9 @@ export class SKY extends plugin {
         statistics[year] = calculateYearStatistics(yearData, seasonalSpiritsData);
         filteredData = [yearData];
     } else {
-        // 过滤并排序所有有效的年份数据
         filteredData = regressionRecordsData
             .filter(data => data && data.year)
-            .sort((a, b) => b.year - a.year); // 按年份降序排列
+            .sort((a, b) => b.year - a.year);
             
         filteredData.forEach(yearData => {
             statistics[yearData.year] = calculateYearStatistics(yearData, seasonalSpiritsData);
@@ -74,7 +71,6 @@ export class SKY extends plugin {
         return acc;
     }, {});
 
-    // 生成HTML内容
     const html = filteredData.map(({ year, yearRecord }) => {
         const stats = statistics[year];
         const statsHtml = `
@@ -104,7 +100,6 @@ export class SKY extends plugin {
             </div>
         `;
 
-        // 按月份排序
         const sortedYearRecord = [...yearRecord].sort((a, b) => b.month - a.month);
 
         const recordsHtml = sortedYearRecord.map(({ month, monthRecord }, j) => {
@@ -190,7 +185,6 @@ export class SKY extends plugin {
   }
 }
 
-// 新增辅助函数用于计算年度统计数据
 function calculateYearStatistics(yearData, seasonalSpiritsData) {
     const stats = {
         totalSpirits: 0,
@@ -200,17 +194,13 @@ function calculateYearStatistics(yearData, seasonalSpiritsData) {
         spiritCount: {}
     };
 
-    // 遍历每个月的记录
     yearData.yearRecord.forEach(({ monthRecord }) => {
         monthRecord.forEach(({ platform, name }) => {
-            // 统计总数和平台分布
             stats.totalSpirits++;
             stats.platformStats[platform] = (stats.platformStats[platform] || 0) + 1;
 
-            // 统计复刻次数
             stats.spiritCount[name] = (stats.spiritCount[name] || 0) + 1;
 
-            // 查找先祖所属季节并统计
             const season = seasonalSpiritsData.find(({ spirits }) => 
                 spirits.some(spirit => 
                     typeof spirit === 'string' ? spirit === name : spirit.name === name
@@ -220,7 +210,6 @@ function calculateYearStatistics(yearData, seasonalSpiritsData) {
         });
     });
 
-    // 计算复刻次数统计
     Object.values(stats.spiritCount).forEach(count => {
         if (count === 1) stats.repeatStats['1'] = (stats.repeatStats['1'] || 0) + 1;
         else if (count === 2) stats.repeatStats['2'] = (stats.repeatStats['2'] || 0) + 1;
