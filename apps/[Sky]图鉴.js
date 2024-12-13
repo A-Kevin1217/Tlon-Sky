@@ -38,80 +38,85 @@ export class SKY extends plugin {
     const seasonalSpiritsData = await (await fetch(`${baseUrl}SeasonalSpirits.json`)).json();
 
     let [, , showAll, yearStr] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
-    
+
     let statistics = {};
     let filteredData;
-    
+
     if (showAll !== '全部') {
-        const year = yearStr.length === 2 ? 2000 + parseInt(yearStr) : parseInt(yearStr);
-        const yearData = regressionRecordsData.find(data => data.year === year);
-        
-        if (!yearData) {
-            return e.reply(`暂无${year}年的复刻记录数据`);
-        }
-        
-        statistics[year] = calculateYearStatistics(yearData, seasonalSpiritsData);
-        filteredData = [yearData];
+      const year = yearStr.length === 2 ? 2000 + parseInt(yearStr) : parseInt(yearStr);
+      const yearData = regressionRecordsData.find(data => data.year === year);
+
+      if (!yearData) {
+        return e.reply(`暂无${year}年的复刻记录数据`);
+      }
+
+      statistics[year] = calculateYearStatistics(yearData, seasonalSpiritsData);
+      filteredData = [yearData];
     } else {
-        filteredData = regressionRecordsData
-            .filter(data => data && data.year)
-            .sort((a, b) => b.year - a.year);
-            
-        filteredData.forEach(yearData => {
-            statistics[yearData.year] = calculateYearStatistics(yearData, seasonalSpiritsData);
-        });
+      filteredData = regressionRecordsData
+        .filter(data => data && data.year)
+        .sort((a, b) => b.year - a.year);
+
+      filteredData.forEach(yearData => {
+        statistics[yearData.year] = calculateYearStatistics(yearData, seasonalSpiritsData);
+      });
     }
 
     if (filteredData.length === 0) {
-        return e.reply('暂无复刻记录数据');
+      return e.reply('暂无复刻记录数据');
     }
 
     const yearCounts = filteredData.reduce((acc, { year, yearRecord }) => {
-        acc[year] = yearRecord.reduce((sum, { monthRecord }) => sum + monthRecord.length, 0);
-        return acc;
+      acc[year] = yearRecord.reduce((sum, { monthRecord }) => sum + monthRecord.length, 0);
+      return acc;
     }, {});
 
     const html = filteredData.map(({ year, yearRecord }) => {
-        const stats = statistics[year];
-        const statsHtml = `
+      const stats = statistics[year];
+      const statsHtml = `
             <div class="year-stats">
                 <h3>${year}年统计</h3>
-                <p>总复刻先祖: ${stats.totalSpirits}位</p>
+                <p>总复刻先祖: ${stats.summary.total}位</p>
                 <p>平台分布：</p>
                 <ul>
-                    <li>全平台: ${stats.platformStats.All || 0}位</li>
-                    <li>国服: ${stats.platformStats.IOS || 0}位</li>
-                    <li>国际服: ${stats.platformStats.Android || 0}位</li>
+                    <li>全平台: ${stats.summary.platforms.all}位</li>
+                    <li>仅IOS: ${stats.summary.platforms.ios}位</li>
+                    <li>仅安卓: ${stats.summary.platforms.android}位</li>
                 </ul>
-                <p>复刻次数：</p>
+                <p>IOS复刻情况 (总计${stats.platforms.ios.total}位)：</p>
                 <ul>
-                    <li>首次复刻: ${stats.repeatStats['1'] || 0}位</li>
-                    <li>二次复刻: ${stats.repeatStats['2'] || 0}位</li>
-                    <li>三次及以上: ${stats.repeatStats['3+'] || 0}位</li>
+                    ${Object.entries(stats.platforms.ios.counts)
+          .sort(([a,], [b,]) => parseInt(a) - parseInt(b))
+          .map(([count, num]) => `<li>${count}次复刻: ${num}位</li>`)
+          .join('')}
+                </ul>
+                <p>安卓复刻情况 (总计${stats.platforms.android.total}位)：</p>
+                <ul>
+                    ${Object.entries(stats.platforms.android.counts)
+          .sort(([a,], [b,]) => parseInt(a) - parseInt(b))
+          .map(([count, num]) => `<li>${count}次复刻: ${num}位</li>`)
+          .join('')}
                 </ul>
                 <p>季节分布(Top 3)：</p>
                 <ul>
-                    ${Object.entries(stats.seasonStats)
-                        .sort(([,a], [,b]) => b - a)
-                        .slice(0, 3)
-                        .map(([season, count]) => `<li>${season}: ${count}位</li>`)
-                        .join('')}
+                    ${stats.seasons.mostFrequent.slice(0, 3)
+          .map(({ season, count }) => `<li>${season}: ${count}位</li>`)
+          .join('')}
                 </ul>
             </div>
         `;
 
-        const sortedYearRecord = [...yearRecord].sort((a, b) => b.month - a.month);
+      const sortedYearRecord = [...yearRecord].sort((a, b) => b.month - a.month);
 
-        const recordsHtml = sortedYearRecord.map(({ month, monthRecord }, j) => {
-            return monthRecord.map((dayData, k) => {
-                const { day, platform, name, count, price } = dayData;
-                const season = seasonalSpiritsData.find(({ spirits }) => 
-                    spirits.some(spirit => 
-                        typeof spirit === 'string' ? spirit === name : spirit.name === name
-                    )
-                )?.name || '未匹配';
+      const recordsHtml = sortedYearRecord.map(({ month, monthRecord }, j) => {
+        return monthRecord.map(({ day, platform, name, count, price }) => {
+          const season = seasonalSpiritsData.find(({ spirits }) =>
+            spirits.some(spirit =>
+              typeof spirit === 'string' ? spirit === name : spirit.name === name
+            )
+          )?.name || '未匹配';
 
-                return `
+          return `
                     <tr>
                         ${j === 0 && k === 0 ? `<td rowspan="${yearCounts[year]}">${year}</td>` : ''}
                         ${k === 0 ? `<td rowspan="${monthRecord.length}">${month}</td>` : ''}
@@ -127,10 +132,10 @@ export class SKY extends plugin {
                         <td>${season}</td>
                     </tr>
                 `;
-            }).join('');
         }).join('');
+      }).join('');
 
-        return statsHtml + recordsHtml;
+      return statsHtml + recordsHtml;
     }).join('');
 
     return render('admin/复刻记录', { html }, { e, scale: 1.4 });
@@ -186,35 +191,68 @@ export class SKY extends plugin {
 }
 
 function calculateYearStatistics(yearData, seasonalSpiritsData) {
-    const stats = {
-        totalSpirits: 0,
-        platformStats: {},
-        repeatStats: {},
-        seasonStats: {},
-        spiritCount: {}
-    };
+  const stats = {
+    summary: {
+      total: 0,
+      platforms: {
+        all: 0,
+        ios: 0,
+        android: 0
+      }
+    },
+    platforms: {
+      ios: {
+        spirits: {},
+        counts: {},
+        total: 0
+      },
+      android: {
+        spirits: {},
+        counts: {},
+        total: 0
+      }
+    },
+    seasons: {
+      stats: {},
+      mostFrequent: []
+    }
+  };
 
-    yearData.yearRecord.forEach(({ monthRecord }) => {
-        monthRecord.forEach(({ platform, name }) => {
-            stats.totalSpirits++;
-            stats.platformStats[platform] = (stats.platformStats[platform] || 0) + 1;
+  yearData.yearRecord.forEach(({ monthRecord }) => {
+    monthRecord.forEach(({ platform, name, count }) => {
+      stats.summary.total++;
+      if (platform === 'All') {
+        stats.summary.platforms.all++;
+      } else if (platform === 'IOS') {
+        stats.summary.platforms.ios++;
+      } else if (platform === 'Android') {
+        stats.summary.platforms.android++;
+      }
 
-            stats.spiritCount[name] = (stats.spiritCount[name] || 0) + 1;
+      if (count.i > 0) {
+        stats.platforms.ios.spirits[name] = count.i;
+        stats.platforms.ios.counts[count.i] = (stats.platforms.ios.counts[count.i] || 0) + 1;
+        stats.platforms.ios.total++;
+      }
 
-            const season = seasonalSpiritsData.find(({ spirits }) => 
-                spirits.some(spirit => 
-                    typeof spirit === 'string' ? spirit === name : spirit.name === name
-                )
-            )?.name || '未知季节';
-            stats.seasonStats[season] = (stats.seasonStats[season] || 0) + 1;
-        });
+      if (count.a > 0) {
+        stats.platforms.android.spirits[name] = count.a;
+        stats.platforms.android.counts[count.a] = (stats.platforms.android.counts[count.a] || 0) + 1;
+        stats.platforms.android.total++;
+      }
+
+      const season = seasonalSpiritsData.find(({ spirits }) =>
+        spirits.some(spirit =>
+          typeof spirit === 'string' ? spirit === name : spirit.name === name
+        )
+      )?.name || '未知季节';
+      stats.seasons.stats[season] = (stats.seasons.stats[season] || 0) + 1;
     });
+  });
 
-    Object.values(stats.spiritCount).forEach(count => {
-        if (count === 1) stats.repeatStats['1'] = (stats.repeatStats['1'] || 0) + 1;
-        else if (count === 2) stats.repeatStats['2'] = (stats.repeatStats['2'] || 0) + 1;
-        else stats.repeatStats['3+'] = (stats.repeatStats['3+'] || 0) + 1;
-    });
+  stats.seasons.mostFrequent = Object.entries(stats.seasons.stats)
+    .sort(([, a], [, b]) => b - a)
+    .map(([season, count]) => ({ season, count }));
 
-    return stats;
+  return stats;
 }
