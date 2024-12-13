@@ -1,31 +1,185 @@
 <style>
     body {
+        width: 1200px;
         font-family: Arial, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 20px;
+        background: #f5f7fa;
+    }
+
+    .container {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .records-table {
+        flex: 2;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .year-stats {
+        flex: 1;
+        position: sticky;
+        top: 20px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     table {
-        border-collapse: collapse;
         width: 100%;
-        max-width: 1000px;
-        margin: 0 auto;
+        border-collapse: collapse;
     }
 
     th, td {
         border: 1px solid #ddd;
         padding: 8px;
         text-align: center;
+        vertical-align: middle;
     }
 
     th {
         background-color: #f2f2f2;
+        font-weight: bold;
+        color: #444;
     }
 
-    .summary {
-        margin-top: 20px;
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .stats-header h2 {
+        font-size: 20px;
+        margin: 0 0 16px 0;
+        color: #333;
+    }
+
+    .total-spirits {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    .total-spirits .number {
+        font-size: 28px;
+        color: #4a90e2;
         font-weight: bold;
+        display: block;
+    }
+
+    .total-spirits .label {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .stats-card {
+        background: #f5f7fa;
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+    .stats-card h3 {
+        font-size: 16px;
+        color: #333;
+        margin: 0 0 12px 0;
+    }
+
+    .platform-list {
+        display: grid;
+        gap: 8px;
+    }
+
+    .platform-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        background: white;
+        border-radius: 4px;
+    }
+
+    .platform-icon {
+        font-size: 16px;
+    }
+
+    .platform-name {
+        flex: 1;
+        color: #444;
+    }
+
+    .platform-count {
+        font-weight: bold;
+        color: #4a90e2;
+    }
+
+    .count-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .count-item {
+        background: white;
+        padding: 6px;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    .count-item .count {
+        display: block;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .count-item .number {
+        display: block;
+        font-weight: bold;
+        color: #4a90e2;
+    }
+
+    .season-list {
+        display: grid;
+        gap: 8px;
+    }
+
+    .season-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        background: white;
+        border-radius: 4px;
+    }
+
+    .season-item .rank {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #4a90e2;
+        color: white;
+        font-weight: bold;
+    }
+
+    .season-item .season-name {
+        flex: 1;
+        color: #444;
+    }
+
+    .season-item .season-count {
+        font-weight: bold;
+        color: #4a90e2;
     }
 
     .count-0 { background-color: #00ffa6; }
@@ -33,36 +187,19 @@
     .count-2 { background-color: #b3d9ff; }
     .count-3 { background-color: #80bfff; }
     .count-4 { background-color: #4da6ff; }
+
+    /* 排名样式 */
+    .rank-1 { background: #fff4e5; }
+    .rank-1 .rank { background: #ff9800; }
+    
+    .rank-2 { background: #f5f5f5; }
+    .rank-2 .rank { background: #9e9e9e; }
+    
+    .rank-3 { background: #fff0e9; }
+    .rank-3 .rank { background: #ff5722; }
 </style>
 
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th colspan="3">时间</th>
-                <th colspan="2">复刻先祖</th>
-                <th colspan="2">复刻次数</th>
-                <th colspan="2">所需价格</th>
-                <th rowspan="2">所属季节</th>
-            </tr>
-            <tr>
-                <th>年</th>
-                <th>月</th>
-                <th>日</th>
-                <th>IOS</th>
-                <th>安卓</th>
-                <th>IOS</th>
-                <th>安卓</th>
-                <th>蜡烛</th>
-                <th>心</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{@html}}
-        </tbody>
-    </table>
-    <div class="summary">
-    </div>
+    {{@html}}
 </body>
-
 </html>
