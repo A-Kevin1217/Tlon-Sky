@@ -37,29 +37,45 @@ export class SKY extends plugin {
     let regressionRecordsData = await (await fetch(`${baseUrl}RegressionRecords.json`)).json();
     const seasonalSpiritsData = await (await fetch(`${baseUrl}SeasonalSpirits.json`)).json();
 
-    let [, , showAll, year] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
+    let [, , showAll, yearStr] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
     
     // 统计数据对象
     let statistics = {};
+    let filteredData;
     
     if (showAll !== '全部') {
-        year = parseInt(year);
-        statistics[year] = calculateYearStatistics(regressionRecordsData[year - 20], seasonalSpiritsData);
-        regressionRecordsData = [regressionRecordsData[year - 20]];
+        const year = parseInt(yearStr);
+        // 在数组中查找对应年份的数据
+        const yearData = regressionRecordsData.find(data => data.year === year);
+        
+        if (!yearData) {
+            return e.reply(`暂无${year}年的复刻记录数据`);
+        }
+        
+        statistics[year] = calculateYearStatistics(yearData, seasonalSpiritsData);
+        filteredData = [yearData];
     } else {
-        // 计算所有年份的统计数据
-        regressionRecordsData.forEach((yearData, index) => {
+        // 过滤并排序所有有效的年份数据
+        filteredData = regressionRecordsData
+            .filter(data => data && data.year)
+            .sort((a, b) => b.year - a.year); // 按年份降序排列
+            
+        filteredData.forEach(yearData => {
             statistics[yearData.year] = calculateYearStatistics(yearData, seasonalSpiritsData);
         });
     }
 
-    const yearCounts = regressionRecordsData.reduce((acc, { year, yearRecord }) => {
+    if (filteredData.length === 0) {
+        return e.reply('暂无复刻记录数据');
+    }
+
+    const yearCounts = filteredData.reduce((acc, { year, yearRecord }) => {
         acc[year] = yearRecord.reduce((sum, { monthRecord }) => sum + monthRecord.length, 0);
         return acc;
     }, {});
 
     // 生成HTML内容
-    const html = regressionRecordsData.map(({ year, yearRecord }) => {
+    const html = filteredData.map(({ year, yearRecord }) => {
         const stats = statistics[year];
         const statsHtml = `
             <div class="year-stats">
@@ -88,7 +104,10 @@ export class SKY extends plugin {
             </div>
         `;
 
-        const recordsHtml = yearRecord.map(({ month, monthRecord }, j) => {
+        // 按月份排序
+        const sortedYearRecord = [...yearRecord].sort((a, b) => b.month - a.month);
+
+        const recordsHtml = sortedYearRecord.map(({ month, monthRecord }, j) => {
             return monthRecord.map((dayData, k) => {
                 const { day, platform, name, count, price } = dayData;
                 const season = seasonalSpiritsData.find(({ spirits }) => 
