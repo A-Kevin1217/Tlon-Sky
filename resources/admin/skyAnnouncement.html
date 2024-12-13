@@ -86,12 +86,20 @@
             white-space: pre-wrap;
             max-width: 100%;
         }
+
+        .added {
+            background-color: rgba(0, 255, 0, 0.2);  /* 绿色背景，表示新增 */
+        }
+        
+        .removed {
+            background-color: rgba(255, 0, 0, 0.2);  /* 红色背景，表示删除 */
+        }
     </style>
 </head>
 
 <body>
     <h1>光遇公告</h1>
-    <p>(左边为PC端公告，右边为抢跑公告，光遇临近更新时显示内容与左边不一样)</p>
+    <p>(左边为PC端公告，中间为正式服公告，右边为抢跑公告，光遇临近更新时显示内容与中间不一样)</p>
     <div class="announcements-container">
         <div id="announcements-left"></div>
         <div id="announcements-center"></div>
@@ -119,6 +127,8 @@
                 announcementsCenter.innerHTML = createAnnouncementHTML(data2);
                 announcementsRight.innerHTML = createAnnouncementHTML(data3);
 
+                setTimeout(compareAnnouncements, 100);
+
             } catch (error) {
                 console.error('获取公告失败:', error);
             }
@@ -145,6 +155,38 @@
                 .replace(/【(.*?)】/g, '<h3>$1</h3>')
                 .replace(/\n/g, '<br>')
                 .replace(/^(.*)$/gm, '· $1');
+        }
+
+        async function compareAnnouncements() {
+            const centerContent = document.querySelector('#announcements-center .announcement div').innerText;
+            const rightContent = document.querySelector('#announcements-right .announcement div').innerText;
+            
+            const centerLines = centerContent.split('\n');
+            const rightLines = rightContent.split('\n');
+            
+            const centerDiv = document.querySelector('#announcements-center .announcement div');
+            const rightDiv = document.querySelector('#announcements-right .announcement div');
+            
+            centerDiv.innerHTML = '';
+            rightDiv.innerHTML = '';
+            
+            // 对比并标记差异
+            const centerMarked = centerLines.map(line => {
+                if (!rightLines.includes(line)) {
+                    return `<div class="removed">${line}</div>`;
+                }
+                return `<div>${line}</div>`;
+            }).join('');
+            
+            const rightMarked = rightLines.map(line => {
+                if (!centerLines.includes(line)) {
+                    return `<div class="added">${line}</div>`;
+                }
+                return `<div>${line}</div>`;
+            }).join('');
+            
+            centerDiv.innerHTML = centerMarked;
+            rightDiv.innerHTML = rightMarked;
         }
 
         window.onload = fetchAnnouncements;
