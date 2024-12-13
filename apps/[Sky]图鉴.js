@@ -179,6 +179,15 @@ export class SKY extends plugin {
             `).join('')}
         </div>
       </div>
+
+      <div class="stats-card footer-note">
+        <p><span class="highlight">数据说明：</span></p>
+        <p>• 复刻记录不计入集体复刻，请知悉</p>
+        <p>• 数据更新不及时属正常现象，过几天再次查看即可</p>
+        <p>• <span class="warning">数据仅供参考，具体以游戏内为准</span></p>
+        <p>• 光遇群: 111658697 | 交友扩列找CP</p>
+        <p>Created by Tlon-Sky</p>
+      </div>
     </div>
   `;
 
