@@ -16,7 +16,8 @@
             font-size: 24px;
         }
 
-        .flex-container, .furniture-container {
+        .flex-container,
+        .furniture-container {
             display: flex;
             justify-content: space-between;
             max-width: 800px;
@@ -172,8 +173,64 @@
         async function fetchData() {
             const currentTimestamp = Date.now();
             const linkData = JSON.parse('{{@data}}');
-            const { 季节: season, 活动: activity, 家具: furniture } = linkData;
+            const { 季节: season, 活动: activity } = linkData;
             const currentWeek = getCurrentWeek() - 1;
+            const furniture = [[
+                { name: 'Stone Small Bench', type: 'LargeProps', price: 32, currencyType: 1 },
+                { name: 'Stone Oven', type: 'LargeProps', price: 35, currencyType: 3 },
+                { name: 'Stone Tall Cube', type: 'LargeProps', price: 88, currencyType: 1 },
+                { name: 'Stone Single Bed', type: 'LargeProps', price: 24, currencyType: 2 }
+            ], [
+                { name: 'Stone Chair', type: 'LargeProps', price: 64, currencyType: 1 },
+                { name: 'Stone Small Table', type: 'LargeProps', price: 20, currencyType: 1 },
+                { name: 'Monotone Pillow', type: 'SmallProps', price: 32, currencyType: 1 },
+                { name: 'Stone Tall Shelf', type: 'LargeProps', price: 30, currencyType: 3 }
+            ], [
+                { name: 'Stone Bench', type: 'LargeProps', price: 60, currencyType: 1 },
+                { name: 'Stone Desk', type: 'LargeProps', price: 50, currencyType: 1 },
+                { name: 'Two Colors Pillow', type: 'SmallProps', price: 48, currencyType: 2 },
+                { name: 'Small Solid Rug', type: 'SmallProps', price: 25, currencyType: 1 }
+            ], [
+                { name: 'Stone Armchair', type: 'LargeProps', price: 20, currencyType: 2 },
+                { name: 'Stone Console Table', type: 'LargeProps', price: 45, currencyType: 1 },
+                { name: 'Decor Folded Cloth', type: 'SmallProps', price: 40, currencyType: 2 },
+                { name: 'Small Striped Rug', type: 'SmallProps', price: 35, currencyType: 1 }
+            ], [
+                { name: 'Stone Loveseat', type: 'LargeProps', price: 33, currencyType: 2 },
+                { name: 'Stone Round Dining Table', type: 'LargeProps', price: 18, currencyType: 2 },
+                { name: 'Stone Plant Stand', type: 'LargeProps', price: 24, currencyType: 2 },
+                { name: 'Small Classic Rug', type: 'SmallProps', price: 15, currencyType: 2 }
+            ], [
+                { name: 'Stone Corer Sofa', type: 'LargeProps', price: 25, currencyType: 1 },
+                { name: 'Stone Square Dining Table', type: 'LargeProps', price: 23, currencyType: 2 },
+                { name: '', type: '', price: 24, currencyType: 3 },
+                { name: 'Small Half Circle Rug', type: 'SmallProps', price: 45, currencyType: 1 }
+            ], [
+                { name: 'Stone Sofa Side', type: 'LargeProps', price: 80, currencyType: 1 },
+                { name: 'Stone Long Dining Table', type: 'LargeProps', price: 33, currencyType: 2 },
+                { name: 'Stone Wall Sconce', type: 'SmallProps', price: 32, currencyType: 3 },
+                { name: 'Medium Solid Rug', type: 'SmallProps', price: 40, currencyType: 1 }
+            ], [
+                { name: 'Stone Kitchen Drawers', type: 'LargeProps', price: 25, currencyType: 1 },
+                { name: 'Stone Coffee Table', type: 'LargeProps', price: 28, currencyType: 3 },
+                { name: 'Stone Candle Light', type: 'LargeProps', price: 16, currencyType: 3 },
+                { name: 'Medium Striped Rug', type: 'SmallProps', price: 50, currencyType: 1 }
+            ], [
+                { name: 'Stone Wall Pot Rack', type: 'SmallProps', price: 50, currencyType: 1 },
+                { name: '', type: '', price: 0, currencyType: 0 },
+                { name: '', type: '', price: 0, currencyType: 0 },
+                { name: '', type: '', price: 0, currencyType: 0 }
+            ], [
+                { name: '', type: '', price: 0, currencyType: 0 },
+                { name: '', type: '', price: 0, currencyType: 0 },
+                { name: '', type: '', price: 0, currencyType: 0 },
+                { name: '', type: '', price: 0, currencyType: 0 }
+            ], [
+                { name: '', type: '', price: 0, currencyType: 0 },
+                { name: '', type: '', price: 0, currencyType: 0 },
+                { name: '', type: '', price: 0, currencyType: 0 },
+                { name: '', type: '', price: 0, currencyType: 0 }
+            ]]
 
             if (currentWeek < 0) {
                 console.error("当前周数超出家具数据范围");
