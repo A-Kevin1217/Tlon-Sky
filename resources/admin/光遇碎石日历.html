@@ -304,130 +304,72 @@
     </footer>
 
     <script>
+        const year = "{{@year}}";
+        const month = "{{@month}}";
+
         const maps = ['暮土', '禁阁', '云野', '雨林', '霞谷'];
         const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
-        let currentDate = new Date();
+        let currentDate = new Date(year, month, 1);
         let selectedDate = new Date();
 
-        function getMapLocation(map, dayOfWeek) {
-            console.log(map, dayOfWeek);
-            const locations = {
-                '云野': {
-                    2: '蝴蝶平原',
-                    3: '仙乡',
-                    5: '右边隐藏图',
-                    6: '左边隐藏图',
-                    0: '圣岛'
-                },
-                '雨林': {
-                    2: '雨林蘑菇图',
-                    3: '雨林水母图',
-                    5: '大树屋',
-                    6: '雨林神殿',
-                    0: '秘密花园'
-                },
-                '霞谷': {
-                    2: '滑冰场',
-                    3: '滑冰场',
-                    5: '圆梦村',
-                    6: '圆梦村',
-                    0: '雪隐峰'
-                },
-                '暮土': {
-                    2: '暮土图一',
-                    3: '暮土终点图',
-                    5: '暮土沉船',
-                    6: '暮土四龙图',
-                    0: '失落方舟'
-                },
-                '禁阁': {
-                    2: '星光沙漠',
-                    3: '星光沙漠',
-                    5: '星光沙漠·一隅',
-                    6: '星光沙漠·一隅',
-                    0: '星光沙漠·一隅'
-                },
-            };
+        const locations = {
+            '云野': { 2: '蝴蝶平原', 3: '仙乡', 5: '右边隐藏图', 6: '左边隐藏图', 0: '圣岛' },
+            '雨林': { 2: '雨林蘑菇图', 3: '雨林水母图', 5: '大树屋', 6: '雨林神殿', 0: '秘密花园' },
+            '霞谷': { 2: '滑冰场', 3: '滑冰场', 5: '圆梦村', 6: '圆梦村', 0: '雪隐峰' },
+            '暮土': { 2: '暮土图一', 3: '暮土终点图', 5: '暮土沉船', 6: '暮土四龙图', 0: '失落方舟' },
+            '禁阁': { 2: '星光沙漠', 3: '星光沙漠', 5: '星光沙漠·一隅', 6: '星光沙漠·一隅', 0: '星光沙漠·一隅' },
+        };
 
-            return locations[map] ? locations[map][dayOfWeek] || '' : '';
+        function getMapLocation(map, dayOfWeek) {
+            return locations[map]?.[dayOfWeek] || '';
         }
 
         function isSpecialDate(date) {
-            const day = date.getDate();
             const dayOfWeek = date.getDay();
-            if (day <= 15) {
-                return dayOfWeek === 2 || dayOfWeek === 6 || dayOfWeek === 0;
-            } else {
-                return dayOfWeek === 3 || dayOfWeek === 5 || dayOfWeek === 0;
-            }
+            return date.getDate() <= 15 ? [2, 6, 0].includes(dayOfWeek) : [3, 5, 0].includes(dayOfWeek);
         }
 
         function getStoneType(date) {
-            const day = date.getDate();
             const dayOfWeek = date.getDay();
-            if (day <= 15) {
-                if (dayOfWeek === 2) return '黑石';
-                if (dayOfWeek === 6 || dayOfWeek === 0) return '红石';
+            if (date.getDate() <= 15) {
+                return dayOfWeek === 2 ? '黑石' : [6, 0].includes(dayOfWeek) ? '红石' : '';
             } else {
-                if (dayOfWeek === 3) return '黑石';
-                if (dayOfWeek === 5 || dayOfWeek === 0) return '红石';
+                return dayOfWeek === 3 ? '黑石' : [5, 0].includes(dayOfWeek) ? '红石' : '';
             }
-            return '';
         }
 
         function getFallTimes(date) {
-            const day = date.getDate();
             const dayOfWeek = date.getDay();
+            if (dayOfWeek === 0) return ['07:08', '13:08', '19:08'];
 
-            if (dayOfWeek === 0) {
-                return ['07:08', '13:08', '19:08'];
-            }
+            const times = date.getDate() <= 15
+                ? getStoneType(date) === '红石' ? ['10:08', '14:08', '22:08'] : ['09:08', '14:08', '19:08']
+                : getStoneType(date) === '红石' ? ['11:08', '17:08', '23:08'] : ['09:08', '15:08', '21:08'];
 
-            if (day <= 15) {
-                if (getStoneType(date) === '红石') {
-                    return ['10:08', '14:08', '22:08'];
-                } else {
-                    return ['09:08', '14:08', '19:08'];
-                }
-            } else {
-                if (getStoneType(date) === '红石') {
-                    return ['11:08', '17:08', '23:08'];
-                } else {
-                    return ['09:08', '15:08', '21:08'];
-                }
-            }
+            return times;
         }
 
-        function createCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const firstDay = new Date(year, month, 1);
+        function createCalendar(year = currentDate.getFullYear(), month = currentDate.getMonth()) {
+            currentDate = new Date(year, month, 1);
             const lastDay = new Date(year, month + 1, 0);
 
-            const currentMonthElement = document.getElementById('currentMonth');
-            currentMonthElement.textContent = `${year}年${month + 1}月`;
-
-            const weekdaysContainer = document.getElementById('weekdays');
-            weekdaysContainer.innerHTML = weekdays.map(day => `<div class="weekday">${day}</div>`).join('');
-
+            document.getElementById('currentMonth').textContent = `${year}年${month + 1}月`;
+            document.getElementById('weekdays').innerHTML = weekdays.map(day => `<div class="weekday">${day}</div>`).join('');
             const calendar = document.getElementById('calendar');
             calendar.innerHTML = '';
 
-            for (let i = 0; i < firstDay.getDay(); i++) {
+            for (let i = 0; i < new Date(year, month, 1).getDay(); i++) {
                 calendar.appendChild(document.createElement('div'));
             }
 
             for (let i = 1; i <= lastDay.getDate(); i++) {
                 const date = new Date(year, month, i);
-                const dayOfWeek = date.getDay();
                 const dayElement = document.createElement('div');
                 dayElement.className = 'day';
                 dayElement.dataset.date = date.toISOString();
 
-                const isSpecial = isSpecialDate(date);
-                const stoneType = getStoneType(date);
-                if (isSpecial) {
-                    dayElement.classList.add(stoneType === '黑石' ? 'black-stone' : 'red-stone');
+                if (isSpecialDate(date)) {
+                    dayElement.classList.add(getStoneType(date) === '黑石' ? 'black-stone' : 'red-stone');
                 }
 
                 if (date.toDateString() === new Date().toDateString()) {
@@ -443,8 +385,8 @@
                 dateElement.textContent = i;
                 dayElement.appendChild(dateElement);
 
-                if (isSpecial) {
-                    const mapIndex = (i - 1) % 5;
+                if (isSpecialDate(date)) {
+                    const mapIndex = (i - 1) % maps.length;
                     const mapElement = document.createElement('div');
                     mapElement.className = 'map';
                     mapElement.textContent = maps[mapIndex];
@@ -452,7 +394,7 @@
 
                     const locationElement = document.createElement('div');
                     locationElement.className = 'location';
-                    locationElement.textContent = getMapLocation(maps[mapIndex], dayOfWeek);
+                    locationElement.textContent = getMapLocation(maps[mapIndex], date.getDay());
                     dayElement.appendChild(locationElement);
                 }
 
@@ -462,10 +404,9 @@
         }
 
         function handleDateClick(event) {
-            const clickedDate = new Date(event.currentTarget.dataset.date);
+            selectedDate = new Date(event.currentTarget.dataset.date);
             document.querySelectorAll('.day').forEach(day => day.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
-            selectedDate = clickedDate;
             updateDetailBox();
         }
 
@@ -475,7 +416,7 @@
             const isSpecial = isSpecialDate(selectedDate);
             const stoneType = getStoneType(selectedDate);
             const dayOfWeek = selectedDate.getDay();
-            const mapIndex = (selectedDate.getDate() - 1) % 5;
+            const mapIndex = (selectedDate.getDate() - 1) % maps.length;
             const map = maps[mapIndex];
             const location = getMapLocation(map, dayOfWeek);
 
@@ -497,7 +438,7 @@
                 ${isPastDate ? '<p>坠落已结束</p>' : '<p id="countdown"></p>'}
             `;
 
-            if (location !== '') {
+            if (location) {
                 routeMap.innerHTML = `
                     <h4 style="font-size: 1.5em;">路线图</h4>
                     <img src="https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/%E5%85%89%E9%81%87/ShardRouteMap/${location}.jpg" alt="路线图" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto;" />
@@ -552,11 +493,7 @@
                     return currentHour === fallHour && currentMinute >= fallMinute && currentMinute < 60;
                 });
 
-                if (isFallen) {
-                    countdownElement.textContent = '碎石已降落';
-                } else {
-                    countdownElement.textContent = `距离下次坠落：${hours}小时${minutes}分钟${seconds}秒`;
-                }
+                countdownElement.textContent = isFallen ? '碎石已降落' : `距离下次坠落：${hours}小时${minutes}分钟${seconds}秒`;
             }
 
             calculate();
@@ -565,14 +502,14 @@
 
         function changeMonth(delta) {
             currentDate.setMonth(currentDate.getMonth() + delta);
-            createCalendar();
+            createCalendar(currentDate.getFullYear(), currentDate.getMonth());
             updateDetailBox();
         }
 
         document.getElementById('prevMonth').addEventListener('click', () => changeMonth(-1));
         document.getElementById('nextMonth').addEventListener('click', () => changeMonth(1));
 
-        createCalendar();
+        createCalendar(year, month);
         updateDetailBox();
 
         setInterval(() => {
