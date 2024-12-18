@@ -357,7 +357,7 @@
             currentDate = new Date(year, month, 1);
             const lastDay = new Date(year, month + 1, 0);
 
-            document.getElementById('currentMonth').textContent = `${year}年${month + 1}月`;
+            document.getElementById('currentMonth').textContent = `${year}年${parseInt(month) + 1}月`;
             document.getElementById('weekdays').innerHTML = weekdays.map(day => `<div class="weekday">${day}</div>`).join('');
             const calendar = document.getElementById('calendar');
             calendar.innerHTML = '';
