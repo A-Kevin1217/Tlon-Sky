@@ -304,8 +304,8 @@
     </footer>
 
     <script>
-        const year = "{{@year}}";
-        const month = "{{@month}}";
+        let year = "{{@year}}";
+        let month = "{{@month}}";
 
         let currentDate = new Date(year, month, 1);
         if (year === "undefined" || month === "undefined") {
