@@ -310,6 +310,8 @@
         let currentDate = new Date(year, month, 1);
         if (year === "undefined" || month === "undefined") {
             currentDate = new Date();
+            year = new Date().getFullYear();
+            month = new Date().getMonth();
         }
 
         const maps = ['暮土', '禁阁', '云野', '雨林', '霞谷'];
