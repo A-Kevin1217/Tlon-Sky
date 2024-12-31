@@ -34,7 +34,7 @@ export function getCronData() {
 }
 
 /** 得到链接数据 */
-export async function getLinkData(link, type) {
+global.getLinkData = async function(link, type) {
     let linkData = await fetch(link)
     if (type === 'json') {
         linkData = await linkData.json()

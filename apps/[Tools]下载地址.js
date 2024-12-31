@@ -1,16 +1,3 @@
-const link = [
-    'https://sky.163.com',
-    'http://a.4399.cn/mobile/112700.html',
-    'https://game.oppomobile.com',
-    'https://www.biligame.com/detail/?id=101661',
-    'https://h5.appstore.vivo.com.cn/#/details?appId=2902164&frompage=searchResultApp',
-    'https://a.9game.cn/skygy',
-    'https://appgallery.huawei.com/app/C100685413',
-    'https://m.app.mi.com/#page=detail&id=819119',
-    'https://sj.qq.com/appdetail/com.tencent.tmgp.eyou.eygy',
-    'https://www.thatskygame.com'
-]
-
 export class Ts extends plugin {
     constructor() {
         super({
@@ -23,47 +10,67 @@ export class Ts extends plugin {
     }
 
     async gameDownloadLink(e) {
-        let platform = e.bot?.adapter?.name || e.platform || '未知'
-        let msg = []
-        
+        const platform = e.bot?.adapter?.name || e.platform || '未知'
+        const links = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/GameDownload.json', 'json')
+
         if (platform === 'QQBot') {
-            if (typeof Bot.Button === 'function') {
-                function bd(label, link) {
-                    return { label, link }
+            function content(type) {
+                const buttonConfig = {
+                    'Miao': {
+                        row1: [
+                            { label: '官服', link: links.官服 },
+                            { label: '4399', link: links.四三九九 }
+                        ],
+                        row2: [
+                            { label: 'OPPO', link: links.OPPO },
+                            { label: 'BiliBili', link: links.BiliBili },
+                            { label: 'VIVO', link: links.VIVO }
+                        ],
+                        row3: [
+                            { label: '华为', link: links.华为 },
+                            { label: '小米', link: links.小米 },
+                            { label: '应用宝', link: links.应用宝 }
+                        ]
+                    },
+                    'TRSS': {
+                        row1: [
+                            { text: '官服', link: links.官服 },
+                            { text: '4399', link: links.四三九九 }
+                        ],
+                        row2: [
+                            { text: 'OPPO', link: links.OPPO },
+                            { text: 'BiliBili', link: links.BiliBili },
+                            { text: 'VIVO', link: links.VIVO }
+                        ],
+                        row3: [
+                            { text: '华为', link: links.华为 },
+                            { text: '小米', link: links.小米 },
+                            { text: '应用宝', link: links.应用宝 }
+                        ]
+                    }
                 }
-                msg = [
-                    '# 请点击下方按钮跳转下载',
-                    Bot.Button([
-                        [bd('官服', link[0]), bd('4399', link[1])],
-                        [bd('OPPO', link[2]), bd('BiliBili', link[3]), bd('VIVO', link[4]), bd('九游', link[5])],
-                        [bd('华为', link[6]), bd('小米', link[7]), bd('应用宝', link[8]), bd('国际服', link[9])]
-                    ])
-                ]
-            } else if (typeof segment?.button === 'function') {
-                msg = [
-                    '请点击下方按钮跳转下载',
-                    segment.button([
-                        { text: '官服', link: link[0] }, { text: '4399', link: link[1] }
-                    ],[
-                        { text: 'OPPO', link: link[2] }, { text: 'BiliBili', link: link[3] }, { text: 'VIVO', link: link[4] }, { text: '九游', link: link[5] }
-                    ],[{ text: '华为', link: link[6] }, { text: '小米', link: link[7] }, { text: '应用宝', link: link[8] }, { text: '国际服', link: link[9] }
-                    ]
-                )]
+
+                const config = buttonConfig[type]
+                return [config.row1, config.row2, config.row3]
             }
-        } else {
-            msg = [
-                `官服: ${link[0]}`,
-                `\r4399渠道服: ${link[1]}`,
-                `\rOPPO渠道服: ${link[2]}`,
-                `\rBiliBili渠道服: ${link[3]}`,
-                `\rVIVO渠道服: ${link[4]}`,
-                `\r九游渠道服: ${link[5]}`,
-                `\r华为渠道服: ${link[6]}`,
-                `\r小米渠道服: ${link[7]}`,
-                `\r应用宝渠道服: ${link[8]}`,
-                `\r国际服: ${link[9]}`
-            ]
+
+            let button
+            if (typeof Bot.Button === 'function') {
+                button = Bot.Button(content('Miao'))
+            } else if (typeof segment?.button === 'function') {
+                button = segment.button(...content('TRSS'))
+            }
+
+            return e.reply([
+                '# 光遇下载地址',
+                button || '当前框架暂不支持按钮交互'
+            ])
         }
+
+        // 其他平台返回文本链接
+        const msg = Object.entries(links)
+            .map(([name, link]) => `${name}: ${link}`)
+            .join('\n')
         return e.reply(msg)
     }
 }
