@@ -20,14 +20,30 @@ export class Ts extends plugin {
 
     async checkServerStatus(e) {
         try {
-            const serverData = await getLinkData('https://live-queue-sky-merge.game.163.com/queue?type=json', 'json');
-            const message = serverData['ret'] !== 1 
-                ? ['当前光遇服务器畅通，无需排队'] 
+            const { ret, pos, wait_time } = await getLinkData('https://live-queue-sky-merge.game.163.com/queue?type=json', 'json');
+            
+            let timeDisplay = '';
+            if (wait_time) {
+                const hours = Math.floor(wait_time / 3600);
+                const minutes = Math.floor((wait_time % 3600) / 60);
+                const seconds = wait_time % 60;
+                
+                if (hours > 0) {
+                    timeDisplay = `${hours}时${minutes}分${seconds}秒`;
+                } else if (minutes > 0) {
+                    timeDisplay = `${minutes}分${seconds}秒`;
+                } else {
+                    timeDisplay = `${seconds}秒`;
+                }
+            }
+
+            const message = ret !== 1
+                ? ['当前光遇服务器畅通，无需排队']
                 : [
                     segment.at(e.user_id),
                     '当前排队中\r',
-                    `排队人数：${serverData['pos']} 位\r`,
-                    `预计等待时间：${serverData['wait_time']} 秒`
+                    `排队人数：${pos} 位\r`,
+                    `预计等待时间：${timeDisplay}`
                 ];
 
             const platform = e.bot?.adapter?.name || e.platform || '未知';
@@ -137,7 +153,7 @@ function fetchSeasonalLastAppearance() {
                                     const spiritName = typeof spirit === 'string' ? spirit : spirit.name;
                                     const lastDate = lastAppearance[spiritName];
                                     const icons = typeof spirit === 'object' ? spirit.icon : [];
-                                    
+
                                     if (lastDate) {
                                         const adjustedDate = new Date(lastDate);
                                         adjustedDate.setDate(adjustedDate.getDate() + 5);
