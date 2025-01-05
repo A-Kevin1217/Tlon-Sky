@@ -23,7 +23,8 @@ export class Ts extends plugin {
         this.task = {
             name: '[定时推送]每日任务推送',
             fnc: () => this.Push(),
-            cron: cronData['每日任务']
+            cron: cronData['每日任务'],
+            log: false
         }
     }
 

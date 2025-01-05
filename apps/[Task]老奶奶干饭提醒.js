@@ -23,7 +23,8 @@ export class Ts extends plugin {
         this.task = {
             name: '[定时推送]老奶奶干饭提醒',
             fnc: () => this.Push(),
-            cron: cronData['老奶奶干饭']
+            cron: cronData['老奶奶干饭'],
+            log: false
         }
     }
 

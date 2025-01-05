@@ -68,7 +68,15 @@ export class Ts extends plugin {
         const wingData = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json');
         const wingCounts = wingData.reduce((counts, item) => {
             const tag = item["一级标签"];
-            if (tag in counts) counts[tag]++;
+            if (tag === "晨岛") counts["晨"]++;
+            else if (tag === "云野") counts["云"]++;
+            else if (tag === "雨林") counts["雨"]++;
+            else if (tag === "霞谷") counts["霞"]++;
+            else if (tag === "暮土") counts["暮"]++;
+            else if (tag === "禁阁") counts["禁"]++;
+            else if (tag === "暴风眼") counts["暴"]++;
+            else if (tag === "复刻永久") counts["复刻永久"]++;
+            else if (tag === "普通永久") counts["普通永久"]++;
             return counts;
         }, {
             "复刻永久": 0,
