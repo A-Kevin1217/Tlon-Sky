@@ -1,16 +1,16 @@
 import lodash from 'lodash';
-import { IS_EXIST, STORAGE_JSON_DATA, GET_JSON_DATA } from '../model/Tools.js';
+import { fileExists, storageData, readJsonData } from '../function/function.js';
 
-const filePaths = [
+const randomFriendsFilePaths = [
     'plugins/Tlon-Sky/data/RandomFriends.json',
     'plugins/Tlon-Sky/data/RandomFriendsCD.json'
 ];
 
-if (!IS_EXIST(filePaths[0])) {
-    STORAGE_JSON_DATA([filePaths[0], filePaths[1]], [[], {}]);
+if (!fileExists(randomFriendsFilePaths[0])) {
+    storageData([randomFriendsFilePaths[0], randomFriendsFilePaths[1]], [[], {}]);
 }
 
-const REGEX_PATTERN = /^(#|\/)?存入盲盒(.*)\*(国|国际|测试)服$/i;
+const blindBoxRegexPattern = /^(#|\/)?存入盲盒(.*)\*(国|国际|测试)服$/i;
 
 export class EntertainmentPlugin extends plugin {
     constructor() {
@@ -22,7 +22,7 @@ export class EntertainmentPlugin extends plugin {
             rule: [
                 { reg: /^(#|\/)?复刻预测$/, fnc: 'predictRecreation' },
                 { reg: /^(#|\/)?(绘画|绘画分享|绘图分享)$/, fnc: 'shareDrawing' },
-                { reg: REGEX_PATTERN, fnc: 'storeBlindBox' },
+                { reg: blindBoxRegexPattern, fnc: 'storeBlindBox' },
                 { reg: /^(#|\/)?随机好友$/, fnc: 'getRandomFriend' }
             ]
         });
@@ -49,8 +49,7 @@ export class EntertainmentPlugin extends plugin {
             //'活跃优等生','忧郁自艾者','古怪边缘人','翻滚捣蛋鬼',
         ];
 
-        const firstRandomName = lodash.sample(namePool);
-        const secondRandomName = lodash.sample(namePool.filter(name => name !== firstRandomName));
+        const [firstRandomName, secondRandomName] = lodash.sampleSize(namePool, 2);
 
         e.reply([`以下是我猜的复刻\r[${firstRandomName}] | [${secondRandomName}]\r功能仅供娱乐`]);
     }
@@ -63,10 +62,9 @@ export class EntertainmentPlugin extends plugin {
     }
 
     async storeBlindBox(e) {
-        const userId = e.user_id;
-        const matchedContent = e.msg.match(REGEX_PATTERN);
-        const code = matchedContent[2];
-        const server = matchedContent[3];
+        const { user_id: userId, msg } = e;
+        const matchedContent = msg.match(blindBoxRegexPattern);
+        const [ , , code, server ] = matchedContent;
 
         if (!/^[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}$/.test(code)) {
             return e.reply([
@@ -76,9 +74,9 @@ export class EntertainmentPlugin extends plugin {
             ]);
         }
 
-        const randomFriendsData = await GET_JSON_DATA(filePaths[0]);
+        const randomFriendsData = await readJsonData(randomFriendsFilePaths[0]);
         randomFriendsData.push({ UID: userId, C: code, S: server });
-        STORAGE_JSON_DATA(filePaths[0], randomFriendsData);
+        storageData(randomFriendsFilePaths[0], randomFriendsData);
 
         return e.reply([
             segment.at(userId),
@@ -89,23 +87,20 @@ export class EntertainmentPlugin extends plugin {
     }
 
     async getRandomFriend(e) {
-        const userId = e.user_id;
-        const dailyData = await GET_JSON_DATA(filePaths[1]);
-        const currentDate = new Date();
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-        const day = String(currentDate.getDate()).padStart(2, '0');
-        const today = `${month}-${day}`;
+        const { user_id: userId } = e;
+        const dailyData = await readJsonData(randomFriendsFilePaths[1]);
+        const today = new Date().toISOString().slice(5, 10);
 
         if (dailyData[userId] === today) return e.reply('今日已获取过盲盒，请与明日再来');
 
-        let randomFriendsData = await GET_JSON_DATA(filePaths[0]);
-        if (randomFriendsData.length === 0) return e.reply(['盲盒库已无盲盒，请添加一些再来吧~']);
-        const selectedFriendData = randomFriendsData[Math.floor(Math.random() * randomFriendsData.length)];
+        let randomFriendsData = await readJsonData(randomFriendsFilePaths[0]);
+        if (!randomFriendsData.length) return e.reply(['盲盒库已无盲盒，请添加一些再来吧~']);
+        const selectedFriendData = lodash.sample(randomFriendsData);
 
         randomFriendsData = randomFriendsData.filter(item => item !== selectedFriendData);
         dailyData[userId] = today;
 
-        STORAGE_JSON_DATA([filePaths[0], filePaths[1]], [randomFriendsData, dailyData]);
+        storageData([randomFriendsFilePaths[0], randomFriendsFilePaths[1]], [randomFriendsData, dailyData]);
 
         e.reply([
             '您的盲盒~' +

@@ -38,8 +38,8 @@ export const helpList = [{
     "desc": "季节相关内容计算"
   }, {
     "icon": 81,
-    "title": "24年复刻记录",
-    "desc": "查看往期复刻记录可选[20,21,22,23]"
+    "title": "25年复刻记录",
+    "desc": "查看往期复刻记录可选[全部,20,21,22,23,24,25]"
   }, {
     "icon": 91,
     "title": "#风行季多久未复刻",
@@ -54,8 +54,8 @@ export const helpList = [{
     "desc": "光翼数量统计"
   }, {
     "icon": 14,
-    "title": "碎石查询",
-    "desc": "光遇碎石信息查询"
+    "title": "今日碎石 | 本月碎石",
+    "desc": "今日和本月碎石信息查询"
   }]
 }, {
   "group": "兑换图功能",
@@ -90,6 +90,14 @@ export const helpList = [{
     "icon": 72,
     "title": "#Sky娱乐菜单",
     "desc": "查看蜡烛娱乐功能"
+  }, {
+    "icon": 73,
+    "title": "#随机好友",
+    "desc": "随机获取好友"
+  }, {
+    "icon": 74,
+    "title": "#存入盲盒XXXX-XXXX-XXXX*（国|国际|测试）服",
+    "desc": "存入盲盒"
   }]
 }, {
   "group": "其他功能",
