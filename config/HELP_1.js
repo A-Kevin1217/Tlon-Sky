@@ -44,7 +44,6 @@ export const helpList = [
     list: [
       { icon: 52, title: "#复刻预测", desc: "随机两位复刻先祖" },
       { icon: 62, title: "#绘画分享", desc: "光遇同人赏析" },
-      { icon: 72, title: "#Sky娱乐菜单", desc: "查看蜡烛娱乐功能" },
       { icon: 73, title: "#随机好友", desc: "随机获取好友" },
       { icon: 74, title: "#存入盲盒XXXX-XXXX-XXXX*（国|国际|测试）服", desc: "存入盲盒" }
     ]
