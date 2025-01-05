@@ -9,7 +9,7 @@ export class SKY extends plugin {
       event: 'message',
       priority: 1,
       rule: [
-        { reg: /^(#|\/)?(sky|光遇)(娱乐)?(帮助|菜单)$/i, fnc: 'SKY_HELP', },
+        { reg: /^(#|\/)?(sky|光遇)(帮助|菜单)$/i, fnc: 'SKY_HELP', },
         { reg: /^(#|\/)?(季节|常驻)兑换图列表$/, fnc: 'SKY_HELP' },
         { reg: /^(sky|光遇)版本$/i, fnc: 'SKY_VERSION' }
       ]
@@ -21,7 +21,6 @@ export class SKY extends plugin {
     let HELP_TYPE = '';
 
     if (!U_MSG) HELP_TYPE = 'HELP_1'
-    if (U_MSG === '娱乐') HELP_TYPE = 'HELP_2'
     if (U_MSG === '季节') HELP_TYPE = 'HELP_3'
     if (U_MSG === '常驻') HELP_TYPE = 'HELP_4'
 
