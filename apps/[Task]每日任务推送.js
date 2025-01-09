@@ -1,4 +1,4 @@
-import common from "../../../lib/common/common.js";
+import common from '../../../lib/common/common.js';
 import {
     getPushData,
     getPushTextData,
@@ -6,68 +6,61 @@ import {
     getCronData
 } from '../function/function.js';
 
-const cronData = getCronData()
+const cronData = getCronData();
+const PUSH_REGEX = /^[#\/]?(开启|关闭)每日任务推送$/;
 
-const regex = /^[#\/]?(开启|关闭)每日任务推送$/
-export class Ts extends plugin {
+export class TaskPushPlugin extends plugin {
     constructor() {
         super({
-            name: '[Ts]每日任务推送',
+            name: '[Tlon-Sky]每日任务推送',
             dsc: '每日任务推送',
             event: 'message',
             priority: 1,
             rule: [
-                { reg: regex, fnc: 'Ts' }
+                { reg: PUSH_REGEX, fnc: 'togglePush' }
             ]
-        })
+        });
+
         this.task = {
             name: '[定时推送]每日任务推送',
-            fnc: () => this.Push(),
+            fnc: () => this.push(),
             cron: cronData['每日任务'],
             log: false
-        }
+        };
     }
 
-    async Ts(e) {
-        if (!e.isGroup || !e.member.is_admin && !e.isMaster) return false
-        const ID = e.group_id
-        const pushData = await getPushData()
+    async togglePush(e) {
+        if (!e.isGroup || (!e.member.is_admin && !e.isMaster)) {
+            return false;
+        }
 
-        const [, openOrClose] = e.msg.match(regex)
+        const groupId = e.group_id;
+        const pushData = await getPushData();
+        const [, action] = e.msg.match(PUSH_REGEX);
 
-        if (openOrClose === '开启') {
-            pushData['每日任务'].push(ID)
+        if (action === '开启') {
+            pushData['每日任务'].push(groupId);
         } else {
-            pushData['每日任务'] = pushData['每日任务'].filter(a => a !== ID)
+            pushData['每日任务'] = pushData['每日任务'].filter(id => id !== groupId);
         }
 
-        storagePushData(pushData)
-        e.reply([`已[${openOrClose}]本群每日任务推送`])
+        storagePushData(pushData);
+        return e.reply(`已[${action}]本群每日任务推送`);
     }
 
-    async Push() {
-        const pushData = await getPushData()
-        const textData = await getPushTextData()
+    async push() {
+        const pushData = await getPushData();
+        const textData = await getPushTextData();
+        const { atAll, text, image } = textData['每日任务'];
 
-        const { atAll, text, image } = textData['每日任务']
+        const message = [];
+        if (atAll) message.push(segment.at('all'));
+        if (text) message.push(text);
+        if (image) message.push(segment.image(image));
 
-        let message = []
-
-        if (atAll) {
-            message.push(segment.at('all'))
-        }
-
-        if (text) {
-            message.push(text)
-        }
-
-        if (image) {
-            message.push(segment.image(image))
-        }
-
-        for (const ID of pushData['每日任务']) {
-            Bot.pickGroup(ID).sendMsg(message);
-            common.sleep(1000)
+        for (const groupId of pushData['每日任务']) {
+            Bot.pickGroup(groupId).sendMsg(message);
+            await common.sleep(1000);
         }
     }
 }
