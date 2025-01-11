@@ -1,7 +1,7 @@
-import common from "../../../lib/common/common.js";
-import { render } from './../components/index.js'
+import common from '../../../lib/common/common.js';
+import { render } from './../components/index.js';
 
-export class Ts extends plugin {
+export class SkyInformationPlugin extends plugin {
     constructor() {
         super({
             name: '[Ts]光遇信息查询',
@@ -15,7 +15,7 @@ export class Ts extends plugin {
                 { reg: /^[#\/]?(季节|活动)剩余$/, fnc: 'showSeasonalRemaining' },
                 { reg: /^[#\/]?(.*)季多久未复刻$/, fnc: 'checkSeasonReappearance' }
             ]
-        })
+        });
     }
 
     async checkServerStatus(e) {
@@ -67,40 +67,40 @@ export class Ts extends plugin {
     async countWings(e) {
         const wingData = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json');
         const wingCounts = wingData.reduce((counts, item) => {
-            const tag = item["一级标签"];
-            if (tag === "晨岛") counts["晨"]++;
-            else if (tag === "云野") counts["云"]++;
-            else if (tag === "雨林") counts["雨"]++;
-            else if (tag === "霞谷") counts["霞"]++;
-            else if (tag === "暮土") counts["暮"]++;
-            else if (tag === "禁阁") counts["禁"]++;
-            else if (tag === "暴风眼") counts["暴"]++;
-            else if (tag === "复刻永久") counts["复刻永久"]++;
-            else if (tag === "普通永久") counts["普通永久"]++;
+            const tag = item['一级标签'];
+            if (tag === '晨岛') counts['晨']++;
+            else if (tag === '云野') counts['云']++;
+            else if (tag === '雨林') counts['雨']++;
+            else if (tag === '霞谷') counts['霞']++;
+            else if (tag === '暮土') counts['暮']++;
+            else if (tag === '禁阁') counts['禁']++;
+            else if (tag === '暴风眼') counts['暴']++;
+            else if (tag === '复刻永久') counts['复刻永久']++;
+            else if (tag === '普通永久') counts['普通永久']++;
             return counts;
         }, {
-            "复刻永久": 0,
-            "普通永久": 0,
-            "晨": 0,
-            "云": 0,
-            "雨": 0,
-            "霞": 0,
-            "暮": 0,
-            "禁": 0,
-            "暴": 0
+            '复刻永久': 0,
+            '普通永久': 0,
+            '晨': 0,
+            '云': 0,
+            '雨': 0,
+            '霞': 0,
+            '暮': 0,
+            '禁': 0,
+            '暴': 0
         });
 
         const message = [
-            `永久翼: ${wingCounts["复刻永久"] + wingCounts["普通永久"]}个`,
-            `复刻先祖永久翼: ${wingCounts["复刻永久"]}`,
-            `常驻先祖永久翼：${wingCounts["普通永久"]}`,
-            `晨岛光翼：${wingCounts["晨"]}`,
-            `云野光翼：${wingCounts["云"]}`,
-            `雨林光翼：${wingCounts["雨"]}`,
-            `霞谷光翼：${wingCounts["霞"]}`,
-            `暮土光翼：${wingCounts["暮"]}`,
-            `禁阁光翼：${wingCounts["禁"]}`,
-            `伊甸光翼：${wingCounts["暴"]}`
+            `永久翼: ${wingCounts['复刻永久'] + wingCounts['普通永久']}个`,
+            `复刻先祖永久翼: ${wingCounts['复刻永久']}`,
+            `常驻先祖永久翼：${wingCounts['普通永久']}`,
+            `晨岛光翼：${wingCounts['晨']}`,
+            `云野光翼：${wingCounts['云']}`,
+            `雨林光翼：${wingCounts['雨']}`,
+            `霞谷光翼：${wingCounts['霞']}`,
+            `暮土光翼：${wingCounts['暮']}`,
+            `禁阁光翼：${wingCounts['禁']}`,
+            `伊甸光翼：${wingCounts['暴']}`
         ];
 
         return e.reply(await common.makeForwardMsg(e, [message.join('\r'), '数据来源: 网易大神'], `总光翼数量: ${wingData.length} | 点击查看更多`));
