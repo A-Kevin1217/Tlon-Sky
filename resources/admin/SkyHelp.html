@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky菜单 - Tlon-Sky</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2563eb;
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #9333ea;
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        .card-header {
+            background-color: #3b82f6;
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .item:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .item-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #4b5563;
+        }
+        .item-content {
+            flex-grow: 1;
+        }
+        .item-title {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+        .item-desc {
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 0.5rem;
+            font-style: italic;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sky菜单</h1>
+        <h2>Tlon-Sky</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">每日功能</div>
+                <div class="card-content">
+                    <div class="item">
+                        <i class="fas fa-tasks item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#今日任务</div>
+                            <div class="item-desc">查看国服今日任务丨季蜡丨大蜡等</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-map-marker-alt item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#代币位置</div>
+                            <div class="item-desc">查看国服今日获取代币位置</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-calendar-alt item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#季节任务</div>
+                            <div class="item-desc">查看国服当前季节任务</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">查询功能</div>
+                <div class="card-content">
+                    <div class="item">
+                        <i class="fas fa-server item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#Sky状态</div>
+                            <div class="item-desc">查询光遇是否炸服</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-bullhorn item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#光遇公告</div>
+                            <div class="item-desc">查看告示栏内容</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-hourglass-half item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#季节剩余</div>
+                            <div class="item-desc">季节相关内容计算</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-history item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">25年复刻记录</div>
+                            <div class="item-desc">查看往期复刻记录可选[全部,20,21,22,23,24,25]</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-clock item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#风行季多久未复刻</div>
+                            <div class="item-desc">查询季节先祖多久未复刻[可选其他季节]</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-book item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#全图鉴参考</div>
+                            <div class="item-desc">衣柜图鉴参考[国际服版]</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-feather-alt item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">光翼统计</div>
+                            <div class="item-desc">光翼数量统计</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-gem item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">今日碎石 | 本月碎石</div>
+                            <div class="item-desc">今日和本月碎石信息查询</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">兑换图功能</div>
+                <div class="card-content">
+                    <div class="item">
+                        <i class="fas fa-exchange-alt item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#常驻兑换图列表</div>
+                            <div class="item-desc">查看常驻兑换图</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-sync-alt item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#季节兑换图列表</div>
+                            <div class="item-desc">查看季节兑换图</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-redo-alt item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#复刻兑换图</div>
+                            <div class="item-desc">查看最近一次复刻的兑换图</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-tree item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#好友树兑换图</div>
+                            <div class="item-desc">查看好友树解锁图</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">娱乐功能</div>
+                <div class="card-content">
+                    <div class="item">
+                        <i class="fas fa-dice item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#复刻预测</div>
+                            <div class="item-desc">随机两位复刻先祖</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-paint-brush item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#绘画分享</div>
+                            <div class="item-desc">光遇同人赏析</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-user-friends item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#随机好友</div>
+                            <div class="item-desc">随机获取好友</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-box-open item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#存入盲盒XXXX-XXXX-XXXX*（国|国际|测试）服</div>
+                            <div class="item-desc">存入盲盒</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">其他功能</div>
+                <div class="card-content">
+                    <div class="item">
+                        <i class="fas fa-fire item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#蜡烛合成机制</div>
+                            <div class="item-desc">蜡烛合成讲解</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-ruler-vertical item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#测量规则</div>
+                            <div class="item-desc">身高测量规则</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-graduation-cap item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#身高进阶知识</div>
+                            <div class="item-desc">对身高的各种讲解</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-image item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#身高透明图</div>
+                            <div class="item-desc">身高对比图透明背景版</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="fas fa-chart-bar item-icon"></i>
+                        <div class="item-content">
+                            <div class="item-title">#身高图</div>
+                            <div class="item-desc">获取身高对比查询图片</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            图片源自网络，如有侵权·联系删除
+        </footer>
+    </div>
+</body>
+</html>

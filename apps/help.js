@@ -1,4 +1,5 @@
 import { Version, Common, render, Data } from '../components/index.js';
+import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 import lodash from 'lodash';
 import fs from 'fs'
 
@@ -9,11 +10,19 @@ export class SKY extends plugin {
       event: 'message',
       priority: 1,
       rule: [
-        { reg: /^(#|\/)?(sky|光遇)(帮助|菜单)$/i, fnc: 'SKY_HELP', },
+        { reg: /^(#|\/)?(sky|光遇)(帮助|菜单)$/i, fnc: 'help', },
         { reg: /^(#|\/)?(季节|常驻)兑换图列表$/, fnc: 'SKY_HELP' },
         { reg: /^(sky|光遇)版本$/i, fnc: 'SKY_VERSION' }
       ]
     });
+  }
+
+  async help(e) {
+    const image = await puppeteer.screenshot('help', {
+      tplFile: 'plugins/Tlon-Sky/resources/admin/SkyHelp.html'
+    })
+
+    await e.reply(image)
   }
 
   async SKY_HELP(e) {
