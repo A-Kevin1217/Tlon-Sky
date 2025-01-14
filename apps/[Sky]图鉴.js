@@ -15,7 +15,7 @@ export class SKY extends plugin {
       rule: [
         { reg: SEARCH_PATTERNS[0], fnc: 'handleImageQuery' },
         { reg: SEARCH_PATTERNS[1], fnc: 'handleImageQuery' },
-        { reg: /^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/, fnc: 'regressionRecords' }
+        { reg: /^(#|\/)?(全部|(20|21|22|23|24|25)年)复刻记录$/, fnc: 'regressionRecords' }
       ]
     })
 
@@ -37,7 +37,7 @@ export class SKY extends plugin {
     let regressionRecordsData = await (await fetch(`${baseUrl}RegressionRecords.json`)).json();
     const seasonalSpiritsData = await (await fetch(`${baseUrl}SeasonalSpirits.json`)).json();
 
-    let [, , showAll, yearStr] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24)年)复刻记录$/);
+    let [, , showAll, yearStr] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24|25)年)复刻记录$/);
 
     let statistics = {};
     let filteredData;
