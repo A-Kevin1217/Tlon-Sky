@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态正方形网格墙</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .grid-container {
+            display: grid;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .grid-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            aspect-ratio: 1 / 1;
+        }
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+        .grid-item img {
+            width: 100%;
+            height: 80%;
+            object-fit: cover;
+        }
+        .grid-item p {
+            margin: 10px 0;
+            padding: 0 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="grid-container" class="grid-container"></div>
+
+    <script>
+        const images = {{@images}}
+
+        function createGrid(images) {
+            const container = document.getElementById('grid-container');
+            const gridSize = Math.ceil(Math.sqrt(images.length));
+            
+            container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+
+            images.forEach(image => {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                item.innerHTML = `
+                    <img src="${image.src}" alt="${image.name}">
+                    <p>${image.name}</p>
+                `;
+                container.appendChild(item);
+            });
+
+            const totalCells = gridSize * gridSize;
+            for (let i = images.length; i < totalCells; i++) {
+                const emptyItem = document.createElement('div');
+                emptyItem.className = 'grid-item';
+                container.appendChild(emptyItem);
+            }
+        }
+
+        createGrid(images);
+    </script>
+</body>
+</html>

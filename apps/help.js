@@ -11,6 +11,7 @@ export class SKY extends plugin {
       priority: 1,
       rule: [
         { reg: /^(#|\/)?(sky|光遇)(帮助|菜单)$/i, fnc: 'help', },
+        { reg: /^[#\/]?季节列表$/, fnc: 'seasonList' },
         { reg: /^(#|\/)?(季节|常驻)兑换图列表$/, fnc: 'SKY_HELP' },
         { reg: /^(sky|光遇)版本$/i, fnc: 'SKY_VERSION' }
       ]
@@ -20,6 +21,24 @@ export class SKY extends plugin {
   async help(e) {
     const image = await puppeteer.screenshot('help', {
       tplFile: 'plugins/Tlon-Sky/resources/admin/SkyHelp.html'
+    })
+
+    await e.reply(image)
+  }
+
+  async seasonList(e) {
+    const res = await (await fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json')).json()
+    let images = []
+
+    for (const item of res) {
+      const src = `https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${item.seasonIcon}`
+      const name = item.name
+      
+      images.push({ src, name })
+    }
+    const image = await puppeteer.screenshot('seasonList', {
+      tqlFile: 'plugins/Tlon-Sky/resources/admin/seasonList.html',
+      images
     })
 
     await e.reply(image)
