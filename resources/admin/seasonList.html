@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             padding: 20px;
             background-color: #f0f0f0;
         }
+
         .grid-container {
             display: grid;
             gap: 20px;
@@ -18,6 +20,7 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .grid-item {
             background-color: white;
             border-radius: 8px;
@@ -25,33 +28,48 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
             aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
         }
+
         .grid-item:hover {
             transform: translateY(-5px);
         }
+
         .grid-item img {
             width: 100%;
-            height: 80%;
-            object-fit: cover;
+            height: 75%;
+            object-fit: contain;
         }
+
         .grid-item p {
-            margin: 10px 0;
-            padding: 0 10px;
+            margin: 5px 0;
+            padding: 0;
             text-align: center;
             font-weight: bold;
+            flex-shrink: 0;
         }
     </style>
 </head>
+
 <body>
     <div id="grid-container" class="grid-container"></div>
 
     <script>
-        const images = {{@images}}
+        const images = JSON.parse('{{@images}}')
+
+        const placeholderImage = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/example/placeholder.svg';
+
+        function handleImageError(img) {
+            img.onerror = null;
+            img.src = placeholderImage;
+        }
 
         function createGrid(images) {
             const container = document.getElementById('grid-container');
             const gridSize = Math.ceil(Math.sqrt(images.length));
-            
+
             container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
 
             images.forEach(image => {
@@ -68,6 +86,10 @@
             for (let i = images.length; i < totalCells; i++) {
                 const emptyItem = document.createElement('div');
                 emptyItem.className = 'grid-item';
+                emptyItem.innerHTML = `
+                    <img src="${placeholderImage}" alt="占位图">
+                    <p>无</p>
+                `;
                 container.appendChild(emptyItem);
             }
         }
@@ -75,4 +97,5 @@
         createGrid(images);
     </script>
 </body>
+
 </html>

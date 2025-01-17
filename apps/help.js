@@ -38,7 +38,7 @@ export class SKY extends plugin {
     }
     const image = await puppeteer.screenshot('seasonList', {
       tplFile: 'plugins/Tlon-Sky/resources/admin/seasonList.html',
-      images
+      images: JSON.stringify(images)
     })
 
     await e.reply(image)
