@@ -1,6 +1,8 @@
 import { fileExists } from '../function/function.js'
 import fs from 'fs'
 
+if (!fileExists('plugins/Tlon-Sky/data/recordCandles')) fs.mkdirSync('plugins/Tlon-Sky/data/recordCandles', { recursive: true })
+
 export class SKY extends plugin {
     constructor() {
         super({
