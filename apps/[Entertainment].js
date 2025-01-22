@@ -58,6 +58,7 @@ export class EntertainmentPlugin extends plugin {
     }
 
     async storeBlindBox(e) {
+        if (e.isGroup) return e.reply('请私聊添加盲盒');
         const { user_id: userId, msg } = e;
         const matchedContent = msg.match(blindBoxRegexPattern);
         const [ , , code, server ] = matchedContent;
