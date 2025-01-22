@@ -20,10 +20,10 @@ export class EntertainmentPlugin extends plugin {
             event: 'message',
             priority: 1,
             rule: [
-                { reg: /^(#|\/)?复刻预测$/, fnc: 'predictRecreation' },
-                { reg: /^(#|\/)?(绘画|绘画分享|绘图分享)$/, fnc: 'shareDrawing' },
+                { reg: /^[#\/]?复刻预测$/, fnc: 'predictRecreation' },
+                { reg: /^[#\/]?(光遇)?(绘[画图]分享)$/, fnc: 'shareDrawing' },
                 { reg: blindBoxRegexPattern, fnc: 'storeBlindBox' },
-                { reg: /^(#|\/)?随机好友$/, fnc: 'getRandomFriend' }
+                { reg: /^[#\/]?随机好友(盲盒)?$/, fnc: 'getRandomFriend' }
             ]
         });
     }
