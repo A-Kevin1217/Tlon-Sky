@@ -80,7 +80,7 @@ export class SKY extends plugin {
 
   async stoneRoadMap(e) {
     const data = this.getStoneData()
-    data ? e.reply([segment.image(IMG.SHARD_MAP())]) : e.reply('今日无碎石')
+    data ? e.reply([segment.image(IMG.SHARD_MAP(data.location))]) : e.reply('今日无碎石')
   }
 
   getStoneData() {
