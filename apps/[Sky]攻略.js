@@ -16,9 +16,9 @@ const MAPS_CONFIG = {
   maps: ['暮土', '禁阁', '云野', '雨林', '霞谷'],
   locations: {
     云野: { 2: '蝴蝶平原', 3: '仙乡', 5: '右边隐藏图', 6: '左边隐藏图', 0: '圣岛' },
-    雨林: { 2: '荧光森林', 3: '雨林水母图', 5: '大树屋', 6: '雨林神殿', 0: '秘密花园' },
+    雨林: { 2: '荧光森林', 3: '密林遗迹', 5: '大树屋', 6: '雨林神殿', 0: '秘密花园' },
     霞谷: { 2: '滑冰场', 3: '滑冰场', 5: '圆梦村', 6: '圆梦村', 0: '雪隐峰' },
-    暮土: { 2: '暮土图一', 3: '暮土终点图', 5: '暮土沉船', 6: '巨兽荒原', 0: '失落方舟' },
+    暮土: { 2: '暮土图一', 3: '暮土终点图', 5: '黑水港湾', 6: '巨兽荒原', 0: '失落方舟' },
     禁阁: { 2: '星光沙漠', 3: '星光沙漠', 5: '星光沙漠·一隅', 6: '星光沙漠·一隅', 0: '星光沙漠·一隅' }
   }
 }
@@ -69,7 +69,7 @@ export class SKY extends plugin {
     }, { e, scale: 1.4 })
   }
 
-  async handleMonthlyShards() {
+  async handleMonthlyShards(e) {
     await render('admin/光遇碎石日历', {}, { e, scale: 1.4 })
   }
 
@@ -80,7 +80,7 @@ export class SKY extends plugin {
 
   async stoneRoadMap(e) {
     const data = this.getStoneData()
-    data ? e.reply([segment.image(IMG.SHARD_MAP(data.location))]) : e.reply('今日无碎石')
+    data ? e.reply([segment.image(IMG.SHARD_MAP())]) : e.reply('今日无碎石')
   }
 
   getStoneData() {
