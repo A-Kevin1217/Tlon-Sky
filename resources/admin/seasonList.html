@@ -106,17 +106,6 @@
                 `;
                 container.appendChild(item);
             });
-
-            const totalCells = gridSize * gridSize;
-            for (let i = images.length; i < totalCells; i++) {
-                const emptyItem = document.createElement('div');
-                emptyItem.className = 'grid-item';
-                emptyItem.innerHTML = `
-                    <img src="${placeholderImage}" alt="占位图">
-                    <p>无</p>
-                `;
-                container.appendChild(emptyItem);
-            }
         }
 
         createGrid(images);
