@@ -18,7 +18,7 @@ const MAPS_CONFIG = {
     云野: { 2: '蝴蝶平原', 3: '仙乡', 5: '右边隐藏图', 6: '幽光山洞', 0: '圣岛' },
     雨林: { 2: '荧光森林', 3: '密林遗迹', 5: '大树屋', 6: '雨林神殿', 0: '秘密花园' },
     霞谷: { 2: '滑冰场', 3: '滑冰场', 5: '圆梦村', 6: '圆梦村', 0: '雪隐峰' },
-    暮土: { 2: '暮土图一', 3: '暮土终点图', 5: '黑水港湾', 6: '巨兽荒原', 0: '失落方舟' },
+    暮土: { 2: '暮土图一', 3: '远古战场', 5: '黑水港湾', 6: '巨兽荒原', 0: '失落方舟' },
     禁阁: { 2: '星光沙漠', 3: '星光沙漠', 5: '星光沙漠·一隅', 6: '星光沙漠·一隅', 0: '星光沙漠·一隅' }
   }
 }
@@ -31,8 +31,8 @@ export class SKY extends plugin {
       event: 'message',
       priority: 1,
       rule: [
-        { 
-          reg: /^(#|\/)?(光遇|国服)?(每日|今日)?(任务|魔法|季蜡|大蜡(烛)?|代币(位置)?)$/, 
+        {
+          reg: /^(#|\/)?(光遇|国服)?(每日|今日)?(任务|魔法|季蜡|大蜡(烛)?|代币(位置)?)$/,
           fnc: 'handleDynamic'
         },
         { reg: /^(#|\/)?(季节任务|任务图|本月[红黑碎]石|碎石路线图)$/, fnc: 'handleDirect' },
@@ -43,11 +43,11 @@ export class SKY extends plugin {
   }
 
   async handleDynamic(e) {
-    const type = e.msg.includes('代币') ? 'currency' 
+    const type = e.msg.includes('代币') ? 'currency'
       : e.msg.match(/任务|魔法|季蜡|大蜡/) ? 'dailyTask' : null
     if (!type) return
 
-    type === 'dailyTask' 
+    type === 'dailyTask'
       ? await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 })
       : e.reply([segment.image(IMG.DAILY_COIN)])
   }
@@ -62,7 +62,7 @@ export class SKY extends plugin {
   async handleYearlyShards(e) {
     const match = e.msg.match(/(\d{4})年(\d{1,2})月/)
     if (!match) return e.reply('请输入正确格式，示例：2023年5月')
-    
+
     await render('admin/光遇碎石日历', {
       year: parseInt(match[1], 10),
       month: parseInt(match[2], 10) - 1
@@ -95,9 +95,9 @@ export class SKY extends plugin {
     const mapIndex = (day - 1) % MAPS_CONFIG.maps.length
     const map = MAPS_CONFIG.maps[mapIndex]
     const type = this.getStoneType(dayOfWeek, isFirstHalf)
-    
+
     return {
-      time: `${date.getFullYear()}年${date.getMonth()+1}月${day}日`,
+      time: `${date.getFullYear()}年${date.getMonth() + 1}月${day}日`,
       stoneType: type,
       map,
       location: MAPS_CONFIG.locations[map][dayOfWeek],
@@ -106,7 +106,7 @@ export class SKY extends plugin {
   }
 
   getStoneType(day, isFirstHalf) {
-    return isFirstHalf 
+    return isFirstHalf
       ? day === 2 ? '黑石' : '红石'
       : day === 3 ? '黑石' : '红石'
   }
@@ -122,6 +122,6 @@ export class SKY extends plugin {
 
   formatShardMsg({ time, stoneType, map, location, fallTimes }) {
     return `${time}\n碎石类型: ${stoneType}\n降落地图: ${map}\n` +
-           `降落位置: ${location}\n降落时间: ${fallTimes}\n查看路线: 碎石路线图`
+      `降落位置: ${location}\n降落时间: ${fallTimes}\n查看路线: 碎石路线图`
   }
 }
