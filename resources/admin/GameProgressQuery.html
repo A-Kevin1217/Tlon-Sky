@@ -413,7 +413,7 @@
         <div class="season-info">
             <div class="season-header">
                 <h2>{{season.name}}</h2>
-                <div class="season-period">{{season.startDate.split(' ')[0]}} - {{season.endDate.split(' ')[0]}}</div>
+                <div class="season-period">{{season.start}} - {{season.end}}</div>
             </div>
             <div class="season-content">
                 <div class="season-progress">
@@ -425,7 +425,7 @@
                 <div class="time-info">
                     <div class="info-block">
                         <div class="info-label">季节剩余天数</div>
-                        <div class="info-value days-remaining">{{remainingTime.days.split('天')[0]}} 天</div>
+                        <div class="info-value days-remaining">{{remainingTime.days}}</div>
                     </div>
                     <div class="info-block">
                         <div class="info-label">季节结束时间</div>
@@ -452,7 +452,7 @@
                                 <div class="progress-info">
                                     <span class="progress-label">还可获得</span>
                                     <div class="progress-data">
-                                        <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
+                                        <span class="days-left">{{remainingTime.days}}</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
                                             {{remainingCandles.withPass}}
@@ -488,7 +488,7 @@
                                 <div class="progress-info">
                                     <span class="progress-label">还可获得</span>
                                     <div class="progress-data">
-                                        <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
+                                        <span class="days-left">{{remainingTime.days}}</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
                                             {{remainingCandles.withoutPass}}

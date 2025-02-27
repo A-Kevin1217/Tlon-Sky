@@ -155,9 +155,11 @@ export class SkyInformationPlugin extends plugin {
         };
 
         const remainingTime = {
-            days: calculateRemainingTime(endDate),
-            endDate: endDate.split(' ')[0]
+            days: calculateRemainingTime(endDate)
         };
+
+        season.start = season.startDate.split(' ')[0];
+        season.end = season.endDate.split(' ')[0];
 
         return render('admin/GameProgressQuery', { 
             data: JSON.stringify({
