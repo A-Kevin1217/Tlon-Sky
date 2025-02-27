@@ -21,13 +21,13 @@ export class SkyInformationPlugin extends plugin {
     async checkServerStatus(e) {
         try {
             const { ret, pos, wait_time } = await getLinkData('https://live-queue-sky-merge.game.163.com/queue?type=json', 'json');
-            
+
             let timeDisplay = '';
             if (wait_time) {
                 const hours = Math.floor(wait_time / 3600);
                 const minutes = Math.floor((wait_time % 3600) / 60);
                 const seconds = wait_time % 60;
-                
+
                 if (hours > 0) {
                     timeDisplay = `${hours}时${minutes}分${seconds}秒`;
                 } else if (minutes > 0) {
@@ -107,8 +107,65 @@ export class SkyInformationPlugin extends plugin {
     }
 
     async showSeasonalRemaining(e) {
-        const seasonalData = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/季节&活动剩余.json', 'json');
-        return render('admin/季节&活动剩余', { data: JSON.stringify(seasonalData) }, { e, scale: 1.4 });
+        const { season, activity } = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
+
+        const {
+            /* name, // 季节名称
+            icon, // 季节图标
+            requiredCandlesTrue, // 持有季卡毕业所需季蜡
+            requiredCandlesFalse, // 无季卡毕业所需季蜡
+            startDate, // 季节开始时间 */
+            endDate // 季节结束时间
+        } = season;
+
+        // 计算剩余时间
+        const calculateRemainingTime = (endDateStr) => {
+            const end = new Date(endDateStr.replace(/-/g, '/'));
+            const now = new Date();
+            const diff = end - now;
+
+            if (diff <= 0) return '已结束';
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const timeParts = [];
+            if (days > 0) timeParts.push(`${days}天`);
+            if (hours > 0) timeParts.push(`${hours}时`);
+            if (minutes > 0) timeParts.push(`${minutes}分`);
+            timeParts.push(`${seconds}秒`);
+
+            return timeParts.join('');
+        };
+
+        // 计算剩余季蜡（按自然日计算）
+        const getRemainingCandles = (endDateStr) => {
+            const end = new Date(endDateStr.replace(/-/g, '/'));
+            const now = new Date();
+            end.setHours(0, 0, 0, 0);
+            now.setHours(0, 0, 0, 0);
+            
+            const diffDays = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
+            return {
+                withPass: Math.max(diffDays, 0) * 6,  // 有季卡每天6根
+                withoutPass: Math.max(diffDays, 0) * 5 // 无季卡每天5根
+            };
+        };
+
+        const remainingTime = {
+            days: calculateRemainingTime(endDate),
+            endDate: endDate.split(' ')[0]
+        };
+
+        return render('admin/GameProgressQuery', { 
+            data: JSON.stringify({
+                season,
+                remainingCandles: getRemainingCandles(endDate),
+                remainingTime
+            }) 
+        }, { e, scale: 1.4 });
     }
 
     async checkSeasonReappearance(e) {

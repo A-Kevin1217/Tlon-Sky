@@ -1,0 +1,603 @@
+<style>
+    body {
+        font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        background-color: #e6f2f7;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        background-color: #f0f8fc;
+        width: 100%;
+        max-width: 1000px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        position: relative;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .help-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        background-color: #5a9cba;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .info-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-bottom: 20px;
+    }
+
+    .info-column {
+        width: 100%;
+        flex: 1;
+        min-width: 250px;
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .info-box {
+        flex: 1;
+        min-width: 280px;
+        background-color: white;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .info-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-title {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .info-subtitle {
+        font-size: 14px;
+        color: #999;
+    }
+
+    .info-value {
+        display: flex;
+        align-items: center;
+    }
+
+    .candle-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+        display: inline-block;
+    }
+
+    .value-number {
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .season-info {
+        background: linear-gradient(135deg, #5a9cba 0%, #3a7a96 100%);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        color: white;
+    }
+
+    .season-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .season-header h2 {
+        font-size: 28px;
+        margin: 0 0 8px 0;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .season-period {
+        font-size: 16px;
+        opacity: 0.9;
+    }
+
+    .season-content {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .season-progress {
+        flex: 1;
+        min-width: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .season-icon {
+        width: 200px;
+        height: 200px;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .season-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 8px rgba(90, 156, 186, 0.3));
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .time-info {
+        flex: 2;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        min-width: 300px;
+    }
+
+    .info-block {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .info-label {
+        font-size: 14px;
+        opacity: 0.8;
+        margin-bottom: 8px;
+    }
+
+    .info-value {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .days-remaining {
+        color: #FFD700;
+        font-size: 24px;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+    }
+
+    .countdown {
+        font-family: 'Courier New', monospace;
+        letter-spacing: 1px;
+        color: #FFA500;
+    }
+
+    @media (max-width: 768px) {
+        .season-content {
+            flex-direction: column;
+        }
+
+        .time-info {
+            width: 100%;
+        }
+
+        .season-icon {
+            width: 150px;
+            height: 150px;
+        }
+    }
+
+    .event-section {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .event-title {
+        font-size: 22px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .event-info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .event-detail {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .event-detail-title {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .event-detail-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        display: flex;
+        align-items: center;
+    }
+
+    .event-notes {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    .pass-container {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .pass-type {
+        margin-bottom: 25px;
+    }
+
+    .pass-title {
+        font-size: 22px;
+        color: #5a9cba;
+        margin: 0 0 15px 0;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    .card-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .card-box {
+        border-radius: 10px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-box.premium {
+        background: linear-gradient(135deg, #fff5e6 0%, #ffe9cc 100%);
+        border: 2px solid #ffd8a3;
+    }
+
+    .card-box.free {
+        background: linear-gradient(135deg, #f0f8fc 0%, #e6f2f7 100%);
+        border: 2px solid #cde0eb;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .card-label {
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .card-icon {
+        font-size: 24px;
+    }
+
+    .progress-group {
+        margin: 15px 0;
+    }
+
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .progress-label {
+        font-size: 15px;
+        color: #666;
+    }
+
+    .progress-data {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .days-left {
+        font-size: 16px;
+        color: #5a9cba;
+        font-weight: 500;
+    }
+
+    .candle-count {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .progress-bar.small {
+        height: 8px;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .divider {
+        height: 1px;
+        background: rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+    }
+
+    .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+        background: #f8f8f8;
+        border-radius: 8px;
+        margin: 10px 0;
+    }
+
+    @media (max-width: 768px) {
+        .card-group {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="help-icon">?</div>
+        <div class="header">- 游戏进度 -</div>
+
+        <div class="season-info">
+            <div class="season-header">
+                <h2>{{season.name}}</h2>
+                <div class="season-period">{{season.startDate.split(' ')[0]}} - {{season.endDate.split(' ')[0]}}</div>
+            </div>
+            <div class="season-content">
+                <div class="season-progress">
+                    <div class="season-icon">
+                        <img src="{{season.icon}}"
+                            alt="季节图标" class="season-image">
+                    </div>
+                </div>
+                <div class="time-info">
+                    <div class="info-block">
+                        <div class="info-label">季节剩余天数</div>
+                        <div class="info-value days-remaining">{{remainingTime.days.split('天')[0]}} 天</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-label">季节结束时间</div>
+                        <div class="info-value">{{remainingTime.endDate}}</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-label">倒计时</div>
+                        <div class="info-value countdown" id="countdown">{{remainingTime.days}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-container">
+            <div class="pass-container">
+                <div class="card-group">
+                    <div class="card-box premium">
+                        <div class="card-header">
+                            <span class="card-label">持有季卡</span>
+                            <div class="card-icon">👑</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="progress-group">
+                                <div class="progress-info">
+                                    <span class="progress-label">还可获得</span>
+                                    <div class="progress-data">
+                                        <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
+                                        <span class="candle-count">
+                                            <svg class="candle-icon">...</svg>
+                                            {{remainingCandles.withPass}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="progress-bar small">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="progress-group">
+                                <div class="progress-info">
+                                    <span class="progress-label">毕业共需</span>
+                                    <div class="progress-data">
+                                        <span class="total-days">78天</span>
+                                        <span class="candle-count">
+                                            <svg class="candle-icon">...</svg>
+                                            {{season.requiredCandlesTrue}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-box free">
+                        <div class="card-header">
+                            <span class="card-label">无季卡</span>
+                            <div class="card-icon">⚜</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="progress-group">
+                                <div class="progress-info">
+                                    <span class="progress-label">还可获得</span>
+                                    <div class="progress-data">
+                                        <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
+                                        <span class="candle-count">
+                                            <svg class="candle-icon">...</svg>
+                                            {{remainingCandles.withoutPass}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="progress-bar small">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="progress-group">
+                                <div class="progress-info">
+                                    <span class="progress-label">毕业共需</span>
+                                    <div class="progress-data">
+                                        <span class="total-days">78天</span>
+                                        <span class="candle-count">
+                                            <svg class="candle-icon">...</svg>
+                                            {{season.requiredCandlesFalse}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-section">
+            <div class="event-title">活动信息</div>
+            <div class="event-info">
+                <div class="event-detail">
+                    <div class="event-detail-title">活动剩余时间</div>
+                    <div class="event-detail-value" id="event-countdown">15天 03:45:30</div>
+                </div>
+                <div class="event-detail">
+                    <div class="event-detail-title">活动截止时间</div>
+                    <div class="event-detail-value">2025年4月15日 23:59:59</div>
+                </div>
+                <div class="event-detail">
+                    <div class="event-detail-title">活动兑换物品总价格</div>
+                    <div class="event-detail-value">
+                        <svg class="candle-icon" viewBox="0 0 300 300" fit="" height="100%" width="100%"
+                            preserveAspectRatio="xMidYMid meet" focusable="false"
+                            style="width: 20px; height: 20px; vertical-align: middle;">
+                            <use href="#candle-icon" />
+                        </svg>
+                        350
+                    </div>
+                </div>
+            </div>
+            <div class="event-notes">
+                活动备注：本次活动将带来一系列精彩纷呈的内容，包括限时任务、特殊奖励和独特的季节性物品。参与者可以通过完成每日任务来获得额外的季节蜡烛，用于兑换稀有道具。请注意，活动期间的进度不会结转到下一个季节，因此建议玩家充分利用这段时间来获取所有想要的奖励。此外，我们还准备了一些惊喜活动，将在活动进行过程中陆续揭晓，敬请期待！记得每天登录游戏，不要错过任何精彩内容。祝所有玩家在这个季节玩得开心，收获满满！
+            </div>
+        </div>
+    </div>
+
+    <svg style="display: none;">
+        <defs>
+            <symbol id="candle-icon" viewBox="0 0 300 300">
+                <defs>
+                    <radialGradient id="ac-gradient" gradientUnits="userSpaceOnUse" cx="48%" cy="52%" r="100">
+                        <stop offset="35%" stop-color="#9D3752"></stop>
+                        <stop offset="100%" stop-color="#FFDCCF"></stop>
+                    </radialGradient>
+                </defs>
+                <path style="fill:url('#ac-gradient');stroke: #9D3752;stroke-width: 2px;"
+                    d="M 132.19253,271.95392 C 109.84932,270.24014 97.72766,267.24222 88.061479,261.03945 79.819795,255.75078 79.721195,255.29293 78.900339,218.5 77.899922,173.6587 76.263326,133.04076 74.770363,116 74.071664,108.025 73.511182,97.225 73.524849,92 c 0.02912,-11.133955 1.803503,-15.557322 8.560808,-21.341324 6.489118,-5.554444 13.995804,-7.609561 32.485773,-8.893684 l 16.07144,-1.116157 -0.0714,-12.574417 c -0.0841,-14.798712 1.33242,-20.974279 5.64275,-24.601186 3.5813,-3.013464 9.66455,-3.369707 12.07419,-0.70708 2.74694,3.035331 3.82011,10.744087 3.148,22.612567 -0.85742,15.14074 -1.25595,14.726189 15.17162,15.78167 28.83453,1.852636 37.83926,3.715032 43.17231,8.929073 6.13884,6.001848 5.98043,1.253327 3.21615,96.410538 -0.51128,17.6 -1.20867,42.8 -1.54977,56 -0.72442,28.03361 -1.61228,32.6656 -7.36387,38.41719 -4.41499,4.41499 -11.90372,7.24094 -25.08281,9.46527 -11.35149,1.91586 -32.88987,2.63897 -46.80747,1.57146 z">
+                </path>
+                <path style="fill:#fff"
+                    d="m 140.78738,211.25 c -0.97969,-1.12602 -1.72812,-4.78076 -2.09902,-10.25 -1.18159,-17.42369 -7.36292,-29.73213 -17.40411,-34.65552 C 116.1549,163.82946 114.19795,163.46824 104,163.15414 92.035288,162.78563 89,161.74267 89,158 c 0,-3.26299 3.252468,-4.73243 11.95614,-5.4017 15.31156,-1.17738 25.88251,-4.55111 30.81059,-9.83324 3.93609,-4.21887 6.41475,-13.19983 6.97291,-25.26506 0.54544,-11.79016 1.62804,-14.5 5.7929,-14.5 1.22242,0 2.67423,0.5625 3.22626,1.25 0.55203,0.6875 1.22744,6.2 1.50091,12.25 0.6374,14.10138 3.33173,22.01489 9.74029,28.60813 6.23844,6.41821 13.37124,8.96103 27.39521,9.76627 8.84755,0.50802 11.10188,0.9545 11.99488,2.3756 0.79965,1.27254 0.79946,2.22746 -7.1e-4,3.5 -0.85493,1.35965 -3.19591,1.92163 -10.49488,2.51944 -16.11782,1.32011 -25.11446,4.76537 -31.55735,12.08487 -5.01982,5.70283 -7.4862,13.50763 -8.10421,25.64569 -0.26604,5.225 -0.93238,10.0625 -1.48076,10.75 -1.41826,1.77804 -4.18453,1.54616 -5.9648,-0.5 z">
+                </path>
+            </symbol>
+        </defs>
+    </svg>
+
+    <script>
+        // 设置季节结束时间
+        const seasonEndTime = new Date('2025-03-31T23:59:59').getTime();
+        // 设置活动结束时间
+        const eventEndTime = new Date('2025-04-15T23:59:59').getTime();
+
+        function updateCountdowns() {
+            const now = new Date().getTime();
+
+            // 更新季节倒计时
+            updateSpecificCountdown(seasonEndTime - now, 'countdown', '季节剩余时间：');
+
+            // 更新活动倒计时
+            updateSpecificCountdown(eventEndTime - now, 'event-countdown', '');
+        }
+
+        function updateSpecificCountdown(timeLeft, elementId, prefix) {
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById(elementId).innerHTML =
+                `${prefix}${days}天${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // 初始更新
+        updateCountdowns();
+
+        // 每秒更新一次
+        setInterval(updateCountdowns, 1000);
+    </script>
+</body>
+
+</html>
