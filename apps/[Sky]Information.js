@@ -110,11 +110,6 @@ export class SkyInformationPlugin extends plugin {
         const { season, activity } = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
 
         const {
-            name, // 季节名称
-            /* icon, // 季节图标
-            requiredCandlesTrue, // 持有季卡毕业所需季蜡
-            requiredCandlesFalse, // 无季卡毕业所需季蜡
-            startDate, // 季节开始时间 */
             endDate // 季节结束时间
         } = season;
 
@@ -159,8 +154,6 @@ export class SkyInformationPlugin extends plugin {
             endDate: endDate.split(' ')[0]
         };
 
-        const remainingCandles = getRemainingCandles(endDate);
-
         // 计算毕业所需总天数
         const totalDays = {
             withPass: Math.ceil(season.requiredCandlesTrue / 6),  // 有季卡每天6根
@@ -168,12 +161,10 @@ export class SkyInformationPlugin extends plugin {
         };
 
         return render('admin/GameProgressQuery', { 
-            data: JSON.stringify({
-                ...season,
+                season,
                 remainingTime,
-                remainingCandles,
+                remainingCandles: getRemainingCandles(endDate),
                 totalDays
-            }) 
         }, { e, scale: 1.4 });
     }
 
