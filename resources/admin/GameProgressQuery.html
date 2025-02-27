@@ -413,7 +413,7 @@
         <div class="season-info">
             <div class="season-header">
                 <h2>{{season.name}}</h2>
-                <div class="season-period">{{season.start}} - {{season.end}}</div>
+                <div class="season-period">{{season.startDate.split(' ')[0]}} - {{season.endDate.split(' ')[0]}}</div>
             </div>
             <div class="season-content">
                 <div class="season-progress">
@@ -425,15 +425,15 @@
                 <div class="time-info">
                     <div class="info-block">
                         <div class="info-label">季节剩余天数</div>
-                        <div class="info-value days-remaining">{{remainingTime.days}}</div>
+                        <div class="info-value days-remaining">{{remainingTime.days.split('天')[0]}} 天</div>
                     </div>
                     <div class="info-block">
                         <div class="info-label">季节结束时间</div>
-                        <div class="info-value">{{remainingTime.endDate}}</div>
+                        <div class="info-value">{{season.endDate}}</div>
                     </div>
                     <div class="info-block">
                         <div class="info-label">倒计时</div>
-                        <div class="info-value countdown" id="countdown">{{remainingTime.days}}</div>
+                        <div class="info-value countdown">{{remainingTime.days}}</div>
                     </div>
                 </div>
             </div>
@@ -452,7 +452,7 @@
                                 <div class="progress-info">
                                     <span class="progress-label">还可获得</span>
                                     <div class="progress-data">
-                                        <span class="days-left">{{remainingTime.days}}</span>
+                                        <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
                                             {{remainingCandles.withPass}}
@@ -468,7 +468,7 @@
                                 <div class="progress-info">
                                     <span class="progress-label">毕业共需</span>
                                     <div class="progress-data">
-                                        <span class="total-days">78天</span>
+                                        <span class="total-days">{{totalDays.withPass}}天</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
                                             {{season.requiredCandlesTrue}}
@@ -488,7 +488,7 @@
                                 <div class="progress-info">
                                     <span class="progress-label">还可获得</span>
                                     <div class="progress-data">
-                                        <span class="days-left">{{remainingTime.days}}</span>
+                                        <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
                                             {{remainingCandles.withoutPass}}
@@ -504,7 +504,7 @@
                                 <div class="progress-info">
                                     <span class="progress-label">毕业共需</span>
                                     <div class="progress-data">
-                                        <span class="total-days">78天</span>
+                                        <span class="total-days">{{totalDays.withoutPass}}天</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
                                             {{season.requiredCandlesFalse}}
