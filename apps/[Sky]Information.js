@@ -65,196 +65,139 @@ export class SkyInformationPlugin extends plugin {
     }
 
     async countWings(e) {
-        const wingData = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json');
-        const wingCounts = wingData.reduce((counts, item) => {
-            const tag = item['一级标签'];
-            if (tag === '晨岛') counts['晨']++;
-            else if (tag === '云野') counts['云']++;
-            else if (tag === '雨林') counts['雨']++;
-            else if (tag === '霞谷') counts['霞']++;
-            else if (tag === '暮土') counts['暮']++;
-            else if (tag === '禁阁') counts['禁']++;
-            else if (tag === '暴风眼') counts['暴']++;
-            else if (tag === '复刻永久') counts['复刻永久']++;
-            else if (tag === '普通永久') counts['普通永久']++;
-            return counts;
-        }, {
-            '复刻永久': 0,
-            '普通永久': 0,
-            '晨': 0,
-            '云': 0,
-            '雨': 0,
-            '霞': 0,
-            '暮': 0,
-            '禁': 0,
-            '暴': 0
+        const data = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json');
+        
+        // 使用映射表简化分类统计
+        const categoryMap = {
+            '晨岛': '晨', '云野': '云', '雨林': '雨', 
+            '霞谷': '霞', '暮土': '暮', '禁阁': '禁', 
+            '暴风眼': '暴', '复刻永久': '复刻永久', 
+            '普通永久': '普通永久'
+        };
+
+        // 动态初始化计数对象
+        const counts = Object.values(categoryMap).reduce((acc, cur) => {
+            acc[cur] = 0;
+            return acc;
+        }, {});
+
+        data.forEach(item => {
+            const key = categoryMap[item['一级标签']];
+            if (key) counts[key]++;
         });
 
-        const message = [
-            `永久翼: ${wingCounts['复刻永久'] + wingCounts['普通永久']}个`,
-            `复刻先祖永久翼: ${wingCounts['复刻永久']}`,
-            `常驻先祖永久翼：${wingCounts['普通永久']}`,
-            `晨岛光翼：${wingCounts['晨']}`,
-            `云野光翼：${wingCounts['云']}`,
-            `雨林光翼：${wingCounts['雨']}`,
-            `霞谷光翼：${wingCounts['霞']}`,
-            `暮土光翼：${wingCounts['暮']}`,
-            `禁阁光翼：${wingCounts['禁']}`,
-            `伊甸光翼：${wingCounts['暴']}`
+        // 解构常用数据
+        const [reissue, normal] = [counts['复刻永久'], counts['普通永久']];
+        
+        // 生成消息内容
+        const messages = [
+            `永久翼: ${reissue + normal}个`,
+            `复刻先祖永久翼: ${reissue}`,
+            `常驻先祖永久翼: ${normal}`,
+            ...Object.entries(categoryMap)
+                .filter(([k]) => k !== '复刻永久' && k !== '普通永久')
+                .map(([k, v]) => `${k}光翼：${counts[v]}`)
         ];
 
-        return e.reply(await common.makeForwardMsg(e, [message.join('\r'), '数据来源: 网易大神'], `总光翼数量: ${wingData.length} | 点击查看更多`));
+        return e.reply(await common.makeForwardMsg(
+            e, 
+            [...messages, '数据来源: 网易大神'], 
+            `总光翼数量: ${data.length} | 点击查看更多`
+        ));
     }
 
     async showSeasonalRemaining(e) {
         const { season, activity } = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
-
-        const {
-            endDate // 季节结束时间
-        } = season;
-
-        let activeActivity = null;
-        if (activity && activity.length > 0) {
-            const latestActivity = activity[activity.length - 1];
-            const activityEnd = new Date(latestActivity.endDate.replace(/-/g, '/'));
-            const now = new Date();
-
-            if (activityEnd > now) {
-                activeActivity = latestActivity;
-            }
-        }
-
-        // 计算剩余时间
-        const calculateRemainingTime = (endDateStr) => {
-            const end = new Date(endDateStr.replace(/-/g, '/'));
-            const now = new Date();
-            const diff = end - now;
-
-            if (diff <= 0) return '已结束';
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            const timeParts = [];
-            if (days > 0) timeParts.push(`${days}天`);
-            if (hours > 0) timeParts.push(`${hours}时`);
-            if (minutes > 0) timeParts.push(`${minutes}分`);
-            timeParts.push(`${seconds}秒`);
-
-            return timeParts.join('');
-        };
-
-        // 计算剩余季蜡（按自然日计算）
-        const getRemainingCandles = (endDateStr) => {
-            const end = new Date(endDateStr.replace(/-/g, '/'));
-            const now = new Date();
-            end.setHours(0, 0, 0, 0);
-            now.setHours(0, 0, 0, 0);
-
-            const diffDays = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
-            return {
-                withPass: Math.max(diffDays, 0) * 6,  // 有季卡每天6根
-                withoutPass: Math.max(diffDays, 0) * 5 // 无季卡每天5根
-            };
-        };
-
-        const remainingTime = {
-            days: calculateRemainingTime(endDate), 
-            endDate: endDate.split(' ')[0]
-        };
-
-        // 计算毕业所需总天数
-        const totalDays = {
-            withPass: Math.ceil(season.requiredCandlesTrue / 6),  // 有季卡每天6根
-            withoutPass: Math.ceil(season.requiredCandlesFalse / 5) // 无季卡每天5根
-        };
-
+        const now = new Date();
+        
+        // 合并日期处理逻辑
+        const parseDate = str => new Date(str.replace(/-/g, '/'));
+        const endDate = parseDate(season.endDate);
+        
         return render('admin/GameProgressQuery', {
             season,
-            remainingTime,
-            remainingCandles: getRemainingCandles(endDate),
-            totalDays,
-            activity: activeActivity
+            remainingTime: {
+                days: (() => {
+                    const diff = endDate - now;
+                    if (diff <= 0) return '已结束';
+                    return [
+                        Math.floor(diff / 864e5) + '天',
+                        Math.floor(diff / 36e5 % 24) + '时',
+                        Math.floor(diff / 6e4 % 60) + '分',
+                        Math.floor(diff / 1e3 % 60) + '秒'
+                    ].filter(t => !t.startsWith('0')).join('');
+                })(),
+                endDate: season.endDate.split(' ')[0]
+            },
+            remainingCandles: (() => {
+                const days = Math.ceil((endDate - now) / 864e5);
+                return {
+                    withPass: Math.max(days, 0) * 6,
+                    withoutPass: Math.max(days, 0) * 5
+                };
+            })(),
+            totalDays: {
+                withPass: Math.ceil(season.requiredCandlesTrue / 6),
+                withoutPass: Math.ceil(season.requiredCandlesFalse / 5)
+            },
+            activity: activity?.findLast(a => parseDate(a.endDate) > now),
+            seasonStart: endDate > now
         }, { e, scale: 1.4 });
     }
 
     async checkSeasonReappearance(e) {
         const seasonName = e.msg.replace(/#|\/|季多久未复刻/g, '').trim();
-        const seasonalData = await fetchSeasonalLastAppearance();
-        const seasonInfo = seasonalData.find(season => season.name === seasonName);
+        const currentDate = new Date();
 
-        if (!seasonInfo) {
-            return e.reply(['不存在该季节']);
-        }
+        // 合并数据获取与处理逻辑
+        const [seasonalData, regressionData] = await Promise.all([
+            fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json').then(r => r.json()),
+            fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json').then(r => r.json())
+        ]);
+
+        // 构建最后出现日期映射
+        const lastAppearance = regressionData.flatMap(year => 
+            year.yearRecord.flatMap(month => 
+                month.monthRecord.map(record => ({
+                    name: record.name,
+                    date: new Date(year.year, month.month - 1, record.day)
+                }))
+            )
+        ).reduce((acc, {name, date}) => {
+            if (!acc[name] || acc[name] < date) acc[name] = date;
+            return acc;
+        }, {});
+
+        // 查找目标季节数据
+        const seasonInfo = seasonalData
+            .map(season => ({
+                ...season,
+                spirits: season.spirits
+                    .map(spirit => {
+                        const spiritName = spirit.name || spirit;
+                        const lastDate = lastAppearance[spiritName];
+                        if (!lastDate) return null;
+
+                        const adjustedDate = new Date(lastDate);
+                        adjustedDate.setDate(adjustedDate.getDate() + 5);
+                        const diffDays = Math.ceil((currentDate - adjustedDate) / 864e5);
+
+                        return {
+                            name: spiritName,
+                            status: diffDays > 0 ? `已 ${diffDays} 天未复刻` : '当前正在复刻',
+                            icons: spirit.icon || []
+                        };
+                    })
+                    .filter(Boolean)
+            }))
+            .find(season => season.name === seasonName);
+
+        if (!seasonInfo) return e.reply('不存在该季节');
 
         return render('admin/ancestor-last-reappearance-duration', {
             seasonName,
             seasonIcon: seasonInfo.icon,
             data: JSON.stringify(seasonInfo)
-        }, { e, scale: 1.4 });
+        }, { e, scale: 1.5 });
     }
-}
-
-function fetchSeasonalLastAppearance() {
-    return fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json')
-        .then(res => res.json())
-        .then(seasonalData => {
-            return fetch('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json')
-                .then(res => res.json())
-                .then(regressionData => {
-                    const lastAppearance = {};
-
-                    regressionData.forEach(yearData => {
-                        yearData.yearRecord.forEach(monthData => {
-                            monthData.monthRecord.forEach(record => {
-                                const name = record.name;
-                                const date = new Date(yearData.year, monthData.month - 1, record.day);
-
-                                if (!lastAppearance[name] || lastAppearance[name] < date) {
-                                    lastAppearance[name] = date;
-                                }
-                            });
-                        });
-                    });
-
-                    const currentDate = new Date();
-
-                    const seasonalLastAppearance = seasonalData.map(season => {
-                        return {
-                            name: season.name,
-                            icon: season.seasonIcon,
-                            spirits: season.spirits
-                                .map(spirit => {
-                                    const spiritName = typeof spirit === 'string' ? spirit : spirit.name;
-                                    const lastDate = lastAppearance[spiritName];
-                                    const icons = typeof spirit === 'object' ? spirit.icon : [];
-
-                                    if (lastDate) {
-                                        const adjustedDate = new Date(lastDate);
-                                        adjustedDate.setDate(adjustedDate.getDate() + 5);
-
-                                        const diffTime = currentDate - adjustedDate;
-                                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-                                        return {
-                                            name: spiritName,
-                                            status: diffDays > 0 ? `已 ${diffDays} 天未复刻` : '当前正在复刻',
-                                            icons: icons
-                                        };
-                                    }
-                                    return {
-                                        name: spiritName,
-                                        status: '此先祖还未开始复刻',
-                                        icons: icons
-                                    };
-                                })
-                                .filter(spirit => spirit !== null)
-                        };
-                    });
-
-                    return seasonalLastAppearance;
-                });
-        });
 }

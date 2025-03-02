@@ -504,6 +504,7 @@
         <div class="help-icon">?</div>
         <div class="header">- 游戏进度 -</div>
 
+        {{if seasonStart}}
         <div class="season-info">
             <div class="season-header">
                 <h2>{{season.name}}</h2>
@@ -611,6 +612,7 @@
                 </div>
             </div>
         </div>
+        {{/if}}
 
         {{if activity}}
         <div class="event-section">
@@ -649,17 +651,23 @@
     </div>
 
     <script>
-        const seasonEndTime = new Date('{{@season.endDate}}').getTime();
-        const activity = {{@activity}}
+        let seasonEndTime = null;
         let eventEndTime = null;
+        const activity = {{@activity}}
+        const seasonStart = {{@seasonStart}}
+        
         if (activity) {
             eventEndTime = new Date(activity.endDate).getTime();
+        }
+        if (seasonStart) {
+            seasonEndTime = new Date('{{@season.endDate}}').getTime();
         }
 
         function updateCountdowns() {
             const now = new Date().getTime();
-
-            updateSpecificCountdown(seasonEndTime - now, 'countdown');
+            if (seasonStart) {
+                updateSpecificCountdown(seasonEndTime - now, 'countdown');
+            }
 
             if (activity) {
                 updateSpecificCountdown(eventEndTime - now, 'event-countdown');
