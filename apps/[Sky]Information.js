@@ -125,7 +125,7 @@ export class SkyInformationPlugin extends plugin {
         }
 
         // 计算剩余时间
-        /* const calculateRemainingTime = (endDateStr) => {
+        const calculateRemainingTime = (endDateStr) => {
             const end = new Date(endDateStr.replace(/-/g, '/'));
             const now = new Date();
             const diff = end - now;
@@ -144,7 +144,7 @@ export class SkyInformationPlugin extends plugin {
             timeParts.push(`${seconds}秒`);
 
             return timeParts.join('');
-        }; */
+        };
 
         // 计算剩余季蜡（按自然日计算）
         const getRemainingCandles = (endDateStr) => {
@@ -161,7 +161,7 @@ export class SkyInformationPlugin extends plugin {
         };
 
         const remainingTime = {
-            /* days: calculateRemainingTime(endDate), */
+            days: calculateRemainingTime(endDate), 
             endDate: endDate.split(' ')[0]
         };
 
