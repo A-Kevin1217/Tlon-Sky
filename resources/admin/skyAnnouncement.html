@@ -1,101 +1,96 @@
-<!DOCTYPE html>
-<html lang="zh">
+<style>
+    body {
+        margin: 20px;
+        width: 1600px;
+        padding: 0;
+        min-height: 100;
+        background: url('https://sky.res.netease.com/pc/gw/20221215171426/img/bg_0040d9d.jpg');
+        background-size: 1700px;
+        background-repeat: no-repeat;
+        color: black;
+        font-family: Arial, sans-serif;
+        box-sizing: border-box;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>公告</title>
-    <style>
-        body {
-            margin: 20px;
-            width: 1600px;
-            padding: 0;
-            min-height: 100;
-            background: url('https://sky.res.netease.com/pc/gw/20221215171426/img/bg_0040d9d.jpg');
-            background-size: 1700px;
-            background-repeat: no-repeat;
-            color: black;
-            font-family: Arial, sans-serif;
-            box-sizing: border-box;
-        }
+    .announcement {
+        margin: 10px 5px;
+        padding: 20px;
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        color: black;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
 
-        .announcement {
-            margin: 10px 5px;
-            padding: 20px;
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            color: black;
-            box-sizing: border-box;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
+    /* 添加针对左边框的特殊样式 */
+    #announcements-left .announcement {
+        margin-left: 0;
+    }
 
-        /* 添加针对左边框的特殊样式 */
-        #announcements-left .announcement {
-            margin-left: 0;
-        }
+    .highlight {
+        background-color: #808080;
+        color: black;
+    }
 
-        .highlight {
-            background-color: #808080;
-            color: black;
-        }
+    .announcements-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 2400px;
+        gap: 15px;
+        margin: 0 auto;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
+    #announcements-left,
+    #announcements-center,
+    #announcements-right {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    @media (max-width: 768px) {
         .announcements-container {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 2400px;
-            gap: 15px;
-            margin: 0 auto;
-            padding: 0;
-            box-sizing: border-box;
+            flex-direction: column;
+            align-items: center;
         }
+    }
 
-        #announcements-left,
-        #announcements-center,
-        #announcements-right {
-            flex: 1;
-            min-width: 200px;
-        }
+    h1,
+    p {
+        text-align: center;
+        width: 100%;
+    }
 
-        @media (max-width: 768px) {
-            .announcements-container {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
+    /* 添加针对链接和文本的样式 */
+    .announcement a,
+    .announcement div,
+    .announcement p,
+    .announcement h2,
+    .announcement h3 {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        max-width: 100%;
+    }
 
-        h1, p {
-            text-align: center;
-            width: 100%;
-        }
+    .added {
+        background-color: rgba(0, 255, 0, 0.2);
+        /* 绿色背景，表示新增 */
+    }
 
-        /* 添加针对链接和文本的样式 */
-        .announcement a, 
-        .announcement div,
-        .announcement p,
-        .announcement h2,
-        .announcement h3 {
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            white-space: pre-wrap;
-            max-width: 100%;
-        }
-
-        .added {
-            background-color: rgba(0, 255, 0, 0.2);  /* 绿色背景，表示新增 */
-        }
-        
-        .removed {
-            background-color: rgba(255, 0, 0, 0.2);  /* 红色背景，表示删除 */
-        }
-    </style>
-</head>
+    .removed {
+        background-color: rgba(255, 0, 0, 0.2);
+        /* 红色背景，表示删除 */
+    }
+</style>
 
 <body>
     <h1>光遇公告</h1>
@@ -118,7 +113,7 @@
                 const response3 = await fetch('https://ma75.update.netease.com/game_notice/announcement_qa.json');
                 const data3 = await response3.json();
 
-                
+
                 const announcementsLeft = document.getElementById('announcements-left');
                 const announcementsCenter = document.getElementById('announcements-center');
                 const announcementsRight = document.getElementById('announcements-right');
@@ -160,16 +155,16 @@
         async function compareAnnouncements() {
             const centerContent = document.querySelector('#announcements-center .announcement div').innerText;
             const rightContent = document.querySelector('#announcements-right .announcement div').innerText;
-            
+
             const centerLines = centerContent.split('\n');
             const rightLines = rightContent.split('\n');
-            
+
             const centerDiv = document.querySelector('#announcements-center .announcement div');
             const rightDiv = document.querySelector('#announcements-right .announcement div');
-            
+
             centerDiv.innerHTML = '';
             rightDiv.innerHTML = '';
-            
+
             // 对比并标记差异
             const centerMarked = centerLines.map(line => {
                 if (!rightLines.includes(line)) {
@@ -177,14 +172,14 @@
                 }
                 return `<div>${line}</div>`;
             }).join('');
-            
+
             const rightMarked = rightLines.map(line => {
                 if (!centerLines.includes(line)) {
                     return `<div class="added">${line}</div>`;
                 }
                 return `<div>${line}</div>`;
             }).join('');
-            
+
             centerDiv.innerHTML = centerMarked;
             rightDiv.innerHTML = rightMarked;
         }
@@ -192,5 +187,3 @@
         window.onload = fetchAnnouncements;
     </script>
 </body>
-
-</html>

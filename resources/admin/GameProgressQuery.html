@@ -1,7 +1,9 @@
 <style>
     body {
+        width: 900px;
         font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-        background-color: #e6f2f7;
+        background-color: #1a1a1a;
+        color: #e0e0e0;
         margin: 0;
         padding: 20px;
         display: flex;
@@ -11,11 +13,11 @@
     }
 
     .container {
-        background-color: #f0f8fc;
+        background-color: #2d2d2d;
         width: 100%;
         max-width: 1000px;
         border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         padding: 20px;
         position: relative;
     }
@@ -25,7 +27,7 @@
         margin-bottom: 20px;
         font-size: 24px;
         font-weight: bold;
-        color: #333;
+        color: #ffffff;
     }
 
     .help-icon {
@@ -34,8 +36,8 @@
         right: 20px;
         width: 30px;
         height: 30px;
-        background-color: #5a9cba;
-        color: white;
+        background-color: #4a4a4a;
+        color: #b0b0b0;
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -61,16 +63,10 @@
         flex-wrap: wrap;
     }
 
-    .info-box {
-        flex: 1;
-        min-width: 280px;
-        background-color: white;
-        border-radius: 10px;
-        padding: 15px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .info-box, .event-section, .pass-container, .furniture-section {
+        background-color: #3a3a3a;
+        color: #e0e0e0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .info-text {
@@ -80,13 +76,13 @@
 
     .info-title {
         font-size: 16px;
-        color: #666;
+        color: #b0b0b0;
         margin-bottom: 5px;
     }
 
     .info-subtitle {
         font-size: 14px;
-        color: #999;
+        color: #808080;
     }
 
     .info-value {
@@ -104,16 +100,16 @@
     .value-number {
         font-size: 28px;
         font-weight: bold;
-        color: #333;
+        color: #ffffff;
     }
 
     .season-info {
-        background: linear-gradient(135deg, #5a9cba 0%, #3a7a96 100%);
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
         border-radius: 12px;
         padding: 20px;
         margin-bottom: 25px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        color: white;
+        color: #ecf0f1;
     }
 
     .season-header {
@@ -163,7 +159,6 @@
     }
 
     @keyframes float {
-
         0%,
         100% {
             transform: translateY(0);
@@ -187,6 +182,10 @@
         padding: 15px;
         border-radius: 8px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 120px;
     }
 
     .info-label {
@@ -201,36 +200,31 @@
     }
 
     .days-remaining {
-        color: #FFD700;
+        color: #5a9cba !important;
         font-size: 24px;
         font-weight: 600;
         display: flex;
         justify-content: center;
+        align-items: center;
+        height: 100%;
+        margin: 5px 0;
     }
 
     .countdown {
         font-family: 'Courier New', monospace;
-        letter-spacing: 1px;
-        color: #FFA500;
-    }
-
-    @media (max-width: 768px) {
-        .season-content {
-            flex-direction: column;
-        }
-
-        .time-info {
-            width: 100%;
-        }
-
-        .season-icon {
-            width: 150px;
-            height: 150px;
-        }
+        font-size: 20px;
+        color: #5a9cba;
+        text-align: center;
+        padding: 8px 12px;
+        background: rgba(90, 156, 186, 0.1);
+        border-radius: 6px;
+        margin: 10px 0;
+        display: inline-block;
     }
 
     .event-section {
-        background-color: white;
+        background-color: #3a3a3a;
+        color: #e0e0e0;
         border-radius: 10px;
         padding: 20px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -239,9 +233,10 @@
     .event-title {
         font-size: 22px;
         font-weight: bold;
-        color: #333;
+        color: #ffffff;
         margin-bottom: 15px;
         text-align: center;
+        border-bottom: 2px solid #5a5a5a;
     }
 
     .event-info {
@@ -259,31 +254,32 @@
 
     .event-detail-title {
         font-size: 16px;
-        color: #666;
+        color: #b0b0b0;
         margin-bottom: 5px;
     }
 
     .event-detail-value {
         font-size: 18px;
         font-weight: bold;
-        color: #333;
+        color: #ffffff;
         display: flex;
         align-items: center;
     }
 
     .event-notes {
-        background-color: #f9f9f9;
+        background-color: #353535;
         border-radius: 8px;
         padding: 15px;
         font-size: 14px;
-        color: #555;
+        color: #b0b0b0;
         line-height: 1.6;
         max-height: 150px;
         overflow-y: auto;
     }
 
     .pass-container {
-        background: white;
+        background: #3a3a3a;
+        border: 1px solid #4a4a4a;
         border-radius: 12px;
         padding: 20px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -297,7 +293,7 @@
         font-size: 22px;
         color: #5a9cba;
         margin: 0 0 15px 0;
-        border-bottom: 2px solid #eee;
+        border-bottom: 2px solid #5a5a5a;
         padding-bottom: 10px;
     }
 
@@ -315,13 +311,13 @@
     }
 
     .card-box.premium {
-        background: linear-gradient(135deg, #fff5e6 0%, #ffe9cc 100%);
-        border: 2px solid #ffd8a3;
+        background: linear-gradient(135deg, #2c2c2c 0%, #404040 100%);
+        border: 2px solid #5a5a5a;
     }
 
     .card-box.free {
-        background: linear-gradient(135deg, #f0f8fc 0%, #e6f2f7 100%);
-        border: 2px solid #cde0eb;
+        background: linear-gradient(135deg, #353535 0%, #2b2b2b 100%);
+        border: 2px solid #4a4a4a;
     }
 
     .card-header {
@@ -334,7 +330,7 @@
     .card-label {
         font-size: 18px;
         font-weight: 500;
-        color: #333;
+        color: #e0e0e0;
     }
 
     .card-icon {
@@ -353,7 +349,7 @@
 
     .progress-label {
         font-size: 15px;
-        color: #666;
+        color: #b0b0b0;
     }
 
     .progress-data {
@@ -374,17 +370,17 @@
         gap: 8px;
         font-size: 20px;
         font-weight: bold;
-        color: #333;
+        color: #ffffff;
     }
 
     .progress-bar.small {
         height: 8px;
-        background: rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.1);
     }
 
     .divider {
         height: 1px;
-        background: rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.1);
         margin: 20px 0;
     }
 
@@ -393,13 +389,111 @@
         align-items: center;
         gap: 10px;
         padding: 12px;
-        background: #f8f8f8;
+        background: #404040;
         border-radius: 8px;
         margin: 10px 0;
     }
 
     @media (max-width: 768px) {
         .card-group {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* 修改后的家具部分样式 */
+    .furniture-section {
+        background-color: #3a3a3a;
+        border: 1px solid #4a4a4a;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    /* 修改为2x2网格布局 */
+    .furniture-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 20px;
+        padding: 15px 0;
+    }
+
+    .furniture-item {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #3a3a3a;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .furniture-image {
+        width: 100%;
+        height: 240px;
+        padding: 10px;
+        box-sizing: border-box;
+        object-fit: contain;
+        transition: all 0.3s ease;
+    }
+
+    .furniture-info {
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .furniture-name {
+        font-size: 16px;
+        color: #e0e0e0;
+        font-weight: 500;
+        line-height: 1.4;
+        margin-bottom: 5px;
+    }
+
+    /* 价格容器移到右上角 */
+    .price-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(45, 45, 45, 0.9);
+        padding: 5px 10px;
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        z-index: 10;
+        backdrop-filter: blur(4px);
+        border: 1px solid #5a5a5a;
+    }
+
+    .currency-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .furniture-price {
+        font-size: 16px;
+        font-weight: bold;
+        color: #5a9cba;
+    }
+
+    @media (max-width: 768px) {
+        .furniture-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .furniture-image {
+            height: 150px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .furniture-grid {
             grid-template-columns: 1fr;
         }
     }
@@ -433,7 +527,7 @@
                     </div>
                     <div class="info-block">
                         <div class="info-label">倒计时</div>
-                        <div class="info-value countdown">{{remainingTime.days}}</div>
+                        <div class="countdown" id="countdown">{{remainingTime.days}}</div>
                     </div>
                 </div>
             </div>
@@ -532,11 +626,6 @@
                 <div class="event-detail">
                     <div class="event-detail-title">活动兑换物品总价格</div>
                     <div class="event-detail-value">
-                        <svg class="candle-icon" viewBox="0 0 300 300" fit="" height="100%" width="100%"
-                            preserveAspectRatio="xMidYMid meet" focusable="false"
-                            style="width: 20px; height: 20px; vertical-align: middle;">
-                            <use href="#candle-icon" />
-                        </svg>
                         350
                     </div>
                 </div>
@@ -545,30 +634,17 @@
                 活动备注：本次活动将带来一系列精彩纷呈的内容，包括限时任务、特殊奖励和独特的季节性物品。参与者可以通过完成每日任务来获得额外的季节蜡烛，用于兑换稀有道具。请注意，活动期间的进度不会结转到下一个季节，因此建议玩家充分利用这段时间来获取所有想要的奖励。此外，我们还准备了一些惊喜活动，将在活动进行过程中陆续揭晓，敬请期待！记得每天登录游戏，不要错过任何精彩内容。祝所有玩家在这个季节玩得开心，收获满满！
             </div>
         </div>
-    </div>
 
-    <svg style="display: none;">
-        <defs>
-            <symbol id="candle-icon" viewBox="0 0 300 300">
-                <defs>
-                    <radialGradient id="ac-gradient" gradientUnits="userSpaceOnUse" cx="48%" cy="52%" r="100">
-                        <stop offset="35%" stop-color="#9D3752"></stop>
-                        <stop offset="100%" stop-color="#FFDCCF"></stop>
-                    </radialGradient>
-                </defs>
-                <path style="fill:url('#ac-gradient');stroke: #9D3752;stroke-width: 2px;"
-                    d="M 132.19253,271.95392 C 109.84932,270.24014 97.72766,267.24222 88.061479,261.03945 79.819795,255.75078 79.721195,255.29293 78.900339,218.5 77.899922,173.6587 76.263326,133.04076 74.770363,116 74.071664,108.025 73.511182,97.225 73.524849,92 c 0.02912,-11.133955 1.803503,-15.557322 8.560808,-21.341324 6.489118,-5.554444 13.995804,-7.609561 32.485773,-8.893684 l 16.07144,-1.116157 -0.0714,-12.574417 c -0.0841,-14.798712 1.33242,-20.974279 5.64275,-24.601186 3.5813,-3.013464 9.66455,-3.369707 12.07419,-0.70708 2.74694,3.035331 3.82011,10.744087 3.148,22.612567 -0.85742,15.14074 -1.25595,14.726189 15.17162,15.78167 28.83453,1.852636 37.83926,3.715032 43.17231,8.929073 6.13884,6.001848 5.98043,1.253327 3.21615,96.410538 -0.51128,17.6 -1.20867,42.8 -1.54977,56 -0.72442,28.03361 -1.61228,32.6656 -7.36387,38.41719 -4.41499,4.41499 -11.90372,7.24094 -25.08281,9.46527 -11.35149,1.91586 -32.88987,2.63897 -46.80747,1.57146 z">
-                </path>
-                <path style="fill:#fff"
-                    d="m 140.78738,211.25 c -0.97969,-1.12602 -1.72812,-4.78076 -2.09902,-10.25 -1.18159,-17.42369 -7.36292,-29.73213 -17.40411,-34.65552 C 116.1549,163.82946 114.19795,163.46824 104,163.15414 92.035288,162.78563 89,161.74267 89,158 c 0,-3.26299 3.252468,-4.73243 11.95614,-5.4017 15.31156,-1.17738 25.88251,-4.55111 30.81059,-9.83324 3.93609,-4.21887 6.41475,-13.19983 6.97291,-25.26506 0.54544,-11.79016 1.62804,-14.5 5.7929,-14.5 1.22242,0 2.67423,0.5625 3.22626,1.25 0.55203,0.6875 1.22744,6.2 1.50091,12.25 0.6374,14.10138 3.33173,22.01489 9.74029,28.60813 6.23844,6.41821 13.37124,8.96103 27.39521,9.76627 8.84755,0.50802 11.10188,0.9545 11.99488,2.3756 0.79965,1.27254 0.79946,2.22746 -7.1e-4,3.5 -0.85493,1.35965 -3.19591,1.92163 -10.49488,2.51944 -16.11782,1.32011 -25.11446,4.76537 -31.55735,12.08487 -5.01982,5.70283 -7.4862,13.50763 -8.10421,25.64569 -0.26604,5.225 -0.93238,10.0625 -1.48076,10.75 -1.41826,1.77804 -4.18453,1.54616 -5.9648,-0.5 z">
-                </path>
-            </symbol>
-        </defs>
-    </svg>
+        <div class="furniture-section">
+            <div class="event-title">季节家具展示</div>
+            <div class="furniture-grid">
+            </div>
+        </div>
+    </div>
 
     <script>
         // 设置季节结束时间
-        const seasonEndTime = new Date('2025-03-31T23:59:59').getTime();
+        const seasonEndTime = new Date('2025-04-14 23:59:59').getTime();
         // 设置活动结束时间
         const eventEndTime = new Date('2025-04-15T23:59:59').getTime();
 
@@ -576,20 +652,20 @@
             const now = new Date().getTime();
 
             // 更新季节倒计时
-            updateSpecificCountdown(seasonEndTime - now, 'countdown', '季节剩余时间：');
+            updateSpecificCountdown(seasonEndTime - now, 'countdown');
 
             // 更新活动倒计时
-            updateSpecificCountdown(eventEndTime - now, 'event-countdown', '');
+            updateSpecificCountdown(eventEndTime - now, 'event-countdown');
         }
 
-        function updateSpecificCountdown(timeLeft, elementId, prefix) {
+        function updateSpecificCountdown(timeLeft, elementId) {
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            document.getElementById(elementId).innerHTML =
-                `${prefix}${days}天${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById(elementId).textContent = 
+                `${days}天 ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
         }
 
         // 初始更新
@@ -597,7 +673,227 @@
 
         // 每秒更新一次
         setInterval(updateCountdowns, 1000);
+
+        const image = 'https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/光遇/AncestorDressUp/Props/';
+        const currencyIcons = { 
+            1: `<mat-icon role="img" class="mat-icon notranslate mat-icon-no-color" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="candle" style="width: 24px; height: 24px; vertical-align: top;">
+                        <svg viewBox="0 0 300 300" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <path fill="rgb(221, 221, 221)" d="M 120.5,270.37631 C 106.13946,268.69198 97.386844,266.22075 90.081499,261.78791 80.205463,255.7952 80.590573,257.28941 79.87295,222.17903 79.528072,205.30556 78.958924,189.25 78.608176,186.5 78.257428,183.75 77.535605,167.79625 77.004124,151.04722 76.472644,134.29819 75.307902,113.78047 74.415809,105.45228 72.483555,87.413618 73.251287,81.451427 78.371933,74.729097 84.871113,66.197042 94.077339,63.135901 115.75,62.300604 L 131,61.712845 V 48.034561 c 0,-16.305565 1.47967,-22.13649 6.37489,-25.121471 5.61845,-3.425991 10.65579,-2.13244 12.51993,3.215024 0.60785,1.743683 1.10518,9.573082 1.10518,17.398665 0,11.826071 0.27029,14.452655 1.60091,15.556972 1.03298,0.857292 8.90504,1.959415 22.18984,3.106673 23.6378,2.04133 30.18343,3.583756 34.80002,8.200348 5.53852,5.538518 5.80917,8.220618 4.55201,45.109228 -0.61855,18.15 -1.59068,51.225 -2.16029,73.5 -1.68697,65.97002 -1.30846,60.10258 -4.26705,66.1449 -3.25131,6.64014 -8.00613,9.90886 -18.51891,12.73091 -15.89725,4.26745 -44.69467,5.31565 -68.69653,2.5005 z M 153.01155,196.25 c 3.93595,-2.28267 10.79008,-8.05418 17.5168,-14.75 13.37165,-13.31022 17.50437,-20.22507 18.24102,-30.52079 1.03974,-14.5317 -6.39421,-24.1634 -20.89797,-27.07617 -8.96987,-1.80141 -14.83949,0.75865 -21.5673,9.40664 l -2.18582,2.80967 -5.57937,-4.54445 C 131.25148,125.6392 127.93817,124 123.2278,124 c -10.23621,0 -18.14947,5.91689 -22.22651,16.61917 -2.965743,7.78512 -2.824923,13.1771 0.52285,20.01969 7.47958,15.28771 33.43154,39.31803 42.49861,39.35176 1.38752,0.005 5.43247,-1.67812 8.9888,-3.74062 z"></path>
+                        </svg>
+                    </mat-icon>`,
+            2: `<mat-icon role="img" class="mat-icon notranslate mat-icon-no-color" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="heart" style="width: 24px; height: 24px; vertical-align: top;">
+                        <svg viewBox="0 0 300 300" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <path fill="rgb(221, 221, 221)" d="M 142.60959,239.44301 C 113.95321,222.16358 85.878166,200.14007 65.960999,179.31593 34.762678,146.69692 25.58634,117.48388 38.520684,91.959182 44.836353,79.49581 59.46944,65.48697 70.949494,60.913786 78.618407,57.858805 93.1368,57.186091 101.94215,59.477733 c 13.29152,3.459193 26.87142,11.182516 40.38467,22.968066 l 7.75335,6.762057 8.70991,-8.364533 c 24.65648,-23.678741 50.65888,-30.815814 72.23571,-19.827073 11.53148,5.872805 25.70955,20.774076 31.15572,32.744938 10.07795,22.151642 2.90076,46.630652 -22.5704,76.980142 -16.43339,19.58077 -46.61543,44.60439 -77.99281,64.66304 -6.53493,4.1776 -12.15993,7.59447 -12.5,7.59306 -0.34006,-0.001 -3.26898,-1.6009 -6.50871,-3.55442 z"></path>
+                        </svg>
+                    </mat-icon>`,
+            3: `<mat-icon role="img" class="mat-icon notranslate mat-icon-no-color" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="ascended-candle" style="width: 24px; height: 24px; vertical-align: top;">
+                        <svg viewBox="0 0 300 300" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <defs>
+                                <radialGradient id="ac-gradient" gradientUnits="userSpaceOnUse" cx="48%" cy="52%" r="100">
+                                    <stop offset="35%" stop-color="#9D3752"></stop>
+                                    <stop offset="100%" stop-color="#FFDCCF"></stop>
+                                </radialGradient>
+                            </defs>
+                            <path style="fill:url('#ac-gradient');stroke: #9D3752;stroke-width: 2px;" d="M 132.19253,271.95392 C 109.84932,270.24014 97.72766,267.24222 88.061479,261.03945 79.819795,255.75078 79.721195,255.29293 78.900339,218.5 77.899922,173.6587 76.263326,133.04076 74.770363,116 74.071664,108.025 73.511182,97.225 73.524849,92 c 0.02912,-11.133955 1.803503,-15.557322 8.560808,-21.341324 6.489118,-5.554444 13.995804,-7.609561 32.485773,-8.893684 l 16.07144,-1.116157 -0.0714,-12.574417 c -0.0841,-14.798712 1.33242,-20.974279 5.64275,-24.601186 3.5813,-3.013464 9.66455,-3.369707 12.07419,-0.70708 2.74694,3.035331 3.82011,10.744087 3.148,22.612567 -0.85742,15.14074 -1.25595,14.726189 15.17162,15.78167 28.83453,1.852636 37.83926,3.715032 43.17231,8.929073 6.13884,6.001848 5.98043,1.253327 3.21615,96.410538 -0.51128,17.6 -1.20867,42.8 -1.54977,56 -0.72442,28.03361 -1.61228,32.6656 -7.36387,38.41719 -4.41499,4.41499 -11.90372,7.24094 -25.08281,9.46527 -11.35149,1.91586 -32.88987,2.63897 -46.80747,1.57146 z"></path>
+                            <path style="fill:#fff" d="m 140.78738,211.25 c -0.97969,-1.12602 -1.72812,-4.78076 -2.09902,-10.25 -1.18159,-17.42369 -7.36292,-29.73213 -17.40411,-34.65552 C 116.1549,163.82946 114.19795,163.46824 104,163.15414 92.035288,162.78563 89,161.74267 89,158 c 0,-3.26299 3.252468,-4.73243 11.95614,-5.4017 15.31156,-1.17738 25.88251,-4.55111 30.81059,-9.83324 3.93609,-4.21887 6.41475,-13.19983 6.97291,-25.26506 0.54544,-11.79016 1.62804,-14.5 5.7929,-14.5 1.22242,0 2.67423,0.5625 3.22626,1.25 0.55203,0.6875 1.22744,6.2 1.50091,12.25 0.6374,14.10138 3.33173,22.01489 9.74029,28.60813 6.23844,6.41821 13.37124,8.96103 27.39521,9.76627 8.84755,0.50802 11.10188,0.9545 11.99488,2.3756 0.79965,1.27254 0.79946,2.22746 -7.1e-4,3.5 -0.85493,1.35965 -3.19591,1.92163 -10.49488,2.51944 -16.11782,1.32011 -25.11446,4.76537 -31.55735,12.08487 -5.01982,5.70283 -7.4862,13.50763 -8.10421,25.64569 -0.26604,5.225 -0.93238,10.0625 -1.48076,10.75 -1.41826,1.77804 -4.18453,1.54616 -5.9648,-0.5 z"></path>
+                        </svg>
+                    </mat-icon>`
+        };
+
+        // 添加时间计算函数
+        function Cttrt(timestamp) {
+            return {
+                days: Math.floor(timestamp / (24 * 60 * 60 * 1000)),
+                hours: Math.floor((timestamp % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)),
+                minutes: Math.floor((timestamp % (60 * 60 * 1000)) / (60 * 1000)),
+                seconds: Math.floor((timestamp % (60 * 1000)) / 1000)
+            };
+        }
+
+        // 添加获取当前周数逻辑
+        function getCurrentWeek() {
+            const options = { timeZone: 'Asia/Shanghai' };
+            const startDate = new Date('2025-01-29T00:00:00+08:00');
+            const currentDate = new Date(new Date().toLocaleString('en-US', options));
+
+            if (currentDate < startDate) return 1;
+
+            let thursdays = 0;
+            const tempDate = new Date(startDate);
+            while (tempDate <= currentDate) {
+                if (tempDate.getDay() === 4 && tempDate >= startDate) {
+                    thursdays++;
+                }
+                tempDate.setDate(tempDate.getDate() + 1);
+            }
+
+            let number = 1;
+            if (currentDate >= new Date('2025-01-30T00:00:00+08:00')) {
+                number = thursdays + 1;
+            }
+
+            return ((number - 1) % 13) + 1;
+        }
+
+        // 修改后的完整家具数据数组
+        const furniture = [[
+                { name: 'Stone Small Bench', type: 'LargeProps', price: 32, currencyType: 1 },
+                { name: 'Stone Oven', type: 'LargeProps', price: 35, currencyType: 3 },
+                { name: 'Stone Tall Cube', type: 'LargeProps', price: 88, currencyType: 1 },
+                { name: 'Stone Single Bed', type: 'LargeProps', price: 24, currencyType: 2 }
+            ], [
+                { name: 'Stone Chair', type: 'LargeProps', price: 16, currencyType: 1 },
+                //{ name: 'Stone Small Table', type: 'LargeProps', price: 20, currencyType: 1 },
+                //{ name: 'Monotone Pillow', type: 'SmallProps', price: 32, currencyType: 1 },
+                { name: 'Stone Tall Shelf', type: 'LargeProps', price: 15, currencyType: 3 }
+            ], [
+                { name: 'Stone Bench', type: 'LargeProps', price: 60, currencyType: 1 },
+                { name: 'Stone Desk', type: 'LargeProps', price: 50, currencyType: 1 },
+                { name: 'Two Colors Pillow', type: 'SmallProps', price: 12, currencyType: 2 },
+                //{ name: 'Small Solid Rug', type: 'SmallProps', price: 25, currencyType: 1 }
+            ], [
+                { name: 'Stone Armchair', type: 'LargeProps', price: 10, currencyType: 2 },
+                { name: 'Stone Console Table', type: 'LargeProps', price: 45, currencyType: 1 },
+                { name: 'Decor Folded Cloth', type: 'SmallProps', price: 10, currencyType: 1 },
+                { name: 'Small Striped Rug', type: 'SmallProps', price: 18, currencyType: 1 }
+            ], [
+                { name: 'Stone Loveseat', type: 'LargeProps', price: 33, currencyType: 2 },
+                { name: 'Stone Round Dining Table', type: 'LargeProps', price: 18, currencyType: 2 },
+                { name: 'Stone Plant Stand', type: 'LargeProps', price: 12, currencyType: 2 },
+                { name: 'Small Classic Rug', type: 'SmallProps', price: 8, currencyType: 2 }
+            ], [
+                { name: 'Stone Corer Sofa', type: 'LargeProps', price: 25, currencyType: 1 },
+                { name: 'Stone Square Dining Table', type: 'LargeProps', price: 23, currencyType: 2 },
+                { name: 'Stone Wall Sconce', type: 'SmallProps', price: 8, currencyType: 3 },
+                { name: 'Small Half Circle Rug', type: 'SmallProps', price: 23, currencyType: 1 }
+            ], [
+                { name: 'Stone Sofa Side', type: 'LargeProps', price: 80, currencyType: 1 },
+                { name: 'Stone Long Dining Table', type: 'LargeProps', price: 33, currencyType: 2 },
+                { name: 'Stone Wall Sconce', type: 'SmallProps', price: 32, currencyType: 3 },
+                { name: 'Medium Solid Rug', type: 'SmallProps', price: 40, currencyType: 1 }
+            ], [
+                { name: 'Stone Kitchen Drawers', type: 'LargeProps', price: 25, currencyType: 1 },
+                { name: 'Stone Coffee Table', type: 'LargeProps', price: 28, currencyType: 3 },
+                { name: 'Stone Candle Light', type: 'LargeProps', price: 16, currencyType: 3 },
+                { name: 'Medium Striped Rug', type: 'SmallProps', price: 50, currencyType: 1 }
+            ], [
+                { name: 'Stone Wall Pot Rack', type: 'SmallProps', price: 25, currencyType: 1 },
+                { name: 'Stone Closed Box', type: 'SmallProps', price: 10, currencyType: 1 },
+                { name: 'Stone Washstand', type: 'LargeProps', price: 40, currencyType: 1 },
+                { name: 'Medium Diamonds Rug', type: 'SmallProps', price: 18, currencyType: 2 }
+            ], [
+                { name: 'Stone Empty Box', type: 'SmallProps', price: 10, currencyType: 1 },
+                { name: 'Stone Wall Mirror', type: 'SmallProps', price: 30, currencyType: 1 },
+                { name: 'Medium Argyle Rug', type: 'SmallProps', price: 20, currencyType: 2 }
+            ], [
+                { name: 'Stone Wall Mug Rack', type: 'SmallProps', price: 20, currencyType: 1 },
+                { name: 'Stone Wall Towel Rack', type: 'SmallProps', price: 15, currencyType: 1 },
+                { name: 'Medium Circle Rug', type: 'SmallProps', price: 70, currencyType: 1 }
+            ], [
+                { name: 'Stone Kitchen Cabinet', type: 'LargeProps', price: 40, currencyType: 1 },
+                { name: 'Stone Wall Shelf', type: 'SmallProps', price: 10, currencyType: 1 },
+                { name: 'Large Solid Rug', type: 'SmallProps', price: 80, currencyType: 1 },
+            ], [
+                { name: 'Stone Kitchen Stove', type: 'LargeProps', price: 25, currencyType: 3 },
+                { name: 'Stone Wide Cube', type: 'LargeProps', price: 10, currencyType: 1 },
+                { name: 'Stone Large Bathtub', type: 'LargeProps', price: 45, currencyType: 2 },
+                { name: 'Large Circle Rug', type: 'SmallProps', price: 90, currencyType: 1 }
+            ]]
+
+        // 更新家具数据获取函数
+        async function fetchFurnitureData() {
+            const currentWeek = getCurrentWeek() - 1;
+            if (currentWeek >= 0 && currentWeek < furniture.length) {
+                displayFurniture(furniture[currentWeek]);
+                updateFurnitureRefreshTime();
+            }
+        }
+
+        // 添加家具刷新时间功能
+        function getNextWednesday() {
+            const now = new Date();
+            const dayOfWeek = now.getDay();
+            const daysUntilWednesday = (3 - dayOfWeek + 7) % 7;
+            const nextWednesday = new Date(now);
+            nextWednesday.setDate(now.getDate() + daysUntilWednesday);
+            nextWednesday.setHours(23, 59, 59, 999);
+            return nextWednesday;
+        }
+
+        function updateFurnitureRefreshTime() {
+            const nextWednesday = getNextWednesday();
+            const remainingTime = nextWednesday.getTime() - Date.now();
+            const { days, hours, minutes, seconds } = Cttrt(remainingTime);
+            
+            // 只更新倒计时部分
+            const timerElement = document.getElementById('refresh-timer');
+            if (timerElement) {
+                timerElement.innerHTML = `
+                    距离下次刷新还剩: 
+                    <span style="color: #5a9cba;">${days}</span>天
+                    <span style="color: #5a9cba;">${hours}</span>时
+                    <span style="color: #5a9cba;">${minutes}</span>分
+                    <span style="color: #5a9cba;">${seconds}</span>秒
+                `;
+            } else {
+                // 首次初始化容器结构
+                const furnitureSection = document.querySelector('.furniture-section');
+                furnitureSection.innerHTML = `
+                    <div class="event-title">季节家具展示（第 ${getCurrentWeek()} 周）</div>
+                    <div class="event-detail" style="text-align: center; margin: 15px 0;" id="refresh-timer"></div>
+                    <div class="furniture-grid" id="dynamic-furniture-grid"></div>
+                `;
+            }
+        }
+
+        function displayFurniture(furniture) {
+            const furnitureGrid = document.getElementById('dynamic-furniture-grid');
+            if (!furnitureGrid) return;
+            
+            furnitureGrid.innerHTML = '';
+
+            // 确保我们最多显示4个家具（2x2布局）
+            const displayItems = furniture.slice(0, 4);
+            
+            displayItems.forEach(item => {
+                const { name, type, price, currencyType } = item;
+                const imgSrc = name ? `${image}${type}/${name}.png` : '';
+                
+                const itemHTML = `
+                    <div class="furniture-item">
+                        <div class="price-container">
+                            ${currencyIcons[currencyType]}
+                            <span class="furniture-price">${price}</span>
+                        </div>
+                        <img src="${imgSrc}" alt="${name}" class="furniture-image" 
+                             onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,${encodeURIComponent('<svg width=\"300\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"100%\" height=\"100%\" fill=\"#f0f0f0\"/><text x=\"50%\" y=\"50%\" dominant-baseline=\"middle\" text-anchor=\"middle\" fill=\"#999999\">\u6682\u65e0\u56fe\u7247</text></svg>')}'">
+                        <div class="furniture-info">
+                            <div class="furniture-name">${name}</div>
+                        </div>
+                    </div>
+                `;
+                furnitureGrid.insertAdjacentHTML('beforeend', itemHTML);
+            });
+        }
+
+        // 修改初始化代码
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                updateCountdowns();
+                updateFurnitureRefreshTime();
+                // 添加延迟确保容器初始化完成
+                setTimeout(() => {
+                    fetchFurnitureData();
+                    setInterval(() => {
+                        updateCountdowns();
+                        updateFurnitureRefreshTime();
+                        fetchFurnitureData();
+                    }, 1000);
+                }, 50);
+            } catch (error) {
+                console.error('初始化错误:', error);
+                alert('页面初始化失败，请刷新重试');
+            }
+        });
     </script>
 </body>
-
-</html>
