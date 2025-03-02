@@ -649,19 +649,21 @@
     </div>
 
     <script>
-        // 设置季节结束时间
-        const seasonEndTime = new Date('{{season.endDate}}').getTime();
-        // 设置活动结束时间
-        const eventEndTime = new Date('{{activity.endDate}}').getTime();
+        const seasonEndTime = new Date('{{@season.endDate}}').getTime();
+        const activity = {{@activity}}
+        let eventEndTime = null;
+        if (activity) {
+            eventEndTime = new Date(activity.endDate).getTime();
+        }
 
         function updateCountdowns() {
             const now = new Date().getTime();
 
-            // 更新季节倒计时
             updateSpecificCountdown(seasonEndTime - now, 'countdown');
 
-            // 更新活动倒计时
-            updateSpecificCountdown(eventEndTime - now, 'event-countdown');
+            if (activity) {
+                updateSpecificCountdown(eventEndTime - now, 'event-countdown');
+            }
         }
 
         function updateSpecificCountdown(timeLeft, elementId) {
