@@ -1,5 +1,5 @@
-import common from '../../../lib/common/common.js';
 import { render } from './../components/index.js';
+import { getPlatformInfo } from './../function/function.js'
 
 export class SkyInformationPlugin extends plugin {
     constructor() {
@@ -46,12 +46,10 @@ export class SkyInformationPlugin extends plugin {
                     `预计等待时间：${timeDisplay}`
                 ];
 
-            const platform = e.bot?.adapter?.name || e.platform || '未知';
-            if (platform === 'QQBot') {
-                const buttonFunction = typeof Bot.Button === 'function' ? Bot.Button : segment?.button;
-                if (buttonFunction) {
-                    message.push(buttonFunction([{ text: '再次查询', callback: '光遇服务器状态' }]));
-                }
+            const { Button, isQQBot } = getPlatformInfo(e)
+
+            if (isQQBot && Button) {
+                message.push(Button([{ text: '再次查询', callback: '光遇服务器状态' }]));
             }
 
             return e.reply(message);
@@ -66,12 +64,12 @@ export class SkyInformationPlugin extends plugin {
 
     async countWings(e) {
         const data = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json');
-        
+
         // 使用映射表简化分类统计
         const categoryMap = {
-            '晨岛': '晨', '云野': '云', '雨林': '雨', 
-            '霞谷': '霞', '暮土': '暮', '禁阁': '禁', 
-            '暴风眼': '暴', '复刻永久': '复刻永久', 
+            '晨岛': '晨', '云野': '云', '雨林': '雨',
+            '霞谷': '霞', '暮土': '暮', '禁阁': '禁',
+            '暴风眼': '暴', '复刻永久': '复刻永久',
             '普通永久': '普通永久'
         };
 
@@ -88,7 +86,7 @@ export class SkyInformationPlugin extends plugin {
 
         // 解构常用数据
         const [reissue, normal] = [counts['复刻永久'], counts['普通永久']];
-        
+
         // 生成消息内容
         const messages = [
             `永久翼: ${reissue + normal}个`,
@@ -99,21 +97,23 @@ export class SkyInformationPlugin extends plugin {
                 .map(([k, v]) => `${k}光翼：${counts[v]}`)
         ];
 
-        return e.reply(await common.makeForwardMsg(
-            e, 
-            [...messages, '数据来源: 网易大神'], 
-            `总光翼数量: ${data.length} | 点击查看更多`
-        ));
+        return e.reply([
+            `总光翼数量: ${data.length}`,
+            '---------------',
+            ...messages,
+            '---------------',
+            '数据来源: 网易大神'
+        ]);
     }
 
     async showSeasonalRemaining(e) {
         const { season, activity } = await getLinkData('https://gitee.com/Tloml-Starry/resources/raw/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
         const now = new Date();
-        
+
         // 合并日期处理逻辑
         const parseDate = str => new Date(str.replace(/-/g, '/'));
         const endDate = parseDate(season.endDate);
-        
+
         return render('admin/GameProgressQuery', {
             season,
             remainingTime: {
@@ -156,14 +156,14 @@ export class SkyInformationPlugin extends plugin {
         ]);
 
         // 构建最后出现日期映射
-        const lastAppearance = regressionData.flatMap(year => 
-            year.yearRecord.flatMap(month => 
+        const lastAppearance = regressionData.flatMap(year =>
+            year.yearRecord.flatMap(month =>
                 month.monthRecord.map(record => ({
                     name: record.name,
                     date: new Date(year.year, month.month - 1, record.day)
                 }))
             )
-        ).reduce((acc, {name, date}) => {
+        ).reduce((acc, { name, date }) => {
             if (!acc[name] || acc[name] < date) acc[name] = date;
             return acc;
         }, {});

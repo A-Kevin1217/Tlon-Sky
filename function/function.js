@@ -8,6 +8,13 @@ const otherFilePath = {
     text: path.join(configPath, 'text.json')
 };
 
+function getPlatformInfo(e) {
+    return {
+        Button: typeof Bot.Button === 'function' ? Bot.Button : segment?.button,
+        isQQBot: e.bot?.adapter?.name || e.adapter_name || '未知' === 'QQBot' ? true : false
+    }
+}
+
 /**
  * 读取推送配置数据
  * @returns {Promise<any>} 解析后的推送配置数据
@@ -51,7 +58,7 @@ function getCronData() {
  * @param {string} type 数据类型，json或text
  * @returns {Promise<any>} 根据type解析后的链接数据
  */
-global.getLinkData = async function(link, type) {
+global.getLinkData = async function (link, type) {
     let linkData = await fetch(link)
     if (type === 'json') {
         linkData = await linkData.json()
@@ -109,5 +116,6 @@ export {
     getCronData,
     fileExists,
     storageData,
-    readJsonData
+    readJsonData,
+    getPlatformInfo
 };
