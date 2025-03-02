@@ -12,7 +12,7 @@ export class SkyInformationPlugin extends plugin {
                 { reg: /^[#\/]?(光遇|sky)(服务器)?状态$/i, fnc: 'checkServerStatus' },
                 { reg: /^[#\/]?(光遇|sky)公告$/i, fnc: 'showAnnouncement' },
                 { reg: /^[#\/]?光翼统计$/, fnc: 'countWings' },
-                { reg: /^[#\/]?(季节|活动)剩余$/, fnc: 'showSeasonalRemaining' },
+                { reg: /^[#\/]?(光遇|游戏|季节|活动)(剩余|进度)$/, fnc: 'showSeasonalRemaining' },
                 { reg: /^[#\/]?(.*)季多久未复刻$/, fnc: 'checkSeasonReappearance' }
             ]
         });
@@ -103,7 +103,7 @@ export class SkyInformationPlugin extends plugin {
             ...messages,
             '---------------',
             '数据来源: 网易大神'
-        ]);
+        ].join('\r'));
     }
 
     async showSeasonalRemaining(e) {
