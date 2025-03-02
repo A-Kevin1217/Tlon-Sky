@@ -612,29 +612,35 @@
             </div>
         </div>
 
+        {{if activity}}
         <div class="event-section">
             <div class="event-title">活动信息</div>
             <div class="event-info">
                 <div class="event-detail">
+                    <div class="event-detail-title">活动名称</div>
+                    <div class="event-detail-value">{{activity.name}}</div>
+                </div>
+                <div class="event-detail">
                     <div class="event-detail-title">活动剩余时间</div>
-                    <div class="event-detail-value" id="event-countdown">15天 03:45:30</div>
+                    <div class="event-detail-value" id="event-countdown"></div>
                 </div>
                 <div class="event-detail">
                     <div class="event-detail-title">活动截止时间</div>
-                    <div class="event-detail-value">2025年4月15日 23:59:59</div>
+                    <div class="event-detail-value">{{activity.endDate}}</div>
                 </div>
                 <div class="event-detail">
                     <div class="event-detail-title">活动兑换物品总价格</div>
                     <div class="event-detail-value">
-                        350
+                        {{activity.price}}
                     </div>
                 </div>
             </div>
             <div class="event-notes">
-                活动备注：本次活动将带来一系列精彩纷呈的内容，包括限时任务、特殊奖励和独特的季节性物品。参与者可以通过完成每日任务来获得额外的季节蜡烛，用于兑换稀有道具。请注意，活动期间的进度不会结转到下一个季节，因此建议玩家充分利用这段时间来获取所有想要的奖励。此外，我们还准备了一些惊喜活动，将在活动进行过程中陆续揭晓，敬请期待！记得每天登录游戏，不要错过任何精彩内容。祝所有玩家在这个季节玩得开心，收获满满！
+                {{activity.price}}
             </div>
         </div>
-
+        {{/if}}
+        
         <div class="furniture-section">
             <div class="event-title">季节家具展示</div>
             <div class="furniture-grid">
@@ -644,9 +650,9 @@
 
     <script>
         // 设置季节结束时间
-        const seasonEndTime = new Date('2025-04-14 23:59:59').getTime();
+        const seasonEndTime = new Date('{{season.endDate}}').getTime();
         // 设置活动结束时间
-        const eventEndTime = new Date('2025-04-15T23:59:59').getTime();
+        const eventEndTime = new Date('{{activity.endDate}}').getTime();
 
         function updateCountdowns() {
             const now = new Date().getTime();

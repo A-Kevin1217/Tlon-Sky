@@ -113,8 +113,19 @@ export class SkyInformationPlugin extends plugin {
             endDate // 季节结束时间
         } = season;
 
+        let activeActivity = null;
+        if (activity && activity.length > 0) {
+            const latestActivity = activity[activity.length - 1];
+            const activityEnd = new Date(latestActivity.endDate.replace(/-/g, '/'));
+            const now = new Date();
+
+            if (activityEnd > now) {
+                activeActivity = latestActivity;
+            }
+        }
+
         // 计算剩余时间
-        const calculateRemainingTime = (endDateStr) => {
+        /* const calculateRemainingTime = (endDateStr) => {
             const end = new Date(endDateStr.replace(/-/g, '/'));
             const now = new Date();
             const diff = end - now;
@@ -133,7 +144,7 @@ export class SkyInformationPlugin extends plugin {
             timeParts.push(`${seconds}秒`);
 
             return timeParts.join('');
-        };
+        }; */
 
         // 计算剩余季蜡（按自然日计算）
         const getRemainingCandles = (endDateStr) => {
@@ -150,7 +161,7 @@ export class SkyInformationPlugin extends plugin {
         };
 
         const remainingTime = {
-            days: calculateRemainingTime(endDate),
+            /* days: calculateRemainingTime(endDate), */
             endDate: endDate.split(' ')[0]
         };
 
@@ -160,11 +171,12 @@ export class SkyInformationPlugin extends plugin {
             withoutPass: Math.ceil(season.requiredCandlesFalse / 5) // 无季卡每天5根
         };
 
-        return render('admin/GameProgressQuery', { 
-                season,
-                remainingTime,
-                remainingCandles: getRemainingCandles(endDate),
-                totalDays
+        return render('admin/GameProgressQuery', {
+            season,
+            remainingTime,
+            remainingCandles: getRemainingCandles(endDate),
+            totalDays,
+            activity: activeActivity
         }, { e, scale: 1.4 });
     }
 
