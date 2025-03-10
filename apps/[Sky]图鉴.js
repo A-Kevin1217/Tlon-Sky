@@ -71,13 +71,87 @@ export class SKY extends plugin {
       return acc;
     }, {});
 
-    // ... 前面的代码保持不变 ...
-
     const html = filteredData.map(({ year, yearRecord }) => {
       const stats = statistics[year];
       const sortedYearRecord = [...yearRecord].sort((a, b) => a.month - b.month);
 
-      // 生成表格HTML
+      const generatePlatformDetails = (platform, data) => {
+        return `
+          <div class="platform-detail ${platform}">
+            <h3>${platform === 'ios' ? 'iOS' : '安卓'}复刻详情 <span class="total">(${data.total})</span></h3>
+            <div class="count-list">
+              ${Object.entries(data.counts)
+                .sort(([a], [b]) => parseInt(a) - parseInt(b))
+                .map(([count, num]) => `
+                  <div class="count-item">
+                    <span class="count">${count}次</span>
+                    <span class="number">${num}位</span>
+                  </div>
+                `).join('')}
+            </div>
+          </div>
+        `;
+      };
+
+      const statsHtml = `
+        <div class="stats-header">
+          <h2>${year}年复刻统计</h2>
+          <div class="total-spirits">
+            <span class="number">${stats.summary.total}</span>
+            <span class="label">总复刻先祖</span>
+          </div>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stats-card platform-stats">
+            <h3>平台分布</h3>
+            <div class="platform-list">
+              ${['all', 'ios', 'android'].map(platform => `
+                <div class="platform-item">
+                  <span class="platform-icon ${platform}">
+                    ${platform === 'all' ? '📱' : platform === 'ios' ? '🍎' : '🤖'}
+                  </span>
+                  <span class="platform-name">
+                    ${platform === 'all' ? '全平台' : platform === 'ios' ? '仅iOS' : '仅安卓'}
+                  </span>
+                  <span class="platform-count">${stats.summary.platforms[platform]}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="stats-card platform-details">
+            ${generatePlatformDetails('ios', stats.platforms.ios)}
+            ${generatePlatformDetails('android', stats.platforms.android)}
+          </div>
+
+          <div class="stats-card season-stats">
+            <h3>季节分布</h3>
+            <div class="season-list">
+              ${stats.seasons.mostFrequent
+                .concat(Array(3).fill({ season: '-', count: 0 }))
+                .slice(0, 3)
+                .map(({ season, count }, index) => `
+                  <div class="season-item rank-${index + 1}">
+                    <span class="rank">${index + 1}</span>
+                    <span class="season-name">${season}</span>
+                    <span class="season-count">${count || '-'}位</span>
+                  </div>
+                `).join('')}
+            </div>
+          </div>
+
+          <div class="stats-card footer-note">
+            <p><span class="highlight">数据说明：</span></p>
+            <p>• 复刻记录不计入集体复刻，请知悉</p>
+            <p>• 数据更新不及时属正常现象，过几天再次查看即可</p>
+            <p>• <span class="warning">数据仅供参考，具体以游戏内为准</span></p>
+            <p>• 光遇群: 111658697 | 交友扩列找CP</p>
+            <p>Created by Tlon-Sky</p>
+          </div>
+        </div>
+      `;
+
       const recordsHtml = sortedYearRecord.map(({ month, monthRecord }, monthIndex) => {
         return monthRecord.map(({ day, platform, name, count, price }, recordIndex) => {
           const season = seasonalSpiritsData.find(({ spirits }) =>
@@ -104,92 +178,6 @@ export class SKY extends plugin {
       `;
         }).join('');
       }).join('');
-
-      // 生成统计信息HTML
-      const statsHtml = `
-    <div class="stats-header">
-      <h2>${year}年复刻统计</h2>
-      <div class="total-spirits">
-        <span class="number">${stats.summary.total}</span>
-        <span class="label">总复刻先祖</span>
-      </div>
-    </div>
-    
-    <div class="stats-grid">
-      <div class="stats-card platform-stats">
-        <h3>平台分布</h3>
-        <div class="platform-list">
-          <div class="platform-item">
-            <span class="platform-icon all">📱</span>
-            <span class="platform-name">全平台</span>
-            <span class="platform-count">${stats.summary.platforms.all}</span>
-          </div>
-          <div class="platform-item">
-            <span class="platform-icon ios">🍎</span>
-            <span class="platform-name">仅iOS</span>
-            <span class="platform-count">${stats.summary.platforms.ios}</span>
-          </div>
-          <div class="platform-item">
-            <span class="platform-icon android">🤖</span>
-            <span class="platform-name">仅安卓</span>
-            <span class="platform-count">${stats.summary.platforms.android}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="stats-card platform-details">
-        <div class="platform-detail ios">
-          <h3>iOS复刻详情 <span class="total">(${stats.platforms.ios.total})</span></h3>
-          <div class="count-list">
-            ${Object.entries(stats.platforms.ios.counts)
-          .sort(([a,], [b,]) => parseInt(a) - parseInt(b))
-          .map(([count, num]) => `
-                <div class="count-item">
-                  <span class="count">${count}次</span>
-                  <span class="number">${num}位</span>
-                </div>
-              `).join('')}
-          </div>
-        </div>
-        <div class="platform-detail android">
-          <h3>安卓复刻详情 <span class="total">(${stats.platforms.android.total})</span></h3>
-          <div class="count-list">
-            ${Object.entries(stats.platforms.android.counts)
-          .sort(([a,], [b,]) => parseInt(a) - parseInt(b))
-          .map(([count, num]) => `
-                <div class="count-item">
-                  <span class="count">${count}次</span>
-                  <span class="number">${num}位</span>
-                </div>
-              `).join('')}
-          </div>
-        </div>
-      </div>
-
-      <div class="stats-card season-stats">
-        <h3>热门季节 Top 3</h3>
-        <div class="season-list">
-          ${stats.seasons.mostFrequent.slice(0, 3)
-          .map(({ season, count }, index) => `
-              <div class="season-item rank-${index + 1}">
-                <span class="rank">${index + 1}</span>
-                <span class="season-name">${season}</span>
-                <span class="season-count">${count}位</span>
-              </div>
-            `).join('')}
-        </div>
-      </div>
-
-      <div class="stats-card footer-note">
-        <p><span class="highlight">数据说明：</span></p>
-        <p>• 复刻记录不计入集体复刻，请知悉</p>
-        <p>• 数据更新不及时属正常现象，过几天再次查看即可</p>
-        <p>• <span class="warning">数据仅供参考，具体以游戏内为准</span></p>
-        <p>• 光遇群: 111658697 | 交友扩列找CP</p>
-        <p>Created by Tlon-Sky</p>
-      </div>
-    </div>
-  `;
 
       return `
     <div class="container">
@@ -221,7 +209,6 @@ export class SKY extends plugin {
   `;
     }).join('');
 
-    // 添加样式并返回最终HTML
     const finalHtml = `
   <style>
     .container {
