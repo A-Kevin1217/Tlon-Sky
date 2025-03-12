@@ -113,6 +113,7 @@ export class SkyInformationPlugin extends plugin {
         // 合并日期处理逻辑
         const parseDate = str => new Date(str.replace(/-/g, '/'));
         const endDate = parseDate(season.endDate);
+        const activityEndDate = parseDate((activity?.findLast(a => parseDate(a.endDate) > now))?.endDate)
 
         return render('admin/GameProgressQuery', {
             season,
@@ -141,6 +142,7 @@ export class SkyInformationPlugin extends plugin {
                 withoutPass: Math.ceil(season.requiredCandlesFalse / 5)
             },
             activity: activity?.findLast(a => parseDate(a.endDate) > now),
+            activityStart: activityEndDate > now,
             seasonStart: endDate > now
         }, { e, scale: 1.4 });
     }
