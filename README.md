@@ -15,7 +15,7 @@
 ## 联系我
 点开我的主页私信我
  & [点击跳转我的QQ](https://qm.qq.com/q/h9UHpRmomc)
- & [点击跳转我的QQ群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=5YqRg5S_pk_oVolSp7wydrx2ZFblhE-U&authKey=rl1zGbz8KHpvTlgkd%2BDm5Z9y%2FdMaWFnIL9p0FNVS6dyNmkNQ%2F2ngy3oU5Gynx8Ob&noverify=0&group_code=392665563)
+ & [点击跳转我的QQ群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=irT-arKOLusNtih-HccwMbHrtBuma4IZ&authKey=YZeABWIX%2BkSIMYM3T1Fuc0Bm%2BZJAMyD9rUivnLO42dbZrXGqdZBlATbVx0r7zO9o&noverify=0&group_code=1030599760)
 
 ---
 
