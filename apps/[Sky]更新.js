@@ -168,22 +168,15 @@ export class UPDATE extends plugin {
             });
         }
 
-        /** 制作转发内容 */
-
-        let dec = '点击查看'
-        if (typeof (forwardMsg.data) === 'object') {
-            let detail = forwardMsg.data?.meta?.detail
-            if (detail) {
-                detail.news = [{ text: dec }]
-            }
+        // 制作转发内容
+        let dec = '点击查看更新日志'
+        if (this.e.isGroup) {
+            forwardMsg = await this.e.group.makeForwardMsg(forwardMsg)
         } else {
-            forwardMsg.data = forwardMsg.data
-                .replace(/\n/g, '')
-                .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, '___')
-                .replace(/___+/, `<title color="#777777" size="26">${dec}</title>`)
+            forwardMsg = await this.e.friend.makeForwardMsg(forwardMsg)
         }
 
-        return forwardMsg;
+        return forwardMsg
     }
 
     async gitErr(err, stdout) {
