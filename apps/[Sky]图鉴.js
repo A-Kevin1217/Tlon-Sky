@@ -15,7 +15,7 @@ export class SKY extends plugin {
       rule: [
         { reg: SEARCH_PATTERNS[0], fnc: 'handleImageQuery' },
         { reg: SEARCH_PATTERNS[1], fnc: 'handleImageQuery' },
-        { reg: /^(#|\/)?((全部)|((20|21|22|23|24|25)年))复刻记录$/i, fnc: 'regressionRecords' }
+        { reg: /^(#|\/)?(全部|((20|21|22|23|24|25)\s*年))复刻记录$/i, fnc: 'regressionRecords' }
       ]
     })
 
