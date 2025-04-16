@@ -501,37 +501,36 @@
 
 <body>
     <div class="container" 
-         data-activity='{{@if activity}}{{activity}}{{@/if}}'
-         data-season-start="{{@seasonStart}}"
-         data-season-end="{{@season.endDate}}">
+         data-activity="{{activity}}"
+         data-season-start="{{seasonStart}}"
+         data-season-end="{{season.endDate}}">
         <div class="help-icon">?</div>
         <div class="header">- 游戏进度 -</div>
 
-        {{@if seasonStart}}
-        <div class="season-info">
+        <div class="season-info" style="display: none;">
             <div class="season-header">
-                <h2>{{@season.name}}</h2>
-                <div class="season-period">{{@season.startDate.split(' ')[0]}} - {{@season.endDate.split(' ')[0]}}</div>
+                <h2>{{season.name}}</h2>
+                <div class="season-period">{{season.startDate.split(' ')[0]}} - {{season.endDate.split(' ')[0]}}</div>
             </div>
             <div class="season-content">
                 <div class="season-progress">
                     <div class="season-icon">
-                        <img src="{{@season.icon}}"
+                        <img src="{{season.icon}}"
                             alt="季节图标" class="season-image">
                     </div>
                 </div>
                 <div class="time-info">
                     <div class="info-block">
                         <div class="info-label">季节剩余天数</div>
-                        <div class="info-value days-remaining">{{@remainingTime.days.split('天')[0]}} 天</div>
+                        <div class="info-value days-remaining">{{remainingTime.days.split('天')[0]}} 天</div>
                     </div>
                     <div class="info-block">
                         <div class="info-label">季节结束时间</div>
-                        <div class="info-value">{{@season.endDate}}</div>
+                        <div class="info-value">{{season.endDate}}</div>
                     </div>
                     <div class="info-block">
                         <div class="info-label">倒计时</div>
-                        <div class="countdown" id="countdown">{{@remainingTime.days}}</div>
+                        <div class="countdown" id="countdown">{{remainingTime.days}}</div>
                     </div>
                 </div>
             </div>
@@ -615,15 +614,13 @@
                 </div>
             </div>
         </div>
-        {{@/if}}
 
-        {{@if activity}}
-        <div class="event-section">
+        <div class="event-section" style="display: none;">
             <div class="event-title">活动信息</div>
             <div class="event-info">
                 <div class="event-detail">
                     <div class="event-detail-title">活动名称</div>
-                    <div class="event-detail-value">{{@activity.name}}</div>
+                    <div class="event-detail-value" id="activity-name"></div>
                 </div>
                 <div class="event-detail">
                     <div class="event-detail-title">活动剩余时间</div>
@@ -631,20 +628,15 @@
                 </div>
                 <div class="event-detail">
                     <div class="event-detail-title">活动截止时间</div>
-                    <div class="event-detail-value">{{@activity.endDate}}</div>
+                    <div class="event-detail-value" id="activity-end-date"></div>
                 </div>
                 <div class="event-detail">
                     <div class="event-detail-title">活动兑换物品总价格</div>
-                    <div class="event-detail-value">
-                        {{@activity.price}}
-                    </div>
+                    <div class="event-detail-value" id="activity-price"></div>
                 </div>
             </div>
-            <div class="event-notes">
-                {{@activity.remark}}
-            </div>
+            <div class="event-notes" id="activity-remark"></div>
         </div>
-        {{@/if}}
         
         <div class="furniture-section">
             <div class="event-title">本周家具</div>
@@ -656,14 +648,27 @@
     <script>
         let seasonEndTime = null;
         let eventEndTime = null;
-        const activity = {{@activity}};
-        const seasonStart = {{@seasonStart}};
         
-        if (activity) {
-            eventEndTime = new Date(activity.endDate).getTime();
-        }
+        // 从数据属性中获取数据
+        const container = document.querySelector('.container');
+        const activityData = container.dataset.activity;
+        const seasonStart = container.dataset.seasonStart === 'true';
+        const activity = activityData ? JSON.parse(activityData) : null;
+
+        // 初始化显示
         if (seasonStart) {
-            seasonEndTime = new Date('{{@season.endDate}}').getTime();
+            document.querySelector('.season-info').style.display = 'block';
+            seasonEndTime = new Date(container.dataset.seasonEnd).getTime();
+        }
+
+        if (activity) {
+            const eventSection = document.querySelector('.event-section');
+            eventSection.style.display = 'block';
+            document.getElementById('activity-name').textContent = activity.name;
+            document.getElementById('activity-end-date').textContent = activity.endDate;
+            document.getElementById('activity-price').textContent = activity.price;
+            document.getElementById('activity-remark').textContent = activity.remark;
+            eventEndTime = new Date(activity.endDate).getTime();
         }
 
         function updateCountdowns() {
