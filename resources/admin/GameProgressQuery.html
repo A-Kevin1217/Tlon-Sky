@@ -501,37 +501,37 @@
 
 <body>
     <div class="container" 
-         data-activity='{{#if activity}}{{{json activity}}}{{/if}}'
-         data-season-start="{{seasonStart}}"
-         data-season-end="{{season.endDate}}">
+         data-activity='{{@if activity}}{{activity}}{{@/if}}'
+         data-season-start="{{@seasonStart}}"
+         data-season-end="{{@season.endDate}}">
         <div class="help-icon">?</div>
         <div class="header">- 游戏进度 -</div>
 
-        {{if seasonStart}}
+        {{@if seasonStart}}
         <div class="season-info">
             <div class="season-header">
-                <h2>{{season.name}}</h2>
-                <div class="season-period">{{season.startDate.split(' ')[0]}} - {{season.endDate.split(' ')[0]}}</div>
+                <h2>{{@season.name}}</h2>
+                <div class="season-period">{{@season.startDate.split(' ')[0]}} - {{@season.endDate.split(' ')[0]}}</div>
             </div>
             <div class="season-content">
                 <div class="season-progress">
                     <div class="season-icon">
-                        <img src="{{season.icon}}"
+                        <img src="{{@season.icon}}"
                             alt="季节图标" class="season-image">
                     </div>
                 </div>
                 <div class="time-info">
                     <div class="info-block">
                         <div class="info-label">季节剩余天数</div>
-                        <div class="info-value days-remaining">{{remainingTime.days.split('天')[0]}} 天</div>
+                        <div class="info-value days-remaining">{{@remainingTime.days.split('天')[0]}} 天</div>
                     </div>
                     <div class="info-block">
                         <div class="info-label">季节结束时间</div>
-                        <div class="info-value">{{season.endDate}}</div>
+                        <div class="info-value">{{@season.endDate}}</div>
                     </div>
                     <div class="info-block">
                         <div class="info-label">倒计时</div>
-                        <div class="countdown" id="countdown">{{remainingTime.days}}</div>
+                        <div class="countdown" id="countdown">{{@remainingTime.days}}</div>
                     </div>
                 </div>
             </div>
@@ -550,10 +550,10 @@
                                 <div class="progress-info">
                                     <span class="progress-label">还可获得</span>
                                     <div class="progress-data">
-                                        <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
+                                        <span class="days-left">{{@remainingTime.days.split('天')[0]}}天</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
-                                            {{remainingCandles.withPass}}
+                                            {{@remainingCandles.withPass}}
                                         </span>
                                     </div>
                                 </div>
@@ -566,10 +566,10 @@
                                 <div class="progress-info">
                                     <span class="progress-label">毕业共需</span>
                                     <div class="progress-data">
-                                        <span class="total-days">{{totalDays.withPass}}天</span>
+                                        <span class="total-days">{{@totalDays.withPass}}天</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
-                                            {{season.requiredCandlesTrue}}
+                                            {{@season.requiredCandlesTrue}}
                                         </span>
                                     </div>
                                 </div>
@@ -586,10 +586,10 @@
                                 <div class="progress-info">
                                     <span class="progress-label">还可获得</span>
                                     <div class="progress-data">
-                                        <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
+                                        <span class="days-left">{{@remainingTime.days.split('天')[0]}}天</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
-                                            {{remainingCandles.withoutPass}}
+                                            {{@remainingCandles.withoutPass}}
                                         </span>
                                     </div>
                                 </div>
@@ -602,10 +602,10 @@
                                 <div class="progress-info">
                                     <span class="progress-label">毕业共需</span>
                                     <div class="progress-data">
-                                        <span class="total-days">{{totalDays.withoutPass}}天</span>
+                                        <span class="total-days">{{@totalDays.withoutPass}}天</span>
                                         <span class="candle-count">
                                             <svg class="candle-icon">...</svg>
-                                            {{season.requiredCandlesFalse}}
+                                            {{@season.requiredCandlesFalse}}
                                         </span>
                                     </div>
                                 </div>
@@ -615,15 +615,15 @@
                 </div>
             </div>
         </div>
-        {{/if}}
+        {{@/if}}
 
-        {{if activity}}
+        {{@if activity}}
         <div class="event-section">
             <div class="event-title">活动信息</div>
             <div class="event-info">
                 <div class="event-detail">
                     <div class="event-detail-title">活动名称</div>
-                    <div class="event-detail-value">{{activity.name}}</div>
+                    <div class="event-detail-value">{{@activity.name}}</div>
                 </div>
                 <div class="event-detail">
                     <div class="event-detail-title">活动剩余时间</div>
@@ -631,20 +631,20 @@
                 </div>
                 <div class="event-detail">
                     <div class="event-detail-title">活动截止时间</div>
-                    <div class="event-detail-value">{{activity.endDate}}</div>
+                    <div class="event-detail-value">{{@activity.endDate}}</div>
                 </div>
                 <div class="event-detail">
                     <div class="event-detail-title">活动兑换物品总价格</div>
                     <div class="event-detail-value">
-                        {{activity.price}}
+                        {{@activity.price}}
                     </div>
                 </div>
             </div>
             <div class="event-notes">
-                {{activity.remark}}
+                {{@activity.remark}}
             </div>
         </div>
-        {{/if}}
+        {{@/if}}
         
         <div class="furniture-section">
             <div class="event-title">本周家具</div>
@@ -656,18 +656,14 @@
     <script>
         let seasonEndTime = null;
         let eventEndTime = null;
+        const activity = {{@activity}};
+        const seasonStart = {{@seasonStart}};
         
-        // 从数据属性中获取数据
-        const container = document.querySelector('.container');
-        const activityData = container.dataset.activity;
-        const seasonStart = container.dataset.seasonStart === 'true';
-        const activity = activityData ? JSON.parse(activityData) : null;
-
         if (activity) {
             eventEndTime = new Date(activity.endDate).getTime();
         }
         if (seasonStart) {
-            seasonEndTime = new Date(container.dataset.seasonEnd).getTime();
+            seasonEndTime = new Date('{{@season.endDate}}').getTime();
         }
 
         function updateCountdowns() {
