@@ -534,78 +534,78 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="info-container">
-            <div class="pass-container">
-                <div class="card-group">
-                    <div class="card-box premium">
-                        <div class="card-header">
-                            <span class="card-label">持有季卡</span>
-                            <div class="card-icon">👑</div>
-                        </div>
-                        <div class="card-content">
-                            <div class="progress-group">
-                                <div class="progress-info">
-                                    <span class="progress-label">还可获得</span>
-                                    <div class="progress-data">
-                                        <span class="days-left">{{@remainingTime.days.split('天')[0]}}天</span>
-                                        <span class="candle-count">
-                                            <svg class="candle-icon">...</svg>
-                                            {{@remainingCandles.withPass}}
-                                        </span>
+            <div class="info-container">
+                <div class="pass-container">
+                    <div class="card-group">
+                        <div class="card-box premium">
+                            <div class="card-header">
+                                <span class="card-label">持有季卡</span>
+                                <div class="card-icon">👑</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="progress-group">
+                                    <div class="progress-info">
+                                        <span class="progress-label">还可获得</span>
+                                        <div class="progress-data">
+                                            <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
+                                            <span class="candle-count">
+                                                <svg class="candle-icon">...</svg>
+                                                {{remainingCandles.withPass}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 60%"></div>
                                     </div>
                                 </div>
-                                <div class="progress-bar small">
-                                    <div class="progress-fill" style="width: 60%"></div>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <div class="progress-group">
-                                <div class="progress-info">
-                                    <span class="progress-label">毕业共需</span>
-                                    <div class="progress-data">
-                                        <span class="total-days">{{@totalDays.withPass}}天</span>
-                                        <span class="candle-count">
-                                            <svg class="candle-icon">...</svg>
-                                            {{@season.requiredCandlesTrue}}
-                                        </span>
+                                <div class="divider"></div>
+                                <div class="progress-group">
+                                    <div class="progress-info">
+                                        <span class="progress-label">毕业共需</span>
+                                        <div class="progress-data">
+                                            <span class="total-days">{{totalDays.withPass}}天</span>
+                                            <span class="candle-count">
+                                                <svg class="candle-icon">...</svg>
+                                                {{season.requiredCandlesTrue}}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-box free">
-                        <div class="card-header">
-                            <span class="card-label">无季卡</span>
-                            <div class="card-icon">⚜</div>
-                        </div>
-                        <div class="card-content">
-                            <div class="progress-group">
-                                <div class="progress-info">
-                                    <span class="progress-label">还可获得</span>
-                                    <div class="progress-data">
-                                        <span class="days-left">{{@remainingTime.days.split('天')[0]}}天</span>
-                                        <span class="candle-count">
-                                            <svg class="candle-icon">...</svg>
-                                            {{@remainingCandles.withoutPass}}
-                                        </span>
+                        <div class="card-box free">
+                            <div class="card-header">
+                                <span class="card-label">无季卡</span>
+                                <div class="card-icon">⚜</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="progress-group">
+                                    <div class="progress-info">
+                                        <span class="progress-label">还可获得</span>
+                                        <div class="progress-data">
+                                            <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
+                                            <span class="candle-count">
+                                                <svg class="candle-icon">...</svg>
+                                                {{remainingCandles.withoutPass}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="progress-bar small">
+                                        <div class="progress-fill" style="width: 60%"></div>
                                     </div>
                                 </div>
-                                <div class="progress-bar small">
-                                    <div class="progress-fill" style="width: 60%"></div>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <div class="progress-group">
-                                <div class="progress-info">
-                                    <span class="progress-label">毕业共需</span>
-                                    <div class="progress-data">
-                                        <span class="total-days">{{@totalDays.withoutPass}}天</span>
-                                        <span class="candle-count">
-                                            <svg class="candle-icon">...</svg>
-                                            {{@season.requiredCandlesFalse}}
-                                        </span>
+                                <div class="divider"></div>
+                                <div class="progress-group">
+                                    <div class="progress-info">
+                                        <span class="progress-label">毕业共需</span>
+                                        <div class="progress-data">
+                                            <span class="total-days">{{totalDays.withoutPass}}天</span>
+                                            <span class="candle-count">
+                                                <svg class="candle-icon">...</svg>
+                                                {{season.requiredCandlesFalse}}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -673,12 +673,25 @@
 
         function updateCountdowns() {
             const now = new Date().getTime();
+            
             if (seasonStart) {
-                updateSpecificCountdown(seasonEndTime - now, 'countdown');
+                const timeLeft = seasonEndTime - now;
+                if (timeLeft <= 0) {
+                    // 如果季节已结束，隐藏季节信息
+                    document.querySelector('.season-info').style.display = 'none';
+                } else {
+                    updateSpecificCountdown(timeLeft, 'countdown');
+                }
             }
 
             if (activity) {
-                updateSpecificCountdown(eventEndTime - now, 'event-countdown');
+                const timeLeft = eventEndTime - now;
+                if (timeLeft <= 0) {
+                    // 如果活动已结束，隐藏活动信息
+                    document.querySelector('.event-section').style.display = 'none';
+                } else {
+                    updateSpecificCountdown(timeLeft, 'event-countdown');
+                }
             }
         }
 
