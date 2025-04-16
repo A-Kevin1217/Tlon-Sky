@@ -113,7 +113,16 @@ export class SkyInformationPlugin extends plugin {
         // 合并日期处理逻辑
         const parseDate = str => new Date(str.replace(/-/g, '/'));
         const endDate = parseDate(season.endDate);
-        const activityEndDate = parseDate((activity?.findLast(a => parseDate(a.endDate) > now))?.endDate)
+        
+        // 修改活动处理逻辑
+        let currentActivity = null;
+        if (activity && Array.isArray(activity)) {
+            currentActivity = activity.find(a => {
+                const startDate = parseDate(a.startDate);
+                const endDate = parseDate(a.endDate);
+                return now >= startDate && now <= endDate;
+            });
+        }
 
         return render('admin/GameProgressQuery', {
             season,
@@ -141,8 +150,8 @@ export class SkyInformationPlugin extends plugin {
                 withPass: Math.ceil(season.requiredCandlesTrue / 6),
                 withoutPass: Math.ceil(season.requiredCandlesFalse / 5)
             },
-            activity: activity?.findLast(a => parseDate(a.endDate) > now),
-            activityStart: activityEndDate > now,
+            activity: currentActivity,
+            activityStart: currentActivity ? true : false,
             seasonStart: endDate > now
         }, { e, scale: 1.4 });
     }
