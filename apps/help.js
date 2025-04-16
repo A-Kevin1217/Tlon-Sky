@@ -2,6 +2,7 @@ import { Version, Common, render, Data } from '../components/index.js';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 import lodash from 'lodash';
 import fs from 'fs'
+import { getPlatformInfo } from './../function/function.js'
 
 export class SKY extends plugin {
   constructor() {
@@ -23,7 +24,27 @@ export class SKY extends plugin {
       tplFile: 'plugins/Tlon-Sky/resources/admin/SkyHelp.html'
     })
 
-    await e.reply(image)
+    const { Button, isQQBot } = getPlatformInfo(e)
+
+    const message = [image]
+
+    if (isQQBot && Button) {
+      // 第一行按钮
+      message.push(Button([
+        { text: '每日任务', callback: '每日任务' },
+        { text: '代币位置', callback: '代币位置' },
+        { text: 'sky状态', callback: 'sky状态' }
+      ]))
+
+      // 第二行按钮
+      message.push(Button([
+        { text: '季节剩余', callback: '季节剩余' },
+        { text: '今日碎石', callback: '今日碎石' },
+        { text: '复刻兑换图', callback: '复刻兑换图' }
+      ]))
+    }
+
+    await e.reply(message)
   }
 
   async seasonList(e) {
@@ -33,7 +54,7 @@ export class SKY extends plugin {
     for (const item of res) {
       const src = `https://gitee.com/Tloml-Starry/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${item.seasonIcon}`
       const name = item.name
-      
+
       images.push({ src, name })
     }
     const image = await puppeteer.screenshot('seasonList', {
