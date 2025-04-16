@@ -500,7 +500,10 @@
 </style>
 
 <body>
-    <div class="container">
+    <div class="container" 
+         data-activity='{{#if activity}}{{{json activity}}}{{/if}}'
+         data-season-start="{{seasonStart}}"
+         data-season-end="{{season.endDate}}">
         <div class="help-icon">?</div>
         <div class="header">- 游戏进度 -</div>
 
@@ -653,14 +656,18 @@
     <script>
         let seasonEndTime = null;
         let eventEndTime = null;
-        const activity = {{@activityStart}}
-        const seasonStart = {{@seasonStart}}
         
+        // 从数据属性中获取数据
+        const container = document.querySelector('.container');
+        const activityData = container.dataset.activity;
+        const seasonStart = container.dataset.seasonStart === 'true';
+        const activity = activityData ? JSON.parse(activityData) : null;
+
         if (activity) {
             eventEndTime = new Date(activity.endDate).getTime();
         }
         if (seasonStart) {
-            seasonEndTime = new Date('{{@season.endDate}}').getTime();
+            seasonEndTime = new Date(container.dataset.seasonEnd).getTime();
         }
 
         function updateCountdowns() {
