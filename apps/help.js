@@ -48,11 +48,11 @@ export class SKY extends plugin {
   }
 
   async seasonList(e) {
-    const res = await (await fetch('https://gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json')).json()
+    const res = await (await fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json')).json()
     let images = []
 
     for (const item of res) {
-      const src = `https://gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${item.seasonIcon}`
+      const src = `https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${item.seasonIcon}`
       const name = item.name
 
       images.push({ src, name })

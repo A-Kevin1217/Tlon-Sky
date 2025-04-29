@@ -107,7 +107,7 @@ export class SkyInformationPlugin extends plugin {
     }
 
     async showSeasonalRemaining(e) {
-        const { season, activity } = await getLinkData('https://gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
+        const { season, activity } = await getLinkData('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
         const now = new Date();
 
         // 合并日期处理逻辑
@@ -162,8 +162,8 @@ export class SkyInformationPlugin extends plugin {
 
         // 合并数据获取与处理逻辑
         const [seasonalData, regressionData] = await Promise.all([
-            fetch('https://gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json').then(r => r.json()),
-            fetch('https://gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json').then(r => r.json())
+            fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json').then(r => r.json()),
+            fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json').then(r => r.json())
         ]);
 
         // 构建最后出现日期映射

@@ -9,7 +9,7 @@ const IMG = {
     `${SKY_IMAGE_URL.B}tlonsky/json/scdl.jpg`,
     `${SKY_IMAGE_URL.B}json/mf.jpg`
   ],
-  SHARD_MAP: loc => `https://gitcode.com/Kevin1217/resources/raw/master/resources/img/光遇/ShardRouteMap/${loc}.jpg`
+  SHARD_MAP: loc => `https://raw.gitcode.com/Kevin1217/resources/files/master/resources/img/光遇/ShardRouteMap/${loc}.jpg`
 }
 
 const MAPS_CONFIG = {
