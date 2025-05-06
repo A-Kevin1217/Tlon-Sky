@@ -709,7 +709,7 @@
             } else {
                 extraInfo = `${totalHours}小时`;
             }
-            document.getElementById(elementId).textContent = `${days}天${extraInfo}`;
+            document.getElementById(elementId).innerHTML = `${days}天<br>${extraInfo}`;
         }
 
         // 初始更新
