@@ -38,7 +38,7 @@ export class SKY extends plugin {
 
       // 第二行按钮
       message.push(Button([
-        { text: '季节剩余', callback: '季节剩余' },
+        { text: '光遇进度', callback: '光遇进度' },
         { text: '今日碎石', callback: '今日碎石' },
         { text: '复刻兑换图', callback: '复刻兑换图' }
       ]))

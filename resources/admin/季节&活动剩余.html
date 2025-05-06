@@ -293,6 +293,18 @@
                 createInfoElement([`${seasonName}已结束 请等待下个季节到来`], seasonInfoDiv);
             } else {
                 const { days, hours, minutes, seconds } = Cttrt(seasonRemainingTimestamp);
+                const totalSeconds = Math.floor(seasonRemainingTimestamp / 1000);
+                const totalMinutes = Math.floor(seasonRemainingTimestamp / 1000 / 60);
+                const totalHours = Math.floor(seasonRemainingTimestamp / 1000 / 60 / 60);
+                const randomType = Math.floor(Math.random() * 3);
+                let extraInfo = '';
+                if (randomType === 0) {
+                    extraInfo = `<span style=\"color: #FFD700;\">${totalSeconds}秒</span>`;
+                } else if (randomType === 1) {
+                    extraInfo = `<span style=\"color: #FFD700;\">${totalMinutes}分钟</span>`;
+                } else {
+                    extraInfo = `<span style=\"color: #FFD700;\">${totalHours}小时</span>`;
+                }
                 const totalNumberOfDays = Math.floor((seasonEndTimestamp - seasonStartTimestamp) / 86400000) + 1;
                 const { YesJKGetNumber, NoJKGetNumber } = {
                     YesJKGetNumber: (days + 1) * 6,
@@ -306,7 +318,7 @@
 
                 const data = [
                     `距离<strong style="color: #FFD700;">[${seasonName}]</strong>结束还剩`,
-                    `<span style="color: #4CAF50;">${days}</span>天<span style="color: #4CAF50;">${hours}</span>时<span style="color: #4CAF50;">${minutes}</span>分<span style="color: #4CAF50;">${seconds}</span>秒`,
+                    `<span style="color: #4CAF50;">${days}</span>天${extraInfo}`,
                     `截至至${seasonEndDate}`,
                     `本季节一共${totalNumberOfDays}天`,
                     '季蜡还可获得: ',
