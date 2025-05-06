@@ -696,20 +696,30 @@
         }
 
         function updateSpecificCountdown(timeLeft, elementId) {
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const totalSeconds = Math.floor(timeLeft / 1000);
-            const totalMinutes = Math.floor(timeLeft / 1000 / 60);
-            const totalHours = Math.floor(timeLeft / 1000 / 60 / 60);
-            const randomType = Math.floor(Math.random() * 3);
-            let extraInfo = '';
-            if (randomType === 0) {
-                extraInfo = `${totalSeconds}秒`;
-            } else if (randomType === 1) {
-                extraInfo = `${totalMinutes}分钟`;
+            if (elementId === 'countdown') {
+                // 只显示总秒数/分钟/小时，包含天数
+                const totalSeconds = Math.floor(timeLeft / 1000);
+                const totalMinutes = Math.floor(timeLeft / 1000 / 60);
+                const totalHours = Math.floor(timeLeft / 1000 / 60 / 60);
+                const randomType = Math.floor(Math.random() * 3);
+                let extraInfo = '';
+                if (randomType === 0) {
+                    extraInfo = `${totalSeconds}秒`;
+                } else if (randomType === 1) {
+                    extraInfo = `${totalMinutes}分钟`;
+                } else {
+                    extraInfo = `${totalHours}小时`;
+                }
+                document.getElementById(elementId).innerHTML = extraInfo;
             } else {
-                extraInfo = `${totalHours}小时`;
+                // 活动倒计时保持原样
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                document.getElementById(elementId).textContent = 
+                    `${days}天 ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
             }
-            document.getElementById(elementId).innerHTML = `${extraInfo}`;
         }
 
         // 初始更新
