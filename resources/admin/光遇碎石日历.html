@@ -88,7 +88,6 @@
         padding: 0.5rem 1.5rem;
         border-radius: 0.5rem;
         font-weight: 500;
-        transition: all 0.2s;
         color: var(--text-color);
         border: none;
         cursor: pointer;
@@ -126,7 +125,6 @@
         aspect-ratio: 1;
         padding: 0.5rem;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         background-color: var(--calendar-bg);
         border-radius: 5px;
         text-align: center;
@@ -151,13 +149,11 @@
         background: radial-gradient(circle, transparent 20%, var(--calendar-bg) 80%);
         transform: scale(2);
         opacity: 0;
-        transition: transform 0.3s, opacity 0.3s;
     }
 
     .day:active::before {
         transform: scale(0);
         opacity: 1;
-        transition: 0s;
     }
 
     .black-stone {
@@ -200,7 +196,6 @@
         backdrop-filter: blur(8px);
         margin-top: 20px;
         padding: 15px;
-        transition: all 0.3s ease;
     }
 
     .detail-box:hover {
