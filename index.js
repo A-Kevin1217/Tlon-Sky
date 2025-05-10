@@ -10,7 +10,7 @@ import fs from 'node:fs';
 
 global.SKY_IMAGE_URL = {
   A: "https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/光遇/",
-  B: "https://api.t1qq.com/api/sky/gy/sc/"
+  B: "https://api.t1qq.com/api/sky/"
 };
 
 const file = [
