@@ -61,7 +61,7 @@
             const images = document.querySelectorAll('.gallery img');
             images.forEach(img => {
                 const originalSrc = img.src;
-                img.src = originalSrc + '?t=' + new Date().getTime(); // 添加时间戳以防止缓存
+                img.src = originalSrc + (originalSrc.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
                 img.onerror = function() {
                     this.src = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect width=%22300%22 height=%22200%22 fill=%22%23cccccc%22></rect><text x=%22150%22 y=%22100%22 fill=%22%23999999%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>图片加载失败</text></svg>';
                 };
