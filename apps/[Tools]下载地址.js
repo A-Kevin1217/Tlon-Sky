@@ -62,7 +62,8 @@ export class Ts extends plugin {
             }
 
             return e.reply([
-                '#光遇下载地址',
+                segment.at(e.user_id),
+                '\n# 光遇下载地址',
                 button || '当前框架暂不支持按钮交互'
             ])
         }
