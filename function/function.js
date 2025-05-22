@@ -8,9 +8,13 @@ const otherFilePath = {
     text: path.join(configPath, 'text.json')
 };
 
+/**
+ * 获取平台信息
+ * @param {object} e 事件对象
+ * @returns {object} 包含平台信息的对象
+ */
 function getPlatformInfo(e) {
     return {
-        Button: typeof Bot.Button === 'function' ? Bot.Button : segment?.button,
         isQQBot: e.bot?.adapter?.name || e.adapter_name || '未知' === 'QQBot' ? true : false
     }
 }

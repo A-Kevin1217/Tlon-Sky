@@ -9,7 +9,7 @@
 ![动态访问量](https://count.kjchmc.cn/get/@Tlon-Sky?theme=rule34)  
 为[Yunzai-Bot V3](https://gitee.com/Le-niao/Yunzai-Bot) & [A-Yunzai](https://gitee.com/ningmengchongshui/azai-bot)提供光遇相关功能
 插件内图片源自网络，如有侵权，请联系我删除  
-如出现插件报错或功能不适配等情况请及时联系[作者](https://gitee.com/Tloml-Starry)或发起[issues](https://gitee.com/Tloml-Starry/Plugin-Example/issues)  
+如出现插件报错或功能不适配等情况请及时联系[维护者](https://qm.qq.com/q/Knk3sMiLui)或发起[issues](https://gitee.com/Tloml-Starry/Plugin-Example/issues)  
 参与贡献请Fock本仓库修改代码后发起[Pull Request](https://gitee.com/Tloml-Starry/Eggy/pulls)  
 如果你对本仓库表示支持，请点点你手中的Star
 ## 联系我

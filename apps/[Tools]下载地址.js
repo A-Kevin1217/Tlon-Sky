@@ -1,3 +1,5 @@
+import Button from '../model/Button.js';
+
 export class Ts extends plugin {
     constructor() {
         super({
@@ -14,52 +16,9 @@ export class Ts extends plugin {
         const links = await getLinkData('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/GameDownload.json', 'json')
 
         if (platform === 'QQBot'|| platform === 'OneBotv11') {
-            function content(type) {
-                const buttonConfig = {
-                    'Miao': {
-                        row1: [
-                            { label: '官服', link: links.官服 },
-                            { label: '4399', link: links.四三九九 }
-                        ],
-                        row2: [
-                            { label: 'OPPO', link: links.OPPO },
-                            { label: 'BiliBili', link: links.BiliBili },
-                            { label: 'VIVO', link: links.VIVO }
-                        ],
-                        row3: [
-                            { label: '华为', link: links.华为 },
-                            { label: '小米', link: links.小米 },
-                            { label: '应用宝', link: links.应用宝 }
-                        ]
-                    },
-                    'TRSS': {
-                        row1: [
-                            { text: '官服', link: links.官服 },
-                            { text: '4399', link: links.四三九九 }
-                        ],
-                        row2: [
-                            { text: 'OPPO', link: links.OPPO },
-                            { text: 'BiliBili', link: links.BiliBili },
-                            { text: 'VIVO', link: links.VIVO }
-                        ],
-                        row3: [
-                            { text: '华为', link: links.华为 },
-                            { text: '小米', link: links.小米 },
-                            { text: '应用宝', link: links.应用宝 }
-                        ]
-                    }
-                }
-
-                const config = buttonConfig[type]
-                return [config.row1, config.row2, config.row3]
-            }
-
-            let button
-            if (typeof Bot.Button === 'function') {
-                button = Bot.Button(content('Miao'))
-            } else if (typeof segment?.button === 'function') {
-                button = segment.button(...content('TRSS'))
-            }
+            // 使用Button类创建下载链接按钮
+            const buttonObj = new Button();
+            const button = buttonObj.downloadLinks(links);
 
             return e.reply([
                 segment.at(e.user_id),

@@ -1,5 +1,6 @@
 import { render } from './../components/index.js';
 import { getPlatformInfo } from './../function/function.js'
+import Button from '../model/Button.js';
 
 export class SkyInformationPlugin extends plugin {
     constructor() {
@@ -46,10 +47,11 @@ export class SkyInformationPlugin extends plugin {
                     `预计等待时间：${timeDisplay}`
                 ];
 
-            const { Button, isQQBot } = getPlatformInfo(e)
+            const { isQQBot } = getPlatformInfo(e)
 
-            if (isQQBot && Button) {
-                message.push(Button([{ text: '再次查询', callback: '光遇服务器状态' }]));
+            if (isQQBot) {
+                const buttonStatus = new Button().serverStatus()
+                if (buttonStatus) message.push(buttonStatus)
             }
 
             return e.reply(message);

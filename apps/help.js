@@ -3,6 +3,7 @@ import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 import lodash from 'lodash';
 import fs from 'fs'
 import { getPlatformInfo } from './../function/function.js'
+import Button from '../model/Button.js'
 
 export class SKY extends plugin {
   constructor() {
@@ -24,54 +25,55 @@ export class SKY extends plugin {
       tplFile: 'plugins/Tlon-Sky/resources/admin/SkyHelp.html'
     })
 
-    const { Button, isQQBot } = getPlatformInfo(e)
-
+    const { isQQBot } = getPlatformInfo(e)
     const message = [image]
 
-    if (isQQBot && Button) {
-      // 第一行按钮
-      message.push(Button([
-        { text: '每日任务', callback: '每日任务' },
-        { text: '代币位置', callback: '代币位置' },
-        { text: 'sky状态', callback: 'sky状态' }
-      ]))
-
-      // 第二行按钮
-      message.push(Button([
-        { text: '光遇进度', callback: '光遇进度' },
-        { text: '今日碎石', callback: '今日碎石' },
-        { text: '复刻兑换图', callback: '复刻兑换图' }
-      ]))
+    if (isQQBot) {
+      const buttonHelp = new Button().help()
+      if (buttonHelp) message.push(buttonHelp)
     }
 
     await e.reply(message)
   }
 
   async seasonList(e) {
-    const res = await (await fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json')).json()
-    let images = []
+    try {
+      const response = await fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json');
+      if (!response.ok) {
+        throw new Error(`网络请求失败: ${response.status}`);
+      }
+      const res = await response.json();
+      let images = [];
 
-    for (const item of res) {
-      const src = `https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${item.seasonIcon}`
-      const name = item.name
+      for (const item of res) {
+        const src = `https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${item.seasonIcon}`;
+        const name = item.name;
+        images.push({ src, name });
+      }
+      
+      const image = await puppeteer.screenshot('seasonList', {
+        tplFile: 'plugins/Tlon-Sky/resources/admin/seasonList.html',
+        images: JSON.stringify(images)
+      });
 
-      images.push({ src, name })
+      await e.reply(image);
+    } catch (error) {
+      logger.error(`seasonList获取失败: ${error.message}`);
+      await e.reply('获取季节列表失败，请稍后再试');
     }
-    const image = await puppeteer.screenshot('seasonList', {
-      tplFile: 'plugins/Tlon-Sky/resources/admin/seasonList.html',
-      images: JSON.stringify(images)
-    })
-
-    await e.reply(image)
   }
 
   async SKY_HELP(e) {
-    const U_MSG = e.msg.replace(/^#|\/|光遇|sky|兑换图列表|帮助|菜单|/ig, '')
-    let HELP_TYPE = '';
-
-    if (!U_MSG) HELP_TYPE = 'HELP_1'
-    if (U_MSG === '季节') HELP_TYPE = 'HELP_3'
-    if (U_MSG === '常驻') HELP_TYPE = 'HELP_4'
+    const userMsg = e.msg.replace(/^#|\/|光遇|sky|兑换图列表|帮助|菜单|/ig, '');
+    
+    // 使用映射简化判断逻辑
+    const helpTypeMap = {
+      '': 'HELP_1',
+      '季节': 'HELP_3',
+      '常驻': 'HELP_4'
+    };
+    
+    const HELP_TYPE = helpTypeMap[userMsg] || 'HELP_1';
 
     let help = {};
     const { diyCfg, sysCfg } = await Data.importCfg(HELP_TYPE);
@@ -105,6 +107,7 @@ export class SKY extends plugin {
     const colCount = 3;
     return await render(`help/HELP`, { helpCfg: helpConfig, helpGroup, bg: theme, colCount, element: 'default' }, { e, scale: 2.0 });
   }
+  
   async SKY_VERSION(e) {
     return await Common.render('help/version-info', {
       currentVersion: Version.version,
