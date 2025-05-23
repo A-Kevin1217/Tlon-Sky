@@ -4,10 +4,10 @@ const IMG = {
   DAILY_COIN: `${SKY_IMAGE_URL.A}当前/当前代币.jpg`,
   SEASON_TASK: `${SKY_IMAGE_URL.A}当前/当前季节任务.jpg`,
   TASK_IMAGES: [
-    `${SKY_IMAGE_URL.B}sc/scrw?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`,
-    `${SKY_IMAGE_URL.B}sc/scjl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`,
-    `${SKY_IMAGE_URL.B}sc/scdl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`,
-    `${SKY_IMAGE_URL.B}mf/magic?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`
+    `${SKY_IMAGE_URL.B}sc/scrw?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`+ "&num=" + Math.floor(Math.random() * 1000000),
+    `${SKY_IMAGE_URL.B}sc/scjl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`+ "&num=" + Math.floor(Math.random() * 1000000),
+    `${SKY_IMAGE_URL.B}sc/scdl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`+ "&num=" + Math.floor(Math.random() * 1000000),
+    `${SKY_IMAGE_URL.B}mf/magic?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`+ "&num=" + Math.floor(Math.random() * 1000000)
   ],
   SHARD_MAP: loc => `https://raw.gitcode.com/Kevin1217/resources/files/master/resources/img/光遇/ShardRouteMap/${loc}.jpg`
 }
