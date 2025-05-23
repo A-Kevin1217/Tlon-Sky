@@ -11,32 +11,76 @@ export default class Button {
     this.isMiaoBot = typeof Bot.Button === 'function';
   }
   
+  createButton(button) {
+    if (!this.buttonInstance || !button) return null;
+    return this.buttonInstance(button);
+  }
+  
+  /**
+   * 根据指令字符串生成对应的按钮
+   * @param {string} cmd - 按钮指令
+   * @param {object} params - 可选参数
+   * @returns {object} - 返回按钮对象
+   */
+  renderButton(cmd, params = {}) {
+    if (!this.buttonInstance) return null;
+    
+    // 根据指令匹配对应的按钮
+    switch (cmd) {
+      case 'help':
+        return this.help();
+      case 'regressionRecords':
+        return this.Records();
+      case 'checkServerStatus':
+        return this.serverStatus();
+      case 'gameDownloadLink':
+        return this.downloadLinks(params);
+      case 'handleDynamic':
+        return this.handleDynamic();
+      default:
+        // 如果是字符串数组，尝试创建自定义按钮
+        if (typeof cmd === 'string' && cmd.includes(',')) {
+          const buttons = cmd.split(',').map(item => item.trim());
+          if (this.isMiaoBot) {
+            return this.buttonInstance(buttons.map(btn => ({ label: btn, data: btn })));
+          } else {
+            return this.buttonInstance(buttons.map(btn => ({ text: btn, callback: btn })));
+          }
+        }
+        // 如果是对象，直接传递
+        if (typeof cmd === 'object') {
+          return this.createButton(cmd);
+        }
+        return null;
+    }
+  }
+  
   help() {
     if (!this.buttonInstance) return null;
     
     if (this.isMiaoBot) {
       // 喵崽按钮格式 (使用label和data)
       return this.buttonInstance([
-        { label: '每日任务', data: '每日任务' },
-        { label: '代币位置', data: '代币位置' },
-        { label: 'sky状态', data: 'sky状态' }
+        { label: '每日任务', data: '/每日任务' },
+        { label: '代币位置', data: '/代币位置' },
+        { label: 'sky状态', data: '/sky状态' }
       ],[
-        { label: '光遇进度', data: '光遇进度' },
-        { label: '今日碎石', data: '今日碎石' },
-        { label: '复刻兑换图', data: '复刻兑换图' }
+        { label: '光遇进度', data: '/光遇进度' },
+        { label: '今日碎石', data: '/今日碎石' },
+        { label: '复刻兑换图', data: '/复刻兑换图' }
       ]);
     } else {
       // TRSS按钮格式 (使用text和callback)
       return this.buttonInstance(
         [
-          { text: '每日任务', callback: '每日任务' },
-          { text: '代币位置', callback: '代币位置' },
-          { text: 'sky状态', callback: 'sky状态' }
+          { text: '每日任务', callback: '/每日任务' },
+          { text: '代币位置', callback: '/代币位置' },
+          { text: 'sky状态', callback: '/sky状态' }
         ],
         [
-          { text: '光遇进度', callback: '光遇进度' },
-          { text: '今日碎石', callback: '今日碎石' },
-          { text: '复刻兑换图', callback: '复刻兑换图' }
+          { text: '光遇进度', callback: '/光遇进度' },
+          { text: '今日碎石', callback: '/今日碎石' },
+          { text: '复刻兑换图', callback: '/复刻兑换图' }
         ]
       );
     }
@@ -78,13 +122,30 @@ export default class Button {
     if (this.isMiaoBot) {
       // 喵崽按钮格式
       return this.buttonInstance([
-        { label: '再次查询', data: '光遇服务器状态' }
+        { label: '再次查询', data: '/光遇服务器状态' }
       ]);
     } else {
       // TRSS按钮格式
       return this.buttonInstance(
         [
-          { text: '再次查询', callback: '光遇服务器状态' }
+          { text: '再次查询', callback: '/光遇服务器状态' }
+        ]
+      );
+    }
+  }
+  handleDynamic(){
+    if (!this.buttonInstance) return null;
+    
+    if (this.isMiaoBot) {
+      // 喵崽按钮格式
+      return this.buttonInstance([
+        { label: '任务图', data: '/任务图' }
+      ]);
+    } else {
+      // TRSS按钮格式
+      return this.buttonInstance(
+        [
+          { text: '任务图', callback: '/任务图' }
         ]
       );
     }

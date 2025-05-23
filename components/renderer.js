@@ -1,6 +1,7 @@
 import { Data, Version, Plugin_Name } from './index.js'
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 import fs from 'fs'
+import Button from '../model/Button.js'
 const _path = process.cwd()
 export default async function (path, params, cfg, text, button) {
   let [app, tpl] = path.split('/')
@@ -42,7 +43,14 @@ export default async function (path, params, cfg, text, button) {
   if (base64) {
     if (!text) text = ''
     if (!button) button = ''
-    if (button) button = Bot.Button(button)
+    if (button) {
+      const buttonHandler = new Button()
+      if (typeof button === 'string') {
+        button = buttonHandler.renderButton(button, params)
+      } else {
+        button = buttonHandler.createButton(button)
+      }
+    }
     ret = await e.reply([text, base64, button])
   }
   return cfg.retMsgId ? ret : true

@@ -6,4 +6,5 @@ import Data from './Data.js'
 import render from './renderer.js';
 import Cfg from './Cfg.js'
 import Common from './Common.js'
-export { render, Cfg, Common, Data, Version, Path, Plugin_Name, Plugin_Path }
+import Button from '../model/Button.js'
+export { render, Cfg, Common, Data, Version, Path, Plugin_Name, Plugin_Path, Button }

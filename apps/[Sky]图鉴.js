@@ -314,7 +314,7 @@ export class SKY extends plugin {
   ${html}
 `;
 
-    return render('admin/复刻记录', { html: finalHtml }, { e, scale: 1.4 })
+    return render('admin/复刻记录', { html: finalHtml }, { e, scale: 1.4 }, null, 'regressionRecords')
   }
 
   async handleImageQuery(e) {

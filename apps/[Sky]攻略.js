@@ -48,7 +48,7 @@ export class SKY extends plugin {
     if (!type) return
 
     type === 'dailyTask'
-      ? await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 })
+      ? await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }, null, 'handleDynamic')
       : e.reply([segment.image(IMG.DAILY_COIN)])
   }
 
