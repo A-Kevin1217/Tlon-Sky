@@ -326,7 +326,8 @@ export class SKY extends plugin {
     }
 
     const { type, name, extension } = imageInfo
-    return e.reply([segment.image(`${SKY_IMAGE_URL['A']}${type}/${name}.${extension}`)])
+    image = `${SKY_IMAGE_URL['A']}${type}/${name}.${extension}`
+    return e.reply([segment.image(image)])
   }
 
   getImageInfo(queryText) {
