@@ -99,6 +99,8 @@ export default class Button {
         { label: "23年记录", data: `/23年复刻记录` },
         { label: "24年记录", data: `/24年复刻记录` },
         { label: "25年记录", data: `/25年复刻记录` }
+      ],[
+        { label: "全部复刻记录", data: `/全部复刻记录` }
       ]);
     } else {
       // TRSS按钮格式
@@ -111,6 +113,9 @@ export default class Button {
           { text: "23年记录", callback: `/23年复刻记录` },
           { text: "24年记录", callback: `/24年复刻记录` },
           { text: "25年记录", callback: `/25年复刻记录` }
+        ],
+        [
+          { text: "全部复刻记录", callback: `/全部复刻记录` }
         ]
       );
     }
