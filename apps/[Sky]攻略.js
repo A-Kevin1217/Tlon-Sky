@@ -1,4 +1,6 @@
 import { render } from '../components/index.js'
+import { getPlatformInfo } from './../function/function.js'
+import Button from '../model/Button.js'
 
 const IMG = {
   DAILY_COIN: `${SKY_IMAGE_URL.A}当前/当前代币.jpg`,
@@ -74,8 +76,13 @@ export class SKY extends plugin {
   }
 
   async handleTodayShards(e) {
+    const { isQQBot } = getPlatformInfo(e)
+    let buttonTodayShards;
+    if (isQQBot) {
+      buttonTodayShards = new Button().TodayShards()
+    }
     const data = this.getStoneData()
-    data ? e.reply(this.formatShardMsg(data)) : e.reply('今日无碎石')
+    data ? e.reply([this.formatShardMsg(data), ...(buttonTodayShards ? [buttonTodayShards] : [])]) : e.reply('今日无碎石')
   }
 
   async stoneRoadMap(e) {

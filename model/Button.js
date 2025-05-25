@@ -85,6 +85,23 @@ export default class Button {
       );
     }
   }
+  shareDrawing() {
+    if (!this.buttonInstance) return null;
+    
+    if (this.isMiaoBot) {
+      // 喵崽按钮格式
+      return this.buttonInstance([
+        { label: '再来一张', data: '/绘画分享' }
+      ]);
+    } else {
+      // TRSS按钮格式
+      return this.buttonInstance(
+        [
+          { text: '再来一张', callback: '/绘画分享' }
+        ]
+      );
+    }
+  }
 
   Records() {
     if (!this.buttonInstance) return null;
@@ -116,6 +133,24 @@ export default class Button {
         ],
         [
           { text: "全部复刻记录", callback: `/全部复刻记录` }
+        ]
+      );
+    }
+  }
+
+  TodayShards(){
+    if (!this.buttonInstance) return null;
+    
+    if (this.isMiaoBot) {
+      // 喵崽按钮格式
+      return this.buttonInstance([
+        { label: '碎石路线图', data: '/碎石路线图' }
+      ]);
+    } else {
+      // TRSS按钮格式
+      return this.buttonInstance(
+        [
+          { text: '碎石路线图', callback: '/碎石路线图' }
         ]
       );
     }

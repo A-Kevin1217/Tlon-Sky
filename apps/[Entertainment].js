@@ -1,5 +1,7 @@
 import lodash from 'lodash';
 import { fileExists, storageData, readJsonData } from '../function/function.js';
+import { getPlatformInfo } from './../function/function.js'
+import Button from '../model/Button.js'
 
 const randomFriendsFilePaths = [
     'plugins/Tlon-Sky/data/RandomFriends.json',
@@ -51,9 +53,16 @@ export class EntertainmentPlugin extends plugin {
     }
 
     async shareDrawing(e) {
+        const { isQQBot } = getPlatformInfo(e)
+        let buttonshareDrawing;
+        
+        if (isQQBot) {
+            buttonshareDrawing = new Button().shareDrawing()
+        }
+        
         return e.reply([
-            segment.at(e.user_id),
-            segment.image(`${SKY_IMAGE_URL['A']}绘画分享/${lodash.random(0, 720)}.jpg`)
+            segment.image(`${SKY_IMAGE_URL['A']}绘画分享/${lodash.random(0, 720)}.jpg`),
+            ...(buttonshareDrawing ? [buttonshareDrawing] : [])
         ]);
     }
 
