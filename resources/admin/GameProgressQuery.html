@@ -1,49 +1,36 @@
 <style>
     body {
-        width: 900px;
-        font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-        background-color: #1a1a1a;
-        color: #e0e0e0;
         margin: 0;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
+        padding: 0;
+        background: transparent;
+        font-family: sans-serif;
+        transform-origin: 0 0;
+        width: 900px;
     }
 
     .container {
-        background-color: #2d2d2d;
-        width: 100%;
-        max-width: 1000px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        width: 900px;
         padding: 20px;
-        position: relative;
+        box-sizing: border-box;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 15px;
+        color: #fff;
+    }
+
+    @media screen and (max-width: 850px) {
+        .container {
+            width: 100%;
+            margin: 0;
+            border-radius: 0;
+        }
     }
 
     .header {
         text-align: center;
-        margin-bottom: 20px;
         font-size: 24px;
+        margin-bottom: 20px;
+        color: #5a9cba;
         font-weight: bold;
-        color: #ffffff;
-    }
-
-    .help-icon {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 30px;
-        height: 30px;
-        background-color: #4a4a4a;
-        color: #b0b0b0;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        cursor: pointer;
     }
 
     .info-container {
@@ -90,11 +77,12 @@
         align-items: center;
     }
 
-    .candle-icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-        display: inline-block;
+    .candelIcon {
+        width: 32px;
+        height: 32px;
+        vertical-align: middle;
+        margin-left: 2px;
+        object-fit: contain;
     }
 
     .value-number {
@@ -104,12 +92,11 @@
     }
 
     .season-info {
-        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        background: rgba(45, 45, 45, 0.8);
         border-radius: 12px;
         padding: 20px;
         margin-bottom: 25px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        color: #ecf0f1;
     }
 
     .season-header {
@@ -125,15 +112,16 @@
     }
 
     .season-period {
-        font-size: 16px;
+        font-size: 14px;
         opacity: 0.9;
+        color: #5a9cba;
     }
 
     .season-content {
         display: flex;
         gap: 30px;
-        flex-wrap: wrap;
-        align-items: center;
+        align-items: flex-start;
+        padding: 10px 0;
     }
 
     .season-progress {
@@ -147,7 +135,10 @@
     .season-icon {
         width: 200px;
         height: 200px;
-        animation: float 3s ease-in-out infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: -20px;
     }
 
     .season-image {
@@ -155,18 +146,6 @@
         height: 100%;
         object-fit: contain;
         filter: drop-shadow(0 4px 8px rgba(90, 156, 186, 0.3));
-        animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(-10px);
-        }
     }
 
     .time-info {
@@ -178,36 +157,45 @@
     }
 
     .info-block {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.2);
         padding: 15px;
         border-radius: 8px;
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-height: 120px;
+        min-height: 100px;
+        height: 100px;
     }
 
     .info-label {
         font-size: 14px;
-        opacity: 0.8;
+        color: #5a9cba;
         margin-bottom: 8px;
     }
 
     .info-value {
-        font-size: 18px;
-        font-weight: 500;
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 1.2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .info-value.end-date {
+        font-size: 16px;
+        color: #5a9cba;
+        padding: 4px 0;
     }
 
     .days-remaining {
         color: #5a9cba !important;
         font-size: 24px;
         font-weight: 600;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        margin: 5px 0;
+        padding: 4px 0;
     }
 
     .countdown {
@@ -335,6 +323,12 @@
 
     .card-icon {
         font-size: 24px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #5a9cba;
     }
 
     .progress-group {
@@ -367,15 +361,23 @@
     .candle-count {
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 20px;
-        font-weight: bold;
-        color: #ffffff;
+        gap: 2px;
     }
 
-    .progress-bar.small {
-        height: 8px;
+    .progress-bar {
+        width: 100%;
+        height: 4px;
         background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+        margin: 8px 0;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: #5a9cba;
+        border-radius: 2px;
+        transition: width 0.3s ease;
     }
 
     .divider {
@@ -414,7 +416,6 @@
     .furniture-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
         gap: 20px;
         padding: 15px 0;
     }
@@ -423,7 +424,7 @@
         position: relative;
         border-radius: 12px;
         overflow: hidden;
-        background: #3a3a3a;
+        background: rgba(45, 45, 45, 0.8);
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         height: 300px;
         display: flex;
@@ -436,7 +437,6 @@
         padding: 10px;
         box-sizing: border-box;
         object-fit: contain;
-        transition: all 0.3s ease;
     }
 
     .furniture-info {
@@ -504,7 +504,6 @@
          data-activity="{{activity}}"
          data-season-start="{{seasonStart}}"
          data-season-end="{{season.endDate}}">
-        <div class="help-icon">?</div>
         <div class="header">- 游戏进度 -</div>
 
         <div class="season-info" style="display: none;">
@@ -526,7 +525,7 @@
                     </div>
                     <div class="info-block">
                         <div class="info-label">季节结束时间</div>
-                        <div class="info-value">{{season.endDate}}</div>
+                        <div class="info-value end-date">{{season.endDate}}</div>
                     </div>
                     <div class="info-block">
                         <div class="info-label">倒计时</div>
@@ -541,7 +540,11 @@
                         <div class="card-box premium">
                             <div class="card-header">
                                 <span class="card-label">持有季卡</span>
-                                <div class="card-icon">👑</div>
+                                <div class="card-icon">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="#5a9cba" d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                                    </svg>
+                                </div>
                             </div>
                             <div class="card-content">
                                 <div class="progress-group">
@@ -550,12 +553,12 @@
                                         <div class="progress-data">
                                             <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
                                             <span class="candle-count">
-                                                <svg class="candle-icon">...</svg>
                                                 {{remainingCandles.withPass}}
+                                                <img src="{{season.candelIcon}}" alt="季节蜡烛" class="candelIcon" style="width: 32px; height: 32px;">
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="progress-bar small">
+                                    <div class="progress-bar">
                                         <div class="progress-fill" style="width: 60%"></div>
                                     </div>
                                 </div>
@@ -566,8 +569,8 @@
                                         <div class="progress-data">
                                             <span class="total-days">{{totalDays.withPass}}天</span>
                                             <span class="candle-count">
-                                                <svg class="candle-icon">...</svg>
                                                 {{season.requiredCandlesTrue}}
+                                                <img src="{{season.candelIcon}}" alt="季节蜡烛" class="candelIcon" style="width: 32px; height: 32px;">
                                             </span>
                                         </div>
                                     </div>
@@ -577,7 +580,11 @@
                         <div class="card-box free">
                             <div class="card-header">
                                 <span class="card-label">无季卡</span>
-                                <div class="card-icon">⚜</div>
+                                <div class="card-icon">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="#5a9cba" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                    </svg>
+                                </div>
                             </div>
                             <div class="card-content">
                                 <div class="progress-group">
@@ -586,12 +593,12 @@
                                         <div class="progress-data">
                                             <span class="days-left">{{remainingTime.days.split('天')[0]}}天</span>
                                             <span class="candle-count">
-                                                <svg class="candle-icon">...</svg>
                                                 {{remainingCandles.withoutPass}}
+                                                <img src="{{season.candelIcon}}" alt="季节蜡烛" class="candelIcon" style="width: 32px; height: 32px;">
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="progress-bar small">
+                                    <div class="progress-bar">
                                         <div class="progress-fill" style="width: 60%"></div>
                                     </div>
                                 </div>
@@ -602,8 +609,8 @@
                                         <div class="progress-data">
                                             <span class="total-days">{{totalDays.withoutPass}}天</span>
                                             <span class="candle-count">
-                                                <svg class="candle-icon">...</svg>
                                                 {{season.requiredCandlesFalse}}
+                                                <img src="{{season.candelIcon}}" alt="季节蜡烛" class="candelIcon" style="width: 32px; height: 32px;">
                                             </span>
                                         </div>
                                     </div>
@@ -930,23 +937,45 @@
             });
         }
 
-        // 修改初始化代码
+        function updateProgress() {
+            // 持有季卡的进度
+            const withPassTotal = parseInt("{{season.requiredCandlesTrue}}", 10) || 0;
+            const withPassRemaining = parseInt("{{remainingCandles.withPass}}", 10) || 0;
+            const withPassObtained = withPassTotal - withPassRemaining;
+            const withPassPercentage = Math.min(100, Math.max(0, (withPassObtained / withPassTotal) * 100));
+
+            // 无季卡的进度
+            const withoutPassTotal = parseInt("{{season.requiredCandlesFalse}}", 10) || 0;
+            const withoutPassRemaining = parseInt("{{remainingCandles.withoutPass}}", 10) || 0;
+            const withoutPassObtained = withoutPassTotal - withoutPassRemaining;
+            const withoutPassPercentage = Math.min(100, Math.max(0, (withoutPassObtained / withoutPassTotal) * 100));
+
+            // 更新进度条
+            const premiumBar = document.querySelector('.card-box.premium .progress-fill');
+            const freeBar = document.querySelector('.card-box.free .progress-fill');
+            
+            if (premiumBar) premiumBar.style.width = `${withPassPercentage}%`;
+            if (freeBar) freeBar.style.width = `${withoutPassPercentage}%`;
+        }
+
+        // 在初始化时调用
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 updateCountdowns();
                 updateFurnitureRefreshTime();
+                updateProgress();
                 // 添加延迟确保容器初始化完成
                 setTimeout(() => {
                     fetchFurnitureData();
                     setInterval(() => {
                         updateCountdowns();
                         updateFurnitureRefreshTime();
+                        updateProgress();
                         fetchFurnitureData();
                     }, 1000);
                 }, 50);
             } catch (error) {
                 console.error('初始化错误:', error);
-                alert('页面初始化失败，请刷新重试');
             }
         });
     </script>
