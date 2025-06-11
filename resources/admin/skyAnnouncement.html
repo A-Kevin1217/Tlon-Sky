@@ -1,4 +1,17 @@
 <style>
+    :root {
+        --primary-bg: rgba(255, 255, 255, 0.3);
+        --border-color: rgba(255, 255, 255, 0.4);
+        --shadow-color: rgba(31, 38, 135, 0.2);
+        --text-color: #333;
+        --added-color: rgba(76, 175, 80, 0.2);
+        --removed-color: rgba(244, 67, 54, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 20px;
         width: 1600px;
@@ -7,35 +20,44 @@
         background: url('https://sky.res.netease.com/pc/gw/20221215171426/img/bg_0040d9d.jpg');
         background-size: 1700px;
         background-repeat: no-repeat;
-        color: black;
-        font-family: Arial, sans-serif;
-        box-sizing: border-box;
+        color: var(--text-color);
+        font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
     }
 
-    .announcement {
-        margin: 10px 5px;
+    .page-header {
+        text-align: center;
+        margin: 0 auto 30px;
         padding: 20px;
-        width: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 5px;
-        background: rgba(255, 255, 255, 0.3);
+        background: var(--primary-bg);
+        border-radius: 10px;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        color: black;
-        box-sizing: border-box;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+        width: 100%;
     }
 
-    /* 添加针对左边框的特殊样式 */
-    #announcements-left .announcement {
-        margin-left: 0;
+    .page-header h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #2c3e50;
+        font-weight: normal;
     }
 
-    .highlight {
-        background-color: #808080;
-        color: black;
+    .page-header p {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0;
+    }
+
+    /* 调整标题容器的位置 */
+    .title-container {
+        margin-bottom: 20px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.3);
+        padding: 15px;
+        border-radius: 8px;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        width: 100%;
     }
 
     .announcements-container {
@@ -46,7 +68,6 @@
         gap: 15px;
         margin: 0 auto;
         padding: 0;
-        box-sizing: border-box;
     }
 
     #announcements-left,
@@ -56,45 +77,180 @@
         min-width: 200px;
     }
 
-    @media (max-width: 768px) {
-        .announcements-container {
-            flex-direction: column;
-            align-items: center;
-        }
+    .announcement {
+        margin: 10px 5px;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        background: var(--primary-bg);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px 0 var(--shadow-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    h1,
-    p {
-        text-align: center;
-        width: 100%;
+    .announcement:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px 0 var(--shadow-color);
     }
 
-    /* 添加针对链接和文本的样式 */
-    .announcement a,
-    .announcement div,
-    .announcement p,
-    .announcement h2,
+    .announcement h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--border-color);
+        color: #2c3e50;
+    }
+
     .announcement h3 {
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        white-space: pre-wrap;
-        max-width: 100%;
+        font-size: 1.2rem;
+        margin: 1rem 0;
+        color: #34495e;
+    }
+
+    .announcement div {
+        line-height: 1.8;
+        margin: 0.5rem 0;
+        font-size: 1rem;
+        color: var(--text-color);
     }
 
     .added {
-        background-color: rgba(0, 255, 0, 0.2);
-        /* 绿色背景，表示新增 */
+        background-color: var(--added-color);
+        padding: 0.3rem;
+        border-radius: 4px;
+        margin: 0.2rem 0;
     }
 
     .removed {
-        background-color: rgba(255, 0, 0, 0.2);
-        /* 红色背景，表示删除 */
+        background-color: var(--removed-color);
+        padding: 0.3rem;
+        border-radius: 4px;
+        margin: 0.2rem 0;
+    }
+
+    @media (max-width: 1200px) {
+        body {
+            padding: 1rem;
+        }
+        
+        .announcements-container {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 2rem;
+        }
+
+        .announcement {
+            padding: 1rem;
+        }
+    }
+
+    /* 添加加载动画 */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .announcement {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .loading::before {
+        content: "";
+        width: 40px;
+        height: 40px;
+        margin-bottom: 1rem;
+        border: 4px solid var(--border-color);
+        border-top-color: #2c3e50;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .error {
+        border-color: #ff5252 !important;
+        background: rgba(255, 82, 82, 0.1) !important;
+    }
+
+    .error h2 {
+        color: #ff5252;
+    }
+
+    /* 添加工具提示样式 */
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0.5rem;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        white-space: nowrap;
+        z-index: 1000;
+    }
+
+    /* 添加滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .announcement a {
+        color: #3498db;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .announcement a:hover {
+        color: #2980b9;
+        text-decoration: underline;
     }
 </style>
 
 <body>
-    <h1>光遇公告</h1>
-    <p>(左边为PC端公告，中间为正式服公告，右边为抢跑公告，光遇临近更新时显示内容与中间不一样)</p>
+    <div class="title-container">
+        <h1>光遇公告</h1>
+        <p>左边为PC端公告 | 中间为正式服公告 | <span class="tooltip" data-tooltip="光遇临近更新时显示内容与正式服不一样">右边为抢跑公告</span></p>
+    </div>
     <div class="announcements-container">
         <div id="announcements-left"></div>
         <div id="announcements-center"></div>
@@ -102,88 +258,146 @@
     </div>
 
     <script>
-        async function fetchAnnouncements() {
-            try {
-                const response1 = await fetch('https://ma75.update.netease.com/game_notice/announcement_pc.json');
-                const data1 = await response1.json();
+        class AnnouncementManager {
+            constructor() {
+                this.endpoints = {
+                    pc: 'https://ma75.update.netease.com/game_notice/announcement_pc.json',
+                    live: 'https://ma75.update.netease.com/game_notice/announcement_live.json',
+                    qa: 'https://ma75.update.netease.com/game_notice/announcement_qa.json'
+                };
+                this.containers = {
+                    left: document.getElementById('announcements-left'),
+                    center: document.getElementById('announcements-center'),
+                    right: document.getElementById('announcements-right')
+                };
+            }
 
-                const response2 = await fetch('https://ma75.update.netease.com/game_notice/announcement_live.json');
-                const data2 = await response2.json();
+            async init() {
+                this.showLoading();
+                try {
+                    const [pcData, liveData, qaData] = await Promise.all([
+                        this.fetchData(this.endpoints.pc),
+                        this.fetchData(this.endpoints.live),
+                        this.fetchData(this.endpoints.qa)
+                    ]);
 
-                const response3 = await fetch('https://ma75.update.netease.com/game_notice/announcement_qa.json');
-                const data3 = await response3.json();
+                    this.containers.left.innerHTML = this.createAnnouncementHTML(pcData);
+                    this.containers.center.innerHTML = this.createAnnouncementHTML(liveData);
+                    this.containers.right.innerHTML = this.createAnnouncementHTML(qaData);
 
+                    setTimeout(() => this.compareAnnouncements(), 100);
+                } catch (error) {
+                    this.handleError(error);
+                } finally {
+                    this.hideLoading();
+                }
+            }
 
-                const announcementsLeft = document.getElementById('announcements-left');
-                const announcementsCenter = document.getElementById('announcements-center');
-                const announcementsRight = document.getElementById('announcements-right');
+            showLoading() {
+                Object.values(this.containers).forEach(container => {
+                    container.innerHTML = `
+                        <div class="announcement loading">
+                            <div class="loading">加载中...</div>
+                        </div>
+                    `;
+                });
+            }
 
-                announcementsLeft.innerHTML = createAnnouncementHTML(data1);
-                announcementsCenter.innerHTML = createAnnouncementHTML(data2);
-                announcementsRight.innerHTML = createAnnouncementHTML(data3);
+            hideLoading() {
+                const loadingElements = document.querySelectorAll('.loading');
+                loadingElements.forEach(el => el.remove());
+            }
 
-                setTimeout(compareAnnouncements, 100);
+            async fetchData(url) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    throw new Error(`获取数据失败: ${error.message}`);
+                }
+            }
 
-            } catch (error) {
-                console.error('获取公告失败:', error);
+            createAnnouncementHTML(data) {
+                const announcementDiv = document.createElement('div');
+                announcementDiv.className = 'announcement';
+
+                if (data.Title && (data.OtherChannelMessage || data.NeteaseMessage)) {
+                    announcementDiv.innerHTML = `
+                        <h2>${this.sanitizeHTML(data.Title)}</h2>
+                        <div>${this.formatMessage(data.OtherChannelMessage || data.NeteaseMessage)}</div>
+                    `;
+                } else {
+                    announcementDiv.innerHTML = `<p>暂无公告内容</p>`;
+                }
+
+                return announcementDiv.outerHTML;
+            }
+
+            sanitizeHTML(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            formatMessage(message) {
+                if (!message) return '';
+                return message
+                    .replace(/【(.*?)】/g, '<h3>$1</h3>')
+                    .replace(/\n/g, '<br>')
+                    .replace(/^(.*)$/gm, '· $1');
+            }
+
+            compareAnnouncements() {
+                const centerContent = this.containers.center.querySelector('.announcement div')?.innerText || '';
+                const rightContent = this.containers.right.querySelector('.announcement div')?.innerText || '';
+
+                if (!centerContent || !rightContent) return;
+
+                const centerLines = centerContent.split('\n');
+                const rightLines = rightContent.split('\n');
+
+                const centerDiv = this.containers.center.querySelector('.announcement div');
+                const rightDiv = this.containers.right.querySelector('.announcement div');
+
+                if (!centerDiv || !rightDiv) return;
+
+                centerDiv.innerHTML = this.markDifferences(centerLines, rightLines, 'removed');
+                rightDiv.innerHTML = this.markDifferences(rightLines, centerLines, 'added');
+            }
+
+            markDifferences(sourceLines, compareLines, className) {
+                return sourceLines.map(line => {
+                    const cleanLine = line.trim();
+                    if (!cleanLine) return '';
+                    if (!compareLines.some(l => l.trim() === cleanLine)) {
+                        return `<div class="${className}">${cleanLine}</div>`;
+                    }
+                    return `<div>${cleanLine}</div>`;
+                }).filter(Boolean).join('');
+            }
+
+            handleError(error) {
+                console.error('错误:', error);
+                Object.values(this.containers).forEach(container => {
+                    container.innerHTML = `
+                        <div class="announcement error">
+                            <h2>加载失败</h2>
+                            <p>获取公告数据时发生错误，请稍后重试。</p>
+                        </div>
+                    `;
+                });
             }
         }
 
-        function createAnnouncementHTML(data) {
-            const announcementDiv = document.createElement('div');
-            announcementDiv.className = 'announcement';
+        window.onload = () => {
+            const manager = new AnnouncementManager();
+            manager.init();
 
-            if (data.Title && data.OtherChannelMessage || data.NeteaseMessage) {
-                announcementDiv.innerHTML = `
-                    <h2>${data.Title}</h2>
-                    <div>${formatMessage(data.OtherChannelMessage || data.NeteaseMessage)}</div>
-                `;
-            } else {
-                announcementDiv.innerHTML = `<p>公告内容未定义</p>`;
-            }
-
-            return announcementDiv.outerHTML;
-        }
-
-        function formatMessage(message) {
-            return message
-                .replace(/【(.*?)】/g, '<h3>$1</h3>')
-                .replace(/\n/g, '<br>')
-                .replace(/^(.*)$/gm, '· $1');
-        }
-
-        async function compareAnnouncements() {
-            const centerContent = document.querySelector('#announcements-center .announcement div').innerText;
-            const rightContent = document.querySelector('#announcements-right .announcement div').innerText;
-
-            const centerLines = centerContent.split('\n');
-            const rightLines = rightContent.split('\n');
-
-            const centerDiv = document.querySelector('#announcements-center .announcement div');
-            const rightDiv = document.querySelector('#announcements-right .announcement div');
-
-            centerDiv.innerHTML = '';
-            rightDiv.innerHTML = '';
-
-            // 对比并标记差异
-            const centerMarked = centerLines.map(line => {
-                if (!rightLines.includes(line)) {
-                    return `<div class="removed">${line}</div>`;
-                }
-                return `<div>${line}</div>`;
-            }).join('');
-
-            const rightMarked = rightLines.map(line => {
-                if (!centerLines.includes(line)) {
-                    return `<div class="added">${line}</div>`;
-                }
-                return `<div>${line}</div>`;
-            }).join('');
-
-            centerDiv.innerHTML = centerMarked;
-            rightDiv.innerHTML = rightMarked;
-        }
-
-        window.onload = fetchAnnouncements;
+            // 添加自动刷新功能
+            setInterval(() => manager.init(), 5 * 60 * 1000); // 每5分钟刷新一次
+        };
     </script>
 </body>
