@@ -1,323 +1,527 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-<style>
-    body {
-        width: 1800px;
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 100%);
-        margin: 0;
-        padding: 20px;
-        min-height: 100vh;
-    }
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky光遇 - 帮助中心</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .full-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-42%, -35%);
+            width: 150vw;
+            height: 180vh;
+            background: url('https://vip.123pan.cn/1810660/yk6baz03t0l000d7w33fgakmsdoawb9eDIYPDdQzDcxPAdJwDF==.webp') no-repeat 58% 65%;
+            background-size: contain;
+            z-index: -100;
+            pointer-events: none;
+            min-width: 2500px;
+            min-height: 2000px;
+        }
+        body {
+            font-family: 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            width: 1800px;
+            margin: 0 auto;
+            color: #2d3748;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 20px;
+        }
 
-    .container {
-        max-width: 1700px;
-        margin: 0 auto;
-    }
+        #bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-42%, -35%);
+            width: 150vw;
+            height: 180vh;
+            z-index: -2;
+            object-fit: contain;
+            min-width: 2500px;
+            min-height: 2000px;
+            object-position: 58% 65%;
+        }
 
-    h1 {
-        color: #2563eb;
-        text-align: center;
-        font-size: 3rem;
-        margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        .overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-42%, -35%);
+            width: 150vw;
+            height: 180vh;
+            min-width: 2500px;
+            min-height: 2000px;
+            background: rgba(255, 255, 255, 0.6);
+            z-index: -1;
+        }
 
-    h2 {
-        color: #9333ea;
-        text-align: center;
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
+        .container {
+            width: 1700px;
+            margin: 0 auto;
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 10px;
+        }
 
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-    }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
 
-    .card {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 1rem;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        overflow: hidden;
-    }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, #3b82f6, #60a5fa);
+            border-radius: 3px;
+        }
 
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-    }
+        .title {
+            font-size: 3.5rem;
+            color: #1a365d;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 800;
+        }
 
-    .card-header {
-        background-color: #3b82f6;
-        color: white;
-        padding: 1.5rem;
-        font-size: 1.5rem;
-        font-weight: bold;
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
+        .subtitle {
+            font-size: 1.5rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
 
-    .card-content {
-        padding: 1.5rem;
-    }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
 
-    .item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1.5rem;
-        padding: 1rem;
-        background-color: rgba(255, 255, 255, 0.7);
-        border-radius: 0.5rem;
-        transition: background-color 0.3s ease;
-    }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            min-width: 0;
+        }
 
-    .item:hover {
-        background-color: rgba(255, 255, 255, 0.9);
-    }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.5);
+        }
 
-    .item-icon {
-        font-size: 1.5rem;
-        margin-right: 1rem;
-        color: #4b5563;
-    }
+        .feature-title {
+            font-size: 1.5rem;
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
 
-    .item-content {
-        flex-grow: 1;
-    }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-    .item-title {
-        font-weight: bold;
-        color: #1f2937;
-        margin-bottom: 0.25rem;
-    }
+        .feature-item {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            flex: 1 1 calc(50% - 0.5rem);
+            min-width: 200px;
+        }
 
-    .item-desc {
-        font-size: 0.875rem;
-        color: #4b5563;
-    }
+        .feature-item.full-width {
+            flex: 1 1 100%;
+        }
 
-    footer {
-        text-align: center;
-        margin-top: 3rem;
-        padding: 1rem;
-        background-color: rgba(255, 255, 255, 0.7);
-        border-radius: 0.5rem;
-        font-style: italic;
-        color: #4b5563;
-    }
-</style>
+        .feature-item-header {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
+        .feature-item:hover .feature-item-header {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-item i {
+            font-size: 1.2rem;
+            margin-right: 0.8rem;
+            min-width: 1.2rem;
+            color: #3b82f6;
+        }
+
+        .feature-item:hover i {
+            transform: scale(1.1);
+        }
+
+        .feature-text {
+            font-size: 1rem;
+            color: #2d3748;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .feature-description {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            color: #4a5568;
+            background: rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 针对特定长文本的指令使用单行显示 */
+        .feature-item.long-text {
+            flex: 1 1 100%;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
 <body>
+    <div class="full-bg"></div>
+    <img id="bg" src="https://vip.123pan.cn/1810660/yk6baz03t0l000d7w33fgakmsdoawb9eDIYPDdQzDcxPAdJwDF==.webp" alt="background">
+    <div class="overlay"></div>
     <div class="container">
-        <h1>Sky菜单</h1>
-        <h2>Tlon-Sky</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="card-header">每日功能</div>
-                <div class="card-content">
-                    <div class="item">
-                        <i class="fas fa-tasks item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#今日任务</div>
-                            <div class="item-desc">查看国服今日任务丨季蜡丨大蜡等</div>
+        <header class="header">
+            <h1 class="title">Sky光遇</h1>
+            <p class="subtitle">探索神秘世界的完整指南</p>
+        </header>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h2 class="feature-title">每日任务</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-tasks"></i>
+                            <span class="feature-text">#今日任务</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-map-marker-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#代币位置</div>
-                            <div class="item-desc">查看国服今日获取代币位置</div>
+                        <div class="feature-description">
+                            查看国服今日任务丨季蜡丨大蜡等
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-calendar-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#季节任务</div>
-                            <div class="item-desc">查看国服当前季节任务</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="feature-text">#代币位置</span>
                         </div>
-                    </div>
-                </div>
+                        <div class="feature-description">
+                            查看国服今日获取代币位置
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="feature-text">#季节任务</span>
+                        </div>
+                        <div class="feature-description">
+                            查看国服当前季节任务
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="card">
-                <div class="card-header">查询功能</div>
-                <div class="card-content">
-                    <div class="item">
-                        <i class="fas fa-server item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#Sky状态</div>
-                            <div class="item-desc">查询光遇是否炸服</div>
+
+            <div class="feature-card">
+                <h2 class="feature-title">实时查询</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-server"></i>
+                            <span class="feature-text">#Sky状态</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-bullhorn item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#光遇公告</div>
-                            <div class="item-desc">查看告示栏内容</div>
+                        <div class="feature-description">
+                            查询光遇是否炸服
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-hourglass-half item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#季节剩余</div>
-                            <div class="item-desc">季节相关内容计算</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-bullhorn"></i>
+                            <span class="feature-text">#光遇公告</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-history item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">25年复刻记录</div>
-                            <div class="item-desc">查看往期复刻记录可选[全部,20,21,22,23,24,25]</div>
+                        <div class="feature-description">
+                            查看告示栏内容
                         </div>
-                    </div>
-                    <!-- <div class="item">
-                        <i class="fas fa-clock item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#风行季多久未复刻</div>
-                            <div class="item-desc">查询季节先祖多久未复刻[可选其他季节]</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span class="feature-text">#季节剩余</span>
                         </div>
-                    </div> -->
-                    <div class="item">
-                        <i class="fas fa-book item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#全图鉴参考</div>
-                            <div class="item-desc">衣柜图鉴参考[国际服版]</div>
+                        <div class="feature-description">
+                            季节相关内容计算
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-feather-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">光翼统计</div>
-                            <div class="item-desc">光翼数量统计</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-history"></i>
+                            <span class="feature-text">25年复刻记录</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-gem item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">今日碎石 | 本月碎石</div>
-                            <div class="item-desc">今日和本月碎石信息查询</div>
+                        <div class="feature-description">
+                            查看往期复刻记录<br>可选[全部,20,21,22,23,24,25]
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-book"></i>
+                            <span class="feature-text">#全图鉴参考</span>
+                        </div>
+                        <div class="feature-description">
+                            衣柜图鉴参考[国际服版]
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-feather-alt"></i>
+                            <span class="feature-text">光翼统计</span>
+                        </div>
+                        <div class="feature-description">
+                            光翼数量统计
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-gem"></i>
+                            <span class="feature-text">今日碎石 | 本月碎石</span>
+                        </div>
+                        <div class="feature-description">
+                            今日和本月碎石信息查询
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="card">
-                <div class="card-header">兑换图功能</div>
-                <div class="card-content">
-                    <div class="item">
-                        <i class="fas fa-exchange-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#常驻兑换图列表</div>
-                            <div class="item-desc">查看常驻兑换图</div>
+
+            <div class="feature-card">
+                <h2 class="feature-title">兑换指南</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span class="feature-text">#常驻兑换图列表</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-sync-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#季节列表</div>
-                            <div class="item-desc">查看所有季节以及相关功能</div>
+                        <div class="feature-description">
+                            查看常驻兑换图
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-redo-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#复刻兑换图</div>
-                            <div class="item-desc">查看最近一次复刻的兑换图</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-sync-alt"></i>
+                            <span class="feature-text">#季节列表</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-tree item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#好友树兑换图</div>
-                            <div class="item-desc">查看好友树解锁图</div>
+                        <div class="feature-description">
+                            查看所有季节以及相关功能
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-redo-alt"></i>
+                            <span class="feature-text">#复刻兑换图</span>
+                        </div>
+                        <div class="feature-description">
+                            查看最近一次复刻的兑换图
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-tree"></i>
+                            <span class="feature-text">#好友树兑换图</span>
+                        </div>
+                        <div class="feature-description">
+                            查看好友树解锁图
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="card">
-                <div class="card-header">娱乐功能</div>
-                <div class="card-content">
-                    <div class="item">
-                        <i class="fas fa-dice item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#复刻预测</div>
-                            <div class="item-desc">随机两位复刻先祖</div>
+
+            <div class="feature-card">
+                <h2 class="feature-title">蜡烛记录</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-pencil-alt"></i>
+                            <span class="feature-text">#记录蜡烛白:季:心:红</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-paint-brush item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#绘画分享</div>
-                            <div class="item-desc">光遇同人赏析</div>
+                        <div class="feature-description">
+                            记录当前蜡烛数量 例:#记录蜡烛100:20:30:40
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-user-friends item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#随机好友</div>
-                            <div class="item-desc">随机获取好友</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-plus-circle"></i>
+                            <span class="feature-text">#添加蜡烛ID [名称]</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-box-open item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#存入盲盒XXXX-XXXX-XXXX*（国|国际|测试）服</div>
-                            <div class="item-desc">存入盲盒</div>
+                        <div class="feature-description">
+                            添加新的蜡烛记录ID
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span class="feature-text">#切换蜡烛ID [名称]</span>
+                        </div>
+                        <div class="feature-description">
+                            切换到指定的蜡烛记录ID
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-trash-alt"></i>
+                            <span class="feature-text">#删除蜡烛ID [名称]</span>
+                        </div>
+                        <div class="feature-description">
+                            删除指定的蜡烛记录ID
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-history"></i>
+                            <span class="feature-text">#蜡烛记录</span>
+                        </div>
+                        <div class="feature-description">
+                            查看最近5条蜡烛记录及变化
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-list"></i>
+                            <span class="feature-text">#蜡烛ID列表</span>
+                        </div>
+                        <div class="feature-description">
+                            查看所有蜡烛记录ID
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="card">
-                <div class="card-header">蜡烛记录功能</div>
-                <div class="card-content">
-                    <div class="item">
-                        <i class="fas fa-pencil-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#记录蜡烛白:季:心:红</div>
-                            <div class="item-desc">记录当前蜡烛数量 例:#记录蜡烛100:20:30:40</div>
+
+            <div class="feature-card">
+                <h2 class="feature-title">娱乐功能</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-dice"></i>
+                            <span class="feature-text">#复刻预测</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-plus-circle item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#添加蜡烛ID [名称]</div>
-                            <div class="item-desc">添加新的蜡烛记录ID</div>
+                        <div class="feature-description">
+                            随机两位复刻先祖
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-exchange-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#切换蜡烛ID [名称]</div>
-                            <div class="item-desc">切换到指定的蜡烛记录ID</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-paint-brush"></i>
+                            <span class="feature-text">#绘画分享</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-trash-alt item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#删除蜡烛ID [名称]</div>
-                            <div class="item-desc">删除指定的蜡烛记录ID</div>
+                        <div class="feature-description">
+                            光遇同人赏析
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-history item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#蜡烛记录</div>
-                            <div class="item-desc">查看最近5条蜡烛记录及变化</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-user-friends"></i>
+                            <span class="feature-text">#随机好友</span>
                         </div>
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-list item-icon"></i>
-                        <div class="item-content">
-                            <div class="item-title">#蜡烛ID列表</div>
-                            <div class="item-desc">查看所有蜡烛记录ID</div>
+                        <div class="feature-description">
+                            随机获取好友
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li class="feature-item long-text">
+                        <div class="feature-item-header">
+                            <i class="fas fa-box-open"></i>
+                            <span class="feature-text">#存入盲盒XXXX-XXXX-XXXX*（国|国际）服</span>
+                        </div>
+                        <div class="feature-description">
+                            存入盲盒
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h2 class="feature-title">图鉴收藏</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-feather-alt"></i>
+                            <span class="feature-text">光翼图鉴</span>
+                        </div>
+                        <div class="feature-description">
+                            指令：/光翼图鉴
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-tshirt"></i>
+                            <span class="feature-text">服装图鉴</span>
+                        </div>
+                        <div class="feature-description">
+                            指令：/服装图鉴
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-item-header">
+                            <i class="fas fa-magic"></i>
+                            <span class="feature-text">道具图鉴</span>
+                        </div>
+                        <div class="feature-description">
+                            指令：/道具图鉴
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
+
         <footer>
-            图片源自网络，如有侵权·联系删除
+            <p>图片素材来源于网络，如有侵权请联系删除</p>
         </footer>
     </div>
 </body>
+</html>
