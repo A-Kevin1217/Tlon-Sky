@@ -115,7 +115,7 @@ export class SkyInformationPlugin extends plugin {
         // 合并日期处理逻辑
         const parseDate = str => new Date(str.replace(/-/g, '/'));
         const endDate = parseDate(season.endDate);
-        
+
         // 修改活动处理逻辑
         let currentActivity = null;
         if (activity && Array.isArray(activity)) {
@@ -209,7 +209,7 @@ export class SkyInformationPlugin extends plugin {
 
         return render('admin/ancestor-last-reappearance-duration', {
             seasonName,
-            seasonIcon: seasonInfo.icon,
+            seasonIcon: seasonInfo.seasonIcon,
             data: JSON.stringify(seasonInfo)
         }, { e, scale: 1.5 });
     }
