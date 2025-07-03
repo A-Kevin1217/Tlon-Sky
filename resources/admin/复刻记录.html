@@ -1,6 +1,12 @@
 <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
     body {
-        width: 1200px;
+        width: 1400px;
         font-family: Arial, sans-serif;
         line-height: 1.6;
         margin: 0;
@@ -8,161 +14,295 @@
         background: #f5f7fa;
     }
 
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        max-width: 1400px;
+        margin: 20px auto 30px;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #4a90e2, #8e44ad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .header p {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
     .container {
-        display: flex;
-        gap: 20px;
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 25px;
         align-items: flex-start;
         max-width: 1400px;
         margin: 0 auto;
     }
 
     .records-table {
-        flex: 2;
+        flex: 3 !important;
+        order: 1 !important;
         background: rgba(255, 255, 255, 0.95);
         border-radius: 16px;
-        padding: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        min-width: 70% !important;
     }
 
     .year-stats {
-        flex: 1;
+        flex: 1 !important;
+        order: 2 !important;
         position: sticky;
         top: 20px;
         background: rgba(255, 255, 255, 0.95);
         border-radius: 16px;
         padding: 20px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 30% !important;
+    }
+
+    /* 确保响应式设计保持正确顺序 */
+    @media (max-width: 1200px) {
+        .container {
+            flex-direction: column !important;
+        }
+
+        .records-table {
+            order: 1 !important;
+            width: 100%;
+        }
+
+        .year-stats {
+            order: 2 !important;
+            position: static;
+            width: 100%;
+        }
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
+        border-spacing: 0;
+        font-size: 0.95rem;
     }
 
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
+    th,
+    td {
+        padding: 10px 8px;
         text-align: center;
+        border-bottom: 1px solid #e0e6ed;
         vertical-align: middle;
+        font-size: 0.92rem;
     }
 
     th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-        color: #444;
+        background-color: #f8fafc;
+        font-weight: 600;
+        color: #2c3e50;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
     }
 
+    tr:nth-child(even) {
+        background-color: #fafcff;
+    }
+
+    /* 修改后的图片容器样式 - 水平排列，不换行 */
+    .image-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 5px;
+        padding: 3px;
+        overflow-x: auto;
+        max-width: 100%;
+    }
+
+    .image-container img {
+        width: 45px;
+        height: 45px;
+        border-radius: 4px;
+        object-fit: contain;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+
+    /* 平台计数样式 */
+    .count-0 {
+        background-color: #00ffa6;
+    }
+
+    .count-1 {
+        background-color: #e6f3ff;
+    }
+
+    .count-2 {
+        background-color: #b3d9ff;
+    }
+
+    .count-3 {
+        background-color: #80bfff;
+    }
+
+    .count-4 {
+        background-color: #4da6ff;
+    }
+
+    /* 统计区域样式 */
     .stats-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 20px;
     }
 
     .stats-header h2 {
-        font-size: 20px;
-        margin: 0 0 16px 0;
-        color: #333;
+        font-size: 1.6rem;
+        margin: 0 0 20px 0;
+        color: #2c3e50;
+        border-bottom: 2px solid #4a90e2;
+        padding-bottom: 10px;
     }
 
     .total-spirits {
         text-align: center;
-        margin-bottom: 16px;
+        margin-bottom: 25px;
     }
 
     .total-spirits .number {
-        font-size: 28px;
+        font-size: 2.8rem;
         color: #4a90e2;
         font-weight: bold;
         display: block;
+        line-height: 1;
+        margin-bottom: 5px;
     }
 
     .total-spirits .label {
-        font-size: 14px;
-        color: #666;
+        font-size: 1.1rem;
+        color: #7f8c8d;
+        letter-spacing: 1px;
     }
 
     .stats-card {
         background: #f5f7fa;
-        border-radius: 8px;
-        padding: 12px;
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
     }
 
     .stats-card h3 {
-        font-size: 16px;
-        color: #333;
-        margin: 0 0 12px 0;
+        font-size: 1.2rem;
+        color: #2c3e50;
+        margin: 0 0 15px 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .stats-card h3::before {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 18px;
+        background: #4a90e2;
+        border-radius: 3px;
+        margin-right: 10px;
     }
 
     .platform-list {
         display: grid;
-        gap: 8px;
+        gap: 10px;
     }
 
     .platform-item {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px;
+        gap: 12px;
+        padding: 10px 15px;
         background: white;
-        border-radius: 4px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
     .platform-icon {
-        font-size: 16px;
+        font-size: 1.4rem;
+        width: 30px;
+        text-align: center;
     }
 
     .platform-name {
         flex: 1;
-        color: #444;
+        color: #34495e;
+        text-align: left;
     }
 
     .platform-count {
         font-weight: bold;
         color: #4a90e2;
+        font-size: 1.2rem;
+        min-width: 30px;
     }
 
     .count-list {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        gap: 10px;
     }
 
     .count-item {
         background: white;
-        padding: 6px;
-        border-radius: 4px;
-        text-align: center;
+        padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
     .count-item .count {
         display: block;
-        font-size: 14px;
-        color: #666;
+        font-size: 0.95rem;
+        color: #7f8c8d;
+        margin-bottom: 5px;
     }
 
     .count-item .number {
         display: block;
         font-weight: bold;
         color: #4a90e2;
+        font-size: 1.3rem;
     }
 
     .season-list {
         display: grid;
-        gap: 8px;
+        gap: 10px;
     }
 
     .season-item {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px;
+        gap: 12px;
+        padding: 12px 15px;
         background: white;
-        border-radius: 4px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
     .season-item .rank {
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -170,47 +310,61 @@
         background: #4a90e2;
         color: white;
         font-weight: bold;
+        flex-shrink: 0;
+        font-size: 0.9rem;
     }
 
     .season-item .season-name {
         flex: 1;
-        color: #444;
+        color: #34495e;
+        text-align: left;
     }
 
     .season-item .season-count {
         font-weight: bold;
         color: #4a90e2;
+        font-size: 1.1rem;
     }
 
-    .count-0 { background-color: #00ffa6; }
-    .count-1 { background-color: #e6f3ff; }
-    .count-2 { background-color: #b3d9ff; }
-    .count-3 { background-color: #80bfff; }
-    .count-4 { background-color: #4da6ff; }
-
     /* 排名样式 */
-    .rank-1 { background: #fff4e5; }
-    .rank-1 .rank { background: #ff9800; }
-    
-    .rank-2 { background: #f5f5f5; }
-    .rank-2 .rank { background: #9e9e9e; }
-    
-    .rank-3 { background: #fff0e9; }
-    .rank-3 .rank { background: #ff5722; }
+    .rank-1 {
+        background: #fff9f2;
+    }
 
-    /* 添加新的样式 */
+    .rank-1 .rank {
+        background: #ff9800;
+    }
+
+    .rank-2 {
+        background: #fafafa;
+    }
+
+    .rank-2 .rank {
+        background: #9e9e9e;
+    }
+
+    .rank-3 {
+        background: #fff5f2;
+    }
+
+    .rank-3 .rank {
+        background: #ff5722;
+    }
+
+    /* 页脚说明 */
     .footer-note {
         margin-top: 20px;
-        padding: 12px;
+        padding: 18px;
         background: rgba(255, 255, 255, 0.9);
-        border-radius: 8px;
-        font-size: 12px;
-        color: #666;
-        line-height: 1.4;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        line-height: 1.6;
+        border-left: 4px solid #4a90e2;
     }
 
     .footer-note p {
-        margin: 4px 0;
+        margin: 8px 0;
     }
 
     .footer-note .highlight {
@@ -220,10 +374,35 @@
 
     .footer-note .warning {
         color: #ff9800;
+        font-weight: 600;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+
+        th,
+        td {
+            padding: 10px 5px;
+            font-size: 0.85rem;
+        }
+
+        .image-container img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+        }
+
+        .stats-card h3 {
+            font-size: 1.1rem;
+        }
     }
 </style>
 
 <body>
     {{@html}}
 </body>
+
 </html>

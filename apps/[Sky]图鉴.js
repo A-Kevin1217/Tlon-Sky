@@ -81,8 +81,8 @@ export class SKY extends plugin {
             <h3>${platform === 'ios' ? 'iOS' : '安卓'}复刻详情 <span class="total">(${data.total})</span></h3>
             <div class="count-list">
               ${Object.entries(data.counts)
-                .sort(([a], [b]) => parseInt(a) - parseInt(b))
-                .map(([count, num]) => `
+            .sort(([a], [b]) => parseInt(a) - parseInt(b))
+            .map(([count, num]) => `
                   <div class="count-item">
                     <span class="count">${count}次</span>
                     <span class="number">${num}位</span>
@@ -129,9 +129,9 @@ export class SKY extends plugin {
             <h3>季节分布</h3>
             <div class="season-list">
               ${stats.seasons.mostFrequent
-                .concat(Array(3).fill({ season: '-', count: 0 }))
-                .slice(0, 3)
-                .map(({ season, count }, index) => `
+          .concat(Array(3).fill({ season: '-', count: 0 }))
+          .slice(0, 3)
+          .map(({ season, count }, index) => `
                   <div class="season-item rank-${index + 1}">
                     <span class="rank">${index + 1}</span>
                     <span class="season-name">${season}</span>
@@ -159,6 +159,14 @@ export class SKY extends plugin {
             )
           )?.name || '未匹配';
 
+          const seasonData = seasonalSpiritsData.find(seasonalSpiritsData => seasonalSpiritsData.name === season)
+          const { icon } = seasonData.spirits.find(seasonData => seasonData.name === name)
+
+          let img = ''
+          for (let i = 0; i < icon.length; i++) {
+            img += `<img src="${SKY_IMAGE_URL.A}AncestorDressUp/${icon[i]}">`
+          }
+
           return `
         <tr>
           ${monthIndex === 0 && recordIndex === 0 ? `<td rowspan="${yearCounts[year]}">${year}</td>` : ''}
@@ -168,19 +176,20 @@ export class SKY extends plugin {
           ${platform === 'IOS' && day === 19 ? `<td>${name}</td><td rowspan="9" class="count-0">未开服</td>` : ''}
           ${platform === 'IOS' && day !== 19 ? `<td>${name}</td>` : ''}
           ${platform !== 'All' && platform !== 'IOS' ? `<td class="count-0">——</td><td>${name}</td>` : ''}
+          <td><div class="image-container">${img}</div></td>
           <td class="count-${count.i}">${count.i || '——'}</td>
           <td class="count-${count.a}">${count.a || '——'}</td>
           <td>${price['🕯']}</td>
           <td>${price['❤️']}</td>
-          <td>${season}</td>
+          <td><div class="image-container"><img src="${SKY_IMAGE_URL.A}AncestorDressUp/${seasonData.seasonIcon}"></div></td>
         </tr>
       `;
         }).join('');
       }).join('');
 
       return `
-    <div class="container">
-      <div class="records-table">
+    <div class="container" style="display: flex !important; flex-direction: row !important;">
+      <div class="records-table" style="flex: 3 !important; order: 1 !important; min-width: 70% !important;">
         <h2>${year}年复刻记录</h2>
         <table>
           <thead>
@@ -189,6 +198,7 @@ export class SKY extends plugin {
               <th>月份</th>
               <th>日期</th>
               <th colspan="2">先祖</th>
+              <th>装扮&动作</th>
               <th>iOS</th>
               <th>安卓</th>
               <th>蜡烛</th>
@@ -201,7 +211,7 @@ export class SKY extends plugin {
           </tbody>
         </table>
       </div>
-      <div class="year-stats">
+      <div class="year-stats" style="flex: 1 !important; order: 2 !important; max-width: 30% !important;">
         ${statsHtml}
       </div>
     </div>
@@ -210,46 +220,86 @@ export class SKY extends plugin {
 
     const finalHtml = `
   <style>
+    body {
+      width: 1400px;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f7fa;
+    }
+    
     .container {
-      display: flex;
+      display: flex !important;
+      flex-direction: row !important;
       gap: 20px;
       align-items: flex-start;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .records-table {
-      flex: 2;
+      flex: 3 !important;
+      order: 1 !important;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 16px;
       padding: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: auto;
+      min-width: 75% !important;
+      width: 75% !important;
     }
 
     .year-stats {
-      flex: 1;
+      flex: 1 !important;
+      order: 2 !important;
       position: sticky;
       top: 20px;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 16px;
       padding: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 25% !important;
+      width: 25% !important;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      font-size: 0.95rem;
     }
 
     th, td {
-      padding: 12px;
+      padding: 10px 8px;
       text-align: center;
       border-bottom: 1px solid #eee;
       vertical-align: middle;
+      white-space: nowrap;
     }
 
     th {
       background: #f5f7fa;
       font-weight: bold;
       color: #444;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .image-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 5px;
+      padding: 3px;
+      overflow-x: auto;
+    }
+
+    .image-container img {
+      width: 45px;
+      height: 45px;
+      border-radius: 4px;
+      object-fit: contain;
     }
 
     .stats-grid {
