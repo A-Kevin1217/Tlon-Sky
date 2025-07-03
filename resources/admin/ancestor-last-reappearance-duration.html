@@ -1,105 +1,340 @@
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f0f2f5;
+    }
+
+    .header-icon {
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+        margin-right: 15px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    h1 {
+        color: #2c3e50;
+        font-size: 2.8em;
+        font-weight: 700;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtitle {
+        color: #7f8c8d;
+        font-size: 1.1em;
+        margin-top: 10px;
+    }
+
+    .spirit-list {
+        list-style: none;
+        display: grid;
+        gap: 20px;
+    }
+
+    .spirit-item {
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        border: 1px solid #e9ecef;
+        border-radius: 16px;
+        padding: 25px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .spirit-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+    }
+
+    .spirit-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .spirit-info {
+        flex: 1;
+    }
+
+    .spirit-name {
+        font-size: 1.4em;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    .spirit-name::before {
+        content: '✨';
+        margin-right: 8px;
+        font-size: 0.9em;
+    }
+
+    .spirit-status {
+        color: #e74c3c;
+        font-size: 1em;
+        font-weight: 500;
+        background: rgba(231, 76, 60, 0.1);
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    .spirit-icons {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .spirit-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        border: 2px solid #e9ecef;
+        background: #f8f9fa;
+        padding: 4px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .spirit-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: #7f8c8d;
+    }
+
+    .stats {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 15px 25px;
+        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+        border-radius: 12px;
+        min-width: 120px;
+    }
+
+    .stat-number {
+        font-size: 2em;
+        font-weight: 700;
+        color: #667eea;
+        display: block;
+    }
+
+    .stat-label {
+        color: #7f8c8d;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
         .container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 600px;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+        }
+
+        .spirit-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .spirit-icons {
+            justify-content: center;
             width: 100%;
         }
-        h1 {
-            color: #1a1a1a;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-        }
-        .spirit-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .spirit-item {
-            background-color: #f8f9fa;
-            border-left: 4px solid #007bff;
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 4px;
-            transition: transform 0.2s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .spirit-item:hover {
-            transform: translateX(5px);
-        }
-        .spirit-info {
-            flex-grow: 1;
-        }
-        .spirit-name {
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 5px;
-        }
-        .spirit-status {
-            color: #6c757d;
-            font-size: 0.9em;
-        }
-        .spirit-icons {
-            display: block;
-            max-width: none;
-        }
+
         .spirit-icon {
             width: 50px;
             height: 50px;
-            margin: 5px 0;
         }
-    </style>
+
+        .stats {
+            gap: 15px;
+        }
+
+        .stat-item {
+            min-width: 100px;
+            padding: 12px 20px;
+        }
+    }
+
+    .tooltip {
+        position: relative;
+    }
+
+    .tooltip::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.8em;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 1000;
+    }
+
+    .tooltip:hover::after {
+        opacity: 1;
+    }
+</style>
 
 <body>
     <div class="container">
-        <h1>
-            <img src="https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/{{seasonIcon}}" alt="Icon" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 10px;">
-            {{seasonName}}季先祖多久未复刻
-        </h1>
+        <div class="header">
+            <h1>
+                <img src="https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/{{seasonIcon}}"
+                    alt="感恩季图标" class="header-icon">
+                {{seasonName}}季先祖多久未复刻
+            </h1>
+            <p class="subtitle">网易你藏着掖着是想当传家宝吗</p>
+        </div>
+        <div class="stats" id="stats">
+            <div class="stat-item">
+                <span class="stat-number" id="totalSpirits">0</span>
+                <span class="stat-label">总先祖数</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="avgDays">0</span>
+                <span class="stat-label">平均未复刻天数</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="longestWait">0</span>
+                <span class="stat-label">最长等待天数</span>
+            </div>
+        </div>
+
         <ul id="spiritList" class="spirit-list">
+            <li class="loading">正在加载先祖数据...</li>
         </ul>
     </div>
 
     <script>
         const spiritsData = JSON.parse('[{{@data}}]')
 
+        function getIconTooltip(iconPath) {
+            const iconName = iconPath.split('/').pop().replace('.png', '');
+            const iconType = iconPath.includes('Expressions') ? '表情' :
+                iconPath.includes('Hair') ? '发型' :
+                    iconPath.includes('Masks') ? '面具' :
+                        iconPath.includes('Capes') ? '斗篷' :
+                            iconPath.includes('Props') ? '道具' : '物品';
+            return `${iconType}: ${iconName}`;
+        }
+
+        function calculateStats(spirits) {
+            const totalSpirits = spirits.length;
+            const days = spirits.map(spirit => {
+                const match = spirit.status.match(/已 (\d+) 天未复刻/);
+                return match ? parseInt(match[1]) : 0;
+            });
+
+            const avgDays = Math.round(days.reduce((a, b) => a + b, 0) / days.length);
+            const longestWait = Math.max(...days);
+
+            document.getElementById('totalSpirits').textContent = totalSpirits;
+            document.getElementById('avgDays').textContent = avgDays;
+            document.getElementById('longestWait').textContent = longestWait;
+        }
+
         function createSpiritList(data) {
             const spiritList = document.getElementById('spiritList');
-            data[0].spirits.forEach(spirit => {
+            const spirits = data[0].spirits;
+
+            // 计算统计数据
+            calculateStats(spirits);
+
+            // 清空加载提示
+            spiritList.innerHTML = '';
+
+            spirits.forEach((spirit) => {
                 const listItem = document.createElement('li');
                 listItem.className = 'spirit-item';
-                
-                const iconsHtml = spirit.icons.map(icon => 
-                    `<img src="https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${icon}" alt="" class="spirit-icon">`
-                ).join('');
+
+                const iconsHtml = spirit.icons.map(icon => {
+                    const tooltip = getIconTooltip(icon);
+                    return `<div class="spirit-icon tooltip" data-tooltip="${tooltip}">
+                        <img src="https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${icon}" 
+                             alt="${tooltip}" 
+                             loading="lazy"
+                             onerror="this.style.display='none'">
+                    </div>`;
+                }).join('');
 
                 listItem.innerHTML = `
-                    <div class="spirit-info">
-                        <div class="spirit-name">${spirit.name}</div>
-                        <div class="spirit-status">${spirit.status}</div>
+                    <div class="spirit-content">
+                        <div class="spirit-info">
+                            <div class="spirit-name">${spirit.name}</div>
+                            <div class="spirit-status">${spirit.status}</div>
+                        </div>
+                        <div class="spirit-icons">${iconsHtml}</div>
                     </div>
-                    <div class="spirit-icons">${iconsHtml}</div>
                 `;
+
                 spiritList.appendChild(listItem);
             });
         }
 
-        createSpiritList(spiritsData);
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function () {
+            createSpiritList(spiritsData);
+        });
     </script>
 </body>
