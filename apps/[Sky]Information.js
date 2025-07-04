@@ -14,7 +14,8 @@ export class SkyInformationPlugin extends plugin {
                 { reg: /^[#\/]?(光遇|sky)公告$/i, fnc: 'showAnnouncement' },
                 { reg: /^[#\/]?光翼统计$/, fnc: 'countWings' },
                 { reg: /^[#\/]?(光遇|游戏|季节|活动)(剩余|进度)$/, fnc: 'showSeasonalRemaining' },
-                { reg: /^[#\/]?(.*)季多久未复刻$/, fnc: 'checkSeasonReappearance' }
+                { reg: /^[#\/]?(.*)季多久未复刻$/, fnc: 'checkSeasonReappearance' },
+                { reg: /^[#\/]?((20|21|22|23|24|25)\s*年)复刻日历$/, fnc: 'showRegressionCalendar' }
             ]
         });
     }
@@ -211,6 +212,31 @@ export class SkyInformationPlugin extends plugin {
             seasonName,
             seasonIcon: seasonInfo.seasonIcon,
             data: JSON.stringify(seasonInfo)
+        }, { e, scale: 1.5 });
+    }
+
+    async showRegressionCalendar(e) {
+        let [, , yearStr] = e.msg.match(/^(#|\/)?((20|21|22|23|24|25)\s*年)复刻日历$/);
+        const year = 2000 + parseInt(yearStr)
+        const baseUrl = 'https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json';
+        const regressionRecordsData = await (await fetch(baseUrl)).json();
+
+        const yearData = regressionRecordsData.find(record => record.year === year);
+        if (!yearData) return e.reply('不存在该年份的复刻日历');
+
+        const specialDays = [];
+        yearData.yearRecord.forEach(monthObj => {
+            monthObj.monthRecord.forEach(record => {
+                specialDays.push({
+                    month: monthObj.month,
+                    day: record.day
+                });
+            });
+        });
+
+        return render('admin/calendar', {
+            year: year,
+            specialDays: JSON.stringify(specialDays)
         }, { e, scale: 1.5 });
     }
 }
