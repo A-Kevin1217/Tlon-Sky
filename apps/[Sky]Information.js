@@ -182,6 +182,16 @@ export class SkyInformationPlugin extends plugin {
             return acc;
         }, {});
 
+        // 统计每个先祖的复刻次数
+        const spiritReappearCount = regressionData.flatMap(year =>
+            year.yearRecord.flatMap(month =>
+                month.monthRecord.map(record => record.name)
+            )
+        ).reduce((acc, name) => {
+            acc[name] = (acc[name] || 0) + 1;
+            return acc;
+        }, {});
+
         // 查找目标季节数据
         const seasonInfo = seasonalData
             .map(season => ({
@@ -199,7 +209,8 @@ export class SkyInformationPlugin extends plugin {
                         return {
                             name: spiritName,
                             status: diffDays > 0 ? `已 ${diffDays} 天未复刻` : '当前正在复刻',
-                            icons: spirit.icon || []
+                            icons: spirit.icon || [],
+                            count: spiritReappearCount[spiritName] || 0
                         };
                     })
                     .filter(Boolean)
