@@ -198,7 +198,7 @@ export class SKY extends plugin {
               <th>月份</th>
               <th>日期</th>
               <th colspan="2">先祖</th>
-              <th>装扮&动作</th>
+              <th>先祖物品</th>
               <th>iOS</th>
               <th>安卓</th>
               <th>蜡烛</th>
