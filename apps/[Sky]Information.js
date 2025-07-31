@@ -110,7 +110,7 @@ export class SkyInformationPlugin extends plugin {
     }
 
     async showSeasonalRemaining(e) {
-        const { season, activity } = await getLinkData('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
+        const { season, activity } = await getLinkData('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
         const now = new Date();
 
         // 合并日期处理逻辑
@@ -165,8 +165,8 @@ export class SkyInformationPlugin extends plugin {
 
         // 合并数据获取与处理逻辑
         const [seasonalData, regressionData] = await Promise.all([
-            fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json').then(r => r.json()),
-            fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json').then(r => r.json())
+            fetch('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json').then(r => r.json()),
+            fetch('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json').then(r => r.json())
         ]);
 
         // 构建最后出现日期映射
@@ -229,7 +229,7 @@ export class SkyInformationPlugin extends plugin {
     async showRegressionCalendar(e) {
         let [, , yearStr] = e.msg.match(/^(#|\/)?((20|21|22|23|24|25)\s*年)复刻日历$/);
         const year = 2000 + parseInt(yearStr)
-        const baseUrl = 'https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json';
+        const baseUrl = 'https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json';
         const regressionRecordsData = await (await fetch(baseUrl)).json();
 
         const yearData = regressionRecordsData.find(record => record.year === year);
