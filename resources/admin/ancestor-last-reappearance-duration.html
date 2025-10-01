@@ -39,6 +39,14 @@
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
 
+    .season-icon {
+        width: 64px;
+        height: 64px;
+        display: block;
+        margin: 10px auto 0;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
     h1 {
         color: #2c3e50;
         font-size: 2.8em;
@@ -240,8 +248,6 @@
     <div class="container">
         <div class="header">
             <h1>
-                <img src="https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/{{seasonIcon}}"
-                    alt="感恩季图标" class="header-icon">
                 {{seasonName}}季先祖多久未复刻
             </h1>
             <p class="subtitle">网易你藏着掖着是想当传家宝吗</p>
@@ -260,6 +266,9 @@
                 <span class="stat-label">最长等待天数</span>
             </div>
         </div>
+
+        <img src="https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/{{seasonIcon}}"
+             alt="季节图标" class="season-icon">
 
         <ul id="spiritList" class="spirit-list">
             <li class="loading">正在加载先祖数据...</li>
