@@ -45,14 +45,16 @@ function storagePushData(data) {
 
 /**
  * 读取cron配置数据
- * @returns {{老奶奶干饭: any, 每日任务: any, 献祭刷新: any}} 解析后的cron配置数据
+ * @returns {{老奶奶干饭: any, 每日任务: any, 献祭刷新: any, 碎石提醒: any}} 解析后的cron配置数据
  */
 function getCronData() {
     const cronData = Yaml.parse(fs.readFileSync(otherFilePath['cron'], 'utf-8'))
-    return {
+        return {
         老奶奶干饭: cronData['老奶奶干饭'],
         每日任务: cronData['每日任务'],
-        献祭刷新: cronData['献祭刷新']
+        献祭刷新: cronData['献祭刷新'],
+        碎石提醒: cronData['碎石提醒'],
+        碎石坠落前提醒: cronData['碎石坠落前提醒']
     }
 }
 
