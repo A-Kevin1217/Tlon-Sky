@@ -68,6 +68,9 @@ export default class Button {
         { label: '光遇进度', data: '/光遇进度' },
         { label: '今日碎石', data: '/今日碎石' },
         { label: '复刻兑换图', data: '/复刻兑换图' }
+      ],[
+        { label: '蜡烛记录', data: '/蜡烛记录' },
+        { label: '蜡烛记录帮助', data: '/蜡烛记录帮助' }
       ]);
     } else {
       // TRSS按钮格式 (使用text和callback)
@@ -81,6 +84,10 @@ export default class Button {
           { text: '光遇进度', callback: '/光遇进度' },
           { text: '今日碎石', callback: '/今日碎石' },
           { text: '复刻兑换图', callback: '/复刻兑换图' }
+        ],
+        [
+          { text: '蜡烛记录', callback: '/蜡烛记录' },
+          { text: '蜡烛记录帮助', callback: '/蜡烛记录帮助' }
         ]
       );
     }

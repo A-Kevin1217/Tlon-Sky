@@ -16,7 +16,8 @@ export class SKY extends plugin {
                 { reg: /^[#\/]?切换蜡烛ID\s*(.+)$/, fnc: 'switchCandleId' },
                 { reg: /^[#\/]?删除蜡烛ID\s*(.+)$/, fnc: 'deleteCandleId' },
                 { reg: /^[#\/]?蜡烛记录$/, fnc: 'showCandleHistory' },
-                { reg: /^[#\/]?蜡烛ID列表$/, fnc: 'listCandleIds' }
+                { reg: /^[#\/]?蜡烛ID列表$/, fnc: 'listCandleIds' },
+                { reg: /^[#\/]?蜡烛记录帮助$/, fnc: 'showHelp' }
             ]
         })
     }
@@ -242,6 +243,32 @@ export class SKY extends plugin {
         }
 
         await e.reply(reply)
+        return true
+    }
+
+    async showHelp(e) {
+        const helpText = `━蜡烛记录功能使用说明━
+
+【功能】
+记录蜡烛数据，支持多账号，自动计算变化量
+
+【主要命令】
+• 记录： #记录蜡烛<白蜡>:<季蜡>:<爱心>:<红蜡>
+  例： #记录蜡烛100:50:20:10
+
+• 查看记录： #蜡烛记录
+
+• 多账号管理：
+  #添加蜡烛ID <名称> - 添加新ID
+  #切换蜡烛ID <名称> - 切换当前ID
+  #蜡烛ID列表 - 查看所有ID
+  #删除蜡烛ID <名称> - 删除ID
+
+【使用示例】
+#记录蜡烛100:50:20:10
+（系统会自动显示距离上次记录天数及变化量）`;
+
+        await e.reply(helpText)
         return true
     }
 }
