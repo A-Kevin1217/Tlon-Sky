@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜡烛记录报表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', Arial, sans-serif;
+            background: linear-gradient(135deg, #0b0b0b 0%, #171717 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #e5e7eb;
+        }
+
+        .report-container {
+            width: 800px;
+            background: #111315;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            border: 1px solid #222428;
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #0f0f10 0%, #1b1b1d 100%);
+            color: #f3f4f6;
+            padding: 30px 40px;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid #222428;
+        }
+
+        .report-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .report-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #e5e7eb;
+            border: 1px solid #2a2d31;
+        }
+
+        .report-body {
+            padding: 40px;
+            color: #e5e7eb;
+        }
+
+        .info-bar {
+            background: #171a1e;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2a2d31;
+            border: 1px solid #222428;
+        }
+
+        .info-bar-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+
+        .info-bar-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        .candles-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .candle-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #14171a;
+            border: 1px solid #222428;
+            border-radius: 12px;
+            padding: 20px 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .candle-item:hover {
+            border-color: #2f3338;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .candle-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            flex-shrink: 0;
+        }
+
+        .candle-icon.white {
+            background: transparent;
+        }
+
+        .candle-icon.season {
+            background: transparent;
+        }
+
+        .candle-icon.heart {
+            background: transparent;
+        }
+
+        .candle-icon.red {
+            background: transparent;
+        }
+
+        .candle-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+
+        .candle-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 5px;
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.02em;
+            color: #e5e7eb;
+        }
+        .candle-value .value-text { display: inline-block; }
+
+        .candle-value.white { color: #e5e7eb; }
+        .candle-value.season { color: #e5e7eb; }
+        .candle-value.heart { color: #e5e7eb; }
+        .candle-value.red { color: #e5e7eb; }
+
+        .change-sup {
+            position: absolute;
+            top: -0.35em;
+            left: 100%;
+            margin-left: 0.12em;
+            font-size: 0.6em;
+            line-height: 1;
+            font-weight: 700;
+            z-index: 1;
+            pointer-events: none;
+            text-shadow: 0 1px 1px rgba(0,0,0,.06);
+            white-space: nowrap;
+        }
+
+        .change-sup.positive {
+            color: #34d399;
+        }
+
+        .change-sup.negative {
+            color: #f87171;
+        }
+
+
+        .footer-info {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #222428;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <div class="report-header">
+            <div class="status-badge">✓ 记录成功</div>
+            <div class="report-title">蜡烛记录报表</div>
+            <div class="report-subtitle">Candle Records Report</div>
+        </div>
+
+        <div class="report-body">
+            <div class="info-bar">
+                <div class="info-bar-label">当前记录ID</div>
+                <div class="info-bar-value" id="currentId"></div>
+            </div>
+
+            <div class="candles-container">
+                <div class="candle-item">
+                    <div class="candle-icon white">
+                        <svg viewBox="0 0 240 360" width="60" height="90" style="transform: translate(-10px, 5px);">
+                            <path fill="#ffffff" d="M 120.5,270.37631 C 106.13946,268.69198 97.386844,266.22075 90.081499,261.78791 80.205463,255.7952 80.590573,257.28941 79.87295,222.17903 79.528072,205.30556 78.958924,189.25 78.608176,186.5 78.257428,183.75 77.535605,167.79625 77.004124,151.04722 76.472644,134.29819 75.307902,113.78047 74.415809,105.45228 72.483555,87.413618 73.251287,81.451427 78.371933,74.729097 84.871113,66.197042 94.077339,63.135901 115.75,62.300604 L 131,61.712845 V 48.034561 c 0,-16.305565 1.47967,-22.13649 6.37489,-25.121471 5.61845,-3.425991 10.65579,-2.13244 12.51993,3.215024 0.60785,1.743683 1.10518,9.573082 1.10518,17.398665 0,11.826071 0.27029,14.452655 1.60091,15.556972 1.03298,0.857292 8.90504,1.959415 22.18984,3.106673 23.6378,2.04133 30.18343,3.583756 34.80002,8.200348 5.53852,5.538518 5.80917,8.220618 4.55201,45.109228 -0.61855,18.15 -1.59068,51.225 -2.16029,73.5 -1.68697,65.97002 -1.30846,60.10258 -4.26705,66.1449 -3.25131,6.64014 -8.00613,9.90886 -18.51891,12.73091 -15.89725,4.26745 -44.69467,5.31565 -68.69653,2.5005 z M 153.01155,196.25 c 3.93595,-2.28267 10.79008,-8.05418 17.5168,-14.75 13.37165,-13.31022 17.50437,-20.22507 18.24102,-30.52079 1.03974,-14.5317 -6.39421,-24.1634 -20.89797,-27.07617 -8.96987,-1.80141 -14.83949,0.75865 -21.5673,9.40664 l -2.18582,2.80967 -5.57937,-4.54445 C 131.25148,125.6392 127.93817,124 123.2278,124 c -10.23621,0 -18.14947,5.91689 -22.22651,16.61917 -2.965743,7.78512 -2.824923,13.1771 0.52285,20.01969 7.47958,15.28771 33.43154,39.31803 42.49861,39.35176 1.38752,0.005 5.43247,-1.67812 8.9888,-3.74062 z"/>
+                        </svg>
+                    </div>
+                    <div class="candle-info">
+                        <div class="candle-value white" id="white">
+                            <span class="value-text" id="whiteValue"></span>
+                            <span class="change-sup white-change" id="whiteChange" style="display: none;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="candle-item">
+                    <div class="candle-icon season">
+                        <svg viewBox="0 0 240 360" width="60" height="90" style="transform: translate(-10px, 5px);">
+                            <path fill="#fdab2b" d="M 120.5,270.37631 C 106.13946,268.69198 97.386844,266.22075 90.081499,261.78791 80.205463,255.7952 80.590573,257.28941 79.87295,222.17903 79.528072,205.30556 78.958924,189.25 78.608176,186.5 78.257428,183.75 77.535605,167.79625 77.004124,151.04722 76.472644,134.29819 75.307902,113.78047 74.415809,105.45228 72.483555,87.413618 73.251287,81.451427 78.371933,74.729097 84.871113,66.197042 94.077339,63.135901 115.75,62.300604 L 131,61.712845 V 48.034561 c 0,-16.305565 1.47967,-22.13649 6.37489,-25.121471 5.61845,-3.425991 10.65579,-2.13244 12.51993,3.215024 0.60785,1.743683 1.10518,9.573082 1.10518,17.398665 0,11.826071 0.27029,14.452655 1.60091,15.556972 1.03298,0.857292 8.90504,1.959415 22.18984,3.106673 23.6378,2.04133 30.18343,3.583756 34.80002,8.200348 5.53852,5.538518 5.80917,8.220618 4.55201,45.109228 -0.61855,18.15 -1.59068,51.225 -2.16029,73.5 -1.68697,65.97002 -1.30846,60.10258 -4.26705,66.1449 -3.25131,6.64014 -8.00613,9.90886 -18.51891,12.73091 -15.89725,4.26745 -44.69467,5.31565 -68.69653,2.5005 z M 153.01155,196.25 c 3.93595,-2.28267 10.79008,-8.05418 17.5168,-14.75 13.37165,-13.31022 17.50437,-20.22507 18.24102,-30.52079 1.03974,-14.5317 -6.39421,-24.1634 -20.89797,-27.07617 -8.96987,-1.80141 -14.83949,0.75865 -21.5673,9.40664 l -2.18582,2.80967 -5.57937,-4.54445 C 131.25148,125.6392 127.93817,124 123.2278,124 c -10.23621,0 -18.14947,5.91689 -22.22651,16.61917 -2.965743,7.78512 -2.824923,13.1771 0.52285,20.01969 7.47958,15.28771 33.43154,39.31803 42.49861,39.35176 1.38752,0.005 5.43247,-1.67812 8.9888,-3.74062 z"></path>
+                        </svg>
+                    </div>
+                    <div class="candle-info">
+                        <div class="candle-value season" id="season">
+                            <span class="value-text" id="seasonValue"></span>
+                            <span class="change-sup season-change" id="seasonChange" style="display: none;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="candle-item">
+                    <div class="candle-icon heart">
+                        <svg viewBox="0 0 300 300" width="60" height="60" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <path fill="#ffffff" d="M 142.60959,239.44301 C 113.95321,222.16358 85.878166,200.14007 65.960999,179.31593 34.762678,146.69692 25.58634,117.48388 38.520684,91.959182 44.836353,79.49581 59.46944,65.48697 70.949494,60.913786 78.618407,57.858805 93.1368,57.186091 101.94215,59.477733 c 13.29152,3.459193 26.87142,11.182516 40.38467,22.968066 l 7.75335,6.762057 8.70991,-8.364533 c 24.65648,-23.678741 50.65888,-30.815814 72.23571,-19.827073 11.53148,5.872805 25.70955,20.774076 31.15572,32.744938 10.07795,22.151642 2.90076,46.630652 -22.5704,76.980142 -16.43339,19.58077 -46.61543,44.60439 -77.99281,64.66304 -6.53493,4.1776 -12.15993,7.59447 -12.5,7.59306 -0.34006,-0.001 -3.26898,-1.6009 -6.50871,-3.55442 z"></path>
+                        </svg>
+                    </div>
+                    <div class="candle-info">
+                        <div class="candle-value heart" id="heart">
+                            <span class="value-text" id="heartValue"></span>
+                            <span class="change-sup heart-change" id="heartChange" style="display: none;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="candle-item">
+                    <div class="candle-icon red">
+                        <svg viewBox="0 0 300 300" width="60" height="60" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <defs>
+                                <radialGradient id="ac-gradient" gradientUnits="userSpaceOnUse" cx="48%" cy="52%" r="100">
+                                    <stop offset="35%" stop-color="#9D3752"></stop>
+                                    <stop offset="100%" stop-color="#FFDCCF"></stop>
+                                </radialGradient>
+                            </defs>
+                            <path style="fill:url(#ac-gradient);stroke:#9D3752;stroke-width:2px;" d="M 132.19253,271.95392 C 109.84932,270.24014 97.72766,267.24222 88.061479,261.03945 79.819795,255.75078 79.721195,255.29293 78.900339,218.5 77.899922,173.6587 76.263326,133.04076 74.770363,116 74.071664,108.025 73.511182,97.225 73.524849,92 c 0.02912,-11.133955 1.803503,-15.557322 8.560808,-21.341324 6.489118,-5.554444 13.995804,-7.609561 32.485773,-8.893684 l 16.07144,-1.116157 -0.0714,-12.574417 c -0.0841,-14.798712 1.33242,-20.974279 5.64275,-24.601186 3.5813,-3.013464 9.66455,-3.369707 12.07419,-0.70708 2.74694,3.035331 3.82011,10.744087 3.148,22.612567 -0.85742,15.14074 -1.25595,14.726189 15.17162,15.78167 28.83453,1.852636 37.83926,3.715032 43.17231,8.929073 6.13884,6.001848 5.98043,1.253327 3.21615,96.410538 -0.51128,17.6 -1.20867,42.8 -1.54977,56 -0.72442,28.03361 -1.61228,32.6656 -7.36387,38.41719 -4.41499,4.41499 -11.90372,7.24094 -25.08281,9.46527 -11.35149,1.91586 -32.88987,2.63897 -46.80747,1.57146 z"></path>
+                            <path style="fill:#fff" d="m 140.78738,211.25 c -0.97969,-1.12602 -1.72812,-4.78076 -2.09902,-10.25 -1.18159,-17.42369 -7.36292,-29.73213 -17.40411,-34.65552 C 116.1549,163.82946 114.19795,163.46824 104,163.15414 92.035288,162.78563 89,161.74267 89,158 c 0,-3.26299 3.252468,-4.73243 11.95614,-5.4017 15.31156,-1.17738 25.88251,-4.55111 30.81059,-9.83324 3.93609,-4.21887 6.41475,-13.19983 6.97291,-25.26506 0.54544,-11.79016 1.62804,-14.5 5.7929,-14.5 1.22242,0 2.67423,0.5625 3.22626,1.25 0.55203,0.6875 1.22744,6.2 1.50091,12.25 0.6374,14.10138 3.33173,22.01489 9.74029,28.60813 6.23844,6.41821 13.37124,8.96103 27.39521,9.76627 8.84755,0.50802 11.10188,0.9545 11.99488,2.3756 0.79965,1.27254 0.79946,2.22746 -7.1e-4,3.5 -0.85493,1.35965 -3.19591,1.92163 -10.49488,2.51944 -16.11782,1.32011 -25.11446,4.76537 -31.55735,12.08487 -5.01982,5.70283 -7.4862,13.50763 -8.10421,25.64569 -0.26604,5.225 -0.93238,10.0625 -1.48076,10.75 -1.41826,1.77804 -4.18453,1.54616 -5.9648,-0.5 z"></path>
+                        </svg>
+                    </div>
+                    <div class="candle-info">
+                        <div class="candle-value red" id="red">
+                            <span class="value-text" id="redValue"></span>
+                            <span class="change-sup red-change" id="redChange" style="display: none;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-info">
+                Tlon-Sky Plugin - 光遇蜡烛记录系统
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const data = JSON.parse('{{@data}}')
+        
+        const setVal = (baseId, val) => {
+            const span = document.getElementById(baseId + 'Value')
+            const container = document.getElementById(baseId)
+            const text = String(val ?? '')
+            if (span) span.textContent = text
+            if (container) container.setAttribute('data-value', text)
+        }
+
+        document.getElementById('currentId').textContent = data.currentId
+        // 数值写入到单独的span，避免被上标覆盖布局
+        setVal('white', data.white)
+        setVal('season', data.season)
+        setVal('heart', data.heart)
+        setVal('red', data.red)
+        
+        if (data.hasChanges) {
+            // 显示变化量为上标
+            if (data.whiteChange) {
+                const whiteChangeEl = document.getElementById('whiteChange')
+                whiteChangeEl.textContent = data.whiteChange
+                whiteChangeEl.className = 'change-sup ' + data.whiteChangeClass
+                whiteChangeEl.style.display = 'block'
+            }
+            
+            if (data.seasonChange) {
+                const seasonChangeEl = document.getElementById('seasonChange')
+                seasonChangeEl.textContent = data.seasonChange
+                seasonChangeEl.className = 'change-sup ' + data.seasonChangeClass
+                seasonChangeEl.style.display = 'block'
+            }
+            
+            if (data.heartChange) {
+                const heartChangeEl = document.getElementById('heartChange')
+                heartChangeEl.textContent = data.heartChange
+                heartChangeEl.className = 'change-sup ' + data.heartChangeClass
+                heartChangeEl.style.display = 'block'
+            }
+            
+            if (data.redChange) {
+                const redChangeEl = document.getElementById('redChange')
+                redChangeEl.textContent = data.redChange
+                redChangeEl.className = 'change-sup ' + data.redChangeClass
+                redChangeEl.style.display = 'block'
+            }
+        }
+    </script>
+</body>
+</html>
+

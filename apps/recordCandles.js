@@ -1,5 +1,6 @@
 import { fileExists } from '../function/function.js'
 import fs from 'fs'
+import { render } from './../components/index.js'
 
 if (!fileExists('plugins/Tlon-Sky/data/recordCandles')) fs.mkdirSync('plugins/Tlon-Sky/data/recordCandles', { recursive: true })
 
@@ -227,23 +228,39 @@ export class SKY extends plugin {
 
         this.saveUserData(user_id, userData)
 
-        let reply = `记录成功！\n当前ID：${currentId}\n`
-        reply += `白蜡：${candles.white}\n`
-        reply += `季蜡：${candles.season}\n`
-        reply += `爱心：${candles.heart}\n`
-        reply += `红蜡：${candles.red}`
+        const hasChanges = lastRecord !== null
+        
+        const whiteChange = changes.white >= 0 ? `+${changes.white}` : changes.white.toString()
+        const seasonChange = changes.season >= 0 ? `+${changes.season}` : changes.season.toString()
+        const heartChange = changes.heart >= 0 ? `+${changes.heart}` : changes.heart.toString()
+        const redChange = changes.red >= 0 ? `+${changes.red}` : changes.red.toString()
+        
+        const whiteChangeClass = changes.white >= 0 ? 'positive' : 'negative'
+        const seasonChangeClass = changes.season >= 0 ? 'positive' : 'negative'
+        const heartChangeClass = changes.heart >= 0 ? 'positive' : 'negative'
+        const redChangeClass = changes.red >= 0 ? 'positive' : 'negative'
 
-        if (lastRecord) {
-            reply += `\n\n距离上次记录：${daysPassed}天`
-            reply += '\n蜡烛变化：'
-            reply += `\n白蜡：${changes.white >= 0 ? '+' : ''}${changes.white}`
-            reply += `\n季蜡：${changes.season >= 0 ? '+' : ''}${changes.season}`
-            reply += `\n爱心：${changes.heart >= 0 ? '+' : ''}${changes.heart}`
-            reply += `\n红蜡：${changes.red >= 0 ? '+' : ''}${changes.red}`
+        const renderData = {
+            currentId,
+            white: candles.white,
+            season: candles.season,
+            heart: candles.heart,
+            red: candles.red,
+            hasChanges,
+            daysPassed,
+            whiteChange: hasChanges ? whiteChange : '',
+            seasonChange: hasChanges ? seasonChange : '',
+            heartChange: hasChanges ? heartChange : '',
+            redChange: hasChanges ? redChange : '',
+            whiteChangeClass: hasChanges ? whiteChangeClass : '',
+            seasonChangeClass: hasChanges ? seasonChangeClass : '',
+            heartChangeClass: hasChanges ? heartChangeClass : '',
+            redChangeClass: hasChanges ? redChangeClass : ''
         }
-
-        await e.reply(reply)
-        return true
+        
+        return render('admin/candleRecord', {
+            data: JSON.stringify(renderData)
+        }, { e, scale: 1.5 });
     }
 
     async showHelp(e) {
