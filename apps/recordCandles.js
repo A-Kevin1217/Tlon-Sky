@@ -126,33 +126,16 @@ export class SKY extends plugin {
             return true
         }
 
-        const recentRecords = records.slice(-5)
-        let reply = `当前ID: ${currentId}\n最近${recentRecords.length}条记录：\n`
+        const recentRecords = records.slice(-10) // 显示最近10条记录
+        const processedRecords = []
 
         recentRecords.forEach((record, index) => {
             const prevRecord = index > 0 ? recentRecords[index - 1] : null
-
-            // 格式化时间显示
-            let timeDisplay = record.date
-            // 如果date字段只包含日期（旧数据），则从timestamp中提取时间
-            if (record.timestamp && !record.date.includes(' ')) {
-                const recordTime = new Date(record.timestamp)
-                const timeStr = recordTime.toLocaleTimeString('zh-CN', { 
-                    hour: '2-digit', 
-                    minute: '2-digit', 
-                    second: '2-digit' 
-                })
-                timeDisplay += ` ${timeStr}`
-            }
-
-            reply += `\n${timeDisplay}:`
-            reply += `\n白蜡: ${record.candles.white}`
-            reply += `\n季蜡: ${record.candles.season}`
-            reply += `\n爱心: ${record.candles.heart}`
-            reply += `\n红蜡: ${record.candles.red}`
+            let changes = null
+            let timeInterval = ''
 
             if (prevRecord) {
-                const changes = {
+                changes = {
                     white: record.candles.white - prevRecord.candles.white,
                     season: record.candles.season - prevRecord.candles.season,
                     heart: record.candles.heart - prevRecord.candles.heart,
@@ -160,9 +143,6 @@ export class SKY extends plugin {
                 }
 
                 // 计算时间间隔
-                let timeIntervalText = ''
-                
-                // 计算当前记录的时间戳
                 let currentRecordTimestamp
                 if (record.timestamp) {
                     currentRecordTimestamp = record.timestamp
@@ -170,7 +150,6 @@ export class SKY extends plugin {
                     currentRecordTimestamp = new Date(record.date + 'T00:00:00').getTime()
                 }
                 
-                // 计算上一条记录的时间戳
                 let prevRecordTimestamp
                 if (prevRecord.timestamp) {
                     prevRecordTimestamp = prevRecord.timestamp
@@ -186,30 +165,33 @@ export class SKY extends plugin {
                 const seconds = totalSeconds % 60
 
                 if (days > 0) {
-                    timeIntervalText = `${days}天${hours}小时${minutes}分钟`
+                    timeInterval = `${days}天${hours}小时${minutes}分钟`
                 } else if (hours > 0) {
-                    timeIntervalText = `${hours}小时${minutes}分钟${seconds}秒`
+                    timeInterval = `${hours}小时${minutes}分钟${seconds}秒`
                 } else if (minutes > 0) {
-                    timeIntervalText = `${minutes}分钟${seconds}秒`
+                    timeInterval = `${minutes}分钟${seconds}秒`
                 } else {
-                    timeIntervalText = `${seconds}秒`
-                }
-
-                reply += '\n变化:'
-                reply += `\n白蜡: ${changes.white >= 0 ? '+' : ''}${changes.white}`
-                reply += `\n季蜡: ${changes.season >= 0 ? '+' : ''}${changes.season}`
-                reply += `\n爱心: ${changes.heart >= 0 ? '+' : ''}${changes.heart}`
-                reply += `\n红蜡: ${changes.red >= 0 ? '+' : ''}${changes.red}`
-                
-                if (timeIntervalText) {
-                    reply += `\n间隔: ${timeIntervalText}`
+                    timeInterval = `${seconds}秒`
                 }
             }
-            reply += '\n'
+
+            processedRecords.push({
+                date: record.date,
+                timestamp: record.timestamp,
+                candles: record.candles,
+                changes: changes,
+                timeInterval: timeInterval
+            })
         })
 
-        await e.reply(reply)
-        return true
+        const renderData = {
+            currentId: currentId,
+            records: processedRecords.reverse() // 最新的记录在上面
+        }
+
+        return render('admin/candleHistory', {
+            data: JSON.stringify(renderData)
+        }, { e, scale: 1.2 });
     }
 
     async listCandleIds(e) {
