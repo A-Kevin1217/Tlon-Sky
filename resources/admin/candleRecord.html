@@ -201,6 +201,35 @@
             font-size: 12px;
             color: #9ca3af;
         }
+
+        .time-interval {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #e5e7eb;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .time-unit .number {
+            color: #60a5fa;
+            margin-right: 2px;
+        }
+
+        .time-unit .label {
+            color: #9ca3af;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -215,6 +244,16 @@
             <div class="info-bar">
                 <div class="info-bar-label">当前记录ID</div>
                 <div class="info-bar-value" id="currentId"></div>
+            </div>
+
+            <div class="info-bar" id="timeIntervalBar" style="display: none;">
+                <div class="info-bar-label">距离上次记录过了</div>
+                <div class="info-bar-value" id="timeInterval"></div>
+            </div>
+
+            <div class="info-bar" id="lastRecordTimeBar" style="display: none;">
+                <div class="info-bar-label">上次记录时间</div>
+                <div class="info-bar-value" id="lastRecordTime"></div>
             </div>
 
             <div class="candles-container">
@@ -296,7 +335,72 @@
             if (container) container.setAttribute('data-value', text)
         }
 
+        const formatTimeInterval = (timeInterval) => {
+            if (!timeInterval) return ''
+            
+            const { days, hours, minutes, seconds } = timeInterval
+            
+            if (days > 0) {
+                return `${days}天${hours}小时${minutes}分钟`
+            } else if (hours > 0) {
+                return `${hours}小时${minutes}分钟${seconds}秒`
+            } else if (minutes > 0) {
+                return `${minutes}分钟${seconds}秒`
+            } else {
+                return `${seconds}秒`
+            }
+        }
+
+        const createTimeDisplay = (timeInterval) => {
+            if (!timeInterval) return ''
+            
+            const { days, hours, minutes, seconds } = timeInterval
+            let html = '<div class="time-interval">'
+            
+            if (days > 0) {
+                // 满一天：显示天数和小时
+                html += `<div class="time-unit"><span class="number">${days}</span><span class="label">天</span></div>`
+                if (hours > 0) {
+                    html += `<div class="time-unit"><span class="number">${hours}</span><span class="label">时</span></div>`
+                }
+            } else if (hours > 0) {
+                // 满一小时但不足一天：显示时分秒
+                html += `<div class="time-unit"><span class="number">${hours}</span><span class="label">时</span></div>`
+                html += `<div class="time-unit"><span class="number">${minutes}</span><span class="label">分</span></div>`
+                if (seconds > 0) {
+                    html += `<div class="time-unit"><span class="number">${seconds}</span><span class="label">秒</span></div>`
+                }
+            } else if (minutes > 0) {
+                // 满一分钟但不足一小时：显示分秒
+                html += `<div class="time-unit"><span class="number">${minutes}</span><span class="label">分</span></div>`
+                html += `<div class="time-unit"><span class="number">${seconds}</span><span class="label">秒</span></div>`
+            } else {
+                // 不足一分钟：显示秒
+                html += `<div class="time-unit"><span class="number">${seconds}</span><span class="label">秒</span></div>`
+            }
+            
+            html += '</div>'
+            return html
+        }
+
         document.getElementById('currentId').textContent = data.currentId
+        
+        // 显示时间间隔
+        if (data.timeInterval) {
+            const timeIntervalBar = document.getElementById('timeIntervalBar')
+            const timeIntervalEl = document.getElementById('timeInterval')
+            timeIntervalEl.innerHTML = createTimeDisplay(data.timeInterval)
+            timeIntervalBar.style.display = 'block'
+        }
+        
+        // 显示上次记录时间
+        if (data.lastRecordTime) {
+            const lastRecordTimeBar = document.getElementById('lastRecordTimeBar')
+            const lastRecordTimeEl = document.getElementById('lastRecordTime')
+            lastRecordTimeEl.textContent = data.lastRecordTime
+            lastRecordTimeBar.style.display = 'block'
+        }
+        
         // 数值写入到单独的span，避免被上标覆盖布局
         setVal('white', data.white)
         setVal('season', data.season)
