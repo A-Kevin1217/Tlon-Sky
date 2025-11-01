@@ -1,0 +1,471 @@
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 1200px;
+        font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 3px solid #667eea;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 10px;
+    }
+
+    .header-info {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .header-info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    .header-info-item strong {
+        color: #333;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .stat-card .label {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .stat-card .value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #667eea;
+    }
+
+    .section {
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #667eea;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-title::before {
+        content: '';
+        width: 5px;
+        height: 25px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 3px;
+    }
+
+    .map-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .map-card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 15px;
+        border-left: 4px solid #667eea;
+        transition: all 0.3s ease;
+    }
+
+    .map-card:hover {
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        transform: translateX(5px);
+    }
+
+    .map-card-header {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .map-card-stats {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .map-card-stats span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .map-card-stats .collected {
+        color: #27ae60;
+        font-weight: bold;
+    }
+
+    .map-card-stats .uncollected {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .uncollected-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .uncollected-type {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        border-left: 5px solid #667eea;
+    }
+
+    .uncollected-type-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    .uncollected-type-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .uncollected-type-count {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .uncollected-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 10px;
+    }
+
+    .uncollected-item {
+        background: white;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+    }
+
+    .uncollected-item:hover {
+        border-color: #667eea;
+        box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+    }
+
+    .uncollected-item-name {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .uncollected-item-count {
+        color: #e74c3c;
+        font-size: 0.9rem;
+    }
+
+    .season-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .season-card {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border-radius: 12px;
+        padding: 15px;
+        text-align: center;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .season-card-name {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .season-card-stats {
+        display: flex;
+        justify-content: space-around;
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 8px;
+    }
+
+    .season-card .collected {
+        color: #27ae60;
+    }
+
+    .season-card .uncollected {
+        color: #e74c3c;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .map-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="header">
+        <h1>光翼收集统计</h1>
+        <div class="header-info">
+            <div class="header-info-item">
+                <strong>角色ID:</strong> <span id="roleId">{{roleId}}</span>
+            </div>
+            <div class="header-info-item">
+                <strong>更新时间:</strong> <span id="timestamp">{{timestamp}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+            <div class="label">总光翼数</div>
+            <div class="value">{{statistics.total}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">已收集</div>
+            <div class="value" style="color: #27ae60;">{{statistics.collected}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">未收集</div>
+            <div class="value" style="color: #e74c3c;">{{statistics.actual_total - statistics.collected}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">收集率</div>
+            <div class="value">{{statistics.collection_rate}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">已献祭</div>
+            <div class="value">{{statistics.deposited}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">永无翼数</div>
+            <div class="value" style="color: #f39c12;">
+                {{statistics.unredeemed_permanent}}
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">永久光翼统计</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">普通永久翼</div>
+                <div class="value">{{statistics.normal_wings.total}}</div>
+                <div style="margin-top: 10px; font-size: 0.85rem; color: #666;">
+                    已收集: <span style="color: #27ae60;">{{statistics.normal_wings.collected}}</span> | 
+                    未收集: <span style="color: #e74c3c;">{{statistics.normal_wings.uncollected}}</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="label">永久光翼</div>
+                <div class="value">{{statistics.permanent_wings.total}}</div>
+                <div style="margin-top: 10px; font-size: 0.85rem; color: #666;">
+                    已收集: <span style="color: #27ae60;">{{statistics.permanent_wings.collected}}</span> | 
+                    未收集: <span style="color: #e74c3c;">{{statistics.permanent_wings.uncollected}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">地图光翼统计</div>
+        <div class="map-grid" id="mapGrid"></div>
+    </div>
+
+    <div class="section" id="uncollectedSection" style="display: none;">
+        <div class="section-title">未收集光翼详情</div>
+        <div class="uncollected-list" id="uncollectedList"></div>
+    </div>
+
+    <div class="section" id="seasonSection" style="display: none;">
+        <div class="section-title">季节光翼统计</div>
+        <div class="season-list" id="seasonList"></div>
+    </div>
+</div>
+
+<script>
+    // 解析JSON数据
+    const mapStatistics = JSON.parse('{{@mapStatisticsJson}}');
+    const uncollectedByType = JSON.parse('{{@uncollectedByTypeJson}}');
+    const seasonStatistics = JSON.parse('{{@seasonStatisticsJson}}');
+
+    // 渲染地图统计
+    function renderMapStatistics() {
+        const mapGrid = document.getElementById('mapGrid');
+        if (!mapStatistics || Object.keys(mapStatistics).length === 0) {
+            return;
+        }
+
+        for (const [mapName, stats] of Object.entries(mapStatistics)) {
+            const card = document.createElement('div');
+            card.className = 'map-card';
+            card.innerHTML = `
+                <div class="map-card-header">
+                    <span>${mapName}</span>
+                    <span style="font-size: 0.9rem; color: #667eea;">${stats.total}个</span>
+                </div>
+                <div class="map-card-stats">
+                    <span class="collected">✓ ${stats.collected}</span>
+                    <span class="uncollected">✗ ${stats.uncollected}</span>
+                </div>
+            `;
+            mapGrid.appendChild(card);
+        }
+    }
+
+    // 渲染未收集光翼详情
+    function renderUncollectedList() {
+        const uncollectedList = document.getElementById('uncollectedList');
+        const uncollectedSection = document.getElementById('uncollectedSection');
+        
+        if (!uncollectedByType || Object.keys(uncollectedByType).length === 0) {
+            return;
+        }
+
+        uncollectedSection.style.display = 'block';
+
+        for (const [type, items] of Object.entries(uncollectedByType)) {
+            const typeDiv = document.createElement('div');
+            typeDiv.className = 'uncollected-type';
+            typeDiv.innerHTML = `
+                <div class="uncollected-type-header">
+                    <div class="uncollected-type-title">${type}</div>
+                    <div class="uncollected-type-count">${items.length}类</div>
+                </div>
+                <div class="uncollected-items"></div>
+            `;
+
+            const itemsContainer = typeDiv.querySelector('.uncollected-items');
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'uncollected-item';
+                itemDiv.innerHTML = `
+                    <div class="uncollected-item-name">${item.name}</div>
+                    <div class="uncollected-item-count">缺少 ${item.uncollected} 个</div>
+                `;
+                itemsContainer.appendChild(itemDiv);
+            });
+
+            uncollectedList.appendChild(typeDiv);
+        }
+    }
+
+    // 渲染季节统计
+    function renderSeasonStatistics() {
+        const seasonList = document.getElementById('seasonList');
+        const seasonSection = document.getElementById('seasonSection');
+        
+        if (!seasonStatistics || Object.keys(seasonStatistics).length === 0) {
+            return;
+        }
+
+        seasonSection.style.display = 'block';
+
+        for (const [seasonName, stats] of Object.entries(seasonStatistics)) {
+            const card = document.createElement('div');
+            card.className = 'season-card';
+            card.innerHTML = `
+                <div class="season-card-name">${seasonName}</div>
+                <div class="season-card-stats">
+                    <span class="collected">✓ ${stats.collected}</span>
+                    <span class="uncollected">✗ ${stats.uncollected}</span>
+                </div>
+            `;
+            seasonList.appendChild(card);
+        }
+    }
+
+    // 初始化渲染
+    document.addEventListener('DOMContentLoaded', function() {
+        renderMapStatistics();
+        renderUncollectedList();
+        renderSeasonStatistics();
+    });
+</script>
