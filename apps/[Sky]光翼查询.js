@@ -15,8 +15,8 @@ export class SkyWingQueryPlugin extends plugin {
             priority: 1,
             rule: [
                 { reg: /^光遇绑定\s*(\d+)$/, fnc: 'bindSkyId' },
-                { reg: /^光遇切换\s*(.+)$/, fnc: 'switchSkyId' },
-                { reg: /^光遇删除\s*(.+)$/, fnc: 'deleteSkyId' },
+                { reg: /^光遇切换\s*(\d+)$/, fnc: 'switchSkyId' },
+                { reg: /^光遇删除\s*(\d+)$/, fnc: 'deleteSkyId' },
                 { reg: /^光遇ID列表$/, fnc: 'listSkyIds' },
                 { reg: /^光翼查询$/, fnc: 'queryWings' },
                 { reg: /^光翼查询\s*(\d+)$/, fnc: 'queryWingsById' }
@@ -70,15 +70,21 @@ export class SkyWingQueryPlugin extends plugin {
 
     async switchSkyId(e) {
         const { user_id } = e;
-        const targetId = e.msg.match(/^光遇切换\s*(.+)$/)[1].trim();
+        const index = parseInt(e.msg.match(/^光遇切换\s*(\d+)$/)[1].trim());
 
         let userData = this.getUserData(user_id);
 
-        if (!userData.ids.includes(targetId)) {
-            await e.reply(['ID不存在，请先绑定该ID！']);
+        if (userData.ids.length === 0) {
+            await e.reply(['您还没有绑定任何ID！']);
             return true;
         }
 
+        if (index < 1 || index > userData.ids.length) {
+            await e.reply([`序号无效！请输入1-${userData.ids.length}之间的数字。`]);
+            return true;
+        }
+
+        const targetId = userData.ids[index - 1];
         userData.currentId = targetId;
         this.saveUserData(user_id, userData);
 
@@ -88,16 +94,22 @@ export class SkyWingQueryPlugin extends plugin {
 
     async deleteSkyId(e) {
         const { user_id } = e;
-        const targetId = e.msg.match(/^光遇删除\s*(.+)$/)[1].trim();
+        const index = parseInt(e.msg.match(/^光遇删除\s*(\d+)$/)[1].trim());
 
         let userData = this.getUserData(user_id);
 
-        if (!userData.ids.includes(targetId)) {
-            await e.reply(['ID不存在！']);
+        if (userData.ids.length === 0) {
+            await e.reply(['您还没有绑定任何ID！']);
             return true;
         }
 
-        userData.ids = userData.ids.filter(id => id !== targetId);
+        if (index < 1 || index > userData.ids.length) {
+            await e.reply([`序号无效！请输入1-${userData.ids.length}之间的数字。`]);
+            return true;
+        }
+
+        const targetId = userData.ids[index - 1];
+        userData.ids.splice(index - 1, 1);
         
         // 如果删除的是当前ID，切换到第一个（如果还有ID的话）
         if (userData.currentId === targetId) {

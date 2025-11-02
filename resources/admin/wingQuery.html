@@ -7,135 +7,140 @@
 
     body {
         width: 1200px;
-        font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: #fafafa;
+        padding: 40px 20px;
     }
 
     .container {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        padding: 30px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 32px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
     .header {
         text-align: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 3px solid #667eea;
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #dbdbdb;
     }
 
     .header h1 {
-        font-size: 2.5rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        margin-bottom: 10px;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #262626;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
     }
 
     .header-info {
         display: flex;
         justify-content: center;
-        gap: 30px;
-        margin-top: 15px;
+        gap: 32px;
+        margin-top: 16px;
         flex-wrap: wrap;
     }
 
     .header-info-item {
         display: flex;
         align-items: center;
-        gap: 8px;
-        color: #666;
-        font-size: 0.95rem;
+        gap: 6px;
+        color: #8e8e8e;
+        font-size: 0.875rem;
     }
 
     .header-info-item strong {
-        color: #333;
+        color: #262626;
+        font-weight: 600;
     }
 
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
     }
 
     .stat-card {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-        border-radius: 15px;
+        background: #ffffff;
+        border-radius: 8px;
         padding: 20px;
         text-align: center;
-        border: 2px solid rgba(102, 126, 234, 0.2);
-        transition: transform 0.3s ease;
+        border: 1px solid #dbdbdb;
+        transition: all 0.2s ease;
     }
 
     .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        border-color: #c7c7c7;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     }
 
     .stat-card .label {
-        font-size: 0.9rem;
-        color: #666;
-        margin-bottom: 10px;
+        font-size: 0.875rem;
+        color: #8e8e8e;
+        margin-bottom: 12px;
+        font-weight: 400;
     }
 
     .stat-card .value {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #667eea;
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #262626;
+        letter-spacing: -0.5px;
     }
 
     .section {
-        margin-bottom: 30px;
+        margin-bottom: 32px;
     }
 
     .section-title {
-        font-size: 1.5rem;
-        color: #333;
+        font-size: 1.125rem;
+        color: #262626;
         margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #667eea;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #dbdbdb;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
+        font-weight: 600;
+        letter-spacing: -0.3px;
     }
 
     .section-title::before {
         content: '';
-        width: 5px;
-        height: 25px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 3px;
+        width: 3px;
+        height: 16px;
+        background: #0095f6;
+        border-radius: 2px;
     }
 
     .map-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 15px;
+        gap: 12px;
     }
 
     .map-card {
-        background: #f8f9fa;
-        border-radius: 12px;
-        padding: 15px;
-        border-left: 4px solid #667eea;
-        transition: all 0.3s ease;
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 16px;
+        border: 1px solid #dbdbdb;
+        transition: all 0.2s ease;
     }
 
     .map-card:hover {
-        background: #fff;
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-        transform: translateX(5px);
+        border-color: #c7c7c7;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .map-card-header {
-        font-size: 1.1rem;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #262626;
+        margin-bottom: 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -144,144 +149,157 @@
     .map-card-stats {
         display: flex;
         justify-content: space-between;
-        font-size: 0.9rem;
-        color: #666;
+        font-size: 0.875rem;
+        color: #8e8e8e;
     }
 
     .map-card-stats span {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
+        font-weight: 500;
     }
 
     .map-card-stats .collected {
-        color: #27ae60;
-        font-weight: bold;
+        color: #0095f6;
     }
 
     .map-card-stats .uncollected {
-        color: #e74c3c;
-        font-weight: bold;
+        color: #ed4956;
     }
 
     .uncollected-list {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 16px;
     }
 
     .uncollected-type {
-        background: #f8f9fa;
-        border-radius: 15px;
+        background: #ffffff;
+        border-radius: 8px;
         padding: 20px;
-        border-left: 5px solid #667eea;
+        border: 1px solid #dbdbdb;
     }
 
     .uncollected-type-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #dbdbdb;
     }
 
     .uncollected-type-title {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #333;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #262626;
     }
 
     .uncollected-type-count {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #0095f6;
         color: white;
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-weight: bold;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.875rem;
     }
 
     .uncollected-items {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 10px;
+        gap: 12px;
     }
 
     .uncollected-item {
-        background: white;
+        background: #fafafa;
         padding: 12px;
-        border-radius: 10px;
-        border: 1px solid #e0e0e0;
-        transition: all 0.3s ease;
+        border-radius: 8px;
+        border: 1px solid #dbdbdb;
+        transition: all 0.2s ease;
     }
 
     .uncollected-item:hover {
-        border-color: #667eea;
-        box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+        border-color: #c7c7c7;
+        background: #ffffff;
     }
 
     .uncollected-item-name {
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 5px;
+        font-weight: 500;
+        color: #262626;
+        margin-bottom: 6px;
+        font-size: 0.875rem;
     }
 
     .uncollected-item-count {
-        color: #e74c3c;
-        font-size: 0.9rem;
+        color: #ed4956;
+        font-size: 0.8125rem;
+        font-weight: 500;
     }
 
     .season-list {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 15px;
+        gap: 12px;
     }
 
     .season-card {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-        border-radius: 12px;
-        padding: 15px;
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 16px;
         text-align: center;
-        border: 2px solid rgba(102, 126, 234, 0.2);
+        border: 1px solid #dbdbdb;
+        transition: all 0.2s ease;
+    }
+
+    .season-card:hover {
+        border-color: #c7c7c7;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .season-card-name {
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 8px;
+        font-weight: 600;
+        color: #262626;
+        margin-bottom: 12px;
+        font-size: 0.9375rem;
     }
 
     .season-card-stats {
         display: flex;
         justify-content: space-around;
-        font-size: 0.85rem;
-        color: #666;
+        font-size: 0.8125rem;
+        color: #8e8e8e;
         margin-top: 8px;
     }
 
     .season-card .collected {
-        color: #27ae60;
+        color: #0095f6;
+        font-weight: 500;
     }
 
     .season-card .uncollected {
-        color: #e74c3c;
+        color: #ed4956;
+        font-weight: 500;
     }
 
     @media (max-width: 768px) {
         body {
             width: 100%;
-            padding: 10px;
+            padding: 16px;
         }
 
         .container {
-            padding: 15px;
+            padding: 20px;
+            border-radius: 0;
         }
 
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
 
         .stats-grid {
             grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         .map-grid {
@@ -310,11 +328,11 @@
         </div>
         <div class="stat-card">
             <div class="label">已收集</div>
-            <div class="value" style="color: #27ae60;">{{statistics.collected}}</div>
+            <div class="value" style="color: #0095f6;">{{statistics.collected}}</div>
         </div>
         <div class="stat-card">
             <div class="label">未收集</div>
-            <div class="value" style="color: #e74c3c;">{{statistics.actual_total - statistics.collected}}</div>
+            <div class="value" style="color: #ed4956;">{{statistics.actual_total - statistics.collected}}</div>
         </div>
         <div class="stat-card">
             <div class="label">收集率</div>
@@ -338,17 +356,17 @@
             <div class="stat-card">
                 <div class="label">普通永久翼</div>
                 <div class="value">{{statistics.normal_wings.total}}</div>
-                <div style="margin-top: 10px; font-size: 0.85rem; color: #666;">
-                    已收集: <span style="color: #27ae60;">{{statistics.normal_wings.collected}}</span> | 
-                    未收集: <span style="color: #e74c3c;">{{statistics.normal_wings.uncollected}}</span>
+                <div style="margin-top: 12px; font-size: 0.8125rem; color: #8e8e8e;">
+                    已收集: <span style="color: #0095f6; font-weight: 500;">{{statistics.normal_wings.collected}}</span> | 
+                    未收集: <span style="color: #ed4956; font-weight: 500;">{{statistics.normal_wings.uncollected}}</span>
                 </div>
             </div>
             <div class="stat-card">
                 <div class="label">永久光翼</div>
                 <div class="value">{{statistics.permanent_wings.total}}</div>
-                <div style="margin-top: 10px; font-size: 0.85rem; color: #666;">
-                    已收集: <span style="color: #27ae60;">{{statistics.permanent_wings.collected}}</span> | 
-                    未收集: <span style="color: #e74c3c;">{{statistics.permanent_wings.uncollected}}</span>
+                <div style="margin-top: 12px; font-size: 0.8125rem; color: #8e8e8e;">
+                    已收集: <span style="color: #0095f6; font-weight: 500;">{{statistics.permanent_wings.collected}}</span> | 
+                    未收集: <span style="color: #ed4956; font-weight: 500;">{{statistics.permanent_wings.uncollected}}</span>
                 </div>
             </div>
         </div>
@@ -389,7 +407,7 @@
             card.innerHTML = `
                 <div class="map-card-header">
                     <span>${mapName}</span>
-                    <span style="font-size: 0.9rem; color: #667eea;">${stats.total}个</span>
+                    <span style="font-size: 0.875rem; color: #8e8e8e; font-weight: 500;">${stats.total}个</span>
                 </div>
                 <div class="map-card-stats">
                     <span class="collected">✓ ${stats.collected}</span>
