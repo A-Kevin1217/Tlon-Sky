@@ -19,7 +19,9 @@ export class SkyWingQueryPlugin extends plugin {
                 { reg: /^光遇删除\s*(\d+)$/, fnc: 'deleteSkyId' },
                 { reg: /^光遇ID列表$/, fnc: 'listSkyIds' },
                 { reg: /^光翼查询$/, fnc: 'queryWings' },
-                { reg: /^光翼查询\s*(\d+)$/, fnc: 'queryWingsById' }
+                { reg: /^光翼查询\s*(\d+)$/, fnc: 'queryWingsById' },
+                { reg: /^光翼详情$/, fnc: 'queryWingDetails' },
+                { reg: /^光翼详情\s*(\d+)$/, fnc: 'queryWingDetailsById' }
             ]
         });
     }
@@ -110,8 +112,7 @@ export class SkyWingQueryPlugin extends plugin {
 
         const targetId = userData.ids[index - 1];
         userData.ids.splice(index - 1, 1);
-        
-        // 如果删除的是当前ID，切换到第一个（如果还有ID的话）
+
         if (userData.currentId === targetId) {
             userData.currentId = userData.ids.length > 0 ? userData.ids[0] : null;
         }
@@ -175,13 +176,10 @@ export class SkyWingQueryPlugin extends plugin {
                 return true;
             }
 
-            // 处理数据，准备渲染
             const statistics = data.statistics;
-            
-            // 构建地图统计信息
+
             const mapStats = statistics.map_statistics;
-            
-            // 构建未收集列表（按类型分组）
+
             const uncollectedByType = {};
             statistics.uncollected_list.forEach(item => {
                 if (!uncollectedByType[item.type]) {
@@ -194,7 +192,6 @@ export class SkyWingQueryPlugin extends plugin {
                 });
             });
 
-            // 准备传递给模板的数据
             const templateData = {
                 roleId: data.roleId,
                 timestamp: data.timestamp,
@@ -214,9 +211,284 @@ export class SkyWingQueryPlugin extends plugin {
             };
 
             await render('admin/wingQuery', templateData, { e, scale: 1.3 });
-            
+
         } catch (error) {
             logger.error(`光翼查询失败: ${error.message}`);
+            await e.reply(['查询失败，请稍后重试']);
+        }
+    }
+
+    getMapFromWingName(wingName) {
+        if (!wingName || !wingName.startsWith('l_')) {
+            return '先祖永久翼';
+        }
+
+        const mapPrefixes = {
+            'l_Prairie': '云野',
+            'l_DayHubCave': '云野',
+            'l_Rain': '雨林',
+            'l_Skyway': '雨林',
+            'l_Dusk': '暮土',
+            'l_Sunset': '霞谷',
+            'l_Night': '禁阁',
+            'l_Credits': '伊甸',
+            'l_Storm': '伊甸',
+            'l_Dawn': '晨岛',
+            'l_CandleSpace': '遇境'
+        };
+
+        if (wingName.startsWith('l_Skyway')) {
+            return '雨林';
+        }
+
+        for (const [prefix, map] of Object.entries(mapPrefixes)) {
+            if (prefix !== 'l_Skyway' && wingName.startsWith(prefix)) {
+                return map;
+            }
+        }
+        return '未知';
+    }
+
+    getWingChineseName(wingName) {
+        const wingNameMap = {
+            'l_Dawn_0': '晨岛',
+            'l_Dawn_1': '晨岛',
+            'l_Dawn_2': '晨岛',
+            'l_Dawn_3': '晨岛',
+            'l_Dawn_4': '晨岛',
+            'l_Dawn_5': '晨岛',
+            'l_Dawn_TrialsAir_0': '风试炼',
+            'l_Dawn_TrialsEarth_0': '土试炼',
+            'l_Dawn_TrialsFire_0': '火试炼',
+            'l_Dawn_TrialsWater_0': '水试炼',
+
+            'l_Prairie_Cave_0': '幽光山洞',
+            'l_Prairie_Cave_1': '幽光山洞',
+            'l_Prairie_Village_0': '仙乡',
+            'l_Prairie_Village_1': '仙乡',
+            'l_Prairie_Village_2': '仙乡',
+            'l_Prairie_Village_3': '仙乡',
+            'l_Prairie_Village_4': '仙乡',
+            'l_DayHubCave_0': '仙乡',
+            'l_Prairie_Island_0': '圣岛',
+            'l_Prairie_Island_1': '圣岛',
+            'l_Prairie_Island_2': '圣岛',
+            'l_Prairie_Island_3': '圣岛',
+            'l_Prairie_Island_4': '圣岛',
+            'l_Prairie_Island_5': '圣岛',
+            'l_Prairie_Island_6': '圣岛',
+            'l_Prairie_Island_7': '圣岛',
+            'l_Prairie_ButterflyFields_0': '蝴蝶平原',
+            'l_Prairie_ButterflyFields_1': '蝴蝶平原',
+            'l_Prairie_ButterflyFields_2': '蝴蝶平原',
+            'l_Prairie_NestAndKeeper_0': '云顶浮石',
+            'l_Prairie_NestAndKeeper_1': '云顶浮石',
+            'l_Prairie_WildlifePark_0': '云峰',
+            'l_Prairie_WildlifePark_1': '云峰',
+            'l_Prairie_WildlifePark_2': '云峰',
+
+            'l_Rain_0': '雨林',
+            'l_Rain_1': '雨林',
+            'l_RainMid_0': '密林遗迹',
+            'l_RainMid_1': '密林遗迹',
+            'l_RainMid_2': '密林遗迹',
+            'l_RainEnd_0': '雨林神殿',
+            'l_RainShelter_0': '秘密花园',
+            'l_RainShelter_1': '秘密花园',
+            'l_Rain_Cave_0': '地下溶洞',
+            'l_Rain_Cave_1': '地下溶洞',
+            'l_Rain_Cave_2': '地下溶洞',
+            'l_Rain_Cave_3': '地下溶洞',
+            'l_Rain_BaseCamp_0': '大树屋',
+            'l_Rain_BaseCamp_1': '大树屋',
+            'l_RainForest_0': '荧光森林',
+            'l_RainForest_1': '荧光森林',
+            'l_RainForest_2': '荧光森林',
+            'l_RainForest_3': '荧光森林',
+            'l_Rain_BlueBirdTheater_0': '青鸟剧场',
+            'l_Skyway_0': '风行网道',
+
+            'l_Sunset_0': '霞谷',
+            'l_Sunset_1': '霞谷',
+            'l_Sunset_2': '霞谷',
+            'l_Sunset_Theater_0': '圆梦村剧场',
+            'l_Sunset_Citadel_0': '霞光城',
+            'l_Sunset_Citadel_1': '霞光城',
+            'l_SunsetRace_0': '滑行赛道',
+            'l_SunsetColosseum_0': '落日竞技场',
+            'l_SunsetEnd_0': '落日竞技场',
+            'l_Sunset_YetiPark_0': '雪隐峰',
+            'l_Sunset_YetiPark_1': '雪隐峰',
+            'l_SunsetVillage_0': '圆梦村',
+            'l_SunsetVillage_1': '圆梦村',
+            'l_SunsetVillage_2': '圆梦村',
+            'l_SunsetEnd2_0': '霞谷神殿',
+            'l_Sunset_FlyRace_0': '飞行赛道',
+            'l_Sunset_FlyRace_1': '飞行赛道',
+
+            'l_Dusk_0': '暮土',
+            'l_Dusk_1': '暮土',
+            'l_DuskEnd_0': '暮土神殿',
+            'l_DuskMid_0': '远古战场',
+            'l_DuskMid_1': '远古战场',
+            'l_Dusk_CrabField_0': '黑水港湾',
+            'l_Dusk_CrabField_1': '黑水港湾',
+            'l_Dusk_CrabField_2': '黑水港湾',
+            'l_DuskGraveyard_0': '巨兽荒原',
+            'l_DuskGraveyard_1': '巨兽荒原',
+            'l_DuskGraveyard_2': '巨兽荒原',
+            'l_DuskGraveyard_3': '巨兽荒原',
+            'l_DuskGraveyard_4': '巨兽荒原',
+            'l_DuskGraveyard_5': '巨兽荒原',
+            'l_Dusk_Triangle_0': '藏宝岛礁',
+            'l_Dusk_Triangle_1': '藏宝岛礁',
+            'l_DuskOasis_0': '失落方舟',
+            'l_DuskOasis_1': '失落方舟',
+
+            'l_Night_0': '禁阁光翼',
+            'l_Night_1': '禁阁光翼',
+            'l_Night2_0': '禁阁二层',
+            'l_Night2_1': '禁阁二层',
+            'l_Night2_2': '禁阁二层',
+            'l_Night2_3': '禁阁二层',
+            'l_Night_PaintedWorld_1': '月牙绿洲',
+            'l_Night_PaintedWorld_2': '月牙绿洲',
+            'l_Night_StoryBook_0': '姆明故事书',
+            'l_NightArchive_0': '档案阁',
+            'l_NightArchive_1': '档案阁',
+            'l_NightDesert_0': '星光沙漠',
+            'l_NightDesert_1': '星光沙漠',
+            'l_NightDesert_2': '星光沙漠',
+            'l_Night_Shelter_0': '庇护所',
+
+            'l_StormStart_0': '伊甸',
+            'l_Storm_0': '伊甸',
+            'l_Storm_1': '伊甸',
+            'l_Storm_2': '伊甸',
+            'l_Storm_3': '伊甸',
+            'l_Storm_4': '伊甸',
+            'l_Storm_5': '伊甸',
+            'l_Storm_6': '伊甸',
+            'l_Storm_7': '伊甸',
+            'l_Storm_8': '伊甸',
+            'l_Credits_0': '重生之路',
+            'l_StormEvent_VoidSpace_0': '远古回忆',
+            'l_StormEvent_VoidSpace_1': '远古回忆',
+            'l_StormEvent_VoidSpace_2': '远古回忆',
+            'l_StormEvent_VoidSpace_3': '远古回忆',
+            'l_StormEvent_VoidSpace_4': '远古回忆',
+            'l_StormEvent_VoidSpace_5': '远古回忆',
+
+            'l_CandleSpace_0': '遇境(小黑屋)',
+
+/*             's_plead': '乞求孩童',
+            's_ghost_02': '幽灵',
+            's_dustoff': '拍灰',
+            's_slouch': '懒散',
+            's_peek': '偷看',
+            's_ohno': '哦不',
+            's_deepbreath': '深呼吸',
+            's_anxious': '焦虑',
+            's_darkvoidspace02': '暗黑虚空',
+            's_wipe': '擦拭',
+            's_shrug': '耸肩',
+            's_tsktsk': '啧啧',
+            's_strong': '强壮',
+            's_proud': '骄傲',
+            's_force': '力量',
+            's_scared': '害怕', */
+        };
+
+        return wingNameMap[wingName] || wingName;
+    }
+
+    formatTimestamp(timestamp) {
+        if (!timestamp || timestamp === 0) {
+            return '从未收集';
+        }
+        const date = new Date(timestamp * 1000);
+        return date.toLocaleString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    async queryWingDetails(e) {
+        const { user_id } = e;
+        let userData = this.getUserData(user_id);
+
+        if (!userData.currentId) {
+            if (userData.ids.length === 0) {
+                await e.reply(['您还没有绑定任何ID！\n使用"光遇绑定<ID>"来绑定。']);
+                return true;
+            } else {
+                await e.reply(['请先使用"光遇切换<序号>"设置当前ID！']);
+                return true;
+            }
+        }
+
+        await this.queryWingDetailsBySkyId(e, userData.currentId);
+        return true;
+    }
+
+    async queryWingDetailsById(e) {
+        const skyId = e.msg.match(/^光翼详情\s*(\d+)$/)[1].trim();
+        await this.queryWingDetailsBySkyId(e, skyId);
+        return true;
+    }
+
+    async queryWingDetailsBySkyId(e, skyId) {
+        try {
+            const url = `http://sh-aliyun2.vincentzyu233.cn:51024/queryGuangyi?id=${skyId}`;
+            const response = await getLinkData(url, 'json');
+
+            if (!response.success) {
+                await e.reply(['查询失败：' + (response.errmsg || '未知错误')]);
+                return true;
+            }
+
+            const resultData = JSON.parse(response.data.result);
+            const wingBuffs = resultData.wing_buffs || [];
+
+
+            const wingsByMap = {};
+            const uncollectedByMap = {};
+
+            wingBuffs.forEach(wing => {
+                wing.chineseName = this.getWingChineseName(wing.name);
+
+                const map = this.getMapFromWingName(wing.name);
+
+                if (!wingsByMap[map]) {
+                    wingsByMap[map] = [];
+                    uncollectedByMap[map] = [];
+                }
+
+                wingsByMap[map].push(wing);
+
+                if (!wing.collected) {
+                    uncollectedByMap[map].push(wing);
+                }
+            });
+
+            const templateData = {
+                roleId: response.roleId,
+                timestamp: response.timestamp,
+                wingsByMapJson: JSON.stringify(wingsByMap),
+                uncollectedByMapJson: JSON.stringify(uncollectedByMap),
+                totalWings: wingBuffs.length,
+                collectedWings: wingBuffs.filter(w => w.collected).length,
+                uncollectedWings: wingBuffs.filter(w => !w.collected).length,
+                depositedWings: wingBuffs.filter(w => w.deposited).length
+            };
+
+            await render('admin/wingDetails', templateData, { e, scale: 1.3 });
+
+        } catch (error) {
+            logger.error(`光翼详情查询失败: ${error.message}`);
             await e.reply(['查询失败，请稍后重试']);
         }
     }

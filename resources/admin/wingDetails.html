@@ -1,0 +1,387 @@
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 1200px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: #000000;
+        padding: 40px 20px;
+    }
+
+    .container {
+        background: #1a1a1a;
+        border-radius: 12px;
+        padding: 32px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #383838;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
+    }
+
+    .header-info {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+    }
+
+    .header-info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #a8a8a8;
+        font-size: 0.875rem;
+    }
+
+    .header-info-item strong {
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .stat-card {
+        background: #262626;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #383838;
+        transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+        border-color: #4a4a4a;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        background: #2a2a2a;
+    }
+
+    .stat-card .label {
+        font-size: 0.875rem;
+        color: #a8a8a8;
+        margin-bottom: 12px;
+        font-weight: 400;
+    }
+
+    .stat-card .value {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: -0.5px;
+    }
+
+    .section {
+        margin-bottom: 32px;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        color: #ffffff;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #383838;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        letter-spacing: -0.3px;
+    }
+
+    .section-title::before {
+        content: '';
+        width: 3px;
+        height: 16px;
+        background: #0095f6;
+        border-radius: 2px;
+    }
+
+    .map-section {
+        background: #262626;
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid #383838;
+        margin-bottom: 20px;
+    }
+
+    .map-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #383838;
+    }
+
+    .map-name {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .map-stats {
+        display: flex;
+        gap: 16px;
+        font-size: 0.875rem;
+        color: #a8a8a8;
+    }
+
+    .map-stats span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .map-stats .collected {
+        color: #0095f6;
+        font-weight: 500;
+    }
+
+    .map-stats .uncollected {
+        color: #ed4956;
+        font-weight: 500;
+    }
+
+    .wing-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+    }
+
+    .wing-item {
+        background: #1f1f1f;
+        border-radius: 8px;
+        padding: 12px;
+        border: 1px solid #383838;
+        transition: all 0.2s ease;
+    }
+
+    .wing-item.collected {
+        border-left: 3px solid #0095f6;
+    }
+
+    .wing-item.uncollected {
+        border-left: 3px solid #ed4956;
+    }
+
+    .wing-item:hover {
+        border-color: #4a4a4a;
+        background: #262626;
+    }
+
+    .wing-name {
+        font-weight: 500;
+        color: #ffffff;
+        margin-bottom: 8px;
+        font-size: 0.875rem;
+        word-break: break-all;
+    }
+
+    .wing-info {
+        font-size: 0.8125rem;
+        color: #a8a8a8;
+        line-height: 1.5;
+    }
+
+    .wing-info .status {
+        margin-top: 6px;
+        padding-top: 6px;
+        border-top: 1px solid #383838;
+    }
+
+    .wing-info .collected-time {
+        color: #0095f6;
+    }
+
+    .wing-info .uncollected {
+        color: #ed4956;
+    }
+
+    .empty-map {
+        text-align: center;
+        color: #a8a8a8;
+        padding: 40px;
+        font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            width: 100%;
+            padding: 16px;
+        }
+
+        .container {
+            padding: 20px;
+            border-radius: 0;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .wing-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="header">
+        <h1>光翼详细信息</h1>
+        <div class="header-info">
+            <div class="header-info-item">
+                <strong>角色ID:</strong> <span id="roleId">{{roleId}}</span>
+            </div>
+            <div class="header-info-item">
+                <strong>更新时间:</strong> <span id="timestamp">{{timestamp}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+            <div class="label">总光翼数</div>
+            <div class="value">{{totalWings}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">已收集</div>
+            <div class="value" style="color: #0095f6;">{{collectedWings}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">未收集</div>
+            <div class="value" style="color: #ed4956;">{{uncollectedWings}}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">已献祭</div>
+            <div class="value">{{depositedWings}}</div>
+        </div>
+    </div>
+
+    <div class="section" id="wingsSection">
+        <div class="section-title">按地图分类</div>
+        <div id="wingsByMap"></div>
+    </div>
+</div>
+
+<script>
+    const wingsByMap = JSON.parse('{{@wingsByMapJson}}');
+    const uncollectedByMap = JSON.parse('{{@uncollectedByMapJson}}');
+
+    const mapOrder = ['晨岛', '云野', '雨林', '霞谷', '暮土', '禁阁', '伊甸', '先祖永久翼', '未知'];
+
+    function formatTimestamp(timestamp) {
+        if (!timestamp || timestamp === 0) {
+            return '从未收集';
+        }
+        const date = new Date(timestamp * 1000);
+        return date.toLocaleString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    function renderWingsByMap() {
+        const container = document.getElementById('wingsByMap');
+        if (!wingsByMap || Object.keys(wingsByMap).length === 0) {
+            container.innerHTML = '<div class="empty-map">暂无数据</div>';
+            return;
+        }
+
+        const sortedMaps = mapOrder.filter(map => wingsByMap[map] && wingsByMap[map].length > 0);
+
+        Object.keys(wingsByMap).forEach(map => {
+            if (!mapOrder.includes(map) && wingsByMap[map] && wingsByMap[map].length > 0) {
+                sortedMaps.push(map);
+            }
+        });
+
+        sortedMaps.forEach(map => {
+            const wings = wingsByMap[map];
+            const uncollected = uncollectedByMap[map] || [];
+            const collected = wings.filter(w => w.collected);
+
+            const mapSection = document.createElement('div');
+            mapSection.className = 'map-section';
+
+            mapSection.innerHTML = `
+                <div class="map-header">
+                    <div class="map-name">${map}</div>
+                    <div class="map-stats">
+                        <span>总计: ${wings.length}</span>
+                        <span class="collected">已收集: ${collected.length}</span>
+                        <span class="uncollected">未收集: ${uncollected.length}</span>
+                    </div>
+                </div>
+                <div class="wing-list"></div>
+            `;
+
+            const wingList = mapSection.querySelector('.wing-list');
+
+            wings.forEach(wing => {
+                const wingItem = document.createElement('div');
+                wingItem.className = `wing-item ${wing.collected ? 'collected' : 'uncollected'}`;
+
+                const displayName = wing.chineseName || wing.name;
+                let infoHtml = `<div class="wing-name">${displayName}</div>`;
+
+                if (wing.chineseName && wing.chineseName !== wing.name) {
+                    infoHtml += `<div style="font-size: 0.75rem; color: #666; margin-top: 4px;">${wing.name}</div>`;
+                }
+
+                infoHtml += '<div class="wing-info">';
+
+                if (wing.collected) {
+                    infoHtml += `<div class="status">
+                        <span class="collected-time">已收集</span></div>`;
+                    if (wing.deposited) {
+                        infoHtml += '<div style="margin-top: 4px; color: #f39c12;">已献祭</div>';
+                    }
+                } else {
+                    infoHtml += `<div class="status">
+                        <span class="uncollected">未收集</span>
+                    </div>`;
+                }
+
+                infoHtml += '</div>';
+                wingItem.innerHTML = infoHtml;
+                wingList.appendChild(wingItem);
+            });
+
+            container.appendChild(mapSection);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        renderWingsByMap();
+    });
+</script>
