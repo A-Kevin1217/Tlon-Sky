@@ -234,7 +234,8 @@ export class SkyWingQueryPlugin extends plugin {
             'l_Credits': '伊甸',
             'l_Storm': '伊甸',
             'l_Dawn': '晨岛',
-            'l_CandleSpace': '遇境'
+            'l_CandleSpace': '小黑屋',
+            'l_MainStreet': '小黑屋'
         };
 
         if (wingName.startsWith('l_Skyway')) {
@@ -257,6 +258,7 @@ export class SkyWingQueryPlugin extends plugin {
             'l_Dawn_3': '晨岛',
             'l_Dawn_4': '晨岛',
             'l_Dawn_5': '晨岛',
+            'l_Dawn_6': '晨岛',
             'l_Dawn_TrialsAir_0': '风试炼',
             'l_Dawn_TrialsEarth_0': '土试炼',
             'l_Dawn_TrialsFire_0': '火试炼',
@@ -286,6 +288,9 @@ export class SkyWingQueryPlugin extends plugin {
             'l_Prairie_WildlifePark_0': '云峰',
             'l_Prairie_WildlifePark_1': '云峰',
             'l_Prairie_WildlifePark_2': '云峰',
+            'l_Prairie_WildLifePark_0': '云峰',
+            'l_Prairie_WildLifePark_1': '云峰',
+            'l_Prairie_WildLifePark_2': '云峰',
 
             'l_Rain_0': '雨林',
             'l_Rain_1': '雨林',
@@ -307,6 +312,7 @@ export class SkyWingQueryPlugin extends plugin {
             'l_RainForest_3': '荧光森林',
             'l_Rain_BlueBirdTheater_0': '青鸟剧场',
             'l_Skyway_0': '风行网道',
+            'l_Skyway_1': '风行网道',
 
             'l_Sunset_0': '霞谷',
             'l_Sunset_1': '霞谷',
@@ -317,6 +323,7 @@ export class SkyWingQueryPlugin extends plugin {
             'l_SunsetRace_0': '滑行赛道',
             'l_SunsetColosseum_0': '落日竞技场',
             'l_SunsetEnd_0': '落日竞技场',
+            'l_SunsetEnd_1': '旧版终点',
             'l_Sunset_YetiPark_0': '雪隐峰',
             'l_Sunset_YetiPark_1': '雪隐峰',
             'l_SunsetVillage_0': '圆梦村',
@@ -351,6 +358,7 @@ export class SkyWingQueryPlugin extends plugin {
             'l_Night2_1': '禁阁二层',
             'l_Night2_2': '禁阁二层',
             'l_Night2_3': '禁阁二层',
+            'l_Night_PaintedWorld_0': '月牙绿洲',
             'l_Night_PaintedWorld_1': '月牙绿洲',
             'l_Night_PaintedWorld_2': '月牙绿洲',
             'l_Night_StoryBook_0': '姆明故事书',
@@ -380,26 +388,37 @@ export class SkyWingQueryPlugin extends plugin {
             'l_StormEvent_VoidSpace_5': '远古回忆',
 
             'l_CandleSpace_0': '遇境(小黑屋)',
+            'l_MainStreet_0': '云巢(小黑屋)'
 
-/*             's_plead': '乞求孩童',
-            's_ghost_02': '幽灵',
-            's_dustoff': '拍灰',
-            's_slouch': '懒散',
-            's_peek': '偷看',
-            's_ohno': '哦不',
-            's_deepbreath': '深呼吸',
-            's_anxious': '焦虑',
-            's_darkvoidspace02': '暗黑虚空',
-            's_wipe': '擦拭',
-            's_shrug': '耸肩',
-            's_tsktsk': '啧啧',
-            's_strong': '强壮',
-            's_proud': '骄傲',
-            's_force': '力量',
-            's_scared': '害怕', */
+            /*             's_plead': '乞求孩童',
+                        's_ghost_02': '幽灵',
+                        's_dustoff': '拍灰',
+                        's_slouch': '懒散',
+                        's_peek': '偷看',
+                        's_ohno': '哦不',
+                        's_deepbreath': '深呼吸',
+                        's_anxious': '焦虑',
+                        's_darkvoidspace02': '暗黑虚空',
+                        's_wipe': '擦拭',
+                        's_shrug': '耸肩',
+                        's_tsktsk': '啧啧',
+                        's_strong': '强壮',
+                        's_proud': '骄傲',
+                        's_force': '力量',
+                        's_scared': '害怕', */
         };
 
-        return wingNameMap[wingName] || wingName;
+        if (wingNameMap[wingName]) {
+            return wingNameMap[wingName];
+        }
+        
+        for (const [key, value] of Object.entries(wingNameMap)) {
+            if (key.toLowerCase() === wingName.toLowerCase()) {
+                return value;
+            }
+        }
+        
+        return wingName;
     }
 
     formatTimestamp(timestamp) {
@@ -442,6 +461,7 @@ export class SkyWingQueryPlugin extends plugin {
 
     async queryWingDetailsBySkyId(e, skyId) {
         try {
+            // 获取用户光翼数据
             const url = `http://sh-aliyun2.vincentzyu233.cn:51024/queryGuangyi?id=${skyId}`;
             const response = await getLinkData(url, 'json');
 
@@ -451,15 +471,78 @@ export class SkyWingQueryPlugin extends plugin {
             }
 
             const resultData = JSON.parse(response.data.result);
-            const wingBuffs = resultData.wing_buffs || [];
+            const userWingBuffs = resultData.wing_buffs || [];
 
+            // 获取完整光翼列表
+            const allWingsUrl = 'https://s.166.net/config/ds_yy_02/ma75_wing_wings.json';
+            const allWingsData = await getLinkData(allWingsUrl, 'json');
 
+            // 将用户数据中的光翼建立索引，以name为key
+            const userWingMap = {};
+            userWingBuffs.forEach(wing => {
+                userWingMap[wing.name] = wing;
+            });
+
+            // 写死的光翼列表（如果接口没有返回，则默认为未收集）
+            const fixedWings = ['l_SunsetEnd_1', 'l_CandleSpace_0', 'l_MainStreet_0'];
+
+            // 合并完整列表和用户数据
+            const allWings = [];
+            const processedWings = new Set(); // 记录已处理的光翼名称
+            
+            allWingsData.forEach(wingInfo => {
+                const wingName = wingInfo['光翼名字'];
+                const existingWing = userWingMap[wingName];
+
+                if (existingWing) {
+                    // 用户数据中已有，使用用户数据
+                    existingWing.chineseName = this.getWingChineseName(existingWing.name);
+                    allWings.push(existingWing);
+                } else {
+                    // 用户数据中没有，创建未收集项
+                    const uncollectedWing = {
+                        name: wingName,
+                        chineseName: this.getWingChineseName(wingName),
+                        collected: false,
+                        deposited: false,
+                        last_conversion: 0
+                    };
+                    allWings.push(uncollectedWing);
+                }
+                processedWings.add(wingName);
+            });
+
+            // 处理写死的光翼：如果完整列表中没有，则添加为未收集；如果用户数据中有，则使用用户数据
+            fixedWings.forEach(wingName => {
+                if (processedWings.has(wingName)) {
+                    // 如果完整列表中已有，不需要额外处理
+                    return;
+                }
+
+                // 检查用户数据中是否有
+                const existingWing = userWingMap[wingName];
+                if (existingWing) {
+                    // 用户数据中有，使用用户数据（已收集）
+                    existingWing.chineseName = this.getWingChineseName(existingWing.name);
+                    allWings.push(existingWing);
+                } else {
+                    // 用户数据中没有，创建为未收集项
+                    const uncollectedWing = {
+                        name: wingName,
+                        chineseName: this.getWingChineseName(wingName),
+                        collected: false,
+                        deposited: false,
+                        last_conversion: 0
+                    };
+                    allWings.push(uncollectedWing);
+                }
+            });
+
+            // 按地图分类光翼
             const wingsByMap = {};
             const uncollectedByMap = {};
 
-            wingBuffs.forEach(wing => {
-                wing.chineseName = this.getWingChineseName(wing.name);
-
+            allWings.forEach(wing => {
                 const map = this.getMapFromWingName(wing.name);
 
                 if (!wingsByMap[map]) {
@@ -479,10 +562,10 @@ export class SkyWingQueryPlugin extends plugin {
                 timestamp: response.timestamp,
                 wingsByMapJson: JSON.stringify(wingsByMap),
                 uncollectedByMapJson: JSON.stringify(uncollectedByMap),
-                totalWings: wingBuffs.length,
-                collectedWings: wingBuffs.filter(w => w.collected).length,
-                uncollectedWings: wingBuffs.filter(w => !w.collected).length,
-                depositedWings: wingBuffs.filter(w => w.deposited).length
+                totalWings: allWings.length,
+                collectedWings: allWings.filter(w => w.collected).length,
+                uncollectedWings: allWings.filter(w => !w.collected).length,
+                depositedWings: allWings.filter(w => w.deposited).length
             };
 
             await render('admin/wingDetails', templateData, { e, scale: 1.3 });
