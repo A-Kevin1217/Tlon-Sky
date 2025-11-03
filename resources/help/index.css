@@ -38,7 +38,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.137);
-  /* 半透明灰色背景 */
+  
   z-index: -1;
 }
 
@@ -59,7 +59,7 @@ body {
   overflow: hidden;
   width: 100%;
   color: #62fff7;
-  /* 功能描述 */
+  
 }
 
 .help-table .tr {
@@ -71,7 +71,7 @@ body {
   font-size: 14px;
   display: table-cell;
   box-shadow: 0 0 1px 0 #888 inset;
-  /* 框线 */
+  
   padding: 12px 0 12px 50px;
   line-height: 24px;
   position: relative;
@@ -98,17 +98,17 @@ body {
   top: 12px;
   transform: scale(0.85);
   background-color: rgb(120, 120, 120);
-  /* 添加黑色背景 */
+  
   border-radius: 20%;
-  /* 边缘圆化 */
+  
   box-shadow: 0 0 0 1px black;
-  /* 添加黑色描边 */
+  
 }
 
 .help-title {
   display: block;
   color: #48fa8c;
-  /* 功能名称 */
+  
   font-size: 16px;
   line-height: 24px;
 }
@@ -120,4 +120,3 @@ body {
   line-height: 18px;
 }
 
-/*# sourceMappingURL=index.css.map */

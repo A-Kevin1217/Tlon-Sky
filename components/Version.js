@@ -67,7 +67,7 @@ try {
     })
   }
 } catch (e) {
-  // do nth
+  
 }
 
 const yunzaiVersion = packageJson.version

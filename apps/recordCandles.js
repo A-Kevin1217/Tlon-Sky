@@ -126,7 +126,7 @@ export class SKY extends plugin {
             return true
         }
 
-        const recentRecords = records.slice(-10) // 显示最近10条记录
+        const recentRecords = records.slice(-10) 
         const processedRecords = []
 
         recentRecords.forEach((record, index) => {
@@ -142,7 +142,7 @@ export class SKY extends plugin {
                     red: record.candles.red - prevRecord.candles.red
                 }
 
-                // 计算时间间隔
+                
                 let currentRecordTimestamp
                 if (record.timestamp) {
                     currentRecordTimestamp = record.timestamp
@@ -186,7 +186,7 @@ export class SKY extends plugin {
 
         const renderData = {
             currentId: currentId,
-            records: processedRecords.reverse() // 最新的记录在上面
+            records: processedRecords.reverse() 
         }
 
         return render('admin/candleHistory', {
@@ -221,8 +221,8 @@ export class SKY extends plugin {
         let userData = this.getUserData(user_id)
         const currentId = userData.data.currentId
         const currentDateTime = new Date()
-        const currentDate = currentDateTime.toISOString().split('T')[0] // 保持日期格式用于兼容性
-        const currentDateTimeString = currentDateTime.toISOString().replace('T', ' ').split('.')[0] // 完整日期时间字符串
+        const currentDate = currentDateTime.toISOString().split('T')[0] 
+        const currentDateTimeString = currentDateTime.toISOString().replace('T', ' ').split('.')[0] 
         const currentTimestamp = currentDateTime.getTime()
 
         let lastRecord = null
@@ -241,20 +241,20 @@ export class SKY extends plugin {
             lastRecord = records[records.length - 1]
 
             if (lastRecord) {
-                // 计算上次记录的时间戳
+                
                 let lastTimestamp
                 if (lastRecord.timestamp) {
-                    // 如果有timestamp字段，直接使用
+                    
                     lastTimestamp = lastRecord.timestamp
                 } else {
-                    // 如果没有timestamp字段，按照date的00:00:00计算
+                    
                     lastTimestamp = new Date(lastRecord.date + 'T00:00:00').getTime()
                 }
                 const timeDiff = currentTimestamp - lastTimestamp
                 
                 daysPassed = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
                 
-                // 计算精确的时间间隔
+                
                 const totalSeconds = Math.floor(timeDiff / 1000)
                 const days = Math.floor(totalSeconds / (24 * 60 * 60))
                 const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60))
@@ -269,7 +269,7 @@ export class SKY extends plugin {
                     totalSeconds
                 }
 
-                // 格式化上次记录时间
+                
                 if (lastRecord.timestamp) {
                     const lastRecordDate = new Date(lastRecord.timestamp)
                     lastRecordTime = lastRecordDate.toLocaleString('zh-CN', {
@@ -281,7 +281,7 @@ export class SKY extends plugin {
                         second: '2-digit'
                     })
                 } else {
-                    // 如果没有timestamp，使用date字段
+                    
                     lastRecordTime = lastRecord.date
                 }
 
@@ -297,7 +297,7 @@ export class SKY extends plugin {
         }
 
         userData.data.data[currentId].push({
-            date: currentDateTimeString, // 存储完整的日期时间字符串
+            date: currentDateTimeString, 
             timestamp: currentTimestamp,
             candles: {
                 white: candles.white,

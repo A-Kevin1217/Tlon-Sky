@@ -6,7 +6,7 @@
     }
 
     body {
-        width: 1600px;
+        width: 1200px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         background: #000000;
         padding: 20px 10px;
@@ -17,7 +17,7 @@
         border-radius: 12px;
         padding: 20px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-        max-width: 1600px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
@@ -121,17 +121,17 @@
     .map-section {
         background: #262626;
         border-radius: 8px;
-        padding: 16px;
+        padding: 12px;
         border: 1px solid #383838;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
     }
 
     .map-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 12px;
-        padding-bottom: 8px;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
         border-bottom: 1px solid #383838;
     }
 
@@ -167,7 +167,7 @@
     .wing-list-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 8px;
+        gap: 6px;
     }
 
     .wing-list-column {
@@ -198,9 +198,9 @@
     }
 
     .wing-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 6px;
+        /* Masonry layout to reduce whitespace */
+        column-width: 150px;
+        column-gap: 8px;
     }
 
     .wing-item {
@@ -209,6 +209,13 @@
         padding: 8px;
         border: 1px solid #383838;
         transition: all 0.2s ease;
+        /* Masonry item rules */
+        display: inline-block;
+        width: 100%;
+        margin: 0 0 8px;
+        break-inside: avoid;
+        -webkit-column-break-inside: avoid;
+        -moz-column-break-inside: avoid;
     }
 
     .wing-item.collected {
@@ -289,7 +296,8 @@
         }
 
         .wing-list {
-            grid-template-columns: 1fr;
+            column-width: auto;
+            column-count: 1;
         }
     }
 </style>
@@ -423,19 +431,36 @@
 
             // 如果一列为空，隐藏该列，让另一列占据全宽
             if (sortedUncollected.length === 0 && sortedCollected.length > 0) {
-                // 只有已收集的，隐藏未收集列，让已收集列全宽
                 uncollectedColumn.style.display = 'none';
                 wingListContainer.style.gridTemplateColumns = '1fr';
             } else if (sortedCollected.length === 0 && sortedUncollected.length > 0) {
-                // 只有未收集的，隐藏已收集列，让未收集列全宽
                 collectedColumn.style.display = 'none';
                 wingListContainer.style.gridTemplateColumns = '1fr';
             } else if (sortedUncollected.length === 0 && sortedCollected.length === 0) {
                 // 都没有，隐藏整个容器
                 wingListContainer.style.display = 'none';
             } else {
-                // 两列都有数据，保持正常布局
-                wingListContainer.style.gridTemplateColumns = '1fr 1fr';
+                // 两列都有数据，根据数量动态调整列宽，减少空白
+                const left = sortedUncollected.length;
+                const right = sortedCollected.length;
+                const total = left + right;
+
+                // 计算比例并分配列宽（限制在 0.7fr~2.3fr 之间）
+                let leftFr = 1;
+                let rightFr = 1;
+                if (total > 0) {
+                    const leftRatio = left / total;
+                    // 将 0.15~0.85 的占比映射到 0.7~2.3 的 fr
+                    const mapToFr = (ratio) => {
+                        const minFr = 0.7;
+                        const maxFr = 2.3;
+                        const clamped = Math.max(0.15, Math.min(0.85, ratio));
+                        return (minFr + (maxFr - minFr) * ((clamped - 0.15) / (0.70)));
+                    };
+                    leftFr = mapToFr(leftRatio);
+                    rightFr = mapToFr(1 - leftRatio);
+                }
+                wingListContainer.style.gridTemplateColumns = `${leftFr.toFixed(2)}fr ${rightFr.toFixed(2)}fr`;
             }
 
             // 渲染未收集的光翼

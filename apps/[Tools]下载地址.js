@@ -16,7 +16,7 @@ export class Ts extends plugin {
         const links = await getLinkData('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/GameDownload.json', 'json')
 
         if (platform === 'QQBot'|| platform === 'OneBotv11') {
-            // 使用Button类创建下载链接按钮
+            
             const buttonObj = new Button();
             const button = buttonObj.downloadLinks(links);
 
@@ -27,7 +27,7 @@ export class Ts extends plugin {
             ])
         }
 
-        // 其他平台返回文本链接
+        
         const msg = Object.entries(links)
             .map(([name, link]) => `${name}: ${link}`)
             .join('\n')

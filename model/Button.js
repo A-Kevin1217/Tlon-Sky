@@ -5,9 +5,9 @@ export default class Button {
   
   constructor() {
     this.prefix = '';
-    // 在构造时获取ButtonInstance并保存
+    
     this.buttonInstance = Button.getButtonInstance();
-    // 判断按钮类型
+    
     this.isMiaoBot = typeof Bot.Button === 'function';
   }
   
@@ -16,16 +16,11 @@ export default class Button {
     return this.buttonInstance(button);
   }
   
-  /**
-   * 根据指令字符串生成对应的按钮
-   * @param {string} cmd - 按钮指令
-   * @param {object} params - 可选参数
-   * @returns {object} - 返回按钮对象
-   */
+  
   renderButton(cmd, params = {}) {
     if (!this.buttonInstance) return null;
     
-    // 根据指令匹配对应的按钮
+    
     switch (cmd) {
       case 'help':
         return this.help();
@@ -47,7 +42,7 @@ export default class Button {
             return this.buttonInstance(buttons.map(btn => ({ text: btn, callback: btn })));
           }
         }
-        // 如果是对象，直接传递
+        
         if (typeof cmd === 'object') {
           return this.createButton(cmd);
         }
@@ -59,7 +54,7 @@ export default class Button {
     if (!this.buttonInstance) return null;
     
     if (this.isMiaoBot) {
-      // 喵崽按钮格式 (使用label和data)
+      
       return this.buttonInstance([
         { label: '每日任务', data: '/每日任务' },
         { label: '代币位置', data: '/代币位置' },
@@ -73,7 +68,7 @@ export default class Button {
         { label: '蜡烛记录帮助', data: '/蜡烛记录帮助' }
       ]);
     } else {
-      // TRSS按钮格式 (使用text和callback)
+      
       return this.buttonInstance(
         [
           { text: '每日任务', callback: '/每日任务' },
@@ -96,12 +91,12 @@ export default class Button {
     if (!this.buttonInstance) return null;
     
     if (this.isMiaoBot) {
-      // 喵崽按钮格式
+      
       return this.buttonInstance([
         { label: '再来一张', data: '/绘画分享' }
       ]);
     } else {
-      // TRSS按钮格式
+      
       return this.buttonInstance(
         [
           { text: '再来一张', callback: '/绘画分享' }
@@ -114,7 +109,7 @@ export default class Button {
     if (!this.buttonInstance) return null;
     
     if (this.isMiaoBot) {
-      // 喵崽按钮格式
+      
       return this.buttonInstance([
         { label: "20年记录", data: `/20年复刻记录` },
         { label: "21年记录", data: `/21年复刻记录` },
@@ -127,7 +122,7 @@ export default class Button {
         { label: "全部复刻记录", data: `/全部复刻记录` }
       ]);
     } else {
-      // TRSS按钮格式
+      
       return this.buttonInstance(
         [
           { text: "20年记录", callback: `/20年复刻记录` },
@@ -149,12 +144,12 @@ export default class Button {
     if (!this.buttonInstance) return null;
     
     if (this.isMiaoBot) {
-      // 喵崽按钮格式
+      
       return this.buttonInstance([
         { label: '碎石路线图', data: '/碎石路线图' }
       ]);
     } else {
-      // TRSS按钮格式
+      
       return this.buttonInstance(
         [
           { text: '碎石路线图', callback: '/碎石路线图' }
@@ -167,12 +162,12 @@ export default class Button {
     if (!this.buttonInstance) return null;
     
     if (this.isMiaoBot) {
-      // 喵崽按钮格式
+      
       return this.buttonInstance([
         { label: '再次查询', data: '/光遇服务器状态' }
       ]);
     } else {
-      // TRSS按钮格式
+      
       return this.buttonInstance(
         [
           { text: '再次查询', callback: '/光遇服务器状态' }
@@ -184,12 +179,12 @@ export default class Button {
     if (!this.buttonInstance) return null;
     
     if (this.isMiaoBot) {
-      // 喵崽按钮格式
+      
       return this.buttonInstance([
         { label: '任务图', data: '/任务图' }
       ]);
     } else {
-      // TRSS按钮格式
+      
       return this.buttonInstance(
         [
           { text: '任务图', callback: '/任务图' }
@@ -202,7 +197,7 @@ export default class Button {
     if (!this.buttonInstance) return null;
     
     if (this.isMiaoBot) {
-      // 喵崽按钮格式
+      
       return this.buttonInstance([
         { label: '官服', link: links.官服 },
         { label: '4399', link: links.四三九九 }
@@ -216,7 +211,7 @@ export default class Button {
         { label: '应用宝', link: links.应用宝 }
       ]);
     } else {
-      // TRSS按钮格式
+      
       return this.buttonInstance(
         [
           { text: '官服', link: links.官服 },

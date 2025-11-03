@@ -39,7 +39,7 @@ let Data = {
     return {}
   },
   writeJSON(file, data, space = '\t', root = '') {
-    // 检查并创建目录
+    
     Data.createDir(file, root, true)
     root = getRoot(root)
     delete data._res

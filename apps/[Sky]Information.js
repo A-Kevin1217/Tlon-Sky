@@ -68,7 +68,7 @@ export class SkyInformationPlugin extends plugin {
     async countWings(e) {
         const data = await getLinkData('https://s.166.net/config/ds_yy_02/ma75_wing_wings.json', 'json');
 
-        // 使用映射表简化分类统计
+        
         const categoryMap = {
             '晨岛': '晨', '云野': '云', '雨林': '雨',
             '霞谷': '霞', '暮土': '暮', '禁阁': '禁',
@@ -76,7 +76,7 @@ export class SkyInformationPlugin extends plugin {
             '普通永久': '普通永久'
         };
 
-        // 动态初始化计数对象
+        
         const counts = Object.values(categoryMap).reduce((acc, cur) => {
             acc[cur] = 0;
             return acc;
@@ -87,10 +87,10 @@ export class SkyInformationPlugin extends plugin {
             if (key) counts[key]++;
         });
 
-        // 解构常用数据
+        
         const [reissue, normal] = [counts['复刻永久'], counts['普通永久']];
 
-        // 生成消息内容
+        
         const messages = [
             `永久翼: ${reissue + normal}个`,
             `复刻先祖永久翼: ${reissue}`,
@@ -113,11 +113,11 @@ export class SkyInformationPlugin extends plugin {
         const { season, activity } = await getLinkData('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/GameProgress.json', 'json');
         const now = new Date();
 
-        // 合并日期处理逻辑
+        
         const parseDate = str => new Date(str.replace(/-/g, '/'));
         const endDate = parseDate(season.endDate);
 
-        // 修改活动处理逻辑
+        
         let currentActivity = null;
         if (activity && Array.isArray(activity)) {
             currentActivity = activity.find(a => {
@@ -163,13 +163,13 @@ export class SkyInformationPlugin extends plugin {
         const seasonName = e.msg.replace(/#|\/|季多久未复刻/g, '').trim();
         const currentDate = new Date();
 
-        // 合并数据获取与处理逻辑
+        
         const [seasonalData, regressionData] = await Promise.all([
             fetch('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json').then(r => r.json()),
             fetch('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json').then(r => r.json())
         ]);
 
-        // 构建最后出现日期映射
+        
         const lastAppearance = regressionData.flatMap(year =>
             year.yearRecord.flatMap(month =>
                 month.monthRecord.map(record => ({
@@ -182,7 +182,7 @@ export class SkyInformationPlugin extends plugin {
             return acc;
         }, {});
 
-        // 统计每个先祖的复刻次数
+        
         const spiritReappearCount = regressionData.flatMap(year =>
             year.yearRecord.flatMap(month =>
                 month.monthRecord.map(record => record.name)
@@ -192,7 +192,7 @@ export class SkyInformationPlugin extends plugin {
             return acc;
         }, {});
 
-        // 查找目标季节数据
+        
         const seasonInfo = seasonalData
             .map(season => ({
                 ...season,

@@ -7,7 +7,7 @@ const { exec, execSync } = require('child_process')
 
 let uping = false
 
-/** 插件名称 */
+
 const PLUGIN_NAME = 'Tlon-Sky'
 export class UPDATE extends plugin {
     constructor() {
@@ -168,7 +168,7 @@ export class UPDATE extends plugin {
             });
         }
 
-        // 制作转发内容
+        
         let dec = '点击查看更新日志'
         if (this.e.isGroup) {
             forwardMsg = await this.e.group.makeForwardMsg(forwardMsg)

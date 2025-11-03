@@ -2,22 +2,22 @@
 
 :root {
     --bg: rgba(255, 255, 255);
-    /* 背景颜色 */
+    
     --back-bg: #c5ccda;
-    /* 定义宽度 */
+    
     --w: 100px;
     --back-shadow: #fff;
-    /* 父容器gap间距 */
+    
     --gap: 8px;
-    /* 第二层圆形宽度 */
+    
     --inner: calc(var(--w) - var(--gap));
-    /* 文本颜色 */
+    
     --text-color: #514f4f;
-    /* 定义stroke的宽度 */
+    
     --stroke: 12px;
-    /* svg环形宽度 更正内容*/
+    
     --circle: calc(var(--inner) - var(--stroke));
-    /* 第三层圆形宽度 */
+    
     --center: calc(var(--circle) - var(--stroke));
 }
 
@@ -25,8 +25,8 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
-    /* 添加百分比显示文字 */
-    /* 合并代码 */
+    
+    
 }
 
 .mainHardware .container-box {
@@ -91,13 +91,13 @@
     cx: calc(var(--circle) / 2);
     r: calc(var(--circle) / 2);
     fill: none;
-    /* 圆角 */
+    
     stroke-linecap: round;
     position: absolute;
     --z: calc(var(--w) / 2);
     --c: calc(var(--circle) / 2);
     transform: translate(calc(var(--z) - var(--c)), calc(var(--z) - var(--c)));
-    /* 圆的周长 */
+    
     stroke-dasharray: calc(3.14 * var(--circle));
     stroke-dashoffset: calc(3.14 * var(--circle));
     stroke-width: var(--stroke);
@@ -412,4 +412,3 @@ hr {
     text-align: right;
 }
 
-/*# sourceMappingURL=index.css.map */
