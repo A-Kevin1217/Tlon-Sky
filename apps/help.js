@@ -1,6 +1,4 @@
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
-import { getPlatformInfo } from './../function/function.js'
-import Button from '../model/Button.js'
 
 export class SKY extends plugin {
   constructor() {
@@ -19,14 +17,8 @@ export class SKY extends plugin {
     const image = await puppeteer.screenshot('help', {
       tplFile: 'plugins/Tlon-Sky/resources/admin/SkyHelp.html'
     })
-
-    const { isQQBot } = getPlatformInfo(e)
+    
     const message = [image]
-
-    if (isQQBot) {
-      const buttonHelp = new Button().help()
-      if (buttonHelp) message.push(buttonHelp)
-    }
 
     await e.reply(message)
   }

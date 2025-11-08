@@ -14,7 +14,8 @@
             width: 150vw;
             height: 180vh;
             background: url('https://vip.123pan.cn/1810660/yk6baz03t0l000d7w33fgakmsdoawb9eDIYPDdQzDcxPAdJwDF==.webp') no-repeat 58% 65%;
-            background-size: contain;
+            /* 保持宽度适配的同时填满高度，避免底部留白 */
+            background-size: cover;
             z-index: -100;
             pointer-events: none;
             min-width: 2500px;
@@ -39,7 +40,8 @@
             width: 150vw;
             height: 180vh;
             z-index: -2;
-            object-fit: contain;
+            /* 与背景一致，确保 img 也能覆盖其容器并避免留白 */
+            object-fit: cover;
             min-width: 2500px;
             min-height: 2000px;
             object-position: 58% 65%;
@@ -240,7 +242,7 @@
     <div class="overlay"></div>
     <div class="container">
         <header class="header">
-            <h1 class="title">Sky光遇</h1>
+            <h1 class="title">Tlon Sky · 功能菜单</h1>
             <p class="subtitle">探索神秘世界的完整指南</p>
         </header>
 
@@ -362,10 +364,10 @@
                     <li class="feature-item">
                         <div class="feature-item-header">
                             <i class="fas fa-exchange-alt"></i>
-                            <span class="feature-text">#常驻兑换图列表</span>
+                            <span class="feature-text">#xx兑换图</span>
                         </div>
                         <div class="feature-description">
-                            查看常驻兑换图
+                            查看常驻兑换图<br>例:#云野兑换图
                         </div>
                     </li>
                     <li class="feature-item">
