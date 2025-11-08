@@ -77,7 +77,7 @@ export class SkyWingQueryPlugin extends plugin {
         let userData = this.getUserData(user_id);
 
         if (userData.ids.length === 0) {
-            await e.reply(['⚠️您还没有绑定任何ID！\nTips：这里需要绑定游戏内短ID哦']);
+            await e.reply(['⚠️ 您还没有绑定任何ID！']);
             return true;
         }
 
@@ -101,7 +101,7 @@ export class SkyWingQueryPlugin extends plugin {
         let userData = this.getUserData(user_id);
 
         if (userData.ids.length === 0) {
-            await e.reply(['⚠️您还没有绑定任何ID！\nTips：这里需要绑定游戏内短ID哦']);
+            await e.reply(['⚠️ 您还没有绑定任何ID！']);
             return true;
         }
 
@@ -128,7 +128,7 @@ export class SkyWingQueryPlugin extends plugin {
         let userData = this.getUserData(user_id);
 
         if (userData.ids.length === 0) {
-            await e.reply(['⚠️您还没有绑定任何ID！\nTips：这里需要绑定游戏内短ID哦\n使用"光遇绑定<ID>"来绑定。']);
+            await e.reply(['⚠️ 您还没有绑定任何ID！\n光遇绑定<ID>"来绑定\nTips：这里需要绑定游戏内短ID哦']);
             return true;
         }
 
@@ -148,7 +148,7 @@ export class SkyWingQueryPlugin extends plugin {
 
         if (!userData.currentId) {
             if (userData.ids.length === 0) {
-                await e.reply(['⚠️您还没有绑定任何ID！\nTips：这里需要绑定游戏内短ID哦\n使用"光遇绑定<ID>"来绑定。']);
+                await e.reply(['⚠️ 您还没有绑定任何ID！\n光遇绑定<ID>"来绑定\nTips：这里需要绑定游戏内短ID哦']);
                 return true;
             } else {
                 await e.reply(['请先使用"光遇切换<ID>"设置当前ID！']);
@@ -426,7 +426,7 @@ export class SkyWingQueryPlugin extends plugin {
 
         if (!userData.currentId) {
             if (userData.ids.length === 0) {
-                await e.reply(['⚠️您还没有绑定任何ID！\nTips：这里需要绑定游戏内短ID哦\n使用"光遇绑定<ID>"来绑定。']);
+                await e.reply(['⚠️ 您还没有绑定任何ID！\n光遇绑定<ID>"来绑定\nTips：这里需要绑定游戏内短ID哦']);
                 return true;
             } else {
                 await e.reply(['请先使用"光遇切换<序号>"设置当前ID！']);
