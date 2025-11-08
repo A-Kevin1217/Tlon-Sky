@@ -1,8 +1,8 @@
 import { render } from './../components/index.js'
 import fetch from 'node-fetch'
 const SEARCH_PATTERNS = [
-  /^(#|\/)?((?:季节|好友树|复刻|晨岛|云野|雨林|峡谷|霞谷|暮土|禁阁|AURORA|表演|风行|感恩|归(?:巢|属)|九色鹿|梦想|魔法|破晓|潜海|圣岛|拾光|小王子|夜行|音韵|预言|重组|追(?:光|忆)|欧若拉|集结|凌冬|筑巢|二重奏|姆明|彩染|青鸟)(?:季)?兑换图)$/i,
-  /^(#|\/)?(国服复刻|全图鉴参考|身高(?:(?:透明)?图|进阶知识)|蜡烛合成机制|(?:身高)?测量规则)$/
+  /^[#\/]?((?:季节|好友树|复刻|晨岛|云野|雨林|峡谷|霞谷|暮土|禁阁|AURORA|表演|风行|感恩|归(?:巢|属)|九色鹿|梦想|魔法|破晓|潜海|圣岛|拾光|小王子|夜行|音韵|预言|重组|追(?:光|忆)|欧若拉|集结|凌冬|筑巢|二重奏|姆明|彩染|青鸟)(?:季)?兑换图)$/i,
+  /^[#\/]?(国服复刻|全图鉴参考|身高(?:(?:透明)?图|进阶知识)|蜡烛合成机制|(?:身高)?测量规则)$/
 ]
 
 export class SKY extends plugin {
@@ -15,7 +15,7 @@ export class SKY extends plugin {
       rule: [
         { reg: SEARCH_PATTERNS[0], fnc: 'handleImageQuery' },
         { reg: SEARCH_PATTERNS[1], fnc: 'handleImageQuery' },
-        { reg: /^(#|\/)?(全部|((20|21|22|23|24|25)\s*年))复刻记录$/i, fnc: 'regressionRecords' }
+        { reg: /^[#\/]?(全部|(20|21|22|23|24|25))年复刻记录$/i, fnc: 'regressionRecords' }
       ]
     })
 
@@ -37,7 +37,7 @@ export class SKY extends plugin {
     let regressionRecordsData = await (await fetch(`${baseUrl}RegressionRecords.json`)).json();
     const seasonalSpiritsData = await (await fetch(`${baseUrl}SeasonalSpirits.json`)).json();
 
-    let [, , showAll, yearStr] = e.msg.match(/^(#|\/)?(全部|(20|21|22|23|24|25)年)复刻记录$/);
+    let [, showAll, yearStr] = e.msg.match(/^[#\/]?(全部|(20|21|22|23|24|25))年复刻记录$/);
 
     let statistics = {};
     let filteredData;

@@ -17,7 +17,7 @@ export class UPDATE extends plugin {
             event: 'message',
             priority: 1,
             rule: [
-                { reg: /^(#|\/)?(光遇|sky)(强制)?(更新)$/i, fnc: 'UPDATE' }
+                { reg: /^[#\/]?(光遇|sky)(强制)?(更新)$/i, fnc: 'UPDATE' }
             ]
         })
     }

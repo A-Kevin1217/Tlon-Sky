@@ -227,7 +227,7 @@ export class SkyInformationPlugin extends plugin {
     }
 
     async showRegressionCalendar(e) {
-        let [, , yearStr] = e.msg.match(/^(#|\/)?((20|21|22|23|24|25)\s*年)复刻日历$/);
+        let [, yearStr] = e.msg.match(/^[#\/]?((20|21|22|23|24|25)\s*年)复刻日历$/);
         const year = 2000 + parseInt(yearStr)
         const baseUrl = 'https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json';
         const regressionRecordsData = await (await fetch(baseUrl)).json();

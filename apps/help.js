@@ -9,7 +9,7 @@ export class SKY extends plugin {
       event: 'message',
       priority: 1,
       rule: [
-        { reg: /^(#|\/)?(sky|光遇)(帮助|菜单)$/i, fnc: 'help', },
+        { reg: /^[#\/]?(sky|光遇)(帮助|菜单)$/i, fnc: 'help', },
         { reg: /^[#\/]?季节列表$/, fnc: 'seasonList' }
       ]
     });

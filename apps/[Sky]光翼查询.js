@@ -14,14 +14,14 @@ export class SkyWingQueryPlugin extends plugin {
             event: 'message',
             priority: 1,
             rule: [
-                { reg: /^光遇绑定\s*(\d+)$/, fnc: 'bindSkyId' },
-                { reg: /^光遇切换\s*(\d+)$/, fnc: 'switchSkyId' },
-                { reg: /^光遇删除\s*(\d+)$/, fnc: 'deleteSkyId' },
-                { reg: /^光遇ID列表$/, fnc: 'listSkyIds' },
-                { reg: /^光翼查询$/, fnc: 'queryWings' },
-                { reg: /^光翼查询\s*(\d+)$/, fnc: 'queryWingsById' },
-                { reg: /^光翼详情$/, fnc: 'queryWingDetails' },
-                { reg: /^光翼详情\s*(\d+)$/, fnc: 'queryWingDetailsById' }
+                { reg: /^[#\/]?光遇绑定\s*(\d+)$/, fnc: 'bindSkyId' },
+                { reg: /^[#\/]?光遇切换\s*(\d+)$/, fnc: 'switchSkyId' },
+                { reg: /^[#\/]?光遇删除\s*(\d+)$/, fnc: 'deleteSkyId' },
+                { reg: /^[#\/]?光遇ID列表$/, fnc: 'listSkyIds' },
+                { reg: /^[#\/]?光翼查询$/, fnc: 'queryWings' },
+                { reg: /^[#\/]?光翼查询\s*(\d+)$/, fnc: 'queryWingsById' },
+                { reg: /^[#\/]?光翼详情$/, fnc: 'queryWingDetails' },
+                { reg: /^[#\/]?光翼详情\s*(\d+)$/, fnc: 'queryWingDetailsById' }
             ]
         });
     }
@@ -51,7 +51,7 @@ export class SkyWingQueryPlugin extends plugin {
 
     async bindSkyId(e) {
         const { user_id } = e;
-        const skyId = e.msg.match(/^光遇绑定\s*(\d+)$/)[1].trim();
+        const skyId = e.msg.match(/^[#\/]?光遇绑定\s*(\d+)$/)[1].trim();
 
         let userData = this.getUserData(user_id);
 
@@ -72,7 +72,7 @@ export class SkyWingQueryPlugin extends plugin {
 
     async switchSkyId(e) {
         const { user_id } = e;
-        const index = parseInt(e.msg.match(/^光遇切换\s*(\d+)$/)[1].trim());
+        const index = parseInt(e.msg.match(/^[#\/]?光遇切换\s*(\d+)$/)[1].trim());
 
         let userData = this.getUserData(user_id);
 
@@ -96,7 +96,7 @@ export class SkyWingQueryPlugin extends plugin {
 
     async deleteSkyId(e) {
         const { user_id } = e;
-        const index = parseInt(e.msg.match(/^光遇删除\s*(\d+)$/)[1].trim());
+        const index = parseInt(e.msg.match(/^[#\/]?光遇删除\s*(\d+)$/)[1].trim());
 
         let userData = this.getUserData(user_id);
 
@@ -161,7 +161,7 @@ export class SkyWingQueryPlugin extends plugin {
     }
 
     async queryWingsById(e) {
-        const skyId = e.msg.match(/^光遇查询\s*(\d+)$/)[1].trim();
+        const skyId = e.msg.match(/^[#\/]?光翼查询\s*(\d+)$/)[1].trim();
         await this.queryWingsBySkyId(e, skyId);
         return true;
     }
@@ -439,7 +439,7 @@ export class SkyWingQueryPlugin extends plugin {
     }
 
     async queryWingDetailsById(e) {
-        const skyId = e.msg.match(/^光翼详情\s*(\d+)$/)[1].trim();
+        const skyId = e.msg.match(/^[#\/]?光翼详情\s*(\d+)$/)[1].trim();
         await this.queryWingDetailsBySkyId(e, skyId);
         return true;
     }

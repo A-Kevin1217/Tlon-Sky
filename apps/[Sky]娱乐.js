@@ -12,7 +12,7 @@ if (!fileExists(randomFriendsFilePaths[0])) {
     storageData([randomFriendsFilePaths[0], randomFriendsFilePaths[1]], [[], {}]);
 }
 
-const blindBoxRegexPattern = /^(#|\/)?存入盲盒(.*)\*(国|国际|测试)服$/i;
+const blindBoxRegexPattern = /^[#\/]?存入盲盒(.*)\*(国|国际|测试)服$/i;
 
 export class EntertainmentPlugin extends plugin {
     constructor() {
@@ -47,7 +47,7 @@ export class EntertainmentPlugin extends plugin {
         if (e.isGroup) return e.reply('请私聊添加盲盒');
         const { user_id: userId, msg } = e;
         const matchedContent = msg.match(blindBoxRegexPattern);
-        const [ , , code, server ] = matchedContent;
+        const [ , code, server ] = matchedContent;
 
         if (!/^[0-9A-Z]{4}-[0-9A-Z]{4}-[0-9A-Z]{4}$/.test(code)) {
             return e.reply([

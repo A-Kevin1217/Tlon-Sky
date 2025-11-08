@@ -34,13 +34,13 @@ export class SKY extends plugin {
       priority: 1,
       rule: [
         {
-          reg: /^(#|\/)?(光遇|国服)?(每日|今日)?(任务|魔法|季蜡|大蜡(烛)?|代币(位置)?)$/,
+          reg: /^[#\/]?(光遇|国服)?(每日|今日)?(任务|魔法|季蜡|大蜡(烛)?|代币(位置)?)$/,
           fnc: 'handleDynamic'
         },
-        { reg: /^(#|\/)?(季节任务|任务图|本月[红黑碎]石|碎石路线图)$/, fnc: 'handleDirect' },
-        { reg: /^(#|\/)?(查询)?(\d{4})年(\d{1,2})月碎石$/, fnc: 'handleYearlyShards' },
+        { reg: /^[#\/]?(季节任务|任务图|本月[红黑碎]石|碎石路线图)$/, fnc: 'handleDirect' },
+        { reg: /^[#\/]?(查询)?(\d{4})年(\d{1,2})月碎石$/, fnc: 'handleYearlyShards' },
         { reg: /^[#\/]?今日[红黑碎]石$/, fnc: 'handleTodayShards' },
-        { reg: /^(#|\/)?(碎石规律|碎石规律说明)$/, fnc: 'showStoneRule' }
+        { reg: /^[#\/]?(碎石规律|碎石规律说明)$/, fnc: 'showStoneRule' }
       ]
     })
   }
