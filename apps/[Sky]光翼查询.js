@@ -1,11 +1,11 @@
 import { render } from './../components/index.js';
 import { fileExists } from './../function/function.js';
 import fs from 'fs';
+import fetch from 'node-fetch';
 
 if (!fileExists('plugins/Tlon-Sky/data/wingBindings')) {
     fs.mkdirSync('plugins/Tlon-Sky/data/wingBindings', { recursive: true });
 }
-
 export class SkyWingQueryPlugin extends plugin {
     constructor() {
         super({
@@ -24,6 +24,8 @@ export class SkyWingQueryPlugin extends plugin {
                 { reg: /^[#\/]?光翼详情\s*(\d+)$/, fnc: 'queryWingDetailsById' }
             ]
         });
+        // 缓存光翼名称映射（懒加载）
+        this.wingNameMap = null;
     }
 
     getUserDataFile(user_id) {
@@ -250,159 +252,33 @@ export class SkyWingQueryPlugin extends plugin {
         return '未知';
     }
 
-    getWingChineseName(wingName) {
-        const wingNameMap = {
-            'l_Dawn_0': '晨岛',
-            'l_Dawn_1': '晨岛',
-            'l_Dawn_2': '晨岛',
-            'l_Dawn_3': '晨岛',
-            'l_Dawn_4': '晨岛',
-            'l_Dawn_5': '晨岛',
-            'l_Dawn_6': '晨岛',
-            'l_Dawn_TrialsAir_0': '风试炼',
-            'l_Dawn_TrialsEarth_0': '土试炼',
-            'l_Dawn_TrialsFire_0': '火试炼',
-            'l_Dawn_TrialsWater_0': '水试炼',
-
-            'l_Prairie_Cave_0': '幽光山洞',
-            'l_Prairie_Cave_1': '幽光山洞',
-            'l_Prairie_Village_0': '仙乡',
-            'l_Prairie_Village_1': '仙乡',
-            'l_Prairie_Village_2': '仙乡',
-            'l_Prairie_Village_3': '仙乡',
-            'l_Prairie_Village_4': '仙乡',
-            'l_DayHubCave_0': '仙乡',
-            'l_Prairie_Island_0': '圣岛',
-            'l_Prairie_Island_1': '圣岛',
-            'l_Prairie_Island_2': '圣岛',
-            'l_Prairie_Island_3': '圣岛',
-            'l_Prairie_Island_4': '圣岛',
-            'l_Prairie_Island_5': '圣岛',
-            'l_Prairie_Island_6': '圣岛',
-            'l_Prairie_Island_7': '圣岛',
-            'l_Prairie_ButterflyFields_0': '蝴蝶平原',
-            'l_Prairie_ButterflyFields_1': '蝴蝶平原',
-            'l_Prairie_ButterflyFields_2': '蝴蝶平原',
-            'l_Prairie_NestAndKeeper_0': '云顶浮石',
-            'l_Prairie_NestAndKeeper_1': '云顶浮石',
-            'l_Prairie_WildlifePark_0': '云峰',
-            'l_Prairie_WildlifePark_1': '云峰',
-            'l_Prairie_WildlifePark_2': '云峰',
-            'l_Prairie_WildLifePark_0': '云峰',
-            'l_Prairie_WildLifePark_1': '云峰',
-            'l_Prairie_WildLifePark_2': '云峰',
-
-            'l_Rain_0': '雨林',
-            'l_Rain_1': '雨林',
-            'l_RainMid_0': '密林遗迹',
-            'l_RainMid_1': '密林遗迹',
-            'l_RainMid_2': '密林遗迹',
-            'l_RainEnd_0': '雨林神殿',
-            'l_RainShelter_0': '秘密花园',
-            'l_RainShelter_1': '秘密花园',
-            'l_Rain_Cave_0': '地下溶洞',
-            'l_Rain_Cave_1': '地下溶洞',
-            'l_Rain_Cave_2': '地下溶洞',
-            'l_Rain_Cave_3': '地下溶洞',
-            'l_Rain_BaseCamp_0': '大树屋',
-            'l_Rain_BaseCamp_1': '大树屋',
-            'l_RainForest_0': '荧光森林',
-            'l_RainForest_1': '荧光森林',
-            'l_RainForest_2': '荧光森林',
-            'l_RainForest_3': '荧光森林',
-            'l_Rain_BlueBirdTheater_0': '青鸟剧场',
-            'l_Skyway_0': '风行网道',
-            'l_Skyway_1': '风行网道',
-
-            'l_Sunset_0': '霞谷',
-            'l_Sunset_1': '霞谷',
-            'l_Sunset_2': '霞谷',
-            'l_Sunset_Theater_0': '圆梦村剧场',
-            'l_Sunset_Citadel_0': '霞光城',
-            'l_Sunset_Citadel_1': '霞光城',
-            'l_SunsetRace_0': '滑行赛道',
-            'l_SunsetColosseum_0': '落日竞技场',
-            'l_SunsetEnd_0': '落日竞技场',
-            'l_SunsetEnd_1': '旧版终点',
-            'l_Sunset_YetiPark_0': '雪隐峰',
-            'l_Sunset_YetiPark_1': '雪隐峰',
-            'l_SunsetVillage_0': '圆梦村',
-            'l_SunsetVillage_1': '圆梦村',
-            'l_SunsetVillage_2': '圆梦村',
-            'l_SunsetEnd2_0': '霞谷神殿',
-            'l_Sunset_FlyRace_0': '飞行赛道',
-            'l_Sunset_FlyRace_1': '飞行赛道',
-
-            'l_Dusk_0': '暮土',
-            'l_Dusk_1': '暮土',
-            'l_DuskEnd_0': '暮土神殿',
-            'l_DuskMid_0': '远古战场',
-            'l_DuskMid_1': '远古战场',
-            'l_Dusk_CrabField_0': '黑水港湾',
-            'l_Dusk_CrabField_1': '黑水港湾',
-            'l_Dusk_CrabField_2': '黑水港湾',
-            'l_DuskGraveyard_0': '巨兽荒原',
-            'l_DuskGraveyard_1': '巨兽荒原',
-            'l_DuskGraveyard_2': '巨兽荒原',
-            'l_DuskGraveyard_3': '巨兽荒原',
-            'l_DuskGraveyard_4': '巨兽荒原',
-            'l_DuskGraveyard_5': '巨兽荒原',
-            'l_Dusk_Triangle_0': '藏宝岛礁',
-            'l_Dusk_Triangle_1': '藏宝岛礁',
-            'l_DuskOasis_0': '失落方舟',
-            'l_DuskOasis_1': '失落方舟',
-
-            'l_Night_0': '禁阁光翼',
-            'l_Night_1': '禁阁光翼',
-            'l_Night2_0': '禁阁二层',
-            'l_Night2_1': '禁阁二层',
-            'l_Night2_2': '禁阁二层',
-            'l_Night2_3': '禁阁二层',
-            'l_Night_PaintedWorld_0': '月牙绿洲',
-            'l_Night_PaintedWorld_1': '月牙绿洲',
-            'l_Night_PaintedWorld_2': '月牙绿洲',
-            'l_Night_StoryBook_0': '姆明故事书',
-            'l_NightArchive_0': '档案阁',
-            'l_NightArchive_1': '档案阁',
-            'l_NightDesert_0': '星光沙漠',
-            'l_NightDesert_1': '星光沙漠',
-            'l_NightDesert_2': '星光沙漠',
-            'l_Night_Shelter_0': '庇护所',
-
-            'l_StormStart_0': '伊甸',
-            'l_Storm_0': '伊甸',
-            'l_Storm_1': '伊甸',
-            'l_Storm_2': '伊甸',
-            'l_Storm_3': '伊甸',
-            'l_Storm_4': '伊甸',
-            'l_Storm_5': '伊甸',
-            'l_Storm_6': '伊甸',
-            'l_Storm_7': '伊甸',
-            'l_Storm_8': '伊甸',
-            'l_Credits_0': '重生之路',
-            'l_StormEvent_VoidSpace_0': '远古回忆',
-            'l_StormEvent_VoidSpace_1': '远古回忆',
-            'l_StormEvent_VoidSpace_2': '远古回忆',
-            'l_StormEvent_VoidSpace_3': '远古回忆',
-            'l_StormEvent_VoidSpace_4': '远古回忆',
-            'l_StormEvent_VoidSpace_5': '远古回忆',
-
-            'l_CandleSpace_0': '遇境(小黑屋)',
-            'l_MainStreet_0': '云巢(小黑屋)'
-
-            
-        };
-
-        if (wingNameMap[wingName]) {
-            return wingNameMap[wingName];
+    async loadWingNameMap() {
+        if (this.wingNameMap) return;
+        try {
+            const res = await fetch('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/GuangYi.json');
+            this.wingNameMap = await res.json();
+        } catch (err) {
+            // 保证即便加载失败也不会抛出，后续使用会返回原始名字
+            logger && logger.error && logger.error('加载光翼名称映射失败: ' + (err.message || err));
+            this.wingNameMap = {};
         }
-        
-        for (const [key, value] of Object.entries(wingNameMap)) {
+    }
+
+    getWingChineseName(wingName) {
+        // 如果未提供名字或未加载映射，直接返回原名
+        if (!wingName) return wingName;
+        if (!this.wingNameMap) return wingName;
+
+        if (this.wingNameMap[wingName]) {
+            return this.wingNameMap[wingName];
+        }
+
+        for (const [key, value] of Object.entries(this.wingNameMap)) {
             if (key.toLowerCase() === wingName.toLowerCase()) {
                 return value;
             }
         }
-        
+
         return wingName;
     }
 
@@ -446,7 +322,7 @@ export class SkyWingQueryPlugin extends plugin {
 
     async queryWingDetailsBySkyId(e, skyId) {
         try {
-            
+
             const url = `http://sh-aliyun2.vincentzyu233.cn:51024/queryGuangyi?id=${skyId}`;
             const response = await getLinkData(url, 'json');
 
@@ -458,33 +334,35 @@ export class SkyWingQueryPlugin extends plugin {
             const resultData = JSON.parse(response.data.result);
             const userWingBuffs = resultData.wing_buffs || [];
 
-            
+
             const allWingsUrl = 'https://s.166.net/config/ds_yy_02/ma75_wing_wings.json';
             const allWingsData = await getLinkData(allWingsUrl, 'json');
+            // 预加载光翼名称映射，后续同步查找中文名
+            await this.loadWingNameMap();
 
-            
+
             const userWingMap = {};
             userWingBuffs.forEach(wing => {
                 userWingMap[wing.name] = wing;
             });
 
-            
+
             const fixedWings = ['l_SunsetEnd_1', 'l_CandleSpace_0', 'l_MainStreet_0'];
 
-            
+
             const allWings = [];
-            const processedWings = new Set(); 
-            
+            const processedWings = new Set();
+
             allWingsData.forEach(wingInfo => {
                 const wingName = wingInfo['光翼名字'];
                 const existingWing = userWingMap[wingName];
 
                 if (existingWing) {
-                    
+
                     existingWing.chineseName = this.getWingChineseName(existingWing.name);
                     allWings.push(existingWing);
                 } else {
-                    
+
                     const uncollectedWing = {
                         name: wingName,
                         chineseName: this.getWingChineseName(wingName),
@@ -497,21 +375,21 @@ export class SkyWingQueryPlugin extends plugin {
                 processedWings.add(wingName);
             });
 
-            
+
             fixedWings.forEach(wingName => {
                 if (processedWings.has(wingName)) {
-                    
+
                     return;
                 }
 
-                
+
                 const existingWing = userWingMap[wingName];
                 if (existingWing) {
-                    
+
                     existingWing.chineseName = this.getWingChineseName(existingWing.name);
                     allWings.push(existingWing);
                 } else {
-                    
+
                     const uncollectedWing = {
                         name: wingName,
                         chineseName: this.getWingChineseName(wingName),
@@ -523,7 +401,7 @@ export class SkyWingQueryPlugin extends plugin {
                 }
             });
 
-            
+
             const wingsByMap = {};
             const uncollectedByMap = {};
 
