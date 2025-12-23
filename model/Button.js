@@ -57,7 +57,6 @@ export default class Button {
       
       return this.buttonInstance([
         { label: '每日任务', data: '/每日任务' },
-        { label: '代币位置', data: '/代币位置' },
         { label: 'sky状态', data: '/sky状态' }
       ],[
         { label: '光遇进度', data: '/光遇进度' },
@@ -72,7 +71,6 @@ export default class Button {
       return this.buttonInstance(
         [
           { text: '每日任务', callback: '/每日任务' },
-          { text: '代币位置', callback: '/代币位置' },
           { text: 'sky状态', callback: '/sky状态' }
         ],
         [

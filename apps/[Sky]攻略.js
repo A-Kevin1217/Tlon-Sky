@@ -3,13 +3,12 @@ import { getPlatformInfo } from './../function/function.js'
 import Button from '../model/Button.js'
 
 const IMG = {
-  DAILY_COIN: `${SKY_IMAGE_URL.A}当前/当前代币.jpg`,
   SEASON_TASK: `${SKY_IMAGE_URL.A}当前/当前季节任务.jpg`,
   TASK_IMAGES: [
-    `${SKY_IMAGE_URL.B}sc/scrw?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`+ "&num=" + Math.floor(Math.random() * 1000000),
-    `${SKY_IMAGE_URL.B}sc/scjl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`+ "&num=" + Math.floor(Math.random() * 1000000),
-    `${SKY_IMAGE_URL.B}sc/scdl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`+ "&num=" + Math.floor(Math.random() * 1000000),
-    `${SKY_IMAGE_URL.B}mf/magic?key=qw36BL4Oiq8Kmpefl3bkpIs5IY`+ "&num=" + Math.floor(Math.random() * 1000000)
+    `${SKY_IMAGE_URL.B}sc/scrw?key=qw36BL4Oiq8Kmpefl3bkpIs5IY` + "&num=" + Math.floor(Math.random() * 1000000),
+    `${SKY_IMAGE_URL.B}sc/scjl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY` + "&num=" + Math.floor(Math.random() * 1000000),
+    `${SKY_IMAGE_URL.B}sc/scdl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY` + "&num=" + Math.floor(Math.random() * 1000000),
+    `${SKY_IMAGE_URL.B}mf/magic?key=qw36BL4Oiq8Kmpefl3bkpIs5IY` + "&num=" + Math.floor(Math.random() * 1000000)
   ],
   SHARD_MAP: loc => `https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/img/光遇/ShardRouteMap/${loc}.jpg`
 }
@@ -33,10 +32,7 @@ export class SKY extends plugin {
       event: 'message',
       priority: 1,
       rule: [
-        {
-          reg: /^[#\/]?(光遇|国服)?(每日|今日)?(任务|魔法|季蜡|大蜡(烛)?|代币(位置)?)$/,
-          fnc: 'handleDynamic'
-        },
+        { reg: /^[#\/]?(光遇|国服)?(每日|今日)?(任务|魔法|季蜡|大蜡(烛)?)$/, fnc: 'handleDynamic' },
         { reg: /^[#\/]?(季节任务|任务图|本月[红黑碎]石|碎石路线图)$/, fnc: 'handleDirect' },
         { reg: /^[#\/]?(查询)?(\d{4})年(\d{1,2})月碎石$/, fnc: 'handleYearlyShards' },
         { reg: /^[#\/]?今日[红黑碎]石$/, fnc: 'handleTodayShards' },
@@ -46,13 +42,12 @@ export class SKY extends plugin {
   }
 
   async handleDynamic(e) {
-    const type = e.msg.includes('代币') ? 'currency'
-      : e.msg.match(/任务|魔法|季蜡|大蜡/) ? 'dailyTask' : null
+    const type = e.msg.match(/任务|魔法|季蜡|大蜡/) ? 'dailyTask' : null
     if (!type) return
 
-    type === 'dailyTask'
-      ? await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }, null, 'handleDynamic')
-      : e.reply([segment.image(IMG.DAILY_COIN)])
+    if (type === 'dailyTask') {
+      await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }, null, 'handleDynamic')
+    }
   }
 
   async handleDirect(e) {
