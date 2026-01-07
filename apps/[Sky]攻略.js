@@ -1,6 +1,5 @@
 import { render } from '../components/index.js'
 import { getPlatformInfo } from './../function/function.js'
-import Button from '../model/Button.js'
 
 const IMG = {
   SEASON_TASK: `${SKY_IMAGE_URL.A}当前/当前季节任务.jpg`,
@@ -46,7 +45,7 @@ export class SKY extends plugin {
     if (!type) return
 
     if (type === 'dailyTask') {
-      await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }, null, 'handleDynamic')
+      await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }, null)
     }
   }
 
@@ -72,14 +71,9 @@ export class SKY extends plugin {
   }
 
   async handleTodayShards(e) {
-    const { isQQBot } = getPlatformInfo(e)
-    let buttonTodayShards;
-    if (isQQBot) {
-      buttonTodayShards = new Button().TodayShards()
+        const data = this.getStoneData()
+        data ? e.reply(this.formatShardMsg(data)) : e.reply('今日无碎石')
     }
-    const data = this.getStoneData()
-    data ? e.reply([this.formatShardMsg(data), ...(buttonTodayShards ? [buttonTodayShards] : [])]) : e.reply('今日无碎石')
-  }
 
   async stoneRoadMap(e) {
     const data = this.getStoneData()
