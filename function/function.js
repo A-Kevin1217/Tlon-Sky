@@ -8,14 +8,6 @@ const otherFilePath = {
     text: path.join(configPath, 'text.json')
 };
 
-
-function getPlatformInfo(e) {
-    return {
-        isQQBot: e.bot?.adapter?.name || e.adapter_name || '未知' === 'QQBot' ? true : false
-    }
-}
-
-
 async function getPushData() {
     return Yaml.parse(fs.readFileSync(otherFilePath['push'], 'utf-8'))
 }
@@ -89,6 +81,5 @@ export {
     getCronData,
     fileExists,
     storageData,
-    readJsonData,
-    getPlatformInfo
+    readJsonData
 };

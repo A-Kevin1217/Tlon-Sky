@@ -1,5 +1,4 @@
 import { render } from './../components/index.js';
-import { getPlatformInfo } from './../function/function.js'
 
 export class SkyInformationPlugin extends plugin {
     constructor() {

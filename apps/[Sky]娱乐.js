@@ -1,6 +1,5 @@
 import lodash from 'lodash';
 import { fileExists, storageData, readJsonData } from '../function/function.js';
-import { getPlatformInfo } from './../function/function.js'
 
 const randomFriendsFilePaths = [
     'plugins/Tlon-Sky/data/RandomFriends.json',
