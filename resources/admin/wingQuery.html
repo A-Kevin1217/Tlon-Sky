@@ -1,492 +1,567 @@
-<style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        width: 1200px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        background: #000000;
-        padding: 40px 20px;
-    }
-
-    .container {
-        background: #1a1a1a;
-        border-radius: 12px;
-        padding: 32px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .header {
-        text-align: center;
-        margin-bottom: 40px;
-        padding-bottom: 24px;
-        border-bottom: 1px solid #383838;
-    }
-
-    .header h1 {
-        font-size: 2rem;
-        font-weight: 600;
-        color: #ffffff;
-        margin-bottom: 16px;
-        letter-spacing: -0.5px;
-    }
-
-    .header-info {
-        display: flex;
-        justify-content: center;
-        gap: 32px;
-        margin-top: 16px;
-        flex-wrap: wrap;
-    }
-
-    .header-info-item {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        color: #a8a8a8;
-        font-size: 0.875rem;
-    }
-
-    .header-info-item strong {
-        color: #ffffff;
-        font-weight: 600;
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 16px;
-        margin-bottom: 32px;
-    }
-
-    .stat-card {
-        background: #262626;
-        border-radius: 8px;
-        padding: 20px;
-        text-align: center;
-        border: 1px solid #383838;
-        transition: all 0.2s ease;
-    }
-
-    .stat-card:hover {
-        border-color: #4a4a4a;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-        background: #2a2a2a;
-    }
-
-    .stat-card .label {
-        font-size: 0.875rem;
-        color: #a8a8a8;
-        margin-bottom: 12px;
-        font-weight: 400;
-    }
-
-    .stat-card .value {
-        font-size: 1.75rem;
-        font-weight: 600;
-        color: #ffffff;
-        letter-spacing: -0.5px;
-    }
-
-    .section {
-        margin-bottom: 32px;
-    }
-
-    .section-title {
-        font-size: 1.125rem;
-        color: #ffffff;
-        margin-bottom: 20px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #383838;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        letter-spacing: -0.3px;
-    }
-
-    .section-title::before {
-        content: '';
-        width: 3px;
-        height: 16px;
-        background: #0095f6;
-        border-radius: 2px;
-    }
-
-    .map-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 12px;
-    }
-
-    .map-card {
-        background: #262626;
-        border-radius: 8px;
-        padding: 16px;
-        border: 1px solid #383838;
-        transition: all 0.2s ease;
-    }
-
-    .map-card:hover {
-        border-color: #4a4a4a;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-        background: #2a2a2a;
-    }
-
-    .map-card-header {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #ffffff;
-        margin-bottom: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .map-card-stats {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.875rem;
-        color: #a8a8a8;
-    }
-
-    .map-card-stats span {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-weight: 500;
-    }
-
-    .map-card-stats .collected {
-        color: #0095f6;
-    }
-
-    .map-card-stats .uncollected {
-        color: #ed4956;
-    }
-
-    .uncollected-list {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .uncollected-type {
-        background: #262626;
-        border-radius: 8px;
-        padding: 20px;
-        border: 1px solid #383838;
-    }
-
-    .uncollected-type-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #383838;
-    }
-
-    .uncollected-type-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #ffffff;
-    }
-
-    .uncollected-type-count {
-        background: #0095f6;
-        color: white;
-        padding: 4px 12px;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 0.875rem;
-    }
-
-    .uncollected-items {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 12px;
-    }
-
-    .uncollected-item {
-        background: #1f1f1f;
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #383838;
-        transition: all 0.2s ease;
-    }
-
-    .uncollected-item:hover {
-        border-color: #4a4a4a;
-        background: #262626;
-    }
-
-    .uncollected-item-name {
-        font-weight: 500;
-        color: #ffffff;
-        margin-bottom: 6px;
-        font-size: 0.875rem;
-    }
-
-    .uncollected-item-count {
-        color: #ed4956;
-        font-size: 0.8125rem;
-        font-weight: 500;
-    }
-
-    .season-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 12px;
-    }
-
-    .season-card {
-        background: #262626;
-        border-radius: 8px;
-        padding: 16px;
-        text-align: center;
-        border: 1px solid #383838;
-        transition: all 0.2s ease;
-    }
-
-    .season-card:hover {
-        border-color: #4a4a4a;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-        background: #2a2a2a;
-    }
-
-    .season-card-name {
-        font-weight: 600;
-        color: #ffffff;
-        margin-bottom: 12px;
-        font-size: 0.9375rem;
-    }
-
-    .season-card-stats {
-        display: flex;
-        justify-content: space-around;
-        font-size: 0.8125rem;
-        color: #a8a8a8;
-        margin-top: 8px;
-    }
-
-    .season-card .collected {
-        color: #0095f6;
-        font-weight: 500;
-    }
-
-    .season-card .uncollected {
-        color: #ed4956;
-        font-weight: 500;
-    }
-
-    @media (max-width: 768px) {
-        body {
-            width: 100%;
-            padding: 16px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光翼统计</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
+        body {
+            width: 100%;
+            min-width: 1400px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(145deg, #eef5ff 0%, #d9e9ff 100%);
+            padding: 40px 40px;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        /* 主容器 —— 毛玻璃蓝白质感 · 加宽版 */
         .container {
-            padding: 20px;
-            border-radius: 0;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 40px;
+            padding: 40px 48px;
+            box-shadow: 0 25px 50px -12px rgba(0, 100, 220, 0.3), 0 10px 24px -8px rgba(0, 70, 160, 0.2), inset 0 1px 3px rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 28px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.7);
         }
 
         .header h1 {
-            font-size: 1.5rem;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #0a3860;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
         }
 
+        .header-info {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .header-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px 28px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 6px 16px rgba(0, 60, 130, 0.1);
+            font-size: 1.05rem;
+            color: #0f3b6a;
+            backdrop-filter: blur(8px);
+        }
+
+        .header-info-item strong {
+            color: #0051a9;
+            font-weight: 600;
+        }
+
+        /* 统计卡片网格 - 更宽松 */
         .stats-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
         }
 
+        .stat-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 28px 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 18px 35px -10px rgba(0, 90, 200, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: white;
+            box-shadow: 0 25px 40px -8px rgba(0, 110, 255, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .stat-card .label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1e4d7a;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .stat-card .value {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #003b6f;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);
+        }
+
+        /* 区块标题 */
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0a3560;
+            margin-bottom: 28px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 6px;
+            height: 26px;
+            background: #0090ff;
+            border-radius: 12px;
+            box-shadow: 0 0 12px #66b5ff;
+        }
+
+        /* 地图卡片网格 - 更大卡片 */
         .map-grid {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
         }
-    }
-</style>
 
-<div class="container">
-    <div class="header">
-        <h1>光翼收集统计</h1>
-        <div class="header-info">
-            <div class="header-info-item">
-                <strong>角色ID:</strong> <span id="roleId">{{roleId}}</span>
-            </div>
-            <div class="header-info-item">
-                <strong>更新时间:</strong> <span id="timestamp">{{timestamp}}</span>
-            </div>
-        </div>
-    </div>
+        .map-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 22px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 12px 25px -12px rgba(0, 70, 160, 0.25);
+            transition: all 0.2s ease;
+        }
 
-    <div class="stats-grid" id="statsGrid">
-        <div class="stat-card">
-            <div class="label">总光翼数</div>
-            <div class="value">{{statistics.total}}</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">已收集</div>
-            <div class="value" style="color: #0095f6;">{{statistics.collected}}</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">未收集</div>
-            <div class="value" style="color: #ed4956;">{{statistics.actual_total - statistics.collected}}</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">收集率</div>
-            <div class="value">{{statistics.collection_rate}}</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">已献祭</div>
-            <div class="value">{{statistics.deposited}}</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">永无翼数</div>
-            <div class="value" style="color: #f39c12;">
-                {{statistics.unredeemed_permanent}}
+        .map-card:hover {
+            background: rgba(255, 255, 255, 0.75);
+            border-color: white;
+            box-shadow: 0 22px 35px -12px #2d8cff60;
+        }
+
+        .map-card-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #104079;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .map-card-header span:last-child {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #0a4682;
+            border: 1px solid white;
+        }
+
+        .map-card-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .map-card-stats .collected {
+            color: #0077e6;
+            background: rgba(0, 140, 255, 0.15);
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(0, 120, 255, 0.4);
+            backdrop-filter: blur(4px);
+        }
+
+        .map-card-stats .uncollected {
+            color: #e63e4e;
+            background: rgba(255, 100, 100, 0.15);
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 80, 80, 0.4);
+            backdrop-filter: blur(4px);
+        }
+
+        /* 未收集区域 - 更宽松 */
+        .uncollected-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .uncollected-type {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 28px -12px #3070c0;
+        }
+
+        .uncollected-type-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(255,255,255,0.8);
+        }
+
+        .uncollected-type-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #104682;
+        }
+
+        .uncollected-type-count {
+            background: #0090ff;
+            color: white;
+            padding: 6px 22px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 6px 16px #0090ff70;
+            border: 1px solid white;
+        }
+
+        .uncollected-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .uncollected-item {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            padding: 18px 20px;
+            border-radius: 26px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            transition: all 0.15s;
+            box-shadow: 0 8px 16px -10px #2b7be0;
+        }
+
+        .uncollected-item:hover {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: white;
+        }
+
+        .uncollected-item-name {
+            font-weight: 600;
+            color: #00336e;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .uncollected-item-count {
+            color: #e63e4e;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: rgba(255, 120, 120, 0.2);
+            display: inline-block;
+            padding: 5px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 100, 100, 0.5);
+        }
+
+        /* 季节卡片 - 更大 */
+        .season-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 20px;
+        }
+
+        .season-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 22px 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 15px 28px -16px #1470e0;
+            transition: all 0.2s;
+        }
+
+        .season-card:hover {
+            background: rgba(255, 255, 255, 0.75);
+            transform: scale(1.02);
+            border-color: white;
+        }
+
+        .season-card-name {
+            font-weight: 600;
+            color: #134579;
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .season-card-stats {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(255,255,240,0.4);
+            border-radius: 60px;
+            padding: 10px 6px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .season-card .collected {
+            color: #0077e6;
+        }
+
+        .season-card .uncollected {
+            color: #e63e4e;
+        }
+
+        /* 自适应 - 宽屏下保持比例 */
+        @media (max-width: 1400px) {
+            body {
+                min-width: 100%;
+                padding: 30px;
+            }
+            .container {
+                padding: 32px 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                min-width: 100%;
+                padding: 16px;
+            }
+            .container {
+                padding: 24px;
+                border-radius: 28px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .map-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>光翼收集统计</h1>
+            <div class="header-info">
+                <div class="header-info-item">
+                    <strong>角色ID:</strong> <span id="roleId">{{roleId}}</span>
+                </div>
+                <div class="header-info-item">
+                    <strong>更新时间:</strong> <span id="timestamp">{{timestamp}}</span>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="section">
-        <div class="section-title">永久光翼统计</div>
-        <div class="stats-grid">
+        <div class="stats-grid" id="statsGrid">
             <div class="stat-card">
-                <div class="label">普通永久翼</div>
-                <div class="value">{{statistics.normal_wings.total}}</div>
-                <div style="margin-top: 12px; font-size: 0.8125rem; color: #a8a8a8;">
-                    已收集: <span style="color: #0095f6; font-weight: 500;">{{statistics.normal_wings.collected}}</span> | 
-                    未收集: <span style="color: #ed4956; font-weight: 500;">{{statistics.normal_wings.uncollected}}</span>
-                </div>
+                <div class="label">总光翼数</div>
+                <div class="value">{{statistics.total}}</div>
             </div>
             <div class="stat-card">
-                <div class="label">永久光翼</div>
-                <div class="value">{{statistics.permanent_wings.total}}</div>
-                <div style="margin-top: 12px; font-size: 0.8125rem; color: #a8a8a8;">
-                    已收集: <span style="color: #0095f6; font-weight: 500;">{{statistics.permanent_wings.collected}}</span> | 
-                    未收集: <span style="color: #ed4956; font-weight: 500;">{{statistics.permanent_wings.uncollected}}</span>
+                <div class="label">已收集</div>
+                <div class="value" style="color: #0095f6;">{{statistics.collected}}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">未收集</div>
+                <div class="value" style="color: #ed4956;">{{statistics.actual_total - statistics.collected}}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">收集率</div>
+                <div class="value">{{statistics.collection_rate}}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">已献祭</div>
+                <div class="value">{{statistics.deposited}}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">永无翼数</div>
+                <div class="value" style="color: #f39c12;">{{statistics.unredeemed_permanent}}</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">永久光翼统计</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">普通永久翼</div>
+                    <div class="value">{{statistics.normal_wings.total}}</div>
+                    <div style="margin-top: 16px; font-size: 0.9rem; background: rgba(255,255,255,0.5); padding: 6px 16px; border-radius: 40px; display: inline-block;">
+                        已收集: <span style="color: #0095f6; font-weight: 600;">{{statistics.normal_wings.collected}}</span> | 
+                        未收集: <span style="color: #ed4956; font-weight: 600;">{{statistics.normal_wings.uncollected}}</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">永久光翼</div>
+                    <div class="value">{{statistics.permanent_wings.total}}</div>
+                    <div style="margin-top: 16px; font-size: 0.9rem; background: rgba(255,255,255,0.5); padding: 6px 16px; border-radius: 40px; display: inline-block;">
+                        已收集: <span style="color: #0095f6; font-weight: 600;">{{statistics.permanent_wings.collected}}</span> | 
+                        未收集: <span style="color: #ed4956; font-weight: 600;">{{statistics.permanent_wings.uncollected}}</span>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="section">
+            <div class="section-title">地图光翼统计</div>
+            <div class="map-grid" id="mapGrid"></div>
+        </div>
+
+        <div class="section" id="uncollectedSection" style="display: none;">
+            <div class="section-title">未收集光翼详情</div>
+            <div class="uncollected-list" id="uncollectedList"></div>
+        </div>
+
+        <div class="section" id="seasonSection" style="display: none;">
+            <div class="section-title">季节光翼统计</div>
+            <div class="season-list" id="seasonList"></div>
+        </div>
     </div>
 
-    <div class="section">
-        <div class="section-title">地图光翼统计</div>
-        <div class="map-grid" id="mapGrid"></div>
-    </div>
+    <script>
+        // 解析JSON数据 - 保持原有逻辑不变，仅改变UI风格
+        const mapStatistics = JSON.parse('{{@mapStatisticsJson}}');
+        const uncollectedByType = JSON.parse('{{@uncollectedByTypeJson}}');
+        const seasonStatistics = JSON.parse('{{@seasonStatisticsJson}}');
 
-    <div class="section" id="uncollectedSection" style="display: none;">
-        <div class="section-title">未收集光翼详情</div>
-        <div class="uncollected-list" id="uncollectedList"></div>
-    </div>
+        // 渲染地图统计
+        function renderMapStatistics() {
+            const mapGrid = document.getElementById('mapGrid');
+            if (!mapStatistics || Object.keys(mapStatistics).length === 0) {
+                return;
+            }
 
-    <div class="section" id="seasonSection" style="display: none;">
-        <div class="section-title">季节光翼统计</div>
-        <div class="season-list" id="seasonList"></div>
-    </div>
-</div>
-
-<script>
-    // 解析JSON数据
-    const mapStatistics = JSON.parse('{{@mapStatisticsJson}}');
-    const uncollectedByType = JSON.parse('{{@uncollectedByTypeJson}}');
-    const seasonStatistics = JSON.parse('{{@seasonStatisticsJson}}');
-
-    // 渲染地图统计
-    function renderMapStatistics() {
-        const mapGrid = document.getElementById('mapGrid');
-        if (!mapStatistics || Object.keys(mapStatistics).length === 0) {
-            return;
-        }
-
-        for (const [mapName, stats] of Object.entries(mapStatistics)) {
-            const card = document.createElement('div');
-            card.className = 'map-card';
-            card.innerHTML = `
-                <div class="map-card-header">
-                    <span>${mapName}</span>
-                    <span style="font-size: 0.875rem; color: #a8a8a8; font-weight: 500;">${stats.total}个</span>
-                </div>
-                <div class="map-card-stats">
-                    <span class="collected">✓ ${stats.collected}</span>
-                    <span class="uncollected">✗ ${stats.uncollected}</span>
-                </div>
-            `;
-            mapGrid.appendChild(card);
-        }
-    }
-
-    // 渲染未收集光翼详情
-    function renderUncollectedList() {
-        const uncollectedList = document.getElementById('uncollectedList');
-        const uncollectedSection = document.getElementById('uncollectedSection');
-        
-        if (!uncollectedByType || Object.keys(uncollectedByType).length === 0) {
-            return;
-        }
-
-        uncollectedSection.style.display = 'block';
-
-        for (const [type, items] of Object.entries(uncollectedByType)) {
-            const typeDiv = document.createElement('div');
-            typeDiv.className = 'uncollected-type';
-            typeDiv.innerHTML = `
-                <div class="uncollected-type-header">
-                    <div class="uncollected-type-title">${type}</div>
-                    <div class="uncollected-type-count">${items.length}类</div>
-                </div>
-                <div class="uncollected-items"></div>
-            `;
-
-            const itemsContainer = typeDiv.querySelector('.uncollected-items');
-            items.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'uncollected-item';
-                itemDiv.innerHTML = `
-                    <div class="uncollected-item-name">${item.name}</div>
-                    <div class="uncollected-item-count">缺少 ${item.uncollected} 个</div>
+            for (const [mapName, stats] of Object.entries(mapStatistics)) {
+                const card = document.createElement('div');
+                card.className = 'map-card';
+                card.innerHTML = `
+                    <div class="map-card-header">
+                        <span>${mapName}</span>
+                        <span>${stats.total}个</span>
+                    </div>
+                    <div class="map-card-stats">
+                        <span class="collected">✓ ${stats.collected}</span>
+                        <span class="uncollected">✗ ${stats.uncollected}</span>
+                    </div>
                 `;
-                itemsContainer.appendChild(itemDiv);
-            });
-
-            uncollectedList.appendChild(typeDiv);
-        }
-    }
-
-    // 渲染季节统计
-    function renderSeasonStatistics() {
-        const seasonList = document.getElementById('seasonList');
-        const seasonSection = document.getElementById('seasonSection');
-        
-        if (!seasonStatistics || Object.keys(seasonStatistics).length === 0) {
-            return;
+                mapGrid.appendChild(card);
+            }
         }
 
-        seasonSection.style.display = 'block';
+        // 渲染未收集光翼详情
+        function renderUncollectedList() {
+            const uncollectedList = document.getElementById('uncollectedList');
+            const uncollectedSection = document.getElementById('uncollectedSection');
+            
+            if (!uncollectedByType || Object.keys(uncollectedByType).length === 0) {
+                return;
+            }
 
-        for (const [seasonName, stats] of Object.entries(seasonStatistics)) {
-            const card = document.createElement('div');
-            card.className = 'season-card';
-            card.innerHTML = `
-                <div class="season-card-name">${seasonName}</div>
-                <div class="season-card-stats">
-                    <span class="collected">✓ ${stats.collected}</span>
-                    <span class="uncollected">✗ ${stats.uncollected}</span>
-                </div>
-            `;
-            seasonList.appendChild(card);
+            uncollectedSection.style.display = 'block';
+
+            for (const [type, items] of Object.entries(uncollectedByType)) {
+                const typeDiv = document.createElement('div');
+                typeDiv.className = 'uncollected-type';
+                typeDiv.innerHTML = `
+                    <div class="uncollected-type-header">
+                        <div class="uncollected-type-title">${type}</div>
+                        <div class="uncollected-type-count">${items.length}类</div>
+                    </div>
+                    <div class="uncollected-items"></div>
+                `;
+
+                const itemsContainer = typeDiv.querySelector('.uncollected-items');
+                items.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'uncollected-item';
+                    itemDiv.innerHTML = `
+                        <div class="uncollected-item-name">${item.name}</div>
+                        <div class="uncollected-item-count">缺少 ${item.uncollected} 个</div>
+                    `;
+                    itemsContainer.appendChild(itemDiv);
+                });
+
+                uncollectedList.appendChild(typeDiv);
+            }
         }
-    }
 
-    // 初始化渲染
-    document.addEventListener('DOMContentLoaded', function() {
-        renderMapStatistics();
-        renderUncollectedList();
-        renderSeasonStatistics();
-    });
-</script>
+        // 渲染季节统计
+        function renderSeasonStatistics() {
+            const seasonList = document.getElementById('seasonList');
+            const seasonSection = document.getElementById('seasonSection');
+            
+            if (!seasonStatistics || Object.keys(seasonStatistics).length === 0) {
+                return;
+            }
+
+            seasonSection.style.display = 'block';
+
+            for (const [seasonName, stats] of Object.entries(seasonStatistics)) {
+                const card = document.createElement('div');
+                card.className = 'season-card';
+                card.innerHTML = `
+                    <div class="season-card-name">${seasonName}</div>
+                    <div class="season-card-stats">
+                        <span class="collected">✓ ${stats.collected}</span>
+                        <span class="uncollected">✗ ${stats.uncollected}</span>
+                    </div>
+                `;
+                seasonList.appendChild(card);
+            }
+        }
+
+        // 初始化渲染
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMapStatistics();
+            renderUncollectedList();
+            renderSeasonStatistics();
+        });
+    </script>
+</body>
+</html>
