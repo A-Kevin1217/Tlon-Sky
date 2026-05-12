@@ -136,14 +136,13 @@ export class SKY extends plugin {
 
       const recordsHtml = sortedYearRecord.map(({ month, monthRecord }, monthIndex) => {
         return monthRecord.map(({ day, platform, name, count, price }, recordIndex) => {
-          const season = seasonalSpiritsData.find(({ spirits }) =>
-            spirits.some(spirit =>
+          const seasonEntry = seasonalSpiritsData.find(({ spirits }) =>
+            Array.isArray(spirits) && spirits.some(spirit =>
               typeof spirit === 'string' ? spirit === name : spirit.name === name
             )
-          )?.name || '未匹配';
-
-          const seasonData = seasonalSpiritsData.find(s => s.name === season)
-          const spiritData = seasonData?.spirits?.find(s => s.name === name)
+          );
+          const season = seasonEntry?.name || '未匹配';
+          const spiritData = seasonEntry?.spirits?.find(s => s.name === name)
           const icon = spiritData?.icon || []
 
           let img = ''
@@ -165,7 +164,7 @@ export class SKY extends plugin {
           <td class="count-${count.a}">${count.a || '——'}</td>
           <td>${price['🕯']}</td>
           <td>${price['❤️']}</td>
-          <td><div class="image-container"><img src="${SKY_IMAGE_URL.A}AncestorDressUp/${seasonData?.seasonIcon || ''}"></div></td>
+          <td><div class="image-container"><img src="${SKY_IMAGE_URL.A}AncestorDressUp/${seasonEntry?.seasonIcon || ''}"></div></td>
         </tr>
       `;
         }).join('');
@@ -408,7 +407,7 @@ function calculateYearStatistics(yearData, seasonalSpiritsData) {
       }
 
       const season = seasonalSpiritsData.find(({ spirits }) =>
-        spirits.some(spirit =>
+        Array.isArray(spirits) && spirits.some(spirit =>
           typeof spirit === 'string' ? spirit === name : spirit.name === name
         )
       )?.name || '未知季节';
