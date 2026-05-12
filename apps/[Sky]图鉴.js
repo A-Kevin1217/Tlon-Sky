@@ -142,8 +142,9 @@ export class SKY extends plugin {
             )
           )?.name || '未匹配';
 
-          const seasonData = seasonalSpiritsData.find(seasonalSpiritsData => seasonalSpiritsData.name === season)
-          const { icon } = seasonData.spirits.find(seasonData => seasonData.name === name)
+          const seasonData = seasonalSpiritsData.find(s => s.name === season)
+          const spiritData = seasonData?.spirits?.find(s => s.name === name)
+          const icon = spiritData?.icon || []
 
           let img = ''
           for (let i = 0; i < icon.length; i++) {
@@ -164,7 +165,7 @@ export class SKY extends plugin {
           <td class="count-${count.a}">${count.a || '——'}</td>
           <td>${price['🕯']}</td>
           <td>${price['❤️']}</td>
-          <td><div class="image-container"><img src="${SKY_IMAGE_URL.A}AncestorDressUp/${seasonData.seasonIcon}"></div></td>
+          <td><div class="image-container"><img src="${SKY_IMAGE_URL.A}AncestorDressUp/${seasonData?.seasonIcon || ''}"></div></td>
         </tr>
       `;
         }).join('');
