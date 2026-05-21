@@ -6,9 +6,10 @@
         font-family: system-ui, -apple-system, sans-serif;
     }
 
+    /* 固定两列布局，确保截图为 2x2 四宫格；不更改图片或页面整体尺寸 */
     .gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(2, minmax(300px, 1fr));
         gap: 20px;
         margin-bottom: 30px;
     }
