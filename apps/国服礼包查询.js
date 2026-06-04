@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 import fs from 'fs'
+import Setting from '../components/settings.js'
 
 /**
  * Sky国服礼包查询插件（适配 Tlon-Sky 插件结构）
@@ -21,7 +22,10 @@ export class SkyLiveGift extends plugin {
     })
 
     this.API_BASE = 'https://api.t1qq.com/api/sky/sc/mfskygift'
-    this.API_KEY = 'WUDzjdSTUuNqaSGdnlN5OMOcPr'
+
+    // 从配置文件读取 API Key，支持用户自行配置
+    const config = Setting.getYaml('国服礼包查询', 'config') || {}
+    this.API_KEY = config.API_KEY || ''
     this.userDataPath = process.cwd() + '/plugins/Tlon-Sky/data/sky_live_users/'
 
     // 确保数据目录存在
@@ -177,6 +181,11 @@ export class SkyLiveGift extends plugin {
       const userData = this.getUserData(userId)
       if (userData.ids.length === 0) {
         await e.reply('❌ 还未绑定任何ID\n使用 #国服id绑定 [id] 进行绑定')
+        return true
+      }
+
+      if (!this.API_KEY) {
+        await e.reply('❌ 未配置 API Key\n请在 plugins/Tlon-Sky/config/config/国服礼包查询.yaml 中填写 API_KEY')
         return true
       }
 
