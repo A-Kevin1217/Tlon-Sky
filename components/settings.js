@@ -4,7 +4,7 @@ import fs from 'node:fs'
 const _path = process.cwd().replace(/\\/g, '/')
 class Setting {
   constructor () {
-    this.configPath = `${_path}/plugins/Tlon-Sky/config/`
+    this.configPath = `${_path}/plugins/Tlon-Sky/config/config/`
     this.config = {}
     this.watcher = { config: {} }
   }
