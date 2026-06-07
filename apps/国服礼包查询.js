@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import fs from 'fs'
-import Setting from '../components/settings.js'
+import { getAppConfig } from '../function/function.js'
 
 /**
  * Sky国服礼包查询插件（适配 Tlon-Sky 插件结构）
@@ -24,7 +24,7 @@ export class SkyLiveGift extends plugin {
     this.API_BASE = 'https://api.t1qq.com/api/sky/sc/mfskygift'
 
     // 从配置文件读取 API Key，支持用户自行配置
-    const config = Setting.getYaml('国服礼包查询', 'config') || {}
+    const config = getAppConfig('国服礼包查询')
     this.API_KEY = config.API_KEY || ''
     this.userDataPath = process.cwd() + '/plugins/Tlon-Sky/data/sky_live_users/'
 
@@ -185,7 +185,7 @@ export class SkyLiveGift extends plugin {
       }
 
       if (!this.API_KEY) {
-        await e.reply('❌ 未配置 API Key\n请在 plugins/Tlon-Sky/config/config/国服礼包查询.yaml 中填写 API_KEY')
+        await e.reply('❌ 未配置 API Key\n请在 config/config/国服礼包查询.yaml 或 plugins/Tlon-Sky/config/国服礼包查询.yaml 中填写 API_KEY')
         return true
       }
 

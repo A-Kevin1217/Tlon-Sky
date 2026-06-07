@@ -1,7 +1,11 @@
 import fs from 'fs'; import path from 'path'; import Yaml from 'yaml'; import fetch from 'node-fetch';
 
 export const pluginPath = path.join(path.resolve(), 'plugins', 'Tlon-Sky');
-const configPath = path.join(pluginPath, 'config', 'config')
+const configPathCandidates = [
+    path.join(pluginPath, 'config', 'config'),
+    path.join(path.resolve(), 'config', 'config')
+];
+const configPath = configPathCandidates.find(fs.existsSync) || configPathCandidates[1];
 const otherFilePath = {
     push: path.join(configPath, 'push.yaml'),
     cron: path.join(configPath, 'cron.yaml'),
@@ -34,6 +38,22 @@ function getCronData() {
     }
 }
 
+function getAppConfig(appName) {
+    const appConfigPath = path.join(configPath, `${appName}.yaml`)
+    if (!fs.existsSync(appConfigPath)) {
+        return {}
+    }
+
+    try {
+        const config = Yaml.parse(fs.readFileSync(appConfigPath, 'utf8'))
+        return config && typeof config === 'object' ? config : {}
+    } catch (error) {
+        if (globalThis.logger?.error) {
+            globalThis.logger.error(`[${appName}] 读取配置失败 ${error}`)
+        }
+        return {}
+    }
+}
 
 global.getLinkData = async function (link, type) {
     let linkData = await fetch(link)
@@ -79,6 +99,7 @@ export {
     getPushTextData,
     storagePushData,
     getCronData,
+    getAppConfig,
     fileExists,
     storageData,
     readJsonData
