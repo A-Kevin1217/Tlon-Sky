@@ -77,13 +77,12 @@ export default class Button {
         { text: '4399', link: links['四三九九'] || links['4399'] }
       ],
       [
-        { text: 'OPPO', link: links.OPPO },
         { text: 'BiliBili', link: links.BiliBili },
-        { text: 'VIVO', link: links.VIVO }
+        { text: 'VIVO', link: links.VIVO },
+        { text: '233乐园', link: links['233'] }
       ],
       [
         { text: '华为', link: links.华为 },
-        { text: '小米', link: links.小米 },
         { text: '应用宝', link: links.应用宝 }
       ]
     );
