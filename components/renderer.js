@@ -40,7 +40,8 @@ export default async function (path, params, cfg, text, button) {
   let base64 = await puppeteer.screenshot(`${Plugin_Name}/${app}/${tpl}`, data)
   let ret = true
   if (base64) {
-    let msg = [text, base64]
+    let msg = [base64]
+    if (text) msg.unshift(text)
     if (button) msg.push(button)
     ret = await e.reply(msg)
   }

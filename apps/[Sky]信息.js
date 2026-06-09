@@ -217,7 +217,7 @@ export class SkyInformationPlugin extends plugin {
             seasonName,
             seasonIcon: seasonInfo.seasonIcon,
             data: JSON.stringify(seasonInfo)
-        }, { e, scale: 1.5 }, new Button(e).information());
+        }, { e, scale: 1.5 }, null, new Button(e).information());
     }
 
     async showRegressionCalendar(e) {

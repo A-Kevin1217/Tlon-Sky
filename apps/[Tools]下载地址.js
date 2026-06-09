@@ -16,9 +16,8 @@ export class Ts extends plugin {
         const links = await getLinkData('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/GameDownload.json', 'json')
 
         if (platform === 'QQBot'|| platform === 'OneBotv11') {
-            
-            const buttonObj = new Button();
-            const button = buttonObj.downloadLinks(links);
+
+            const button = new Button(e).downloadLinks(links);
 
             return e.reply([
                 segment.at(e.user_id),
@@ -27,7 +26,7 @@ export class Ts extends plugin {
             ])
         }
 
-        
+
         const msg = Object.entries(links)
             .map(([name, link]) => `${name}: ${link}`)
             .join('\n')
