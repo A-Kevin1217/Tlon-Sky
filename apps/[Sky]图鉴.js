@@ -1,5 +1,6 @@
 import { render } from './../components/index.js'
 import fetch from 'node-fetch'
+import { Button } from '../index.js'
 
 export class SKY extends plugin {
   constructor() {
@@ -347,11 +348,11 @@ export class SKY extends plugin {
   ${html}
 `;
 
-    return render('admin/复刻记录', { html: finalHtml }, { e, scale: 1.4 }, null)
+    return render('admin/复刻记录', { html: finalHtml }, { e, scale: 1.4 }, null, new Button(e).regressionRecords())
   }
 
   async handleImageQuery(e) {
-    return e.reply([segment.image(`${SKY_IMAGE_URL['A']}其他/全图鉴参考.jpg`)])
+    return e.reply([segment.image(`${SKY_IMAGE_URL['A']}其他/全图鉴参考.jpg`), new Button(e).collection()])
   }
 }
 

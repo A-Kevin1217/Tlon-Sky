@@ -1,4 +1,5 @@
 import { render } from './../components/index.js';
+import { Button } from '../index.js';
 
 export class SkyInformationPlugin extends plugin {
     constructor() {
@@ -38,12 +39,13 @@ export class SkyInformationPlugin extends plugin {
             }
 
             const message = ret !== 1
-                ? ['当前光遇服务器畅通，无需排队']
+                ? ['当前光遇服务器畅通，无需排队', new Button(e).information()]
                 : [
                     segment.at(e.user_id),
                     '当前排队中\r',
                     `排队人数：${pos} 位\r`,
-                    `预计等待时间：${timeDisplay}`
+                    `预计等待时间：${timeDisplay}`,
+                    new Button(e).information()
                 ];
 
             return e.reply(message);
@@ -96,8 +98,9 @@ export class SkyInformationPlugin extends plugin {
             '---------------',
             ...messages,
             '---------------',
-            '数据来源: 网易大神'
-        ].join('\r'));
+            '数据来源: 网易大神',
+            new Button(e).information()
+        ]);
     }
 
     async showSeasonalRemaining(e) {
@@ -214,7 +217,7 @@ export class SkyInformationPlugin extends plugin {
             seasonName,
             seasonIcon: seasonInfo.seasonIcon,
             data: JSON.stringify(seasonInfo)
-        }, { e, scale: 1.5 });
+        }, { e, scale: 1.5 }, new Button(e).information());
     }
 
     async showRegressionCalendar(e) {

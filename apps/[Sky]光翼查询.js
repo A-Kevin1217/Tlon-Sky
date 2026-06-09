@@ -1,5 +1,6 @@
 import { render } from './../components/index.js';
 import { fileExists } from './../function/function.js';
+import { Button } from '../index.js';
 import fs from 'fs';
 import fetch from 'node-fetch';
 
@@ -212,7 +213,7 @@ export class SkyWingQueryPlugin extends plugin {
                 seasonStatisticsJson: JSON.stringify(statistics.season_statistics)
             };
 
-            await render('admin/wingQuery', templateData, { e, scale: 1.3 });
+            await render('admin/wingQuery', templateData, { e, scale: 1.3 }, null, new Button(e).wingQuery());
 
         } catch (error) {
             logger.error(`光翼查询失败: ${error.message}`);
@@ -431,7 +432,7 @@ export class SkyWingQueryPlugin extends plugin {
                 depositedWings: allWings.filter(w => w.deposited).length
             };
 
-            await render('admin/wingDetails', templateData, { e, scale: 1.0 });
+            await render('admin/wingDetails', templateData, { e, scale: 1.0 }, null, new Button(e).wingQuery());
 
         } catch (error) {
             logger.error(`光翼详情查询失败: ${error.message}`);

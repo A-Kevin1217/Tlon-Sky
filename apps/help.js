@@ -1,4 +1,5 @@
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
+import { Button } from '../index.js'
 
 export class SKY extends plugin {
   constructor() {
@@ -17,8 +18,8 @@ export class SKY extends plugin {
     const image = await puppeteer.screenshot('help', {
       tplFile: 'plugins/Tlon-Sky/resources/admin/SkyHelp.html'
     })
-    
-    const message = [image]
+
+    const message = [image, new Button(e).help()]
 
     await e.reply(message)
   }

@@ -1,6 +1,7 @@
 import fetch from 'node-fetch'
 import fs from 'fs'
 import { getAppConfig } from '../function/function.js'
+import { Button } from '../index.js'
 
 /**
  * Sky国服礼包查询插件（适配 Tlon-Sky 插件结构）
@@ -76,7 +77,7 @@ export class SkyLiveGift extends plugin {
       '• 使用序号切换不同账号',
       '• 礼包数据来自第三方API'
     ]
-    await e.reply(msg.join('\n'))
+    await e.reply([msg.join('\n'), new Button(e).giftQuery()])
     return true
   }
 
@@ -133,7 +134,7 @@ export class SkyLiveGift extends plugin {
       msg.push(`当前使用：第 ${userData.currentIndex + 1} 个`)
       msg.push('使用 #国服id切换 [序号] 切换账号')
 
-      await e.reply(msg.join('\n'))
+      await e.reply([msg.join('\n'), new Button(e).giftQuery()])
     } catch (error) {
       await e.reply(`❌ 查询失败：${error.message}`)
       logger.error(`[Sky国服礼包] 查询ID列表失败: ${error}`)
@@ -254,7 +255,7 @@ export class SkyLiveGift extends plugin {
         plain.push(`当前使用：第 ${userData.currentIndex + 1}/${userData.ids.length} 个ID`)
         plain.push(`查询时间：${data.time}`)
 
-        await e.reply(plain.join('\n'))
+        await e.reply([plain.join('\n'), new Button(e).giftQuery()])
       }
     } catch (error) {
       await e.reply(`❌ 查询异常：${error.message}`)

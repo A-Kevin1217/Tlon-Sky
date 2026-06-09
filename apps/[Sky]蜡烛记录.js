@@ -1,4 +1,5 @@
 import { fileExists } from '../function/function.js'
+import { Button } from '../index.js'
 import fs from 'fs'
 import { render } from './../components/index.js'
 
@@ -191,7 +192,7 @@ export class SKY extends plugin {
 
         return render('admin/candleHistory', {
             data: JSON.stringify(renderData)
-        }, { e, scale: 1.2 });
+        }, { e, scale: 1.2 }, null, new Button(e).candleRecord());
     }
 
     async listCandleIds(e) {
@@ -343,7 +344,7 @@ export class SKY extends plugin {
         
         return render('admin/candleRecord', {
             data: JSON.stringify(renderData)
-        }, { e, scale: 1.5 });
+        }, { e, scale: 1.5 }, null, new Button(e).candleRecord());
     }
 
     async showHelp(e) {
@@ -368,7 +369,7 @@ export class SKY extends plugin {
 #记录蜡烛100:50:20:10
 （系统会自动显示距离上次记录天数及变化量）`;
 
-        await e.reply(helpText)
+        await e.reply([helpText, new Button(e).candleRecord()])
         return true
     }
 }

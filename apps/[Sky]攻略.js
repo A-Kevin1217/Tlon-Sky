@@ -1,4 +1,5 @@
 import { render } from '../components/index.js'
+import { Button } from '../index.js'
 
 const IMG = {
   SEASON_TASK: `${SKY_IMAGE_URL.A}当前/当前季节任务.jpg`,
@@ -44,7 +45,7 @@ export class SKY extends plugin {
     if (!type) return
 
     if (type === 'dailyTask') {
-      await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }, null)
+      await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }, null, new Button(e).strategy())
     }
   }
 
@@ -71,12 +72,12 @@ export class SKY extends plugin {
 
   async handleTodayShards(e) {
         const data = this.getStoneData()
-        data ? e.reply(this.formatShardMsg(data)) : e.reply('今日无碎石')
+        data ? e.reply([this.formatShardMsg(data), new Button(e).todayShards()]) : e.reply('今日无碎石')
     }
 
   async stoneRoadMap(e) {
     const data = this.getStoneData()
-    data ? e.reply([segment.image(IMG.SHARD_MAP(data.location))]) : e.reply('今日无碎石')
+    data ? e.reply([segment.image(IMG.SHARD_MAP(data.location)), new Button(e).todayShards()]) : e.reply('今日无碎石')
   }
 
   getStoneData() {

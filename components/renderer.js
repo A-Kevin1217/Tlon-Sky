@@ -2,7 +2,7 @@ import { Data, Version, Plugin_Name } from './index.js'
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 import fs from 'fs'
 const _path = process.cwd()
-export default async function (path, params, cfg, text) {
+export default async function (path, params, cfg, text, button) {
   let [app, tpl] = path.split('/')
   let { e } = cfg
   let layoutPath = process.cwd() + `/plugins/${Plugin_Name}/resources/common/layout/`
@@ -40,8 +40,9 @@ export default async function (path, params, cfg, text) {
   let base64 = await puppeteer.screenshot(`${Plugin_Name}/${app}/${tpl}`, data)
   let ret = true
   if (base64) {
-    if (!text) text = ''
-    ret = await e.reply([text, base64])
+    let msg = [text, base64]
+    if (button) msg.push(button)
+    ret = await e.reply(msg)
   }
   return cfg.retMsgId ? ret : true
 }

@@ -1,10 +1,11 @@
-/** 
+/**
  * 插件名: Tlon-Sky
  * 作者: Tloml-Starry
  * 于2023-01-15开始编写
  * 项目主页Gitee: https://gitee.com/Tloml-Starry/Tlon-Sky
  */
 import fs from 'node:fs';
+import Button from './model/Button.js';
 
 global.SKY_IMAGE_URL = {
   A: "https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/img/光遇/",
@@ -37,5 +38,5 @@ for (let i in file) {
   }
   apps[name] = ret[i].value[Object.keys(ret[i].value)[0]]
 }
-export { apps }
+export { apps, Button }
 logger.mark('Sky插件载入成功')
