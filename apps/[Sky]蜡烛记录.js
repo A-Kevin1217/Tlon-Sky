@@ -1,5 +1,5 @@
 import { fileExists } from '../function/function.js'
-import { Button } from '../index.js'
+import Button from '../model/Button.js'
 import fs from 'fs'
 import { render } from './../components/index.js'
 

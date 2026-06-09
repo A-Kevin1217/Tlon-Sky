@@ -1,5 +1,5 @@
 import { render } from '../components/index.js'
-import { Button } from '../index.js'
+import Button from '../model/Button.js'
 
 const IMG = {
   SEASON_TASK: `${SKY_IMAGE_URL.A}当前/当前季节任务.jpg`,

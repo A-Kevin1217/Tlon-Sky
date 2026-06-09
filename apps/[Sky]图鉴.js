@@ -1,6 +1,6 @@
 import { render } from './../components/index.js'
 import fetch from 'node-fetch'
-import { Button } from '../index.js'
+import Button from '../model/Button.js'
 
 export class SKY extends plugin {
   constructor() {

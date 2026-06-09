@@ -1,5 +1,5 @@
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
-import { Button } from '../index.js'
+import Button from '../model/Button.js'
 
 export class SKY extends plugin {
   constructor() {

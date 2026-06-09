@@ -1,6 +1,6 @@
 import { render } from './../components/index.js';
 import { fileExists } from './../function/function.js';
-import { Button } from '../index.js';
+import Button from '../model/Button.js';
 import fs from 'fs';
 import fetch from 'node-fetch';
 

@@ -1,5 +1,5 @@
 import { render } from './../components/index.js';
-import { Button } from '../index.js';
+import Button from '../model/Button.js';
 
 export class SkyInformationPlugin extends plugin {
     constructor() {

@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import fs from 'fs'
 import { getAppConfig } from '../function/function.js'
-import { Button } from '../index.js'
+import Button from '../model/Button.js'
 
 /**
  * Sky国服礼包查询插件（适配 Tlon-Sky 插件结构）
