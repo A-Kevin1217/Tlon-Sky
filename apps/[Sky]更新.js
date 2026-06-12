@@ -25,13 +25,21 @@ export class UPDATE extends plugin {
     async UPDATE(e) {
         if (!e.isMaster) return e.reply('只有主人才能命令哦~')
 
-        if (uping) return e.reply('已有命令更新中..请勿重复操作')
+        if (uping) {
+            await this.reply('正在更新，请稍候再试')
+            return false
+        }
 
-        if (!await this.checkGit()) return
+        uping = true
+        if (!await this.checkGit()) {
+            uping = false
+            return
+        }
         await this.runUpdate()
         if (this.isUp) {
             setTimeout(() => this.restart(), 2000)
         }
+        uping = false
     }
 
     restart() {
@@ -56,9 +64,7 @@ export class UPDATE extends plugin {
         }
         this.oldCommitId = await this.getcommitId()
         await this.reply(`开始执行${type}操作...`)
-        uping = true
         let ret = await this.execSync(cm)
-        uping = false
         if (ret.error) {
             logger.mark(`${this.e.logFnc} 更新失败：${PLUGIN_NAME}`)
             this.gitErr(ret.error, ret.stdout)
