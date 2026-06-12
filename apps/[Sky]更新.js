@@ -148,8 +148,12 @@ export class UPDATE extends plugin {
     async makeForwardMsg(title, msg, end) {
         let nickname = Bot.nickname;
         if (this.e.isGroup) {
-            let info = await Bot.getGroupMemberInfo(this.e.group_id, Bot.uin);
-            nickname = info.card || info.nickname;
+            try {
+                let info = await Bot.getGroupMemberInfo(this.e.group_id, Bot.uin);
+                nickname = info.card || info.nickname;
+            } catch (err) {
+                logger.error(`[更新]获取群成员信息失败：${err.message}`)
+            }
         }
         let userInfo = {
             user_id: Bot.uin,
