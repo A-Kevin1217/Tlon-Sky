@@ -134,7 +134,7 @@ export default class Button {
   strategy() {
     return segment.button(
       [
-        { text: '今日任务', callback: '/今日任务' },
+        { text: '任务图', callback: '/任务图' },
         { text: '今日碎石', callback: '/今日碎石' },
       ],
       [
