@@ -256,7 +256,7 @@ export class SkyWingQueryPlugin extends plugin {
     async loadWingNameMap() {
         if (this.wingNameMap) return;
         try {
-            const res = await fetch('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/GuangYi.json');
+            const res = await fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/GuangYi.json');
             this.wingNameMap = await res.json();
         } catch (err) {
             // 保证即便加载失败也不会抛出，后续使用会返回原始名字

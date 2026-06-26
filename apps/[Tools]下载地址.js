@@ -13,7 +13,7 @@ export class Ts extends plugin {
 
     async gameDownloadLink(e) {
         const platform = e.bot?.adapter?.name || e.platform || '未知'
-        const links = await getLinkData('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/GameDownload.json', 'json')
+        const links = await getLinkData('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/GameDownload.json', 'json')
 
         if (platform === 'QQBot'|| platform === 'OneBotv11') {
 

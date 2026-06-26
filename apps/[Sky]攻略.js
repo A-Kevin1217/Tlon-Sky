@@ -9,7 +9,7 @@ const IMG = {
     `${SKY_IMAGE_URL.B}sc/scdl?key=qw36BL4Oiq8Kmpefl3bkpIs5IY` + "&num=" + Math.floor(Math.random() * 1000000),
     `${SKY_IMAGE_URL.B}mf/magic?key=qw36BL4Oiq8Kmpefl3bkpIs5IY` + "&num=" + Math.floor(Math.random() * 1000000)
   ],
-  SHARD_MAP: loc => `https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/img/光遇/ShardRouteMap/${loc}.jpg`
+  SHARD_MAP: loc => `https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/光遇/ShardRouteMap/${loc}.jpg`
 }
 
 const MAPS_CONFIG = {

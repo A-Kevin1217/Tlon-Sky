@@ -17,7 +17,7 @@ export class SKY extends plugin {
   }
 
   async regressionRecords(e) {
-    const baseUrl = 'https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/';
+    const baseUrl = 'https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/';
     let regressionRecordsData = await (await fetch(`${baseUrl}RegressionRecords.json`)).json();
     const seasonalSpiritsData = await (await fetch(`${baseUrl}SeasonalSpirits.json`)).json();
 

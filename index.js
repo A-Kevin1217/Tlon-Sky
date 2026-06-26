@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 
 global.SKY_IMAGE_URL = {
-  A: "https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/img/光遇/",
+  A: "https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/光遇/",
   B: "https://api.t1qq.com/api/sky/"
 };
 

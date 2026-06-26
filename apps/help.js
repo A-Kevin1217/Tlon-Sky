@@ -26,7 +26,7 @@ export class SKY extends plugin {
 
   async seasonList(e) {
     try {
-      const response = await fetch('https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json');
+      const response = await fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json');
       if (!response.ok) {
         throw new Error(`网络请求失败: ${response.status}`);
       }
@@ -34,7 +34,7 @@ export class SKY extends plugin {
       let images = [];
 
       for (const item of res) {
-        const src = `https://ghfast.top/https://raw.githubusercontent.com/A-Kevin1217/resources/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${item.seasonIcon}`;
+        const src = `https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/img/%E5%85%89%E9%81%87/AncestorDressUp/${item.seasonIcon}`;
         const name = item.name;
         images.push({ src, name });
       }
