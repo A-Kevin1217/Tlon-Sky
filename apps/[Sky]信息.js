@@ -126,12 +126,16 @@ export class SkyInformationPlugin extends plugin {
                 .map(([k, v]) => `${k}光翼：${counts[v]}`)
         ];
 
-        return e.reply([
+        const text = [
             `总光翼数量: ${data.length}`,
             '---------------',
             ...messages,
             '---------------',
-            '数据来源: 网易大神',
+            '数据来源: 网易大神'
+        ].join('\n');
+
+        return e.reply([
+            text,
             new Button(e).information()
         ]);
     }
