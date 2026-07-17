@@ -138,8 +138,28 @@ export class SkyInformationPlugin extends plugin {
             '*数据来源：网易大神*'
         ].join('\n');
 
+        const plainText = [
+            '【光翼统计】',
+            `总光翼数量：${data.length}`,
+            '',
+            '【永久光翼】',
+            `永久翼合计：${reissue + normal}`,
+            `复刻先祖：${reissue}`,
+            `常驻先祖：${normal}`,
+            '',
+            '【地图光翼】',
+            ...Object.entries(categoryMap)
+                .filter(([name]) => name !== '复刻永久' && name !== '普通永久')
+                .map(([name, key]) => `${name}：${counts[key]}`),
+            '',
+            '数据来源：网易大神'
+        ].join('\r\n');
+
+        const adapterName = e.bot?.adapter?.name ?? e.platform ?? '';
+        const message = adapterName === 'QQBot' ? markdown : plainText;
+
         return e.reply([
-            markdown,
+            message,
             new Button(e).information()
         ]);
     }
