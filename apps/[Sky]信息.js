@@ -1,6 +1,39 @@
 import { render } from './../components/index.js';
 import Button from '../model/Button.js';
 
+async function fetchGitCodeJson(url, retries = 2) {
+    let lastError;
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+            const requestUrl = new URL(url);
+            requestUrl.searchParams.set('_retry', `${Date.now()}-${attempt}`);
+
+            const response = await fetch(requestUrl, {
+                headers: { Accept: 'application/json, text/plain;q=0.9' }
+            });
+            const body = await response.text();
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${body.slice(0, 80)}`);
+            }
+
+            try {
+                return JSON.parse(body);
+            } catch {
+                throw new Error(`GitCode 返回了非 JSON 内容: ${body.trim().slice(0, 80)}`);
+            }
+        } catch (error) {
+            lastError = error;
+            if (attempt < retries) {
+                await new Promise(resolve => setTimeout(resolve, 300 * (attempt + 1)));
+            }
+        }
+    }
+
+    throw lastError;
+}
+
 export class SkyInformationPlugin extends plugin {
     constructor() {
         super({
@@ -157,11 +190,17 @@ export class SkyInformationPlugin extends plugin {
         const seasonName = e.msg.replace(/#|\/|季多久未复刻/g, '').trim();
         const currentDate = new Date();
 
-        
-        const [seasonalData, regressionData] = await Promise.all([
-            fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json').then(r => r.json()),
-            fetch('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json').then(r => r.json())
-        ]);
+        let seasonalData;
+        let regressionData;
+        try {
+            [seasonalData, regressionData] = await Promise.all([
+                fetchGitCodeJson('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/SeasonalSpirits.json'),
+                fetchGitCodeJson('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json')
+            ]);
+        } catch (error) {
+            logger.error(`[季节复刻查询] 数据源请求失败: ${error.message}`);
+            return e.reply('复刻数据源暂时不可用，请稍后再试');
+        }
 
         
         const lastAppearance = regressionData.flatMap(year =>
@@ -224,7 +263,13 @@ export class SkyInformationPlugin extends plugin {
         let [, yearStr] = e.msg.match(/^[#\/]?((20|21|22|23|24|25)\s*年)复刻日历$/);
         const year = 2000 + parseInt(yearStr)
         const baseUrl = 'https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/RegressionRecords.json';
-        const regressionRecordsData = await (await fetch(baseUrl)).json();
+        let regressionRecordsData;
+        try {
+            regressionRecordsData = await fetchGitCodeJson(baseUrl);
+        } catch (error) {
+            logger.error(`[复刻日历] 数据源请求失败: ${error.message}`);
+            return e.reply('复刻数据源暂时不可用，请稍后再试');
+        }
 
         const yearData = regressionRecordsData.find(record => record.year === year);
         if (!yearData) return e.reply('不存在该年份的复刻日历');
