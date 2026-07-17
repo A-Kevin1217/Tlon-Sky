@@ -117,25 +117,29 @@ export class SkyInformationPlugin extends plugin {
         const [reissue, normal] = [counts['复刻永久'], counts['普通永久']];
 
         
-        const messages = [
-            `永久翼: ${reissue + normal}个`,
-            `复刻先祖永久翼: ${reissue}`,
-            `常驻先祖永久翼: ${normal}`,
-            ...Object.entries(categoryMap)
-                .filter(([k]) => k !== '复刻永久' && k !== '普通永久')
-                .map(([k, v]) => `${k}光翼：${counts[v]}`)
-        ];
+        const mapWingLines = Object.entries(categoryMap)
+            .filter(([name]) => name !== '复刻永久' && name !== '普通永久')
+            .map(([name, key]) => `- ${name}：**${counts[key]}**`);
 
-        const text = [
-            `总光翼数量: ${data.length}`,
-            '---------------',
-            ...messages,
-            '---------------',
-            '数据来源: 网易大神'
+        const markdown = [
+            '# 🪶 光翼统计',
+            '',
+            `> 总光翼数量：**${data.length}**`,
+            '',
+            '## 永久光翼',
+            `- 永久翼合计：**${reissue + normal}**`,
+            `- 复刻先祖：**${reissue}**`,
+            `- 常驻先祖：**${normal}**`,
+            '',
+            '## 地图光翼',
+            ...mapWingLines,
+            '',
+            '---',
+            '*数据来源：网易大神*'
         ].join('\n');
 
         return e.reply([
-            text,
+            markdown,
             new Button(e).information()
         ]);
     }
