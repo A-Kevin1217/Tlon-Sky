@@ -290,13 +290,12 @@
 
         function calculateStats(spirits) {
             const totalSpirits = spirits.length;
-            const days = spirits.map(spirit => {
-                const match = spirit.status.match(/已 (\d+) 天未复刻/);
-                return match ? parseInt(match[1]) : 0;
-            });
+            const days = spirits.map(spirit => Number.isFinite(spirit.days) ? spirit.days : 0);
 
-            const avgDays = Math.round(days.reduce((a, b) => a + b, 0) / days.length);
-            const longestWait = Math.max(...days);
+            const avgDays = days.length
+                ? Math.round(days.reduce((a, b) => a + b, 0) / days.length)
+                : 0;
+            const longestWait = days.length ? Math.max(...days) : 0;
 
             document.getElementById('totalSpirits').textContent = totalSpirits;
             document.getElementById('avgDays').textContent = avgDays;

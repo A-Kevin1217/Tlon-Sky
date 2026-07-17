@@ -233,7 +233,28 @@ export class SkyInformationPlugin extends plugin {
                     .map(spirit => {
                         const spiritName = spirit.name || spirit;
                         const lastDate = lastAppearance[spiritName];
-                        if (!lastDate) return null;
+
+                        if (!lastDate) {
+                            const endDates = (season.time || [])
+                                .map(item => new Date(String(item.E).replace(/-/g, '/')))
+                                .filter(date => !Number.isNaN(date.getTime()));
+                            const seasonEnd = endDates.length
+                                ? new Date(Math.max(...endDates))
+                                : null;
+                            const days = seasonEnd && currentDate > seasonEnd
+                                ? Math.ceil((currentDate - seasonEnd) / 864e5)
+                                : 0;
+
+                            return {
+                                name: spiritName,
+                                status: seasonEnd && currentDate <= seasonEnd
+                                    ? '当前季节进行中，尚未复刻'
+                                    : `从季节结束起已 ${days} 天未复刻`,
+                                days,
+                                icons: spirit.icon || [],
+                                count: 0
+                            };
+                        }
 
                         const adjustedDate = new Date(lastDate);
                         adjustedDate.setDate(adjustedDate.getDate() + 5);
@@ -242,11 +263,11 @@ export class SkyInformationPlugin extends plugin {
                         return {
                             name: spiritName,
                             status: diffDays > 0 ? `已 ${diffDays} 天未复刻` : '当前正在复刻',
+                            days: Math.max(diffDays, 0),
                             icons: spirit.icon || [],
                             count: spiritReappearCount[spiritName] || 0
                         };
                     })
-                    .filter(Boolean)
             }))
             .find(season => season.name === seasonName);
 
