@@ -54,7 +54,20 @@ export class SkyInformationPlugin extends plugin {
 
     async checkServerStatus(e) {
         try {
-            const { ret, pos, wait_time } = await getLinkData('https://live-queue-sky-merge.game.163.com/queue?type=json', 'json');
+            const response = await fetch('https://live-queue-sky-merge.game.163.com/queue?type=json', {
+                headers: { 'X-Sky-content': 'c2t5R2FtZQ==' }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const payload = await response.json();
+            if (!payload || typeof payload !== 'object' || !['enter', 'queue'].includes(payload.text)) {
+                throw new Error('排队服务返回了无效数据');
+            }
+
+            const { text, pos, wait_time } = payload;
 
             let timeDisplay = '';
             if (wait_time) {
@@ -71,7 +84,7 @@ export class SkyInformationPlugin extends plugin {
                 }
             }
 
-            const message = ret !== 1
+            const message = text === 'enter'
                 ? ['当前光遇服务器畅通，无需排队', new Button(e).information()]
                 : [
                     segment.at(e.user_id),
