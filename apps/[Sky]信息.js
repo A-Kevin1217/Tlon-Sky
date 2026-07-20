@@ -85,7 +85,7 @@ export class SkyInformationPlugin extends plugin {
             }
 
             const message = text === 'enter'
-                ? ['当前光遇服务器畅通，无需排队', new Button(e).information()]
+                ? [segment.at(e.user_id), '当前光遇服务器畅通，无需排队', new Button(e).information()]
                 : [
                     segment.at(e.user_id),
                     '当前排队中\r',
