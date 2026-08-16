@@ -23,6 +23,28 @@ const MAPS_CONFIG = {
   }
 }
 
+function isQQBotEvent(e) {
+  const bot = e?.bot ?? globalThis.Bot?.[e?.self_id] ?? globalThis.Bot
+  const adapterId = bot?.adapter?.id || bot?.adapter?.name || e?.adapter_name || ''
+  const versionId = bot?.version?.id || bot?.version?.name || ''
+  const platform = e?.platform || ''
+  return adapterId === 'QQBot' || versionId === 'QQBot' || String(platform).startsWith('QQ-')
+}
+
+function buildTaskImagesMarkdown() {
+  const imageMeta = [
+    { title: '每日任务', url: IMG.TASK_IMAGES[0], width: 1200, height: 750 },
+    { title: '季节蜡烛', url: IMG.TASK_IMAGES[1], width: 1200, height: 750 },
+    { title: '大蜡烛', url: IMG.TASK_IMAGES[2], width: 1200, height: 750 },
+    { title: '每日魔法', url: IMG.TASK_IMAGES[3], width: 900, height: 600 }
+  ]
+
+  return [
+    '## 光遇任务图',
+    ...imageMeta.map(item => `![${item.title} #${item.width}px #${item.height}px](${item.url})`)
+  ].join('\n\n')
+}
+
 export class SKY extends plugin {
   constructor() {
     super({
@@ -52,8 +74,16 @@ export class SKY extends plugin {
   async handleDirect(e) {
     const cmd = e.msg.replace(/[#\/]/g, '')
     if (cmd === '季节任务') return e.reply([segment.image(IMG.SEASON_TASK)])
-    if (cmd === '任务图') return e.reply([segment.at(e.user_id), ...IMG.TASK_IMAGES.map(segment.image)])
+    if (cmd === '任务图') return this.replyTaskImages(e)
     if (cmd.includes('碎石')) return cmd === '碎石路线图' ? this.stoneRoadMap(e) : this.handleMonthlyShards(e)
+  }
+
+  async replyTaskImages(e) {
+    if (isQQBotEvent(e)) {
+      return e.reply([segment.at(e.user_id), { type: 'markdown', data: { content: buildTaskImagesMarkdown() } }])
+    }
+
+    return e.reply([segment.at(e.user_id), ...IMG.TASK_IMAGES.map(segment.image)])
   }
 
   async handleYearlyShards(e) {
