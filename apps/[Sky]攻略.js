@@ -31,7 +31,7 @@ function isQQBotEvent(e) {
   return adapterId === 'QQBot' || versionId === 'QQBot' || String(platform).startsWith('QQ-')
 }
 
-function buildTaskImagesMarkdown() {
+function buildTaskImagesMarkdownItems() {
   const imageMeta = [
     { title: '每日任务', url: IMG.TASK_IMAGES[0], width: 1200, height: 750 },
     { title: '季节蜡烛', url: IMG.TASK_IMAGES[1], width: 1200, height: 750 },
@@ -39,10 +39,7 @@ function buildTaskImagesMarkdown() {
     { title: '每日魔法', url: IMG.TASK_IMAGES[3], width: 900, height: 600 }
   ]
 
-  return [
-    '## 光遇任务图',
-    ...imageMeta.map(item => `![${item.title} #${item.width}px #${item.height}px](${item.url})`)
-  ].join('\n\n')
+  return imageMeta.map(item => `![${item.title} #${item.width}px #${item.height}px](${item.url})`)
 }
 
 export class SKY extends plugin {
@@ -80,7 +77,13 @@ export class SKY extends plugin {
 
   async replyTaskImages(e) {
     if (isQQBotEvent(e)) {
-      return e.reply([segment.at(e.user_id), { type: 'markdown', data: { content: buildTaskImagesMarkdown() } }])
+      return e.reply([
+        '## ',
+        segment.at(e.user_id),
+        ' 光遇任务图',
+        '\n***\n\n',
+        buildTaskImagesMarkdownItems().join('\n\n')
+      ])
     }
 
     return e.reply([segment.at(e.user_id), ...IMG.TASK_IMAGES.map(segment.image)])
