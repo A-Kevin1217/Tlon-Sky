@@ -42,6 +42,17 @@ function buildTaskImagesMarkdownItems() {
   return imageMeta.map(item => `![${item.title} #${item.width}px #${item.height}px](${item.url})`)
 }
 
+function getPlainQQBotId(userId) {
+  const value = String(userId ?? '').trim()
+  if (!value) return ''
+  const sep = value.includes('') ? '' : ':'
+  return value.includes(sep) ? value.split(sep).pop() : value
+}
+
+function makeMarkdownSegment(content) {
+  return { type: 'markdown', data: { content } }
+}
+
 export class SKY extends plugin {
   constructor() {
     super({
@@ -77,13 +88,14 @@ export class SKY extends plugin {
 
   async replyTaskImages(e) {
     if (isQQBotEvent(e)) {
-      return e.reply([
-        '## ',
-        segment.at(e.user_id),
-        ' 光遇任务图',
-        '\n***\n\n',
+      const markdown = [
+        `<@${getPlainQQBotId(e.user_id)}>`,
+        '## 光遇任务图',
+        '***',
         buildTaskImagesMarkdownItems().join('\n\n')
-      ])
+      ].join('\n\n')
+
+      return e.reply([makeMarkdownSegment(markdown)])
     }
 
     return e.reply([segment.at(e.user_id), ...IMG.TASK_IMAGES.map(segment.image)])
