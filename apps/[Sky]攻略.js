@@ -65,6 +65,7 @@ export class SKY extends plugin {
     if (!type) return
 
     if (type === 'dailyTask') {
+      if (isQQBotEvent(e)) return this.replyTaskImages(e)
       await render('admin/每日任务', { text: '看不清发[ 任务图 ]，复刻发[ 复刻兑换图 ]' }, { e, scale: 1.4 }, null, new Button(e).strategy())
     }
   }
