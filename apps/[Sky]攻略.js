@@ -1,5 +1,6 @@
 import { render } from '../components/index.js'
 import Button from '../model/Button.js'
+import { getPlainQQBotId, makeMarkdownSegment } from '../function/function.js'
 
 const IMG = {
   SEASON_TASK: `${SKY_IMAGE_URL.A}当前/当前季节任务.jpg`,
@@ -40,17 +41,6 @@ function buildTaskImagesMarkdownItems() {
   ]
 
   return imageMeta.map(item => `![${item.title} #${item.width}px #${item.height}px](${item.url})`)
-}
-
-function getPlainQQBotId(userId) {
-  const value = String(userId ?? '').trim()
-  if (!value) return ''
-  const sep = value.includes('') ? '' : ':'
-  return value.includes(sep) ? value.split(sep).pop() : value
-}
-
-function makeMarkdownSegment(content) {
-  return { type: 'markdown', data: { content } }
 }
 
 export class SKY extends plugin {
@@ -117,7 +107,10 @@ export class SKY extends plugin {
 
   async handleTodayShards(e) {
         const data = this.getStoneData()
-        data ? e.reply([this.formatShardMsg(data), new Button(e).todayShards()]) : e.reply('今日无碎石')
+        if (!data) return e.reply('今日无碎石')
+
+        const message = isQQBotEvent(e) ? makeMarkdownSegment(this.formatShardMarkdown(data)) : this.formatShardMsg(data)
+        return e.reply([message, new Button(e).todayShards()])
     }
 
   async stoneRoadMap(e) {
@@ -167,7 +160,52 @@ export class SKY extends plugin {
       `降落位置: ${location}\n降落时间: ${fallTimes}\n查看路线: 碎石路线图`
   }
 
+  formatShardMarkdown({ time, stoneType, map, location, fallTimes }) {
+    return [
+      '# 今日碎石',
+      `> ${time}`,
+      '',
+      `- 碎石类型：**${stoneType}**`,
+      `- 降落地图：${map}`,
+      `- 降落位置：${location}`,
+      `- 降落时间：${fallTimes}`,
+      '',
+      '> 查看路线：碎石路线图'
+    ].join('\n')
+  }
+
   async showStoneRule(e) {
+    if (isQQBotEvent(e)) {
+      const markdown = [
+        '# 光遇碎石规律说明',
+        '## 碎石出现规律',
+        '### 前半月（每月1-15号）',
+        '- 周二：黑石，坠落时间：09:08、14:08、19:08',
+        '- 周六：红石，坠落时间：10:08、14:08、22:08',
+        '- 周日：红石，坠落时间：07:08、13:08、19:08',
+        '### 后半月（每月16号-月末）',
+        '- 周三：黑石，坠落时间：09:08、15:08、21:08',
+        '- 周五：红石，坠落时间：11:08、17:08、23:08',
+        '- 周日：红石，坠落时间：07:08、13:08、19:08',
+        '## 地图循环规律',
+        '地图按日期循环：暮土 → 禁阁 → 云野 → 雨林 → 霞谷',
+        '> 每天按顺序轮换，周而复始',
+        '## 各地图降落位置',
+        '- 云野：周二→蝴蝶平原 | 周三→仙乡 | 周五→云顶浮石 | 周六→幽光山洞 | 周日→圣岛',
+        '- 雨林：周二→荧光森林 | 周三→密林遗迹 | 周五→大树屋 | 周六→雨林神殿 | 周日→秘密花园',
+        '- 霞谷：周二→滑冰场 | 周三→滑冰场 | 周五→圆梦村 | 周六→圆梦村 | 周日→雪隐峰',
+        '- 暮土：周二→边陲荒漠 | 周三→远古战场 | 周五→黑水港湾 | 周六→巨兽荒原 | 周日→失落方舟',
+        '- 禁阁：周二→星光沙漠 | 周三→星光沙漠 | 周五→星光沙漠·一隅 | 周六→星光沙漠·一隅 | 周日→星光沙漠·一隅',
+        '## 使用提示',
+        '- 发送「今日碎石」查看今日碎石信息',
+        '- 发送「本月碎石」查看本月碎石日历',
+        '- 发送「碎石路线图」查看路线图',
+        '- 发送「2024年5月碎石」查询指定月份的碎石日历'
+      ].join('\n')
+
+      return e.reply([makeMarkdownSegment(markdown)])
+    }
+
     const ruleText = `━ 光遇碎石规律说明 ━
 
 【碎石出现规律】

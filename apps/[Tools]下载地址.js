@@ -1,4 +1,5 @@
 import Button from '../model/Button.js';
+import { getPlainQQBotId, isQQBot, makeMarkdownSegment } from '../function/function.js';
 
 export class Ts extends plugin {
     constructor() {
@@ -16,12 +17,18 @@ export class Ts extends plugin {
         const links = await getLinkData('https://raw.gitcode.com/Kevin1217/resources/raw/master/resources/json/SkyChildrenoftheLight/GameDownload.json', 'json')
 
         if (platform === 'QQBot'|| platform === 'OneBotv11') {
-
             const button = new Button(e).downloadLinks(links);
+
+            if (isQQBot(e)) {
+                return e.reply([
+                    makeMarkdownSegment(`<@${getPlainQQBotId(e.user_id)}>\n\n# 光遇下载地址`),
+                    button || '当前框架暂不支持按钮交互'
+                ])
+            }
 
             return e.reply([
                 segment.at(e.user_id),
-                '\n# 光遇下载地址',
+                '\n光遇下载地址',
                 button || '当前框架暂不支持按钮交互'
             ])
         }

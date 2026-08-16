@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import fs from 'fs'
-import { getAppConfig } from '../function/function.js'
+import { getAppConfig, isQQBot, makeMarkdownSegment } from '../function/function.js'
 import Button from '../model/Button.js'
 
 /**
@@ -53,6 +53,31 @@ export class SkyLiveGift extends plugin {
   }
 
   async liveHelp(e) {
+    if (isQQBot(e)) {
+      const markdown = [
+        '# Sky国服礼包查询说明',
+        '## ID管理',
+        '- #国服id绑定 [id] - 绑定国服账号ID',
+        '- #国服id列表 - 查看已绑定的ID',
+        '- #国服id切换 [序号] - 切换当前使用的ID',
+        '## 礼包查询',
+        '- #国服礼包查询 - 查询当前ID的礼包',
+        '## 示例',
+        '```text',
+        '#国服id绑定 c84e795e-a6c2-4b7f-8187-91e2df511963',
+        '#国服id切换 1',
+        '#国服礼包查询',
+        '```',
+        '## 说明',
+        '- 每个用户可绑定多个国服ID',
+        '- 使用序号切换不同账号',
+        '- 礼包数据来自第三方API'
+      ].join('\n')
+
+      await e.reply([makeMarkdownSegment(markdown), new Button(e).giftQuery()])
+      return true
+    }
+
     const msg = [
       '【Sky国服礼包查询说明】\n',
       '━━━━━━━━━━━━━━━━━━',
@@ -134,7 +159,19 @@ export class SkyLiveGift extends plugin {
       msg.push(`当前使用：第 ${userData.currentIndex + 1} 个`)
       msg.push('使用 #国服id切换 [序号] 切换账号')
 
-      await e.reply([msg.join('\n'), new Button(e).giftQuery()])
+      if (isQQBot(e)) {
+        const markdown = [
+          '# 已绑定的国服ID',
+          ...userData.ids.map((id, index) => `${index + 1}. ${id}${index === userData.currentIndex ? ' ✅' : ''}`),
+          '---',
+          `> 当前使用：第 ${userData.currentIndex + 1} 个`,
+          '> 使用 #国服id切换 [序号] 切换账号'
+        ].join('\n')
+
+        await e.reply([makeMarkdownSegment(markdown), new Button(e).giftQuery()])
+      } else {
+        await e.reply([msg.join('\n'), new Button(e).giftQuery()])
+      }
     } catch (error) {
       await e.reply(`❌ 查询失败：${error.message}`)
       logger.error(`[Sky国服礼包] 查询ID列表失败: ${error}`)
@@ -206,8 +243,7 @@ export class SkyLiveGift extends plugin {
       }
 
       // 判断是否为官机：使用适配器名或平台名判断（e.bot?.adapter?.name ?? e.platform ?? '未知'）
-      const adapterName = e.bot?.adapter?.name ?? e.platform ?? '未知'
-      const isOfficial = adapterName === 'QQBot'
+      const isOfficial = isQQBot(e)
 
       // 构建原始（Markdown）消息结构
       const mdMsg = [
@@ -233,7 +269,7 @@ export class SkyLiveGift extends plugin {
 
       if (isOfficial) {
         // 官机：发送 Markdown/格式化消息
-        await e.reply(mdMsg.join('\n'))
+        await e.reply([makeMarkdownSegment(mdMsg.join('\n'))])
       } else {
         // 非官机：移除 Markdown 语法，发送纯文本
         const plain = []

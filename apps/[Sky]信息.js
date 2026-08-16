@@ -1,5 +1,6 @@
 import { render } from './../components/index.js';
 import Button from '../model/Button.js';
+import { makeMarkdownSegment } from '../function/function.js';
 
 async function fetchGitCodeJson(url, retries = 2) {
     let lastError;
@@ -169,7 +170,7 @@ export class SkyInformationPlugin extends plugin {
         ].join('\r\n');
 
         const adapterName = e.bot?.adapter?.name ?? e.platform ?? '';
-        const message = adapterName === 'QQBot' ? markdown : plainText;
+        const message = adapterName === 'QQBot' ? makeMarkdownSegment(markdown) : plainText;
 
         return e.reply([
             message,

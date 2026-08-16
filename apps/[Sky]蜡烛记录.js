@@ -1,4 +1,4 @@
-import { fileExists } from '../function/function.js'
+import { fileExists, isQQBot, makeMarkdownSegment } from '../function/function.js'
 import Button from '../model/Button.js'
 import fs from 'fs'
 import { render } from './../components/index.js'
@@ -199,6 +199,16 @@ export class SKY extends plugin {
         const { user_id } = e
         let userData = this.getUserData(user_id)
 
+        if (isQQBot(e)) {
+            const markdown = [
+                '# 蜡烛ID列表',
+                ...userData.data.ids.map(id => `- ${id}${id === userData.data.currentId ? '（当前）' : ''}`)
+            ].join('\n')
+
+            await e.reply([makeMarkdownSegment(markdown)])
+            return true
+        }
+
         let reply = '蜡烛ID列表：\n'
         userData.data.ids.forEach(id => {
             reply += `${id}${id === userData.data.currentId ? ' (当前)' : ''}\n`
@@ -348,6 +358,29 @@ export class SKY extends plugin {
     }
 
     async showHelp(e) {
+        if (isQQBot(e)) {
+            const markdown = [
+                '# 蜡烛记录功能使用说明',
+                '## 功能',
+                '记录蜡烛数据，支持多账号，自动计算变化量',
+                '## 主要命令',
+                '- 记录：#记录蜡烛<白蜡>:<季蜡>:<爱心>:<红蜡>',
+                '- 查看记录：#蜡烛记录',
+                '- #添加蜡烛ID <名称> - 添加新ID',
+                '- #切换蜡烛ID <名称> - 切换当前ID',
+                '- #蜡烛ID列表 - 查看所有ID',
+                '- #删除蜡烛ID <名称> - 删除ID',
+                '## 使用示例',
+                '```text',
+                '#记录蜡烛100:50:20:10',
+                '```',
+                '> 系统会自动显示距离上次记录天数及变化量'
+            ].join('\n')
+
+            await e.reply([makeMarkdownSegment(markdown), new Button(e).candleRecord()])
+            return true
+        }
+
         const helpText = `━蜡烛记录功能使用说明━
 
 【功能】

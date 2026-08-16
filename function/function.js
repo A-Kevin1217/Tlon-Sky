@@ -55,6 +55,21 @@ function getAppConfig(appName) {
     }
 }
 
+function makeMarkdownSegment(content) {
+    return { type: 'markdown', data: { content } }
+}
+
+function isQQBot(e) {
+    return (e?.bot?.adapter?.name ?? e?.platform ?? '未知') === 'QQBot'
+}
+
+function getPlainQQBotId(userId) {
+    const value = String(userId ?? '').trim()
+    if (!value) return ''
+    const sep = value.includes('') ? '' : ':'
+    return value.includes(sep) ? value.split(sep).pop() : value
+}
+
 global.getLinkData = async function (link, type) {
     let linkData = await fetch(link)
     if (type === 'json') {
@@ -100,6 +115,9 @@ export {
     storagePushData,
     getCronData,
     getAppConfig,
+    makeMarkdownSegment,
+    isQQBot,
+    getPlainQQBotId,
     fileExists,
     storageData,
     readJsonData
