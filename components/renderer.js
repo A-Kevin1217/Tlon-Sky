@@ -1,8 +1,10 @@
 import { Data, Version, Plugin_Name } from './index.js'
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 import fs from 'fs'
+import { buildRenderCacheKey, getCachedRender } from './render-cache.js'
 const _path = process.cwd()
-export default async function (path, params, cfg, text, button) {
+
+async function renderImage(path, params = {}, cfg = {}) {
   let [app, tpl] = path.split('/')
   let { e } = cfg
   let layoutPath = process.cwd() + `/plugins/${Plugin_Name}/resources/common/layout/`
@@ -37,13 +39,42 @@ export default async function (path, params, cfg, text, button) {
     data._app = app
     fs.writeFileSync(file, JSON.stringify(data))
   }
-  let base64 = await puppeteer.screenshot(`${Plugin_Name}/${app}/${tpl}`, data)
+  const cacheKey = buildRenderCacheKey(path, params, cfg)
+  const cacheTTL = Number.isFinite(Number(cfg.cacheTTL))
+    ? Number(cfg.cacheTTL)
+    : 5 * 60 * 1000
+  const screenshot = () => puppeteer.screenshot(`${Plugin_Name}/${app}/${tpl}`, data)
+  let base64 = cfg.cache === false
+    ? await screenshot()
+    : await getCachedRender(cacheKey, screenshot, cacheTTL)
+  return { base64, e, text: cfg.text, button: cfg.button }
+}
+
+async function render(path, params = {}, cfg = {}, text, button) {
+  const result = await renderImage(path, params, cfg)
+  const { base64, e } = result
   let ret = true
+  if (cfg.retType === 'base64') {
+    return base64
+  }
   if (base64) {
     let msg = [base64]
     if (text) msg.unshift(text)
     if (button) msg.push(button)
-    ret = await e.reply(msg)
+    if (e?.reply) {
+      ret = await e.reply(msg)
+    } else {
+      return base64
+    }
   }
   return cfg.retMsgId ? ret : true
 }
+
+export async function preRender(path, params = {}, cfg = {}) {
+  return render(path, params, {
+    ...cfg,
+    retType: 'base64'
+  })
+}
+
+export default render
