@@ -46,7 +46,7 @@ async function renderImage(path, params = {}, cfg = {}) {
   const screenshot = () => puppeteer.screenshot(`${Plugin_Name}/${app}/${tpl}`, data)
   let base64 = cfg.cache === false
     ? await screenshot()
-    : await getCachedRender(cacheKey, screenshot, cacheTTL)
+    : await getCachedRender(cacheKey, screenshot, cacheTTL, cfg.forceRefresh === true)
   return { base64, e, text: cfg.text, button: cfg.button }
 }
 

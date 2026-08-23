@@ -102,7 +102,7 @@ export class SkyInformationPlugin extends plugin {
     }
 
     async showAnnouncement(e) {
-        return render('admin/skyAnnouncement', {}, { e, scale: 1.4 });
+        return render('admin/skyAnnouncement', {}, { e, scale: 1.4, cache: false });
     }
 
     async countWings(e) {

@@ -33,21 +33,32 @@ function buildRenderCacheKey(path, params = {}, cfg = {}) {
   })
 }
 
-async function getCachedRender(key, render, ttl = 5 * 60 * 1000) {
+async function getCachedRender(key, render, ttl = 5 * 60 * 1000, forceRefresh = false) {
   if (ttl <= 0) {
     return render()
   }
 
   const now = Date.now()
   const cached = renderCache.get(key)
-  if (cached && cached.expiresAt > now) {
+  if (!forceRefresh && cached && cached.expiresAt > now) {
     return cached.promise
+  }
+
+  if (forceRefresh) {
+    const value = await render()
+    renderCache.set(key, {
+      expiresAt: Date.now() + ttl,
+      promise: Promise.resolve(value)
+    })
+    return value
   }
 
   const promise = Promise.resolve()
     .then(render)
     .catch(error => {
-      renderCache.delete(key)
+      if (renderCache.get(key)?.promise === promise) {
+        renderCache.delete(key)
+      }
       throw error
     })
 
@@ -59,7 +70,12 @@ async function getCachedRender(key, render, ttl = 5 * 60 * 1000) {
   return promise
 }
 
+function deleteCachedRender(key) {
+  return renderCache.delete(key)
+}
+
 export {
   buildRenderCacheKey,
+  deleteCachedRender,
   getCachedRender
 }
