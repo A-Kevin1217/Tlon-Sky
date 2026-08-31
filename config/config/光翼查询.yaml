@@ -1,0 +1,3 @@
+# KevCore 光翼查询网关 API Key
+# 也可通过环境变量 KEVCORE_API_KEY 配置
+API_KEY: ''

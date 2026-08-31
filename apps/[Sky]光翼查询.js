@@ -1,5 +1,5 @@
 import { render } from './../components/index.js';
-import { fileExists } from './../function/function.js';
+import { fileExists, getAppConfig } from './../function/function.js';
 import Button from '../model/Button.js';
 import fs from 'fs';
 import fetch from 'node-fetch';
@@ -25,6 +25,9 @@ export class SkyWingQueryPlugin extends plugin {
                 { reg: /^[#\/]?光翼详情\s*(\d+)$/, fnc: 'queryWingDetailsById' }
             ]
         });
+        const config = getAppConfig('光翼查询');
+        this.wingQueryApi = 'https://api.kevcore.cn/v1/gateway/sky-wings-cn';
+        this.wingQueryApiKey = process.env.KEVCORE_API_KEY || config.API_KEY || '';
         // 缓存光翼名称映射（懒加载）
         this.wingNameMap = null;
     }
@@ -171,46 +174,55 @@ export class SkyWingQueryPlugin extends plugin {
 
     async queryWingsBySkyId(e, skyId) {
         try {
-            const url = `https://ovoav.com/api/sky/gycx/gka?key=IIoAMkBC5c5zl&id=${skyId}&type=json`;
-            const data = await getLinkData(url, 'json');
-
-            if (!data.success) {
-                await e.reply(['查询失败：' + (data.message || '未知错误')]);
+            if (!this.wingQueryApiKey) {
+                await e.reply(['查询失败：未配置光翼查询 API Key，请在 config/config/光翼查询.yaml 中填写 API_KEY']);
                 return true;
             }
 
-            const statistics = data.statistics;
-
-            const mapStats = statistics.map_statistics;
-
-            const uncollectedByType = {};
-            statistics.uncollected_list.forEach(item => {
-                if (!uncollectedByType[item.type]) {
-                    uncollectedByType[item.type] = [];
-                }
-                uncollectedByType[item.type].push({
-                    name: item.name,
-                    uncollected: item.uncollected,
-                    details: item.details || []
-                });
+            const response = await fetch(this.wingQueryApi, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-Key': this.wingQueryApiKey
+                },
+                body: JSON.stringify({ role_id: String(skyId) })
             });
+            const result = await response.json();
+
+            if (!response.ok || result.code !== 0) {
+                await e.reply(['查询失败：' + (result.msg || result.detail || `HTTP ${response.status}`)]);
+                return true;
+            }
+
+            const data = result.data || {};
+            const total = Number(data.role_total ?? data.wing_count ?? 0);
+            const collected = Number(data.role_collected ?? data.collected_count ?? 0);
+            const uncollected = Number(data.role_uncollected ?? data.uncollected_count ?? Math.max(total - collected, 0));
+            const mapWingData = data.categories?.map_wings || data.map_wings || {};
+            const permanentWingData = data.categories?.spirit_wings || data.permanent_wings || {};
+            const mapWings = this.normalizeWingStatistics(mapWingData);
+            const permanentWings = this.normalizeWingStatistics(permanentWingData);
+            const mapStatistics = this.groupWingStatistics(data.map_groups, '地图光翼', mapWings);
+            const permanentStatistics = this.groupWingStatistics(data.permanent_groups, '永久光翼', permanentWings);
+            const uncollectedByMap = await this.buildUncollectedByMap(data.uncollected_by_map);
+            const collectionRate = total > 0 ? `${((collected / total) * 100).toFixed(2)}%` : '0%';
 
             const templateData = {
-                roleId: data.roleId,
-                timestamp: data.timestamp,
+                roleId: data.player_id || skyId,
+                timestamp: data.timestamp || new Date().toLocaleString('zh-CN'),
                 statistics: {
-                    total: statistics.total,
-                    actual_total: statistics.actual_total,
-                    collected: statistics.collected,
-                    deposited: statistics.deposited,
-                    collection_rate: statistics.collection_rate,
-                    unredeemed_permanent: statistics.unredeemed_permanent,
-                    normal_wings: statistics.normal_wings,
-                    permanent_wings: statistics.permanent_wings
+                    total,
+                    actual_total: total,
+                    collected,
+                    deposited: Number(data.deposited_count ?? 0),
+                    collection_rate: data.collection_rate || collectionRate,
+                    catalog_uncollected: Number(data.catalog_uncollected ?? uncollected),
+                    normal_wings: mapWings,
+                    permanent_wings: permanentWings
                 },
-                mapStatisticsJson: JSON.stringify(mapStats),
-                uncollectedByTypeJson: JSON.stringify(uncollectedByType),
-                seasonStatisticsJson: JSON.stringify(statistics.season_statistics)
+                mapStatisticsJson: JSON.stringify(mapStatistics),
+                uncollectedByTypeJson: JSON.stringify(uncollectedByMap),
+                permanentStatisticsJson: JSON.stringify(permanentStatistics)
             };
 
             await render('admin/wingQuery', templateData, { e, scale: 1.3 }, null, new Button(e).wingQuery());
@@ -219,6 +231,44 @@ export class SkyWingQueryPlugin extends plugin {
             logger.error(`光翼查询失败: ${error.message}`);
             await e.reply(['查询失败，请稍后重试']);
         }
+    }
+
+    normalizeWingStatistics(statistics = {}) {
+        return {
+            total: Number(statistics.total ?? 0),
+            collected: Number(statistics.collected ?? 0),
+            uncollected: Number(statistics.uncollected ?? 0),
+            known_uncollected: Number(statistics.known_uncollected ?? 0),
+            unknown: Number(statistics.unknown ?? 0),
+            deposited: Number(statistics.deposited ?? 0)
+        };
+    }
+
+    groupWingStatistics(groups, fallbackName, fallbackStatistics) {
+        if (!Array.isArray(groups) || groups.length === 0) {
+            return { [fallbackName]: fallbackStatistics };
+        }
+
+        return Object.fromEntries(groups.map(group => [
+            group.name || fallbackName,
+            this.normalizeWingStatistics(group)
+        ]));
+    }
+
+    async buildUncollectedByMap(groups) {
+        if (!Array.isArray(groups) || groups.length === 0) {
+            return {};
+        }
+
+        await this.loadWingNameMap();
+        return Object.fromEntries(groups.map(group => [
+            group.map || '未知地图',
+            (group.wings || []).map(wing => ({
+                name: this.getWingChineseName(wing.wing_id) || wing.wing_id,
+                wingId: wing.wing_id,
+                uncollected: 1
+            }))
+        ]));
     }
 
     getMapFromWingName(wingName) {
@@ -440,4 +490,3 @@ export class SkyWingQueryPlugin extends plugin {
         }
     }
 }
-

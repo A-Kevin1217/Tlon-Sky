@@ -421,16 +421,16 @@
                 <div class="value">{{statistics.deposited}}</div>
             </div>
             <div class="stat-card">
-                <div class="label">永无翼数</div>
-                <div class="value" style="color: #f39c12;">{{statistics.unredeemed_permanent}}</div>
+                <div class="label">图鉴未收集</div>
+                <div class="value" style="color: #f39c12;">{{statistics.catalog_uncollected}}</div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">永久光翼统计</div>
+            <div class="section-title">光翼分类统计</div>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="label">普通永久翼</div>
+                    <div class="label">地图光翼</div>
                     <div class="value">{{statistics.normal_wings.total}}</div>
                     <div style="margin-top: 16px; font-size: 0.9rem; background: rgba(255,255,255,0.5); padding: 6px 16px; border-radius: 40px; display: inline-block;">
                         已收集: <span style="color: #0095f6; font-weight: 600;">{{statistics.normal_wings.collected}}</span> | 
@@ -458,9 +458,9 @@
             <div class="uncollected-list" id="uncollectedList"></div>
         </div>
 
-        <div class="section" id="seasonSection" style="display: none;">
-            <div class="section-title">季节光翼统计</div>
-            <div class="season-list" id="seasonList"></div>
+        <div class="section" id="permanentSection" style="display: none;">
+            <div class="section-title">永久光翼分组</div>
+            <div class="season-list" id="permanentList"></div>
         </div>
     </div>
 
@@ -468,7 +468,7 @@
         // 解析JSON数据 - 保持原有逻辑不变，仅改变UI风格
         const mapStatistics = JSON.parse('{{@mapStatisticsJson}}');
         const uncollectedByType = JSON.parse('{{@uncollectedByTypeJson}}');
-        const seasonStatistics = JSON.parse('{{@seasonStatisticsJson}}');
+        const permanentStatistics = JSON.parse('{{@permanentStatisticsJson}}');
 
         // 渲染地图统计
         function renderMapStatistics() {
@@ -511,7 +511,7 @@
                 typeDiv.innerHTML = `
                     <div class="uncollected-type-header">
                         <div class="uncollected-type-title">${type}</div>
-                        <div class="uncollected-type-count">${items.length}类</div>
+                        <div class="uncollected-type-count">缺少 ${items.length} 个</div>
                     </div>
                     <div class="uncollected-items"></div>
                 `;
@@ -520,9 +520,12 @@
                 items.forEach(item => {
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'uncollected-item';
+                    const wingId = item.wingId && item.wingId !== item.name
+                        ? `<div style="font-size: 0.75rem; color: #666; margin-top: 4px;">${item.wingId}</div>`
+                        : '';
                     itemDiv.innerHTML = `
-                        <div class="uncollected-item-name">${item.name}</div>
-                        <div class="uncollected-item-count">缺少 ${item.uncollected} 个</div>
+                        <div class="uncollected-item-name">${item.name}${wingId}</div>
+                        <div class="uncollected-item-count">未收集</div>
                     `;
                     itemsContainer.appendChild(itemDiv);
                 });
@@ -531,28 +534,28 @@
             }
         }
 
-        // 渲染季节统计
-        function renderSeasonStatistics() {
-            const seasonList = document.getElementById('seasonList');
-            const seasonSection = document.getElementById('seasonSection');
+        // 渲染永久光翼分组统计
+        function renderPermanentStatistics() {
+            const permanentList = document.getElementById('permanentList');
+            const permanentSection = document.getElementById('permanentSection');
             
-            if (!seasonStatistics || Object.keys(seasonStatistics).length === 0) {
+            if (!permanentStatistics || Object.keys(permanentStatistics).length === 0) {
                 return;
             }
 
-            seasonSection.style.display = 'block';
+            permanentSection.style.display = 'block';
 
-            for (const [seasonName, stats] of Object.entries(seasonStatistics)) {
+            for (const [groupName, stats] of Object.entries(permanentStatistics)) {
                 const card = document.createElement('div');
                 card.className = 'season-card';
                 card.innerHTML = `
-                    <div class="season-card-name">${seasonName}</div>
+                    <div class="season-card-name">${groupName}</div>
                     <div class="season-card-stats">
                         <span class="collected">✓ ${stats.collected}</span>
                         <span class="uncollected">✗ ${stats.uncollected}</span>
                     </div>
                 `;
-                seasonList.appendChild(card);
+                permanentList.appendChild(card);
             }
         }
 
@@ -560,7 +563,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             renderMapStatistics();
             renderUncollectedList();
-            renderSeasonStatistics();
+            renderPermanentStatistics();
         });
     </script>
 </body>
