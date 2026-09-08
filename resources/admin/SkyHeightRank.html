@@ -1,0 +1,293 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        background: transparent;
+        padding: 0;
+    }
+
+    .rank-card {
+        width: 780px;
+        background: linear-gradient(160deg, #101c3c 0%, #1d2b5c 40%, #33246b 100%);
+        border-radius: 24px;
+        overflow: hidden;
+        padding: 30px 34px 24px;
+        color: #fff;
+        position: relative;
+    }
+
+    .rank-card::before {
+        content: '';
+        position: absolute;
+        top: -80px;
+        right: -60px;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(circle, rgba(255, 214, 132, 0.22) 0%, rgba(255, 214, 132, 0) 65%);
+        pointer-events: none;
+    }
+
+    .rank-card::after {
+        content: '';
+        position: absolute;
+        bottom: -100px;
+        left: -70px;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(120, 190, 255, 0.18) 0%, rgba(120, 190, 255, 0) 65%);
+        pointer-events: none;
+    }
+
+    .rank-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .rank-title {
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #ffe9b8, #ffd166, #ffb347);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        line-height: 1.2;
+    }
+
+    .rank-title small {
+        font-size: 15px;
+        font-weight: 400;
+        color: #a9b8e8;
+        -webkit-text-fill-color: #a9b8e8;
+        letter-spacing: 0;
+        margin-left: 10px;
+    }
+
+    .rank-meta {
+        font-size: 13px;
+        color: #93a4d8;
+        text-align: right;
+        line-height: 1.6;
+    }
+
+    .rank-divider {
+        height: 2px;
+        margin: 14px 0 18px;
+        background: linear-gradient(90deg, rgba(255, 209, 102, 0.7), rgba(255, 209, 102, 0.15) 45%, rgba(140, 170, 255, 0.1));
+        border-radius: 2px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .rank-list {
+        position: relative;
+        z-index: 1;
+    }
+
+    .rank-row {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.055);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 16px;
+        padding: 10px 18px;
+        margin-bottom: 10px;
+        backdrop-filter: blur(2px);
+    }
+
+    .rank-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .rank-row.top1 {
+        background: linear-gradient(90deg, rgba(255, 209, 102, 0.18), rgba(255, 255, 255, 0.05));
+        border-color: rgba(255, 209, 102, 0.35);
+    }
+
+    .rank-row.top2 {
+        background: linear-gradient(90deg, rgba(200, 220, 255, 0.14), rgba(255, 255, 255, 0.04));
+        border-color: rgba(200, 220, 255, 0.28);
+    }
+
+    .rank-row.top3 {
+        background: linear-gradient(90deg, rgba(255, 180, 130, 0.13), rgba(255, 255, 255, 0.04));
+        border-color: rgba(255, 180, 130, 0.26);
+    }
+
+    .rank-no {
+        width: 64px;
+        text-align: center;
+        flex-shrink: 0;
+    }
+
+    .rank-medal {
+        font-size: 30px;
+        line-height: 1;
+    }
+
+    .rank-num {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+        color: #c7d2f5;
+    }
+
+    .rank-avatar {
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-right: 16px;
+        overflow: hidden;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        background: linear-gradient(145deg, #4a5fa8, #2c3b74);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffe9b8;
+        user-select: none;
+    }
+
+    .rank-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .rank-avatar.hidden img {
+        display: none;
+    }
+
+    .rank-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .rank-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: #f4f7ff;
+        letter-spacing: 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .rank-id {
+        font-size: 13px;
+        color: #8fa0d4;
+        margin-top: 4px;
+        font-family: 'Menlo', 'Courier New', monospace;
+        letter-spacing: 0.5px;
+    }
+
+    .rank-value {
+        text-align: right;
+        flex-shrink: 0;
+        margin-left: 14px;
+    }
+
+    .rank-height {
+        font-size: 28px;
+        font-weight: 800;
+        color: #ffd166;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1;
+    }
+
+    .rank-unit {
+        font-size: 14px;
+        color: #93a4d8;
+        margin-top: 6px;
+    }
+
+    .rank-tip {
+        margin-top: 16px;
+        text-align: center;
+        font-size: 12px;
+        color: #7c8cc0;
+        position: relative;
+        z-index: 1;
+        line-height: 1.8;
+    }
+</style>
+
+<body>
+    <div class="rank-card">
+        <div class="rank-header">
+            <div class="rank-title">☀️ 光遇身高排行榜 <small>本服·本地排行</small></div>
+            <div class="rank-meta">共 {{total}} 位玩家参与<br>{{time}}</div>
+        </div>
+        <div class="rank-divider"></div>
+        <div class="rank-list" id="rankList"></div>
+        <div class="rank-tip" id="rankTip">按最新身高从高到低排序 · 昵称与游戏ID已打码保护隐私 · 数据来自本地查询记录</div>
+    </div>
+
+    <script>
+        const rows = JSON.parse('{{@rows}}')
+        const total = Number('{{total}}')
+        const shown = Number('{{shown}}')
+        const listEl = document.getElementById('rankList')
+
+        if (total > shown) {
+            const tip = document.getElementById('rankTip')
+            tip.textContent = '仅展示前 ' + shown + ' 名（共 ' + total + ' 人）· ' + tip.textContent
+        }
+
+        rows.forEach(item => {
+            const row = document.createElement('div')
+            row.className = 'rank-row' + (item.rank <= 3 ? ' top' + item.rank : '')
+
+            const rankCell = document.createElement('div')
+            rankCell.className = 'rank-no'
+            if (item.medal) {
+                rankCell.innerHTML = '<div class="rank-medal">' + item.medal + '</div>'
+            } else {
+                rankCell.innerHTML = '<div class="rank-num">' + item.rank + '</div>'
+            }
+
+            const avatarCell = document.createElement('div')
+            avatarCell.className = 'rank-avatar'
+            if (item.avatar) {
+                const img = document.createElement('img')
+                img.src = item.avatar
+                img.alt = ''
+                img.onerror = function () {
+                    avatarCell.classList.add('hidden')
+                    avatarCell.textContent = item.char || '旅'
+                }
+                avatarCell.appendChild(img)
+            } else {
+                avatarCell.textContent = item.char || '旅'
+            }
+
+            const infoCell = document.createElement('div')
+            infoCell.className = 'rank-info'
+            infoCell.innerHTML = '<div class="rank-name">' + item.nickname + '</div>' +
+                '<div class="rank-id">' + item.gameId + '</div>'
+
+            const valueCell = document.createElement('div')
+            valueCell.className = 'rank-value'
+            valueCell.innerHTML = '<div class="rank-height">' + item.height + '</div>' +
+                '<div class="rank-unit">当前身高</div>'
+
+            row.appendChild(rankCell)
+            row.appendChild(avatarCell)
+            row.appendChild(infoCell)
+            row.appendChild(valueCell)
+            listEl.appendChild(row)
+        })
+    </script>
+</body>
