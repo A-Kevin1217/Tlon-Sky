@@ -1,1 +1,10 @@
+# 本地配置文件：不纳入版本管理，避免更新冲突
+# config/config/ 下的 cron.yaml / push.yaml / text.json / kevcore.yaml / 光翼查询.yaml / 国服礼包查询.yaml 等
+# 均为每台服务器本地配置，请勿提交
+config/config/*
+
+# 但保留默认模板目录（供新装用户参考/拷贝）
+!config/config/template
+!config/config/template/
+
 scripts/warmup-gitcode-images.mjs
