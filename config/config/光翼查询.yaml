@@ -1,3 +1,6 @@
-# KevCore 光翼查询网关 API Key
+# 【已废弃】旧版光翼查询独立配置，请迁移到通用配置文件 config/config/kevcore.yaml
+# 光翼查询 / 光遇本月日历等 KevCore 网关功能统一使用 kevcore.yaml 中的 API Key
+# 本文件仅作旧版本部署兼容回退，仍会被读取，优先级最低：
+#   环境变量 KEVCORE_API_KEY > kevcore.yaml > 本文件
 # 也可通过环境变量 KEVCORE_API_KEY 配置
 API_KEY: ''

@@ -1,5 +1,5 @@
 import { render } from './../components/index.js';
-import { fileExists, getAppConfig } from './../function/function.js';
+import { fileExists, getKevCoreApiKey } from './../function/function.js';
 import Button from '../model/Button.js';
 import fs from 'fs';
 import fetch from 'node-fetch';
@@ -25,9 +25,9 @@ export class SkyWingQueryPlugin extends plugin {
                 { reg: /^[#\/]?光翼详情\s*(\d+)$/, fnc: 'queryWingDetailsById' }
             ]
         });
-        const config = getAppConfig('光翼查询');
         this.wingQueryApi = 'https://api.kevcore.cn/v1/gateway/sky-wings-cn';
-        this.wingQueryApiKey = process.env.KEVCORE_API_KEY || config.API_KEY || '';
+        // KevCore 网关通用 API Key（config/config/kevcore.yaml，与光遇本月日历共用）
+        this.wingQueryApiKey = getKevCoreApiKey();
         // 缓存光翼名称映射（懒加载）
         this.wingNameMap = null;
     }
@@ -175,7 +175,7 @@ export class SkyWingQueryPlugin extends plugin {
     async queryWingsBySkyId(e, skyId) {
         try {
             if (!this.wingQueryApiKey) {
-                await e.reply(['查询失败：未配置光翼查询 API Key，请在 config/config/光翼查询.yaml 中填写 API_KEY']);
+                await e.reply(['查询失败：未配置 KevCore API Key（与光遇本月日历共用），请在 config/config/kevcore.yaml 或环境变量 KEVCORE_API_KEY 中填写']);
                 return true;
             }
 

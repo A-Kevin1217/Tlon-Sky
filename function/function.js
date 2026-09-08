@@ -55,6 +55,74 @@ function getAppConfig(appName) {
     }
 }
 
+// 读取 KevCore 网关通用 API Key（光翼查询 / 光遇本月日历等共用）
+// 优先级：环境变量 KEVCORE_API_KEY > config/config/kevcore.yaml > 旧版 config/config/光翼查询.yaml
+// 首次调用时自动尝试将旧版 光翼查询.yaml 中的 Key 一次性迁移到 kevcore.yaml
+function getKevCoreApiKey() {
+    migrateKevCoreApiKey()
+    return process.env.KEVCORE_API_KEY ||
+        getAppConfig('kevcore').API_KEY ||
+        getAppConfig('光翼查询').API_KEY ||
+        ''
+}
+
+let kevCoreKeyAutoMigrated = false
+
+function escapeYamlValue(value) {
+    return `'${String(value ?? '').replace(/'/g, "''")}'`
+}
+
+// 旧版 config/config/光翼查询.yaml → 通用 config/config/kevcore.yaml 自动迁移（每个进程只尝试一次）
+function migrateKevCoreApiKey() {
+    if (kevCoreKeyAutoMigrated) return
+    kevCoreKeyAutoMigrated = true
+
+    try {
+        if (process.env.KEVCORE_API_KEY) return // 已配置环境变量则无需迁移
+        const legacyKey = getAppConfig('光翼查询').API_KEY
+        if (!legacyKey) return // 旧文件无 Key 则无需迁移
+        if (getAppConfig('kevcore').API_KEY) return // 新文件已有 Key 则跳过
+
+        const kevcorePath = path.join(configPath, 'kevcore.yaml')
+        const keyLine = `API_KEY: ${escapeYamlValue(legacyKey)}`
+
+        if (!fs.existsSync(kevcorePath)) {
+            // 旧版本部署可能还没有 kevcore.yaml，直接创建
+            const template = [
+                '# ============================================================',
+                '# KevCore 网关 通用 API Key（config/config/kevcore.yaml）',
+                '# ------------------------------------------------------------',
+                '# 以下功能共用此 Key：',
+                '#   1. 光翼查询         (sky-wings-cn)      apps/[Sky]光翼查询.js',
+                '#   2. 光遇本月日历     (sky-calendar-cn)   apps/[Sky]日历.js',
+                '# ------------------------------------------------------------',
+                '# 也可通过环境变量 KEVCORE_API_KEY 配置（优先级最高，配置后无需填写本文件）',
+                '# ============================================================',
+                keyLine,
+                ''
+            ].join('\n')
+            fs.writeFileSync(kevcorePath, template, 'utf8')
+        } else {
+            // 只替换 API_KEY 行，保留已有注释
+            let content = fs.readFileSync(kevcorePath, 'utf8')
+            if (/^\s*API_KEY\s*:.*$/m.test(content)) {
+                content = content.replace(/^(\s*)API_KEY\s*:.*$/m, (_, indent) => indent + keyLine)
+            } else {
+                content = content.replace(/\s*$/, '\n') + keyLine + '\n'
+            }
+            fs.writeFileSync(kevcorePath, content, 'utf8')
+        }
+
+        if (globalThis.logger?.info) {
+            globalThis.logger.info('[Tlon-Sky] 检测到旧版光翼查询配置，已将 API Key 自动迁移到 config/config/kevcore.yaml')
+        }
+    } catch (error) {
+        if (globalThis.logger?.error) {
+            globalThis.logger.error(`[Tlon-Sky] KevCore API Key 自动迁移失败：${error.message}`)
+        }
+    }
+}
+
 function makeMarkdownSegment(content) {
     return { type: 'markdown', data: { content } }
 }
@@ -115,6 +183,7 @@ export {
     storagePushData,
     getCronData,
     getAppConfig,
+    getKevCoreApiKey,
     makeMarkdownSegment,
     isQQBot,
     getPlainQQBotId,
