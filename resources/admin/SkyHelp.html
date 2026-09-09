@@ -96,14 +96,20 @@
         }
 
         .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            align-items: flex-start;
             gap: 1.2rem;
             margin-top: 1rem;
             margin-bottom: 0.5rem;
-            /* 取消 grid 默认等高拉伸，板块高度随内容灵活变动 */
-            align-items: start;
-            align-content: start;
+        }
+
+        /* 瀑布流列容器 */
+        .masonry-col {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
         }
 
         .feature-card {
@@ -115,6 +121,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             min-width: 0;
             height: auto;
+            margin: 0;
         }
 
         .feature-card:hover {
@@ -228,9 +235,7 @@
                 font-size: 1.2rem;
             }
 
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
+            /* 列数由 JS 瀑布流按容器宽度决定，此处无需额外规则 */
         }
     </style>
 </head>
@@ -571,5 +576,36 @@
             <p>图片素材来源于网络，如有侵权请联系删除</p>
         </footer>
     </div>
+
+    <script>
+        // 瀑布流布局：按"最短列优先"把板块分配到各列，区块收缩后其他区块自动跟上填补空隙
+        (function () {
+            const grid = document.querySelector('.features-grid')
+            if (!grid) return
+
+            const cards = Array.from(grid.children)
+            if (cards.length === 0) return
+
+            // 按容器宽度决定列数（约每列 560px 一列，最多 3 列）
+            const colCount = Math.max(1, Math.min(3, Math.round(grid.offsetWidth / 560)))
+            grid.innerHTML = ''
+
+            const cols = []
+            for (let i = 0; i < colCount; i++) {
+                const col = document.createElement('div')
+                col.className = 'masonry-col'
+                grid.appendChild(col)
+                cols.push(col)
+            }
+
+            cards.forEach(card => {
+                let shortest = cols[0]
+                for (const col of cols) {
+                    if (col.offsetHeight < shortest.offsetHeight) shortest = col
+                }
+                shortest.appendChild(card)
+            })
+        })()
+    </script>
 </body>
 </html>
