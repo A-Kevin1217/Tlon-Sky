@@ -175,7 +175,7 @@ export class SkyWingQueryPlugin extends plugin {
     async queryWingsBySkyId(e, skyId) {
         try {
             if (!this.wingQueryApiKey) {
-                await e.reply(['查询失败：未配置 KevCore API Key（与光遇本月日历共用），请在 config/config/kevcore.yaml 或环境变量 KEVCORE_API_KEY 中填写']);
+                await e.reply(['查询失败：未配置 KevCore API Key（与光遇本月日历共用）\n请前往 https://api.kevcore.cn/ 获取 API Key 后，填入 config/config/kevcore.yaml 或环境变量 KEVCORE_API_KEY']);
                 return true;
             }
 

@@ -97,7 +97,7 @@ export class SkyCalendar extends plugin {
   async handleMonthlyCalendar(e) {
     try {
       if (!this.apiKey) {
-        return e.reply(['查询失败：未配置 KevCore API Key（与光翼查询共用），请在 config/config/kevcore.yaml 或环境变量 KEVCORE_API_KEY 中填写'])
+        return e.reply(['查询失败：未配置 KevCore API Key（与光翼查询共用）\n请前往 https://api.kevcore.cn/ 获取 API Key 后，填入 config/config/kevcore.yaml 或环境变量 KEVCORE_API_KEY'])
       }
 
       const imageUrl = await this.fetchCalendarImageUrl()

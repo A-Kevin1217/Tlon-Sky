@@ -7,19 +7,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         .full-bg {
-            position: fixed;
-            top: 50%;
+            position: absolute;
+            top: 0;
             left: 50%;
-            transform: translate(-42%, -35%);
-            width: 150vw;
-            height: 180vh;
+            transform: translateX(-50%);
+            width: 2500px;
+            height: 100%;
             background: url('https://vip.123pan.cn/1810660/yk6baz03t0l000d7w33fgakmsdoawb9eDIYPDdQzDcxPAdJwDF==.webp') no-repeat 58% 65%;
-            /* 保持宽度适配的同时填满高度，避免底部留白 */
+            /* 背景随内容高度伸展，避免内容超出背景边界 */
             background-size: cover;
             z-index: -100;
             pointer-events: none;
-            min-width: 2500px;
-            min-height: 2000px;
         }
         body {
             font-family: 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -33,29 +31,25 @@
         }
 
         #bg {
-            position: fixed;
-            top: 50%;
+            position: absolute;
+            top: 0;
             left: 50%;
-            transform: translate(-42%, -35%);
-            width: 150vw;
-            height: 180vh;
+            transform: translateX(-50%);
+            width: 2500px;
+            height: 100%;
             z-index: -2;
             /* 与背景一致，确保 img 也能覆盖其容器并避免留白 */
             object-fit: cover;
-            min-width: 2500px;
-            min-height: 2000px;
             object-position: 58% 65%;
         }
 
         .overlay {
-            position: fixed;
-            top: 50%;
+            position: absolute;
+            top: 0;
             left: 50%;
-            transform: translate(-42%, -35%);
-            width: 150vw;
-            height: 180vh;
-            min-width: 2500px;
-            min-height: 2000px;
+            transform: translateX(-50%);
+            width: 2500px;
+            height: 100%;
             background: rgba(255, 255, 255, 0.6);
             z-index: -1;
         }
@@ -107,6 +101,9 @@
             gap: 1.2rem;
             margin-top: 1rem;
             margin-bottom: 0.5rem;
+            /* 取消 grid 默认等高拉伸，板块高度随内容灵活变动 */
+            align-items: start;
+            align-content: start;
         }
 
         .feature-card {
@@ -117,6 +114,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             min-width: 0;
+            height: auto;
         }
 
         .feature-card:hover {
