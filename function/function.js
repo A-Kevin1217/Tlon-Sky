@@ -12,6 +12,58 @@ const otherFilePath = {
     text: path.join(configPath, 'text.json')
 };
 
+// ============================================================
+// 本地配置文件自动补全
+// config/config/ 已脱离版本管理，新装部署可能为空目录。
+// 启动时若发现默认配置文件缺失，自动生成：
+//   优先复制 config/config/template/ 下的同名模板；
+//   template 不存在时使用内置默认内容兜底。
+// 已存在的文件【绝不覆盖】，不影响用户自定义配置。
+// ============================================================
+const DEFAULT_CONFIG_FILES = ['cron.yaml', 'push.yaml', 'text.json', 'kevcore.yaml', '光翼查询.yaml', '国服礼包查询.yaml'];
+
+// 内置兜底默认内容（仅在 template/ 目录缺失时使用）
+const FALLBACK_CONFIG_CONTENT = {
+    'cron.yaml': `老奶奶干饭: '0 55 7,9,11,15,17,19,21 * * ?'\n每日任务: '0 0 1,6,12,18 * * ?'\n献祭刷新: '1 0 0,4,8,12,16,20 * * 7'\n碎石提醒: '1 0 * * ?'\n碎石坠落前提醒: '58 6,8,9,10,12,13,14,15,16,18,19,20,21,22,23 * * ?'\n`,
+    'push.yaml': `老奶奶干饭: []\n每日任务: []\n献祭刷新: []\n碎石提醒: []\n碎石坠落前提醒: []\n`,
+    'text.json': `{\n    "老奶奶干饭": {\n        "text": "老奶奶干饭提醒：\\n还有五分钟就开始啦~\\n快去老奶奶那干饭呀"\n    },\n    "每日任务": {\n        "text": "每日任务自动推送",\n        "image": "https://api.t1qq.com/api/sky/gy/sc/scsky.php"\n    },\n    "献祭刷新": {\n        "text": "每周献祭已刷新！"\n    },\n    "碎石提醒": {\n        "text": "碎石提醒"\n    },\n    "碎石坠落前提醒": {\n        "text": "碎石坠落前提醒"\n    }\n}\n`,
+    'kevcore.yaml': `# KevCore 网关 通用 API Key（光翼查询/本月日历/身高查询共用）\n# 也可通过环境变量 KEVCORE_API_KEY 配置（优先级最高）\nAPI_KEY: ''\n`,
+    '光翼查询.yaml': `# 【已废弃】请将 KevCore API Key 迁移到 kevcore.yaml\nAPI_KEY: ''\n`,
+    '国服礼包查询.yaml': `# 国服礼包查询 API Key\n# 请前往 https://api.t1qq.com 申请你的 API Key\nAPI_KEY: xxxxxxxxxxxxxxx\n`
+};
+
+function ensureDefaultConfigFiles() {
+    try {
+        fs.mkdirSync(configPath, { recursive: true })
+        const templateDir = path.join(pluginPath, 'config', 'config', 'template')
+
+        for (const fileName of DEFAULT_CONFIG_FILES) {
+            const targetFile = path.join(configPath, fileName)
+            if (fs.existsSync(targetFile)) continue // 已存在则跳过，绝不覆盖
+
+            let content = ''
+            const templateFile = path.join(templateDir, fileName)
+            if (fs.existsSync(templateFile)) {
+                content = fs.readFileSync(templateFile, 'utf8')
+            } else {
+                content = FALLBACK_CONFIG_CONTENT[fileName] || ''
+            }
+            if (!content) continue
+
+            fs.writeFileSync(targetFile, content, 'utf8')
+            if (globalThis.logger?.info) {
+                globalThis.logger.info(`[Tlon-Sky] 已生成默认配置文件 config/config/${fileName}`)
+            }
+        }
+    } catch (error) {
+        if (globalThis.logger?.error) {
+            globalThis.logger.error(`[Tlon-Sky] 配置文件自动补全失败：${error.message}`)
+        }
+    }
+}
+
+ensureDefaultConfigFiles();
+
 async function getPushData() {
     return Yaml.parse(fs.readFileSync(otherFilePath['push'], 'utf-8'))
 }
