@@ -3,6 +3,8 @@
  * 调用 KevCore 网关 https://api.kevcore.cn/v1/gateway/sky-calendar-cn
  * 获取光遇国服本月日历图片并直接回复图片
  *
+ * 指令：`光遇本月日历` 或 `光遇日历`（同义，走同一个处理函数）
+ *
  * 与光翼查询共用 KevCore 网关 API Key：
  *   config/config/kevcore.yaml 中的 API_KEY，也可通过环境变量 KEVCORE_API_KEY 配置（优先级最高）
  */
@@ -82,11 +84,11 @@ export class SkyCalendar extends plugin {
   constructor() {
     super({
       name: '[Tlon-Sky]光遇:本月日历',
-      dsc: '光遇本月日历查询',
+      dsc: '光遇本月日历 / 光遇日历查询',
       event: 'message',
       priority: 1,
       rule: [
-        { reg: /^[#\/]?光遇本月日历$/, fnc: 'handleMonthlyCalendar' }
+        { reg: /^[#\/]?(光遇本月日历|光遇日历)$/, fnc: 'handleMonthlyCalendar' }
       ]
     })
     // KevCore 网关通用 API Key（config/config/kevcore.yaml，与光翼查询共用）
