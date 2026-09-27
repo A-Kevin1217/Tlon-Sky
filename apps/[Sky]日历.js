@@ -88,7 +88,7 @@ export class SkyCalendar extends plugin {
       event: 'message',
       priority: 1,
       rule: [
-        { reg: /^[#\/]?(光遇本月日历|光遇日历)$/, fnc: 'handleMonthlyCalendar' }
+        { reg: /^[#\/]?光遇(本月)?日历$/, fnc: 'handleMonthlyCalendar' }
       ]
     })
     // KevCore 网关通用 API Key（config/config/kevcore.yaml，与光翼查询共用）
