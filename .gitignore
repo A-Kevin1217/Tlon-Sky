@@ -8,3 +8,5 @@ config/config/*
 !config/config/template/
 
 scripts/warmup-gitcode-images.mjs
+.DS_Store
+.workbuddy-ai
