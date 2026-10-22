@@ -222,7 +222,8 @@ export class SkyWingQueryPlugin extends plugin {
                 },
                 mapStatisticsJson: JSON.stringify(mapStatistics),
                 uncollectedByTypeJson: JSON.stringify(uncollectedByMap),
-                permanentStatisticsJson: JSON.stringify(permanentStatistics)
+                permanentStatisticsJson: JSON.stringify(permanentStatistics),
+                permanentUncollectedJson: JSON.stringify(data.permanent_uncollected || {})
             };
 
             await render('admin/wingQuery', templateData, { e, scale: 1.3 }, null, new Button(e).wingQuery());
@@ -264,7 +265,7 @@ export class SkyWingQueryPlugin extends plugin {
         return Object.fromEntries(groups.map(group => [
             group.map || '未知地图',
             (group.wings || []).map(wing => ({
-                name: this.getWingChineseName(wing.wing_id) || wing.wing_id,
+                name: wing.name || this.getWingChineseName(wing.wing_id) || wing.wing_id,
                 wingId: wing.wing_id,
                 uncollected: 1
             }))

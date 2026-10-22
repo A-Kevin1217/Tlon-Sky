@@ -13,26 +13,26 @@
 
         body {
             width: 100%;
-            min-width: 1400px;
+            min-width: 1000px;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(145deg, #eef5ff 0%, #d9e9ff 100%);
-            padding: 40px 40px;
+            padding: 32px 32px;
             min-height: 100vh;
             display: flex;
             align-items: flex-start;
             justify-content: center;
         }
 
-        /* 主容器 —— 毛玻璃蓝白质感 · 加宽版 */
+        /* 主容器 —— 毛玻璃蓝白质感 */
         .container {
             background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px) saturate(180%);
             border-radius: 40px;
-            padding: 40px 48px;
+            padding: 36px 40px;
             box-shadow: 0 25px 50px -12px rgba(0, 100, 220, 0.3), 0 10px 24px -8px rgba(0, 70, 160, 0.2), inset 0 1px 3px rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.8);
-            max-width: 1600px;
+            max-width: 1080px;
             width: 100%;
             margin: 0 auto;
         }
@@ -82,7 +82,7 @@
         /* 统计卡片网格 - 更宽松 */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             margin-bottom: 48px;
         }
@@ -155,7 +155,7 @@
         /* 地图卡片网格 - 更大卡片 */
         .map-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
 
@@ -264,8 +264,9 @@
 
         .uncollected-items {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(3, minmax(0, max-content));
+            justify-content: center;
+            gap: 12px 16px;
         }
 
         .uncollected-item {
@@ -325,6 +326,15 @@
             border-color: white;
         }
 
+        /* 带未收集明细的分组卡片占满整行，明细横向流式 */
+        .wing-group-card:has(.group-uncollected:not(:empty)) {
+            grid-column: 1 / -1;
+        }
+
+        .wing-group-card .group-uncollected {
+            justify-content: flex-start;
+        }
+
         .season-card-name {
             font-weight: 600;
             color: #134579;
@@ -352,14 +362,65 @@
             color: #e63e4e;
         }
 
+        /* 永久光翼分组内：未收集明细（图标 + 中文名，横向流式） */
+        .group-uncollected {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .group-uncollected:empty {
+            display: none;
+        }
+
+        .wing-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(8px);
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 6px 14px -8px #2b7be0;
+        }
+
+        .wing-chip img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #0f3a63 0%, #08223d 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 3px 8px rgba(0, 40, 90, 0.35);
+            object-fit: contain;
+            padding: 3px;
+        }
+
+        .wing-chip .wing-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #00336e;
+            white-space: nowrap;
+        }
+
+        .wing-chip .wing-missing {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #e63e4e;
+        }
+
         /* 自适应 - 宽屏下保持比例 */
-        @media (max-width: 1400px) {
+        @media (max-width: 1100px) {
             body {
                 min-width: 100%;
-                padding: 30px;
+                padding: 24px;
             }
             .container {
-                padding: 32px 36px;
+                padding: 28px 32px;
             }
         }
 
@@ -428,12 +489,12 @@
 
         <div class="section">
             <div class="section-title">光翼分类统计</div>
-            <div class="stats-grid">
+            <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
                 <div class="stat-card">
                     <div class="label">地图光翼</div>
                     <div class="value">{{statistics.normal_wings.total}}</div>
                     <div style="margin-top: 16px; font-size: 0.9rem; background: rgba(255,255,255,0.5); padding: 6px 16px; border-radius: 40px; display: inline-block;">
-                        已收集: <span style="color: #0095f6; font-weight: 600;">{{statistics.normal_wings.collected}}</span> | 
+                        已收集: <span style="color: #0095f6; font-weight: 600;">{{statistics.normal_wings.collected}}</span> |
                         未收集: <span style="color: #ed4956; font-weight: 600;">{{statistics.normal_wings.uncollected}}</span>
                     </div>
                 </div>
@@ -441,7 +502,7 @@
                     <div class="label">永久光翼</div>
                     <div class="value">{{statistics.permanent_wings.total}}</div>
                     <div style="margin-top: 16px; font-size: 0.9rem; background: rgba(255,255,255,0.5); padding: 6px 16px; border-radius: 40px; display: inline-block;">
-                        已收集: <span style="color: #0095f6; font-weight: 600;">{{statistics.permanent_wings.collected}}</span> | 
+                        已收集: <span style="color: #0095f6; font-weight: 600;">{{statistics.permanent_wings.collected}}</span> |
                         未收集: <span style="color: #ed4956; font-weight: 600;">{{statistics.permanent_wings.uncollected}}</span>
                     </div>
                 </div>
@@ -469,6 +530,7 @@
         const mapStatistics = JSON.parse('{{@mapStatisticsJson}}');
         const uncollectedByType = JSON.parse('{{@uncollectedByTypeJson}}');
         const permanentStatistics = JSON.parse('{{@permanentStatisticsJson}}');
+        const permanentUncollected = JSON.parse('{{@permanentUncollectedJson}}');
 
         // 渲染地图统计
         function renderMapStatistics() {
@@ -547,13 +609,28 @@
 
             for (const [groupName, stats] of Object.entries(permanentStatistics)) {
                 const card = document.createElement('div');
-                card.className = 'season-card';
+                card.className = 'map-card wing-group-card';
+
+                // 该分组下未收集的永久光翼（动作图标 + 中文名，横向排列）
+                const missing = (permanentUncollected && permanentUncollected[groupName]) || [];
+                const chipsHtml = missing.map(w => `
+                    <div class="wing-chip">
+                        ${w.icon ? `<img src="${w.icon}" alt="">` : ''}
+                        <span class="wing-name">${w.name}</span>
+                        <span class="wing-missing">未收集</span>
+                    </div>
+                `).join('');
+
                 card.innerHTML = `
-                    <div class="season-card-name">${groupName}</div>
-                    <div class="season-card-stats">
+                    <div class="map-card-header">
+                        <span>${groupName}</span>
+                        <span>${stats.total}个</span>
+                    </div>
+                    <div class="map-card-stats">
                         <span class="collected">✓ ${stats.collected}</span>
                         <span class="uncollected">✗ ${stats.uncollected}</span>
                     </div>
+                    <div class="group-uncollected">${chipsHtml}</div>
                 `;
                 permanentList.appendChild(card);
             }
