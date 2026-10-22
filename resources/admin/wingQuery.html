@@ -516,7 +516,7 @@
 
         <div class="section" id="uncollectedSection" style="display: none;">
             <div class="section-title">未收集光翼详情</div>
-            <div class="uncollected-list" id="uncollectedList"></div>
+            <div class="season-list" id="uncollectedList"></div>
         </div>
 
         <div class="section" id="permanentSection" style="display: none;">
@@ -556,44 +556,37 @@
             }
         }
 
-        // 渲染未收集光翼详情
+        // 渲染未收集光翼详情（紧凑形式：所有未收集翼合并为一个横向流式 chips 列表，chip = 地图·位置名）
         function renderUncollectedList() {
             const uncollectedList = document.getElementById('uncollectedList');
             const uncollectedSection = document.getElementById('uncollectedSection');
-            
+
             if (!uncollectedByType || Object.keys(uncollectedByType).length === 0) {
                 return;
             }
 
             uncollectedSection.style.display = 'block';
 
-            for (const [type, items] of Object.entries(uncollectedByType)) {
-                const typeDiv = document.createElement('div');
-                typeDiv.className = 'uncollected-type';
-                typeDiv.innerHTML = `
-                    <div class="uncollected-type-header">
-                        <div class="uncollected-type-title">${type}</div>
-                        <div class="uncollected-type-count">缺少 ${items.length} 个</div>
+            const card = document.createElement('div');
+            card.className = 'map-card wing-group-card';
+
+            const chipsHtml = Object.entries(uncollectedByType).flatMap(([type, items]) =>
+                items.map(w => `
+                    <div class="wing-chip">
+                        <span class="wing-name">${type}·${w.name}</span>
                     </div>
-                    <div class="uncollected-items"></div>
-                `;
+                `)
+            ).join('');
 
-                const itemsContainer = typeDiv.querySelector('.uncollected-items');
-                items.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'uncollected-item';
-                    const wingId = item.wingId && item.wingId !== item.name
-                        ? `<div style="font-size: 0.75rem; color: #666; margin-top: 4px;">${item.wingId}</div>`
-                        : '';
-                    itemDiv.innerHTML = `
-                        <div class="uncollected-item-name">${item.name}${wingId}</div>
-                        <div class="uncollected-item-count">未收集</div>
-                    `;
-                    itemsContainer.appendChild(itemDiv);
-                });
-
-                uncollectedList.appendChild(typeDiv);
-            }
+            const total = Object.values(uncollectedByType).reduce((n, items) => n + items.length, 0);
+            card.innerHTML = `
+                <div class="map-card-header">
+                    <span>未收集光翼</span>
+                    <span>${total}个</span>
+                </div>
+                <div class="group-uncollected">${chipsHtml}</div>
+            `;
+            uncollectedList.appendChild(card);
         }
 
         // 渲染永久光翼分组统计
